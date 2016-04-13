@@ -56,6 +56,7 @@
     <x:String x:Key="Eye">&#59636;</x:String>
     <x:String x:Key="Warning">&#57346;</x:String>
     <x:String x:Key="Search">&#59574;</x:String>
+    <x:String x:Key="Power">&#59564;</x:String>
 
     
     <x:String x:Key="ExpandLess">&#58830;</x:String>

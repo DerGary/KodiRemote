@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KodiRemote.View.Base;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,11 +21,25 @@ namespace KodiRemote.View
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class HomePage : Page
+    public sealed partial class HomePage : PageBase
     {
         public HomePage()
         {
             this.InitializeComponent();
+        }
+        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Frame.Navigate(typeof(RemoteControlPage));
+        }
+
+        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+
+        }
+
+        private void Image_ImageOpened(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

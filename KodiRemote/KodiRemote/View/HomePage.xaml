@@ -1,4 +1,4 @@
-﻿<Page
+﻿<base:PageBase
     x:Class="KodiRemote.View.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,9 +6,186 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:KodiRemote.View.UserControls"
+    xmlns:base="using:KodiRemote.View.Base"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <uc:Home/>
+    <Page.Resources>
+        <Style x:Key="CategoryButton" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Margin" Value="0,0,2,2"/>
+            <Setter Property="Width" Value="276"/>
+            <Setter Property="Height" Value="276"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" ContentMargin="0" ContentTransitions="{TemplateBinding ContentTransitions}" CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" PointerOverBackgroundMargin="1" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+
+        <Style x:Key="CategoryButtonSmall" TargetType="GridViewItem" BasedOn="{StaticResource CategoryButton}">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="200"/>
+        </Style>
+
+        <Style x:Key="CategoryButtonText" TargetType="TextBlock">
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style x:Key="CategoryButtonSymbolSmall" TargetType="TextBlock" BasedOn="{StaticResource MaterialIconTextStyle}">
+            <Setter Property="FontSize" Value="160"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{StaticResource TransparentBlack}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ArrangementOfCurrentlyPlayingAndCategorieButtons">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1260"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="buttonGridView.(RelativePanel.LeftOf)" Value="currentlyPlaying"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.AlignRightWithPanel)" Value="True"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="False"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.Below)" Value="{x:Null}"/>
+                        <!--<Setter Target="buttonGridView.Background" Value="Red"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="buttonGridView.(RelativePanel.LeftOf)" Value="{x:Null}"/>
+                        <!--<Setter Target="buttonGridView.Background" Value="Blue"/>-->
+                        <Setter Target="currentlyPlaying.(RelativePanel.AlignRightWithPanel)" Value="False"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.Below)" Value="buttonGridView"/>
+                        <Setter Target="scrollView.VerticalScrollBarVisibility" Value="Auto"/>
+                        <Setter Target="scrollView.VerticalScrollMode" Value="Auto"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup x:Name="SizeOfButtons">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="670" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="Movies.Style" Value="{StaticResource CategoryButtonSmall}"/>
+                        <Setter Target="MoviesSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
+                        <Setter Target="TVShows.Style" Value="{StaticResource CategoryButtonSmall}"/>
+                        <Setter Target="TVShowsSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
+                        <Setter Target="Music.Style" Value="{StaticResource CategoryButtonSmall}"/>
+                        <Setter Target="MusicSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
+                        <Setter Target="RemoteControl.Style" Value="{StaticResource CategoryButtonSmall}"/>
+                        <Setter Target="RemoteControlSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <ScrollViewer x:Name="scrollView" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled">
+            <RelativePanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <GridView
+                    x:Name="buttonGridView"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.LeftOf="currentlyPlaying"
+                    Margin="20"
+                    Padding="0"
+                    SelectionMode="None"
+                    IsItemClickEnabled="True"
+                    ItemClick="itemGridView_ItemClick">
+                    <GridViewItem x:Name="Movies" Style="{StaticResource CategoryButton}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Fill="{StaticResource TransparentGrey}"/>
+
+                            <TextBlock x:Name="MoviesSymbol" Grid.RowSpan="2" Style="{StaticResource MaterialIconTextStyle}" Text="{StaticResource MovieStrip}"/>
+
+                            <StackPanel Background="{StaticResource TransparentGrey}" Grid.Row="1">
+                                <TextBlock x:Uid="Movies" Text="Movies" Style="{StaticResource CategoryButtonText}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem x:Name="TVShows" Style="{StaticResource CategoryButton}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Fill="{StaticResource TransparentGrey}"/>
+
+                            <TextBlock x:Name="TVShowsSymbol" Grid.RowSpan="2" Style="{StaticResource MaterialIconTextStyle}" Text="{StaticResource TV}"/>
+
+                            <StackPanel Background="{StaticResource TransparentGrey}" Grid.Row="1">
+                                <TextBlock x:Uid="TVShows" Text="TVShows" Style="{StaticResource CategoryButtonText}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem x:Name="Music" Style="{StaticResource CategoryButton}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Fill="{StaticResource TransparentGrey}"/>
+
+                            <TextBlock x:Name="MusicSymbol" Grid.RowSpan="2" Style="{StaticResource MaterialIconTextStyle}" Text="{StaticResource MusicNote}"/>
+
+                            <StackPanel Background="{StaticResource TransparentGrey}" Grid.Row="1">
+                                <TextBlock x:Uid="Music" Text="Music" Style="{StaticResource CategoryButtonText}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem x:Name="RemoteControl" Style="{StaticResource CategoryButton}" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Fill="{StaticResource TransparentGrey}"/>
+
+                            <TextBlock x:Name="RemoteControlSymbol" Grid.RowSpan="2" Style="{StaticResource MaterialIconTextStyle}" Text="{StaticResource ArrowPad}"/>
+
+                            <StackPanel Background="{StaticResource TransparentGrey}" Grid.Row="1">
+                                <TextBlock x:Uid="RemoteControl" Text="RemoteControl" Style="{StaticResource CategoryButtonText}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                </GridView>
+
+                <uc:CurrentlyPlaying x:Name="currentlyPlaying" RelativePanel.AlignRightWithPanel="True"/>
+            </RelativePanel>
+        </ScrollViewer>
     </Grid>
-</Page>
+</base:PageBase>

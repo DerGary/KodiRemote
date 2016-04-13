@@ -121,11 +121,14 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\RemoteControlPage.xaml.cs">
+      <DependentUpon>RemoteControlPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\ConnectionState.xaml.cs">
       <DependentUpon>ConnectionState.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
+    <Compile Include="View\UserControls\CurrentlyPlaying.xaml.cs">
+      <DependentUpon>CurrentlyPlaying.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\SplitViewHeader.xaml.cs">
       <DependentUpon>SplitViewHeader.xaml</DependentUpon>
@@ -185,11 +188,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\RemoteControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\ConnectionState.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\Home.xaml">
+    <Page Include="View\UserControls\CurrentlyPlaying.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

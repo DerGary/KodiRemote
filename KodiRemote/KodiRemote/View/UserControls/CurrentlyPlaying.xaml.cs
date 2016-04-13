@@ -17,9 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KodiRemote.View.UserControls
 {
-    public sealed partial class Home : UserControl
+    public sealed partial class CurrentlyPlaying : UserControl
     {
-        public Home()
+        public CurrentlyPlaying()
         {
             this.InitializeComponent();
         }
@@ -30,11 +30,6 @@ namespace KodiRemote.View.UserControls
         }
 
         private void Image_ImageOpened(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
 
         }

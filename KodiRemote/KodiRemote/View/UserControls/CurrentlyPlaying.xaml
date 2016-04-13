@@ -1,0 +1,45 @@
+﻿<UserControl
+    x:Class="KodiRemote.View.UserControls.CurrentlyPlaying"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KodiRemote.View.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="800"
+    d:DesignWidth="1000">
+
+    <Grid HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Uid="currentlyPlaying"
+                   Margin="25,20,0,0" 
+                   Style="{StaticResource SubheaderTextBlockStyle}" 
+                   TextWrapping="NoWrap" 
+                   Text="Currently Playing"/>
+
+        <Grid Margin="20" Grid.Row="1">
+            <Polygon x:Name="Poly" Points="0,0 0,1.47 1,1.47 1,0" Stretch="Uniform" Fill="Black"/>
+            <ProgressRing Width="50" Height="50" IsActive="{Binding PosterProgressRingActive}"/>
+            <Image MaxWidth="{Binding ElementName=Poly, Path=ActualWidth}"
+                   Margin="1"
+                   Source="{Binding CurrentPlayingPoster}"
+                   Tag="CurrentPlayingPoster"
+                   ImageFailed="Image_ImageFailed"
+                   ImageOpened="Image_ImageOpened"
+                   Style="{StaticResource ImageInVisibileStretched}" />
+
+            <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
+                <TextBlock Text="test" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <Button x:Name="PosterPlayButton"
+                    Command="{Binding PlayCommand}"
+                    Style="{StaticResource MovieDetailsPlayButtonStyle}"
+                    Visibility="{Binding PlayButtonVisibility}"/>
+        </Grid>
+    </Grid>
+</UserControl>
