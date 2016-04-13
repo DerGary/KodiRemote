@@ -9,6 +9,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Res/Styles/AppStyles.xaml"/>
+                <ResourceDictionary Source="Res/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="Res/Styles/ImageStyles.xaml"/>
+                <ResourceDictionary Source="Res/Styles/TextBlockStyles.xaml"/>
+                <ResourceDictionary Source="Res/Styles/SplitViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

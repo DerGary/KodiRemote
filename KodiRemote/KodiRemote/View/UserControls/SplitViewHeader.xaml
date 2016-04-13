@@ -16,7 +16,7 @@
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1080" />
+                        <AdaptiveTrigger MinWindowWidth="1250" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="rootSplitView.DisplayMode"
@@ -54,7 +54,7 @@
             <TextBlock Text="{x:Bind Title, Mode=OneWay}" FontSize="24" FontWeight="Light" Margin="8,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <SplitView Grid.Row="1" OpenPaneLength="200" x:Name="rootSplitView" PaneBackground="#FF161616" DisplayMode="Inline" >
+        <SplitView Grid.Row="1" OpenPaneLength="200" x:Name="rootSplitView" PaneBackground="{StaticResource TransparentGrey}" DisplayMode="Inline" >
             <SplitView.Pane>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -77,13 +77,13 @@
                         </Button>
                         <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}">
                             <StackPanel Orientation="Horizontal">
-                                <SymbolIcon Symbol="Video"/>
+                                <SymbolIcon Symbol="SlideShow"/>
                                 <TextBlock x:Uid="TVShows" Text="TVShows" Margin="24,0,0,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}">
                             <StackPanel Orientation="Horizontal">
-                                <SymbolIcon Symbol="MusicInfo"/>
+                                <SymbolIcon Symbol="Play"/>
                                 <TextBlock x:Uid="Music" Text="Music" Margin="24,0,0,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
@@ -102,8 +102,9 @@
                     </Button>
                 </Grid>
             </SplitView.Pane>
-
-            <ContentPresenter Margin="20,0,20,0" Content="{x:Bind PresenterContent, Mode=OneWay}"/>
+            <SplitView.Content>
+                <ContentPresenter Margin="20,0,20,0" Content="{x:Bind PresenterContent, Mode=OneWay}"/>
+            </SplitView.Content>
         </SplitView>
     </Grid>
 </base:UserControlBase>

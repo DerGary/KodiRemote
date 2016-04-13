@@ -1,0 +1,36 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KodiRemote.Res.Styles">
+    <Style x:Key="ImageInVisibileStretched" TargetType="Image">
+        <Setter Property="Stretch" Value="UniformToFill"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+
+    <Style x:Key="ImageInVisibileStretchedCentered" TargetType="Image">
+        <Setter Property="Stretch" Value="UniformToFill"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+
+    <Style x:Key="ImageStyle" TargetType="Image">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Stretch" Value="UniformToFill"/>
+    </Style>
+    
+    <Style x:Key="CheckMarkImageStyle" TargetType="Image">
+        <Setter Property="Source" Value="{Binding WatchedMarkImage}"/>
+        <Setter Property="Name" Value="CheckMark"/>
+        <Setter Property="Visibility"  Value="Collapsed"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Stretch" Value="UniformToFill"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Opacity" Value="0"/>
+    </Style>
+</ResourceDictionary>

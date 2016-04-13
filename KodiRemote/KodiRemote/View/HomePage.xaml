@@ -1,19 +1,14 @@
-﻿<base:PageBase
-    x:Class="KodiRemote.View.MainPage"
+﻿<Page
+    x:Class="KodiRemote.View.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:KodiRemote"
+    xmlns:local="using:KodiRemote.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:KodiRemote.View.UserControls"
-    xmlns:base="using:KodiRemote.View.Base"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <uc:SplitViewHeader x:Uid="Home" Title="Home">
-            <uc:SplitViewHeader.PresenterContent>
-                <Frame x:Name="contentFrame"/>
-            </uc:SplitViewHeader.PresenterContent>
-        </uc:SplitViewHeader>
+        <uc:Home/>
     </Grid>
-</base:PageBase>
+</Page>

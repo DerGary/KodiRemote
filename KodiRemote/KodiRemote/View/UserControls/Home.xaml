@@ -1,0 +1,208 @@
+﻿<UserControl
+    x:Class="KodiRemote.View.UserControls.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KodiRemote.View.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="1080"
+    d:DesignWidth="1920">
+
+    <UserControl.Resources>
+        <Style x:Key="GridViewItemStyle1" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Margin" Value="0,0,2,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" ContentMargin="0" ContentTransitions="{TemplateBinding ContentTransitions}" CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" PointerOverBackgroundMargin="1" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="163*"/>
+            <ColumnDefinition Width="157*"/>
+        </Grid.ColumnDefinitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="HomeVisualStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1250" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="buttonGridView.(RelativePanel.LeftOf)" Value="currentlyPlaying"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.AlignRightWithPanel)" Value="True"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="False"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.Below)" Value="{x:Null}"/>
+                        <!--<Setter Target="buttonGridView.Background" Value="Red"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="buttonGridView.(RelativePanel.LeftOf)" Value="{x:Null}"/>
+                        <!--<Setter Target="buttonGridView.Background" Value="Blue"/>-->
+                        <Setter Target="currentlyPlaying.(RelativePanel.AlignRightWithPanel)" Value="False"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.Below)" Value="buttonGridView"/>
+                        <Setter Target="scrollView.VerticalScrollBarVisibility" Value="Auto"/>
+                        <Setter Target="scrollView.VerticalScrollMode" Value="Auto"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ProgressRing Width="70" Height="70" IsActive="False" Visibility="Collapsed" Grid.ColumnSpan="2" Margin="925,505"/>
+        <Image 
+            Source="{Binding CurrentPlayingFanart}" 
+            Tag="CurrentPlayingFanart" 
+            ImageFailed="Image_ImageFailed" 
+            ImageOpened="Image_ImageOpened"
+            Style="{StaticResource ImageInVisibileStretchedCentered}" Margin="960,540,18,540"/>
+
+        <Grid Background="{StaticResource TransparentBlack}" Grid.ColumnSpan="2">
+            <Grid.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition/>
+                </TransitionCollection>
+            </Grid.ChildrenTransitions>
+
+            <ScrollViewer x:Name="scrollView" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled">
+                <RelativePanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <GridView
+                    RelativePanel.AlignLeftWithPanel="True"
+                    x:Name="buttonGridView"
+                    RelativePanel.LeftOf="currentlyPlaying"
+                    Margin="20,0,20,0"
+                    Padding="0"
+                    SelectionMode="None"
+                    IsItemClickEnabled="True"
+                    ItemClick="itemGridView_ItemClick">
+                        <GridViewItem Height="276" Width="276" Padding="0" Style="{StaticResource GridViewItemStyle1}" Margin="5">
+                            <Grid Width="276" Height="276" x:Name="Movies" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="179*"/>
+                                    <RowDefinition Height="17*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Margin="0,0,0,0" Background="{StaticResource TransparentGrey}" Grid.Row="0" Padding="0" Grid.RowSpan="2"/>
+
+                                <TextBlock Grid.RowSpan="3" Style="{StaticResource IconTextStyle}" Text="&#58883;" Margin="29"/>
+
+                                <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentGrey}" Grid.Row="2">
+                                    <TextBlock x:Uid="Movies" Text="Movies" FontWeight="SemiBold" Margin="15,10,15,25"/>
+                                </StackPanel>
+                            </Grid>
+                        </GridViewItem>
+                        <GridViewItem Height="276" Width="276" Padding="0" Style="{StaticResource GridViewItemStyle1}" Margin="5">
+                            <Grid Width="276" Height="276" x:Name="TVShows" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Margin="0,0,0,0" Background="{StaticResource TransparentGrey}" Grid.Row="0" Padding="0"/>
+
+                                <TextBlock Grid.RowSpan="2" Style="{StaticResource IconTextStyle}" Text="&#58884;"/>
+
+                                <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentGrey}" Grid.Row="1">
+                                    <TextBlock x:Uid="TVShows" Text="TVShows" FontWeight="SemiBold" Margin="15,10,15,25"/>
+                                </StackPanel>
+                            </Grid>
+                        </GridViewItem>
+                        <GridViewItem Height="276" Width="276" Padding="0" Style="{StaticResource GridViewItemStyle1}" Margin="5">
+                            <Grid Width="276" Height="276" x:Name="Music" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Margin="0,0,0,0" Background="{StaticResource TransparentGrey}" Grid.Row="0" Padding="0"/>
+
+                                <TextBlock Grid.RowSpan="2" Style="{StaticResource MaterialIconTextStyle}" Text="{StaticResource MusicNote}"/>
+                                <!--<SymbolIcon Symbol="Video" Width="192" Height="192"/>-->
+                                <!--<TextBlock Grid.RowSpan="2" FontFamily="Segoe UI Symbol" Text="&#57602;" FontSize="192" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                                <Grid VerticalAlignment="Bottom" Background="{StaticResource TransparentGrey}" Grid.Row="1" Height="60">
+                                    <TextBlock x:Uid="Music" Text="Music" FontWeight="SemiBold" Margin="15,0,15,0" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </GridViewItem>
+                        <GridViewItem Height="276" Width="276" Padding="0" Style="{StaticResource GridViewItemStyle1}" Margin="0">
+                            <Grid Width="276" Height="276" x:Name="RemoteControl" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Margin="0,0,0,0" Background="{StaticResource TransparentGrey}" Grid.Row="0" Padding="0">
+                                </Border>
+                                <TextBlock Grid.RowSpan="2" Style="{StaticResource IconTextStyle}" Text="&#58914;"/>
+
+                                <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentGrey}" Grid.Row="1">
+                                    <TextBlock x:Uid="RemoteControl" Text="RemoteControl" FontWeight="SemiBold" Margin="15,10,15,25"/>
+                                </StackPanel>
+                            </Grid>
+                        </GridViewItem>
+                    </GridView>
+
+                    <Grid x:Name="currentlyPlaying" RelativePanel.AlignRightWithPanel="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" VerticalAlignment="Top" Margin="25,0,25,0" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" Visibility="{Binding CurrentlyPlayingSomething}">Aktuelle Wiedergabe</TextBlock>
+                        <Grid Margin="25,0,25,5" Grid.Row="1" Visibility="{Binding CurrentlyPlayingSomething}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="7*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Polygon x:Name="Poly" Grid.RowSpan="4" Points="0,0 0,1.47 1,1.47 1,0" Stretch="Uniform" Fill="Black"/>
+                            <ProgressRing Grid.RowSpan="4" Width="50" Height="50" IsActive="{Binding PosterProgressRingActive}"/>
+                            <Image
+                                MaxWidth="{Binding ElementName=Poly, Path=ActualWidth}"
+                                Grid.RowSpan="4"
+                                Margin="1"
+                                Source="{Binding CurrentPlayingPoster}"
+                                Tag="CurrentPlayingPoster"
+                                ImageFailed="Image_ImageFailed"
+                                ImageOpened="Image_ImageOpened"
+                                Style="{StaticResource ImageInVisibileStretched}" />
+
+                            <!--<Image Style="{StaticResource CheckMarkImageStyle}" ImageOpened="CheckMark_ImageOpened" Source="{Binding PosterWatchedMarkImage}" 
+                                           VerticalAlignment="Top" HorizontalAlignment="Left" Stretch="Uniform" Tag="Poster" DataContextChanged="Image_DataContextChanged"/>-->
+
+                            <StackPanel MaxWidth="{Binding ElementName=Poly, Path=ActualWidth}" VerticalAlignment="Bottom" Background="#A6000000" Grid.Row="3" Margin="0,0,0,0">
+                                <TextBlock Text="{Binding CurrentTitle}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <Button x:Name="PosterPlayButton"
+                            Grid.RowSpan="4"
+                            Grid.Column="0"
+                            Command="{Binding PlayCommand}"
+                            Style="{StaticResource MovieDetailsPlayButtonStyle}"
+                            Visibility="{Binding PlayButtonVisibility}"/>
+                            <Button x:Name="PosterPauseButton"
+                            Grid.RowSpan="4"
+                            Grid.Column="0"
+                            Command="{Binding PlayCommand}"
+                            Style="{StaticResource MovieDetailsPlayButtonStyle}"
+                            Visibility="{Binding PauseButtonVisibility}"
+                            Content="&#58896;"/>
+                        </Grid>
+                    </Grid>
+                </RelativePanel>
+            </ScrollViewer>
+
+
+        </Grid>
+    </Grid>
+</UserControl>
