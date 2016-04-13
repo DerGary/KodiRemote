@@ -1,84 +1,84 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:sys="using:System">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <SolidColorBrush Color="#55000000" x:Name="TransparentBlack"/>
     <SolidColorBrush Color="#55555555" x:Name="TransparentGrey"/>
 
-    <sys:String x:Key="Play">&#57399;</sys:String>
-    <sys:String x:Key="Stop">&#57415;</sys:String>
-    <sys:String x:Key="Pause">&#57396;</sys:String>
-    <sys:String x:Key="Repeat">&#57408;</sys:String>
-    <sys:String x:Key="Replay">&#57410;</sys:String>
-    <sys:String x:Key="Shuffle">&#57411;</sys:String>
+    
+    <x:String x:Key="Play">&#57399;</x:String>
+    <x:String x:Key="Stop">&#57415;</x:String>
+    <x:String x:Key="Pause">&#57396;</x:String>
+    <x:String x:Key="Repeat">&#57408;</x:String>
+    <x:String x:Key="Replay">&#57410;</x:String>
+    <x:String x:Key="Shuffle">&#57411;</x:String>
 
     <!--Arrows-->
-    <sys:String x:Key="FastBackward">&#57376;</sys:String>
-    <sys:String x:Key="FastForward">&#57375;</sys:String>
-    <sys:String x:Key="SkipBack">&#57413;</sys:String>
-    <sys:String x:Key="SkipForward">&#57412;</sys:String>
-    <sys:String x:Key="LeftArrow">&#58820;</sys:String>
-    <sys:String x:Key="RightArrow">&#58824;</sys:String>
-    <sys:String x:Key="UpArrow">&#58840;</sys:String>
-    <sys:String x:Key="DownArrow">&#58843;</sys:String>
+    <x:String x:Key="FastBackward">&#57376;</x:String>
+    <x:String x:Key="FastForward">&#57375;</x:String>
+    <x:String x:Key="SkipBack">&#57413;</x:String>
+    <x:String x:Key="SkipForward">&#57412;</x:String>
+    <x:String x:Key="LeftArrow">&#58820;</x:String>
+    <x:String x:Key="RightArrow">&#58824;</x:String>
+    <x:String x:Key="UpArrow">&#58840;</x:String>
+    <x:String x:Key="DownArrow">&#58843;</x:String>
     
     <!--Speaker-->
-    <sys:String x:Key="SpeakerLess">&#57421;</sys:String>
-    <sys:String x:Key="SpeakerMore">&#57424;</sys:String>
-    <sys:String x:Key="SpeakerZero">&#57422;</sys:String>
-    <sys:String x:Key="SpeakerMute">&#57423;</sys:String>
+    <x:String x:Key="SpeakerLess">&#57421;</x:String>
+    <x:String x:Key="SpeakerMore">&#57424;</x:String>
+    <x:String x:Key="SpeakerZero">&#57422;</x:String>
+    <x:String x:Key="SpeakerMute">&#57423;</x:String>
 
     <!--Categories-->
-    <sys:String x:Key="MusicNote">&#58373;</sys:String>
-    <sys:String x:Key="MovieClapper">&#58372;</sys:String>
-    <sys:String x:Key="Pictures">&#58387;</sys:String>
-    <sys:String x:Key="Picture">&#58379;</sys:String>
-    <sys:String x:Key="TV">&#58937;</sys:String>
-    <sys:String x:Key="Home">&#59530;</sys:String>
-    <sys:String x:Key="Settings">&#59576;</sys:String>
-    <sys:String x:Key="MovieStrip">&#59610;</sys:String>
-    <sys:String x:Key="MusicLibrary">&#57392;</sys:String>
+    <x:String x:Key="MusicNote">&#58373;</x:String>
+    <x:String x:Key="MovieClapper">&#58372;</x:String>
+    <x:String x:Key="Pictures">&#58387;</x:String>
+    <x:String x:Key="Picture">&#58379;</x:String>
+    <x:String x:Key="TV">&#58937;</x:String>
+    <x:String x:Key="Home">&#59530;</x:String>
+    <x:String x:Key="Settings">&#59576;</x:String>
+    <x:String x:Key="MovieStrip">&#59610;</x:String>
+    <x:String x:Key="MusicLibrary">&#57392;</x:String>
 
 
 
     <!--Misc-->
-    <sys:String x:Key="PartyMode">&#57396;</sys:String>
-    <sys:String x:Key="BugReport">&#59496;</sys:String>
-    <sys:String x:Key="Cached">&#59498;</sys:String>
-    <sys:String x:Key="Camera">&#58386;</sys:String>
-    <sys:String x:Key="Close">&#58829;</sys:String>
-    <sys:String x:Key="Checkmark">&#58829;</sys:String>
-    <sys:String x:Key="Delete">&#59506;</sys:String>
-    <sys:String x:Key="Sync">&#58919;</sys:String>
-    <sys:String x:Key="NewRelease">&#57393;</sys:String>
-    <sys:String x:Key="Refresh">&#58837;</sys:String>
-    <sys:String x:Key="Eye">&#59636;</sys:String>
-    <sys:String x:Key="Warning">&#57346;</sys:String>
-    <sys:String x:Key="Search">&#59574;</sys:String>
+    <x:String x:Key="PartyMode">&#57396;</x:String>
+    <x:String x:Key="BugReport">&#59496;</x:String>
+    <x:String x:Key="Cached">&#59498;</x:String>
+    <x:String x:Key="Camera">&#58386;</x:String>
+    <x:String x:Key="Close">&#58829;</x:String>
+    <x:String x:Key="Checkmark">&#58829;</x:String>
+    <x:String x:Key="Delete">&#59506;</x:String>
+    <x:String x:Key="Sync">&#58919;</x:String>
+    <x:String x:Key="NewRelease">&#57393;</x:String>
+    <x:String x:Key="Refresh">&#58837;</x:String>
+    <x:String x:Key="Eye">&#59636;</x:String>
+    <x:String x:Key="Warning">&#57346;</x:String>
+    <x:String x:Key="Search">&#59574;</x:String>
 
     
-    <sys:String x:Key="ExpandLess">&#58830;</sys:String>
-    <sys:String x:Key="ExpandMore">&#58831;</sys:String>
+    <x:String x:Key="ExpandLess">&#58830;</x:String>
+    <x:String x:Key="ExpandMore">&#58831;</x:String>
 
-    <sys:String x:Key="Favorite">&#59517;</sys:String>
-    <sys:String x:Key="Unfavorite">&#59517;</sys:String>
+    <x:String x:Key="Favorite">&#59517;</x:String>
+    <x:String x:Key="Unfavorite">&#59517;</x:String>
 
-    <sys:String x:Key="Folder">&#58055;</sys:String>
-    <sys:String x:Key="FolderOpen">&#58056;</sys:String>
+    <x:String x:Key="Folder">&#58055;</x:String>
+    <x:String x:Key="FolderOpen">&#58056;</x:String>
 
-    <sys:String x:Key="ArrowPad">&#57377;</sys:String>
-    <sys:String x:Key="ArrowPad2">&#59551;</sys:String>
-    <sys:String x:Key="Keyboard">&#58130;</sys:String>
-    <sys:String x:Key="KeyboardHide">&#58138;</sys:String>
-    <sys:String x:Key="KeyboardDown">&#58131;</sys:String>
-    <sys:String x:Key="KeyboardLeft">&#58132;</sys:String>
-    <sys:String x:Key="KeyboardUp">&#58134;</sys:String>
-    <sys:String x:Key="KeyboardRight">&#58133;</sys:String>
+    <x:String x:Key="ArrowPad">&#57377;</x:String>
+    <x:String x:Key="ArrowPad2">&#59551;</x:String>
+    <x:String x:Key="Keyboard">&#58130;</x:String>
+    <x:String x:Key="KeyboardHide">&#58138;</x:String>
+    <x:String x:Key="KeyboardDown">&#58131;</x:String>
+    <x:String x:Key="KeyboardLeft">&#58132;</x:String>
+    <x:String x:Key="KeyboardUp">&#58134;</x:String>
+    <x:String x:Key="KeyboardRight">&#58133;</x:String>
 
 
-    <sys:String x:Key="HD">&#57426;</sys:String>
-    <sys:String x:Key="HQ">&#57380;</sys:String>
+    <x:String x:Key="HD">&#57426;</x:String>
+    <x:String x:Key="HQ">&#57380;</x:String>
 
     
 </ResourceDictionary>
