@@ -6,8 +6,42 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+
+    </Page.Resources>
 
     <Grid Name="rootGrid" Background="{StaticResource TransparentBlack}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="670"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PowerButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="MovieButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="TVShowButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="MusicButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="KeyboardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="SpeakerLessButton.Style" Value="{StaticResource IconRepeatButtonStyleSmall}"/>
+                        <Setter Target="SpeakerMuteButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="SpeakerMoreButton.Style" Value="{StaticResource IconRepeatButtonStyleSmall}"/>
+                        <Setter Target="SkipBackButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="FastBackwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="StopButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="PlayButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="PauseButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="FastForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="SkipForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -16,56 +50,56 @@
 
         <Grid Margin="20,20,20,20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="30*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15*"/>
             </Grid.RowDefinitions>
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button Content="{StaticResource Power}" Grid.Row="0" Grid.Column="0" Style="{StaticResource IconButtonStyle}" Command="{Binding TurnOffCommand}"/>
-                <Button Content="{StaticResource MovieStrip}" Grid.Row="0" Grid.Column="1" Style="{StaticResource IconButtonStyle}" Command="{Binding MovieCommand}"/>
-                <Button Content="{StaticResource TV}" Grid.Row="0" Grid.Column="2" Style="{StaticResource IconButtonStyle}" Command="{Binding SeriesCommand}"/>
-                <Button Content="{StaticResource MusicNote}" Grid.Row="0" Grid.Column="3" Style="{StaticResource IconButtonStyle}" Command="{Binding MusicCommand}" />
-                <Button Content="{StaticResource Keyboard}" Grid.Row="0" Grid.Column="4"  Command="{Binding KeyboardCommand}" Style="{StaticResource IconButtonStyle}"/>
+                <Button x:Name="PowerButton" Content="{StaticResource Power}" Grid.Row="0" Grid.Column="0" Style="{StaticResource IconButtonStyle}" Command="{Binding TurnOffCommand}"/>
+                <Button x:Name="MovieButton" Content="{StaticResource MovieStrip}" Grid.Row="0" Grid.Column="1" Style="{StaticResource IconButtonStyle}" Command="{Binding MovieCommand}"/>
+                <Button x:Name="TVShowButton" Content="{StaticResource TV}" Grid.Row="0" Grid.Column="2" Style="{StaticResource IconButtonStyle}" Command="{Binding SeriesCommand}"/>
+                <Button x:Name="MusicButton" Content="{StaticResource MusicNote}" Grid.Row="0" Grid.Column="3" Style="{StaticResource IconButtonStyle}" Command="{Binding MusicCommand}" />
+                <Button x:Name="KeyboardButton" Content="{StaticResource Keyboard}" Grid.Row="0" Grid.Column="4"  Command="{Binding KeyboardCommand}" Style="{StaticResource IconButtonStyle}"/>
 
-                <RepeatButton   Content="{StaticResource SpeakerLess}" Grid.Row="0" Grid.Column="5" Command="{Binding VolumeDownCommand}" Delay="500" Interval="500" Style="{StaticResource IconButtonStyle}"/>
-                <Button         Content="{StaticResource SpeakerMute}" Grid.Row="0" Grid.Column="6" Command="{Binding VolumeMuteCommand}" Style="{StaticResource IconButtonStyle}"/>
-                <RepeatButton   Content="{StaticResource SpeakerMore}" Grid.Row="0" Grid.Column="7" Command="{Binding VolumeUpCommand}" Delay="500" Interval="500" Style="{StaticResource IconButtonStyle}"/>
+                <RepeatButton   x:Name="SpeakerLessButton" Content="{StaticResource SpeakerLess}" Grid.Row="0" Grid.Column="5" Command="{Binding VolumeDownCommand}" Delay="500" Interval="500" Style="{StaticResource IconRepeatButtonStyle}"/>
+                <Button         x:Name="SpeakerMuteButton" Content="{StaticResource SpeakerMute}" Grid.Row="0" Grid.Column="6" Command="{Binding VolumeMuteCommand}" Style="{StaticResource IconButtonStyle}"/>
+                <RepeatButton   x:Name="SpeakerMoreButton" Content="{StaticResource SpeakerMore}" Grid.Row="0" Grid.Column="7" Command="{Binding VolumeUpCommand}" Delay="500" Interval="500" Style="{StaticResource IconRepeatButtonStyle}"/>
             </Grid>
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button Content="{StaticResource SkipBack}" Grid.Column="0" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PreviousCommand}" />
-                <Button Content="{StaticResource FastBackward}" Grid.Column="1" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding FastBackwardCommand}" />
-                <Button Content="{StaticResource Stop}" Grid.Column="2" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding StopCommand}" />
-                <Button Content="{StaticResource Play}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" Visibility="{Binding PlayButtonVisibility}" />
-                <Button Content="{StaticResource Pause}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" Visibility="{Binding PauseButtonVisibility}" />
-                <Button Content="{StaticResource FastForward}" Grid.Column="4" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding FastForwardCommand}" />
-                <Button Content="{StaticResource SkipForward}" Grid.Column="5" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding NextCommand}" />
+                <Button x:Name="SkipBackButton" Content="{StaticResource SkipBack}" Grid.Column="0" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PreviousCommand}" />
+                <Button x:Name="FastBackwardButton" Content="{StaticResource FastBackward}" Grid.Column="1" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding FastBackwardCommand}" />
+                <Button x:Name="StopButton" Content="{StaticResource Stop}" Grid.Column="2" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding StopCommand}" />
+                <Button x:Name="PlayButton" Content="{StaticResource Play}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" Visibility="{Binding PlayButtonVisibility}" />
+                <Button x:Name="PauseButton" Content="{StaticResource Pause}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" Visibility="{Binding PauseButtonVisibility}" />
+                <Button x:Name="FastForwardButton" Content="{StaticResource FastForward}" Grid.Column="4" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding FastForwardCommand}" />
+                <Button x:Name="SkipForwardButton" Content="{StaticResource SkipForward}" Grid.Column="5" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding NextCommand}" />
             </Grid>
             <Rectangle Grid.Row="4" 
-                       Fill="#88000000" 
+                       Fill="{StaticResource TransparentGrey}" 
                        ManipulationCompleted="Rectangle_ManipulationCompleted" 
                        ManipulationMode="All" 
                        Tapped="Rectangle_Tapped" 

@@ -2,9 +2,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush Color="#55000000" x:Name="TransparentBlack"/>
-    <SolidColorBrush Color="#55555555" x:Name="TransparentGrey"/>
-
+    <Color x:Key="TransparentBlackColor">#55000000</Color>
+    <Color x:Key="TransparentGreyColor">#55555555</Color>
+    <Color x:Key="TransparentWhiteColor40">#40FFFFFF</Color>
+    <Color x:Key="TransparentWhiteColor80">#80FFFFFF</Color>
+    <SolidColorBrush Color="{StaticResource TransparentBlackColor}" x:Name="TransparentBlack"/>
+    <SolidColorBrush Color="{StaticResource TransparentGreyColor}" x:Name="TransparentGrey"/>
+    <SolidColorBrush Color="{StaticResource TransparentWhiteColor40}" x:Name="TransparentWhite40"/>
+    <SolidColorBrush Color="{StaticResource TransparentWhiteColor80}" x:Name="TransparentWhite80"/>
     
     <x:String x:Key="Play">&#57399;</x:String>
     <x:String x:Key="Stop">&#57415;</x:String>

@@ -13,6 +13,15 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Networking;
+using Windows.Networking.Sockets;
+using System.Diagnostics;
+using Windows.Storage.Streams;
+using Windows.Web;
+using System.Threading;
+using KodiRemote.Code.JSON;
+using KodiRemote.Code.Utils;
+using System.Threading.Tasks;
 
 // Die Vorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 dokumentiert.
 
@@ -32,6 +41,29 @@ namespace KodiRemote.View
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             contentFrame.Navigate(typeof(HomePage));
+            start();
         }
+
+        
+
+        private async void start()
+        {
+            WebSocketHelper helper = new WebSocketHelper();
+            Uri server = new Uri("ws://localhost:9090/jsonrpc");
+            helper.MessageReceived += Helper_MessageReceived;
+            helper.ConnectionClosed += Helper_ConnectionClosed;
+            await helper.Connect(server);
+        }
+
+        private void Helper_ConnectionClosed(string message)
+        {
+            Debug.WriteLine(message);
+        }
+
+        private void Helper_MessageReceived(string message)
+        {
+            Debug.WriteLine(message);
+        }
+
     }
 }

@@ -111,6 +111,12 @@
     </Compile>
     <Compile Include="Code\Common\PropertyChangedBase.cs" />
     <Compile Include="Code\Common\RelayCommand.cs" />
+    <Compile Include="Code\JSON\Fields\ItemField.cs" />
+    <Compile Include="Code\JSON\Item.cs" />
+    <Compile Include="Code\JSON\RPCBase.cs" />
+    <Compile Include="Code\Utils\JsonSerializer.cs" />
+    <Compile Include="Code\Utils\SettingsAccess.cs" />
+    <Compile Include="Code\Utils\WebSocketHelper.cs" />
     <Compile Include="View\Base\AppBase.cs" />
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
