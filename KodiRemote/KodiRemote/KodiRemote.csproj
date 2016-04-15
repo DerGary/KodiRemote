@@ -111,11 +111,23 @@
     </Compile>
     <Compile Include="Code\Common\PropertyChangedBase.cs" />
     <Compile Include="Code\Common\RelayCommand.cs" />
+    <Compile Include="Code\JSON\Delegates.cs" />
+    <Compile Include="Code\JSON\Fields\IField.cs" />
     <Compile Include="Code\JSON\Fields\ItemField.cs" />
-    <Compile Include="Code\JSON\Item.cs" />
+    <Compile Include="Code\JSON\Fields\PlayerField.cs" />
+    <Compile Include="Code\JSON\General\Time.cs" />
+    <Compile Include="Code\JSON\KPlayer\Method.cs" />
+    <Compile Include="Code\JSON\KPlayer\Notification.cs" />
+    <Compile Include="Code\JSON\KPlayer\Notifications.cs" />
+    <Compile Include="Code\JSON\Params\PlayerParams.cs" />
+    <Compile Include="Code\JSON\KPlayer\Results.cs" />
     <Compile Include="Code\JSON\RPCBase.cs" />
+    <Compile Include="Code\JSON\ServiceInterfaces\IPlayerService.cs" />
+    <Compile Include="Code\JSON\WebSocketServices\PlayerWebSocketService.cs" />
+    <Compile Include="Code\JSON\WebSocketServices\WebSocketServiceBase.cs" />
     <Compile Include="Code\Utils\JsonSerializer.cs" />
     <Compile Include="Code\Utils\SettingsAccess.cs" />
+    <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
     <Compile Include="View\Base\AppBase.cs" />
     <Compile Include="View\Base\PageBase.cs" />
@@ -212,6 +224,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Code\JSON\Results\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

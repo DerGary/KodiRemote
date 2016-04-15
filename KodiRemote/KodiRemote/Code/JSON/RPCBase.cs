@@ -7,41 +7,57 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiRemote.Code.JSON
-{
+namespace KodiRemote.Code.JSON {
     [DataContract]
-    public class RPCBase
-    {
+    public class RPCBase {
         [DataMember(Name = "jsonrpc")]
         public string JsonRPC { get; set; } = "2.0";
-        [DataMember(Name = "id")]
-        public int Id { get; set; }
-    }
-    [DataContract]
-    public class RPCRequest : RPCBase
-    {
-        [DataMember(Name = "method")]
-        public string Method { get; set; }
-    }
-    [DataContract]
-    public class RPCRequest<T> : RPCRequest
-    {
-        [DataMember(Name = "params")]
-        public T Params { get; set; }
     }
 
     [DataContract]
-    public class RPCResponse<T> : RPCBase
-    {
-        [DataMember(Name = "result")]
-        public T Result { get; set; }
+    public class RPCWithId {
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
+    }
+
+
+    [DataContract]
+    public class RPCRequest : RPCWithId {
+        [DataMember(Name = "method")]
+        public string Method { get; set; }
+
+        public RPCRequest() { }
+        public RPCRequest(StringEnum method) : this() {
+            Method = method;
+            Id = method;
+        }
+
+    }
+
+    [DataContract]
+    public class RPCRequest<T> : RPCRequest {
+        [DataMember(Name = "params")]
+        public T Params { get; set; }
+        public RPCRequest() : base() { }
+        public RPCRequest(StringEnum method) : base(method) {
+
+        }
+    }
+
+    [DataContract]
+    public class RPCResponse : RPCWithId {
         [DataMember(Name = "error")]
         public RPCError Error { get; set; }
     }
 
     [DataContract]
-    public class RPCError
-    {
+    public class RPCResponse<T> : RPCResponse {
+        [DataMember(Name = "result")]
+        public T Result { get; set; }
+    }
+
+    [DataContract]
+    public class RPCError {
         [DataMember(Name = "code")]
         public int Code { get; set; }
         [DataMember(Name = "message")]
@@ -51,29 +67,24 @@ namespace KodiRemote.Code.JSON
     }
 
     [DataContract]
-    public class Player
-    {
-        [DataMember(Name ="playerid")]
-        public int PlayerId { get; set; }
-        [DataMember(Name = "type")]
-        public string Type { get; set; }
+    public class RPCNotification : RPCBase {
+        [DataMember(Name = "method")]
+        public string Method { get; set; }
+    }
+    [DataContract]
+    public class RPCNotification<T> : RPCNotification where T : NotificationParams {
+        [DataMember(Name = "params")]
+        public T Params { get; set; }
     }
 
-    //public class Service : IPlayerService
-    //{
-    //    //public async Task<List<Player>> GetActivePlayers()
-    //    //{
-    //    //    RPCRequest request = new RPCRequest() { Method = "Player.GetActivePlayers" };
-    //    //    string json = JsonSerializer.ToJson(request);
-
-    //    //}
-    //}
-    public interface IPlayerService
-    {
-        Task<List<Player>> GetActivePlayers();
-        //Task<Item> GetItem(int playerid, ItemField properties = null);
-        //Task<PlayerProperties> GetProperties(int playerid, PlayerField properties)
-        //Task<bool> GoTo(int playerid, ToEnum to)
+    [DataContract]
+    public class NotificationParams {
+        [DataMember(Name = "sender")]
+        public string Sender { get; set; }
     }
-    
+    [DataContract]
+    public class NotificationParams<T> : NotificationParams {
+        [DataMember(Name = "data")]
+        public T Data { get; set; }
+    }
 }
