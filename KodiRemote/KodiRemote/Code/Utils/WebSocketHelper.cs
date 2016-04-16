@@ -21,7 +21,7 @@ namespace KodiRemote.Code.Utils {
         public delegate void ConnectionClosedEventHandler(string message);
         public event ConnectionClosedEventHandler ConnectionClosed;
 
-        public async Task Connect(Uri uri) {
+        public async Task<bool> Connect(Uri uri) {
             try {
                 MessageWebSocket webSocket = new MessageWebSocket();
                 // MessageWebSocket supports both utf8 and binary messages.
@@ -35,10 +35,12 @@ namespace KodiRemote.Code.Utils {
                 await webSocket.ConnectAsync(uri);
                 messageWebSocket = webSocket;
                 messageWriter = new DataWriter(webSocket.OutputStream);
+                return true;
             } catch (Exception ex) {
                 WebErrorStatus status = WebSocketError.GetStatus(ex.GetBaseException().HResult);
                 Debug.WriteLine(status);
             }
+            return false;
         }
 
         private void Closed(IWebSocket sender, WebSocketClosedEventArgs args) {

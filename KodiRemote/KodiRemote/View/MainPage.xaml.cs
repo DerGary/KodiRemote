@@ -32,6 +32,8 @@ namespace KodiRemote.View {
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
     public sealed partial class MainPage : PageBase {
+
+
         public MainPage() {
             this.InitializeComponent();
             this.Loaded += MainPage_Loaded;
@@ -39,44 +41,6 @@ namespace KodiRemote.View {
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e) {
             contentFrame.Navigate(typeof(HomePage));
-            start();
         }
-
-
-        PlayerWebSocketService service;
-        private async void start() {
-            WebSocketHelper helper = new WebSocketHelper();
-            Uri server = new Uri("ws://localhost:9090/jsonrpc");
-            await helper.Connect(server);
-            service = new PlayerWebSocketService(helper);
-            service.ItemReceived += Service_ItemReceived;
-            service.PlayersReceived += Service_PlayersReceived;
-            service.OnPauseReceived += Service_OnPauseReceived;
-            service.GetActivePlayers();
-        }
-
-        private void Service_OnPauseReceived(Code.JSON.KPlayer.Notifications.Data item) {
-            Debug.WriteLine(item.Item.type);
-        }
-
-        private void Service_PlayersReceived(List<Player> item) {
-            Debug.WriteLine(item);
-            if (item.Any()) {
-                service.PlayPause(item.First().PlayerId, Code.JSON.Enums.ToggleEnum.True);
-            }
-        }
-
-        private void Service_ItemReceived(Item item) {
-            Debug.WriteLine(item);
-        }
-
-        private void Helper_ConnectionClosed(string message) {
-            Debug.WriteLine(message);
-        }
-
-        private void Helper_MessageReceived(string message) {
-            Debug.WriteLine(message);
-        }
-
     }
 }

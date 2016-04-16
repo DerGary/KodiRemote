@@ -1,5 +1,7 @@
-﻿using KodiRemote.View;
+﻿using KodiRemote.Code.JSON;
+using KodiRemote.View;
 using KodiRemote.View.Base;
+using KodiRemote.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,19 +19,17 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace KodiRemote
-{
+namespace KodiRemote {
     /// <summary>
     /// Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
     /// </summary>
-    sealed partial class App : AppBase
-    {
+    sealed partial class App : AppBase {
+
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt.  Dies ist die erste Zeile von erstelltem Code
         /// und daher das logische Äquivalent von main() bzw. WinMain().
         /// </summary>
-        public App()
-        {
+        public App() {
             //Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
             //    Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
             //    Microsoft.ApplicationInsights.WindowsCollectors.Session);
@@ -42,12 +42,13 @@ namespace KodiRemote
         /// werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
         /// </summary>
         /// <param name="e">Details über Startanforderung und -prozess.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
-        {
+        protected override async void OnLaunched(LaunchActivatedEventArgs e) {
+            ViewModelBase.Kodi = new Kodi("localhost", "9090", ConnectionType.Websocket);
+            await ViewModelBase.Kodi.Connect();
+
             PrepareRootFrame();
 
-            if (_rootFrame.Content == null)
-            {
+            if (_rootFrame.Content == null) {
                 // Wenn der Navigationsstapel nicht wiederhergestellt wird, zur ersten Seite navigieren
                 // und die neue Seite konfigurieren, indem die erforderlichen Informationen als Navigationsparameter
                 // übergeben werden
@@ -64,8 +65,7 @@ namespace KodiRemote
         /// </summary>
         /// <param name="sender">Die Quelle der Anhalteanforderung.</param>
         /// <param name="e">Details zur Anhalteanforderung.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
+        private void OnSuspending(object sender, SuspendingEventArgs e) {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
             deferral.Complete();

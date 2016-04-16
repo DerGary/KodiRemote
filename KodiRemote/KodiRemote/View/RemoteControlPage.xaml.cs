@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KodiRemote.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,48 +18,41 @@ using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace KodiRemote.View
-{
+namespace KodiRemote.View {
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class RemoteControlPage : Page
-    {
-        public RemoteControlPage()
-        {
+    public sealed partial class RemoteControlPage : Page {
+        public RemoteControlViewModel ViewModel { get; set; } = new RemoteControlViewModel();
+
+        public RemoteControlPage() {
             this.InitializeComponent();
         }
 
-        private void Rectangle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
-        {
+        private void Rectangle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) {
             timer.Stop();
         }
         bool singleTap;
-        private async void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
-        {
+        private async void Rectangle_Tapped(object sender, TappedRoutedEventArgs e) {
             this.singleTap = true;
             await Task.Delay(200);
-            if (this.singleTap)
-            {
+            if (this.singleTap) {
                 //defaultViewModel.GoCommand.Execute(null);
                 Debug.WriteLine("Single Tapped");
             }
         }
 
-        private void Rectangle_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
+        private void Rectangle_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {
             this.singleTap = false;
             //defaultViewModel.BackCommand.Execute(null);
             Debug.WriteLine("Double Tapped");
         }
 
-        private void Rectangle_Holding(object sender, HoldingRoutedEventArgs e)
-        {
+        private void Rectangle_Holding(object sender, HoldingRoutedEventArgs e) {
             Debug.WriteLine("Holding");
         }
 
-        private void Rectangle_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
+        private void Rectangle_RightTapped(object sender, RightTappedRoutedEventArgs e) {
             //defaultViewModel.OptionsCommand.Execute(null);
             Debug.WriteLine("Right Tapped");
         }
@@ -66,8 +60,7 @@ namespace KodiRemote.View
         double y;
         DispatcherTimer timer = new DispatcherTimer();
 
-        private void Rectangle_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
-        {
+        private void Rectangle_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e) {
             timer.Interval = TimeSpan.FromSeconds(1);
             x = e.Cumulative.Translation.X;
             y = e.Cumulative.Translation.Y;
@@ -76,42 +69,30 @@ namespace KodiRemote.View
             timer.Start();
         }
 
-        void StartCommand()
-        {
-            if (Math.Abs(x) > Math.Abs(y))
-            {
-                if (x >= 0)
-                {
+        void StartCommand() {
+            if (Math.Abs(x) > Math.Abs(y)) {
+                if (x >= 0) {
                     Debug.WriteLine("Right");
-                }
-                else
-                {
+                } else {
                     Debug.WriteLine("Left");
                 }
-            }
-            else
-            {
-                if (y >= 0)
-                {
+            } else {
+                if (y >= 0) {
                     Debug.WriteLine("Down");
-                }
-                else
-                {
+                } else {
                     Debug.WriteLine("Up");
                 }
             }
         }
 
-        void timer_Tick(object sender, object e)
-        {
+        void timer_Tick(object sender, object e) {
             if (timer.Interval.Seconds == 1)
                 timer.Interval = TimeSpan.FromMilliseconds(500);
 
             StartCommand();
         }
 
-        private void Rectangle_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
+        private void Rectangle_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e) {
             x = e.Cumulative.Translation.X;
             y = e.Cumulative.Translation.Y;
         }

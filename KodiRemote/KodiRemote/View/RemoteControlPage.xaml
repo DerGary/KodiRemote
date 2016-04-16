@@ -5,9 +5,11 @@
     xmlns:local="using:KodiRemote.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:KodiRemote.View.Converter"
+    DataContext="{x:Bind ViewModel}"
     mc:Ignorable="d">
     <Page.Resources>
-
+        <converter:BooleanResourceConverter OnTrue="{StaticResource Play}" OnFalse="{StaticResource Pause}" x:Key="PlayPauseConverter"/>
     </Page.Resources>
 
     <Grid Name="rootGrid" Background="{StaticResource TransparentBlack}">
@@ -35,7 +37,6 @@
                         <Setter Target="FastBackwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="StopButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="PlayButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="PauseButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="FastForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="SkipForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                     </VisualState.Setters>
@@ -93,8 +94,7 @@
                 <Button x:Name="SkipBackButton" Content="{StaticResource SkipBack}" Grid.Column="0" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PreviousCommand}" />
                 <Button x:Name="FastBackwardButton" Content="{StaticResource FastBackward}" Grid.Column="1" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding FastBackwardCommand}" />
                 <Button x:Name="StopButton" Content="{StaticResource Stop}" Grid.Column="2" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding StopCommand}" />
-                <Button x:Name="PlayButton" Content="{StaticResource Play}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" Visibility="{Binding PlayButtonVisibility}" />
-                <Button x:Name="PauseButton" Content="{StaticResource Pause}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" Visibility="{Binding PauseButtonVisibility}" />
+                <Button x:Name="PlayButton" Content="{Binding Kodi.Paused, Mode=OneWay,Converter={StaticResource PlayPauseConverter}}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" />
                 <Button x:Name="FastForwardButton" Content="{StaticResource FastForward}" Grid.Column="4" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding FastForwardCommand}" />
                 <Button x:Name="SkipForwardButton" Content="{StaticResource SkipForward}" Grid.Column="5" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding NextCommand}" />
             </Grid>
