@@ -59,11 +59,11 @@ namespace KodiRemote.Code.Utils {
                 using (DataReader reader = args.GetDataReader()) {
                     reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
                     string message = reader.ReadString(reader.UnconsumedBufferLength);
-                    Debug.WriteLine(message);
+                    Debug.WriteLine("Received Message: " + message);
                     MessageReceived(message);
                 }
             } catch (Exception ex) // For debugging
-              {
+            {
                 WebErrorStatus status = WebSocketError.GetStatus(ex.GetBaseException().HResult);
                 // Add your specific error-handling code here.
                 Debug.WriteLine(status);
@@ -74,25 +74,16 @@ namespace KodiRemote.Code.Utils {
             if (messageWriter == null) {
                 throw new InvalidOperationException("Websocket must be connected first");
             }
-
+            Debug.WriteLine("Send Message: " + message);
             // Buffer any data we want to send.
             messageWriter.WriteString(message);
 
             // Send the data as one complete message.
             await messageWriter.StoreAsync();
         }
-        public async void SendRequest(RPCRequest request) {
-            if (messageWriter == null) {
-                throw new InvalidOperationException("Websocket must be connected first");
-            }
-
+        public void SendRequest(RPCRequest request) {
             string message = JsonSerializer.ToJson(request);
-
-            // Buffer any data we want to send.
-            messageWriter.WriteString(message);
-
-            // Send the data as one complete message.
-            await messageWriter.StoreAsync();
+            SendMessage(message);
         }
     }
 }

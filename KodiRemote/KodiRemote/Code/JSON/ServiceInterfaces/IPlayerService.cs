@@ -1,5 +1,6 @@
-﻿using KodiRemote.Code.JSON.Fields;
-using KodiRemote.Code.JSON.KPlayer.Results;
+﻿using KodiRemote.Code.JSON.Enums;
+using KodiRemote.Code.JSON.Fields;
+using KodiRemote.Code.JSON.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,53 +9,86 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.ServiceInterfaces {
     public interface IPlayerService {
+        #region Notifications
+        event ReceivedEventHandler<KPlayer.Notifications.Data> OnPlayReceived;
+        event ReceivedEventHandler<KPlayer.Notifications.Data> OnPauseReceived;
+        event ReceivedEventHandler<KPlayer.Notifications.Data> OnSpeedChangedReceived;
+        event ReceivedEventHandler<KPlayer.Notifications.Property> OnPropertyChangedReceived;
+        event ReceivedEventHandler<KPlayer.Notifications.Seek> OnSeekReceived;
+        event ReceivedEventHandler<KPlayer.Notifications.Stop> OnStopReceived;
+        #endregion Notifications
+
+
+        event ReceivedEventHandler<List<KPlayer.Results.Player>> PlayersReceived;
+        event ReceivedEventHandler<KPlayer.Results.Item> ItemReceived;
+        event ReceivedEventHandler<KPlayer.Results.Properties> PropertiesReceived;
         void GetActivePlayers();
         void GetItem(int playerid, ItemField properties = null);
         void GetProperties(int playerid, PlayerField properties = null);
 
-        event ReceivedEventHandler<Item> ItemReceived;
-        event ReceivedEventHandler<List<Player>> PlayersReceived;
-        event ReceivedEventHandler<PlayerProperties> PropertiesReceived;
-        event ReceivedEventHandler<KPlayer.Notifications.Data> OnPlayReceived;
-        event ReceivedEventHandler<KPlayer.Notifications.Data> OnPauseReceived;
-        event ReceivedEventHandler<KPlayer.Notifications.Data> OnSpeedChangedReceived;
-        //Task<Speed> PlayPause(int playerID, ToggleEnum play = ToggleEnum.Toggle);
-        //Task<bool> Stop(int playerID);
-        //Task<bool> GoTo(int playerid, ToEnum to);
-        //Task<bool> GoTo(int playerid, int to);
-        //Task<Seek> Seek(int playerID, double percentage);
-        //Task<Seek> Seek(int playerID, Time time);
-        //Task<Seek> Seek(int playerID, SeekEnum step);
-        //Task<Speed> SetSpeed(int playerID, SpeedNumbersEnum speed);
-        //Task<Speed> SetSpeed(int playerID, IncDecEnum speed);
+
+        event ReceivedEventHandler<KPlayer.Results.Speed> SpeedChangedReceived;
+        event ReceivedEventHandler<KPlayer.Results.Seek> SeekReceived;
+        event ReceivedEventHandler<bool> StopReceived;
+        event ReceivedEventHandler<bool> GoToReceived;
+        void PlayPause(int playerID, ToggleEnum play);
+        void SetSpeed(int playerID, SpeedNumbersEnum speed);
+        void SetSpeed(int playerID, IncDecEnum speed);
+        void Stop(int playerID);
+        void GoTo(int playerid, ToEnum to);
+        void GoTo(int playerid, int to);
+        void Seek(int playerID, double percentage);
+        void Seek(int playerID, Time time);
+        void Seek(int playerID, SeekEnum step);
 
 
-        //Task<bool> Move(int playerid, DirectionEnum direction);
-        //Task<bool> Rotate(int playerID, RotateEnum value = RotateEnum.clockwise);
-        //Task<bool> Zoom(int playerID, ZoomEnum zoom);
-        //Task<bool> Zoom(int playerID, ZoomNumbersEnum zoom);
+        event ReceivedEventHandler<bool> MoveReceived;
+        event ReceivedEventHandler<bool> RotateReceived;
+        event ReceivedEventHandler<bool> ZoomReceived;
+        void Move(int playerid, DirectionEnum direction);
+        void Rotate(int playerID, RotateEnum value);
+        void Zoom(int playerID, ZoomEnum zoom);
+        void Zoom(int playerID, ZoomNumbersEnum zoom);
 
-        //Task<bool> SetAudioStream(int playerID, int audioStreamID);
-        //Task<bool> SetAudioStream(int playerID, ToEnum stream);
-        //Task<bool> SetSubtitle(int playerID, SubtitleEnum subtitle, bool enable = false);
-        //Task<bool> SetSubtitle(int playerID, int subtitleID, bool enable = false);
-        //Task<bool> SetPartymode(int playerID, ToggleEnum partymode);
-        //Task<bool> SetRepeat(int playerID, ExtendRepeatEnum repeat);
-        //Task<bool> SetShuffle(int playerID, ToggleEnum shuffle);
+
+        event ReceivedEventHandler<bool> SetAudioStreamReceived;
+        event ReceivedEventHandler<bool> SetSubtitleReceived;
+        event ReceivedEventHandler<bool> SetPartymodeReceived;
+        event ReceivedEventHandler<bool> SetRepeatReceived;
+        event ReceivedEventHandler<bool> SetShuffleReceived;
+        void SetAudioStream(int playerID, int audioStreamID);
+        void SetAudioStream(int playerID, ToEnum stream);
+        void SetSubtitle(int playerID, SubtitleEnum subtitle, bool enable = false);
+        void SetSubtitle(int playerID, int subtitleID, bool enable = false);
+        void SetPartymode(int playerID, ToggleEnum partymode);
+        void SetRepeat(int playerID, ExtendRepeatEnum repeat);
+        void SetShuffle(int playerID, ToggleEnum shuffle);
+
 
         //#region openThings
-        //Task<bool> OpenPlaylist(int playListID, int position = 0, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenPicture(string path, bool recursive = true, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenMovie(int movieID, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenEpisode(int episodeID, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenMusicVideo(int musicVideoID, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenArtist(int artistID, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenAlbum(int albumID, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenSong(int songID, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenGenre(int genreID, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenPartyMode(PartymodeEnum partymode = PartymodeEnum.music, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenPartyMode(String smartPlayListPath, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        //Task<bool> OpenChannel(int channelID, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, RepeatEnum repeat = RepeatEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        event ReceivedEventHandler<bool> OpenPlaylistReceived;
+        event ReceivedEventHandler<bool> OpenPictureReceived;
+        event ReceivedEventHandler<bool> OpenMovieReceived;
+        event ReceivedEventHandler<bool> OpenEpisodeReceived;
+        event ReceivedEventHandler<bool> OpenMusicVideoReceived;
+        event ReceivedEventHandler<bool> OpenArtistReceived;
+        event ReceivedEventHandler<bool> OpenAlbumReceived;
+        event ReceivedEventHandler<bool> OpenSongReceived;
+        event ReceivedEventHandler<bool> OpenGenreReceived;
+        event ReceivedEventHandler<bool> OpenPartyModeReceived;
+        event ReceivedEventHandler<bool> OpenChannelReceived;
+        void OpenPlaylist(int playListID, OptionalRepeatEnum repeat, int position = 0, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenMovie(int movieID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenEpisode(int episodeID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenMusicVideo(int musicVideoID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenArtist(int artistID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenAlbum(int albumID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenSong(int songID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenGenre(int genreID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenChannel(int channelID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
         //#endregion openThings
     }
 }

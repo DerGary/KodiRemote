@@ -15,7 +15,7 @@ namespace KodiRemote.Code.JSON {
     }
 
     [DataContract]
-    public class RPCWithId {
+    public class RPCWithId : RPCBase {
         [DataMember(Name = "id")]
         public int Id { get; set; }
     }

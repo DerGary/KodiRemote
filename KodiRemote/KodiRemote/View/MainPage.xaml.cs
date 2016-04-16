@@ -52,7 +52,7 @@ namespace KodiRemote.View {
             service.ItemReceived += Service_ItemReceived;
             service.PlayersReceived += Service_PlayersReceived;
             service.OnPauseReceived += Service_OnPauseReceived;
-            //service.GetActivePlayers();
+            service.GetActivePlayers();
         }
 
         private void Service_OnPauseReceived(Code.JSON.KPlayer.Notifications.Data item) {
@@ -62,7 +62,7 @@ namespace KodiRemote.View {
         private void Service_PlayersReceived(List<Player> item) {
             Debug.WriteLine(item);
             if (item.Any()) {
-                service.GetItem(item.First().PlayerId);
+                service.PlayPause(item.First().PlayerId, Code.JSON.Enums.ToggleEnum.True);
             }
         }
 

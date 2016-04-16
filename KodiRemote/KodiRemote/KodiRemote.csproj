@@ -112,6 +112,7 @@
     <Compile Include="Code\Common\PropertyChangedBase.cs" />
     <Compile Include="Code\Common\RelayCommand.cs" />
     <Compile Include="Code\JSON\Delegates.cs" />
+    <Compile Include="Code\JSON\Enums.cs" />
     <Compile Include="Code\JSON\Fields\IField.cs" />
     <Compile Include="Code\JSON\Fields\ItemField.cs" />
     <Compile Include="Code\JSON\Fields\PlayerField.cs" />
@@ -119,7 +120,7 @@
     <Compile Include="Code\JSON\KPlayer\Method.cs" />
     <Compile Include="Code\JSON\KPlayer\Notification.cs" />
     <Compile Include="Code\JSON\KPlayer\Notifications.cs" />
-    <Compile Include="Code\JSON\Params\PlayerParams.cs" />
+    <Compile Include="Code\JSON\KPlayer\Params.cs" />
     <Compile Include="Code\JSON\KPlayer\Results.cs" />
     <Compile Include="Code\JSON\RPCBase.cs" />
     <Compile Include="Code\JSON\ServiceInterfaces\IPlayerService.cs" />
@@ -224,7 +225,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Code\JSON\Results\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

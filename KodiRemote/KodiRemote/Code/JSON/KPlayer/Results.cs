@@ -22,7 +22,22 @@ namespace KodiRemote.Code.JSON.KPlayer.Results {
     }
 
     [DataContract]
-    public class PlayerProperties {
+    public class Speed {
+        [DataMember(Name = "speed")]
+        public int CurrentSpeed { get; set; }
+    }
+
+    [DataContract]
+    public class Seek {
+        [DataMember(Name = "percentage")]
+        public float Percentage { get; set; }
+        [DataMember(Name = "time")]
+        public Time Time { get; set; }
+        [DataMember(Name = "totaltime")]
+        public Time Totaltime { get; set; }
+    }
+    [DataContract]
+    public class Properties {
         [DataMember(Name = "audiostreams")]
         public AudioStream[] Audiostreams { get; set; }
         [DataMember(Name = "canchangespeed")]

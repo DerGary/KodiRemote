@@ -31,4 +31,27 @@ namespace KodiRemote.Code.JSON.KPlayer.Notifications {
         [DataMember(Name = "time")]
         public Time Time { get; set; }
     }
+
+    [DataContract]
+    public class Property {
+        [DataMember(Name = "property")]
+        public Properties ChangedProperty { get; set; }
+        [DataMember(Name = "player")]
+        public Player Player { get; set; }
+    }
+    [DataContract]
+    public class Seek {
+        [DataMember(Name = "player")]
+        public PlayerSeek Player { get; set; }
+        [DataMember(Name = "item")]
+        public Item Item { get; set; }
+    }
+
+    [DataContract]
+    public class Stop {
+        [DataMember(Name = "end")]
+        public bool End { get; set; }
+        [DataMember(Name = "item")]
+        public Item Item { get; set; }
+    }
 }

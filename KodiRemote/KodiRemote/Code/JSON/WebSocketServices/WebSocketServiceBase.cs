@@ -32,5 +32,24 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
 
         protected abstract void WebSocketMessageReceived(int id, string message);
         protected abstract void WebSocketNotificationReceived(string method, string notification);
+
+        protected void ConvertResultToBool(ReceivedEventHandler<bool> eventHandler, string message) {
+            var item = JsonSerializer.FromJson<RPCResponse<string>>(message);
+            if (item.Result == "OK") {
+                eventHandler?.Invoke(true);
+            } else {
+                eventHandler?.Invoke(false);
+            }
+        }
+        protected void SendRequest<T>(StringEnum method, T param) {
+            RPCRequest<T> request = new RPCRequest<T>(method) {
+                Params = param
+            };
+            helper.SendRequest(request);
+        }
+        protected void SendRequest(StringEnum method) {
+            RPCRequest request = new RPCRequest(method);
+            helper.SendRequest(request);
+        }
     }
 }
