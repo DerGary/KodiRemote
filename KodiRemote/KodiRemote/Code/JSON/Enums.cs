@@ -88,6 +88,182 @@ namespace KodiRemote.Code.JSON.Enums {
 
         private PartymodeEnum(int value, string name) : base(value, name) { }
     }
+    public class ExecActionEnum : StringEnum {
+        public static readonly ExecActionEnum Left = new ExecActionEnum(1, "left");
+        public static readonly ExecActionEnum Right = new ExecActionEnum(2, "right");
+        public static readonly ExecActionEnum Up = new ExecActionEnum(3, "up");
+        public static readonly ExecActionEnum Down = new ExecActionEnum(4, "down");
+        public static readonly ExecActionEnum Pageup = new ExecActionEnum(5, "pageup");
+        public static readonly ExecActionEnum Pagedown = new ExecActionEnum(6, "pagedown");
+        public static readonly ExecActionEnum Select = new ExecActionEnum(7, "select");
+        public static readonly ExecActionEnum Highlight = new ExecActionEnum(8, "highlight");
+        public static readonly ExecActionEnum Parentdir = new ExecActionEnum(9, "parentdir");
+        public static readonly ExecActionEnum Parentfolder = new ExecActionEnum(10, "parentfolder");
+        public static readonly ExecActionEnum Back = new ExecActionEnum(11, "back");
+        public static readonly ExecActionEnum Previousmenu = new ExecActionEnum(12, "previousmenu");
+        public static readonly ExecActionEnum Info = new ExecActionEnum(13, "info");
+        public static readonly ExecActionEnum Pause = new ExecActionEnum(14, "pause");
+        public static readonly ExecActionEnum Stop = new ExecActionEnum(15, "stop");
+        public static readonly ExecActionEnum SkipNext = new ExecActionEnum(16, "skipnext");
+        public static readonly ExecActionEnum SkipPrevious = new ExecActionEnum(17, "skipprevious");
+        public static readonly ExecActionEnum Fullscreen = new ExecActionEnum(18, "fullscreen");
+        public static readonly ExecActionEnum Aspectratio = new ExecActionEnum(19, "aspectratio");
+        public static readonly ExecActionEnum Stepforward = new ExecActionEnum(20, "stepforward");
+        public static readonly ExecActionEnum Stepback = new ExecActionEnum(21, "stepback");
+        public static readonly ExecActionEnum Bigstepforward = new ExecActionEnum(22, "bigstepforward");
+        public static readonly ExecActionEnum Bigstepback = new ExecActionEnum(23, "bigstepback");
+        public static readonly ExecActionEnum Osd = new ExecActionEnum(24, "osd");
+        public static readonly ExecActionEnum Showsubtitles = new ExecActionEnum(25, "showsubtitles");
+        public static readonly ExecActionEnum Nextsubtitle = new ExecActionEnum(26, "nextsubtitle");
+        public static readonly ExecActionEnum Codecinfo = new ExecActionEnum(27, "codecinfo");
+        public static readonly ExecActionEnum Nextpicture = new ExecActionEnum(28, "nextpicture");
+        public static readonly ExecActionEnum Previouspicture = new ExecActionEnum(29, "previouspicture");
+        public static readonly ExecActionEnum Zoomout = new ExecActionEnum(30, "zoomout");
+        public static readonly ExecActionEnum Zoomin = new ExecActionEnum(31, "zoomin");
+        public static readonly ExecActionEnum Playlist = new ExecActionEnum(32, "playlist");
+        public static readonly ExecActionEnum Queue = new ExecActionEnum(33, "queue");
+        public static readonly ExecActionEnum Zoomnormal = new ExecActionEnum(34, "zoomnormal");
+        public static readonly ExecActionEnum Zoomlevel1 = new ExecActionEnum(35, "zoomlevel1");
+        public static readonly ExecActionEnum Zoomlevel2 = new ExecActionEnum(36, "zoomlevel2");
+        public static readonly ExecActionEnum Zoomlevel3 = new ExecActionEnum(37, "zoomlevel3");
+        public static readonly ExecActionEnum Zoomlevel4 = new ExecActionEnum(38, "zoomlevel4");
+        public static readonly ExecActionEnum Zoomlevel5 = new ExecActionEnum(39, "zoomlevel5");
+        public static readonly ExecActionEnum Zoomlevel6 = new ExecActionEnum(40, "zoomlevel6");
+        public static readonly ExecActionEnum Zoomlevel7 = new ExecActionEnum(41, "zoomlevel7");
+        public static readonly ExecActionEnum Zoomlevel8 = new ExecActionEnum(42, "zoomlevel8");
+        public static readonly ExecActionEnum Zoomlevel9 = new ExecActionEnum(43, "zoomlevel9");
+        public static readonly ExecActionEnum Nextcalibration = new ExecActionEnum(44, "nextcalibration");
+        public static readonly ExecActionEnum Resetcalibration = new ExecActionEnum(45, "resetcalibration");
+        public static readonly ExecActionEnum Analogmove = new ExecActionEnum(46, "analogmove");
+        public static readonly ExecActionEnum Rotate = new ExecActionEnum(47, "rotate");
+        public static readonly ExecActionEnum Rotateccw = new ExecActionEnum(48, "rotateccw");
+        public static readonly ExecActionEnum Close = new ExecActionEnum(49, "close");
+        public static readonly ExecActionEnum Subtitledelayminus = new ExecActionEnum(50, "subtitledelayminus");
+        public static readonly ExecActionEnum Subtitledelay = new ExecActionEnum(51, "subtitledelay");
+        public static readonly ExecActionEnum Subtitledelayplus = new ExecActionEnum(52, "subtitledelayplus");
+        public static readonly ExecActionEnum Audiodelayminus = new ExecActionEnum(53, "audiodelayminus");
+        public static readonly ExecActionEnum Audiodelay = new ExecActionEnum(54, "audiodelay");
+        public static readonly ExecActionEnum Audiodelayplus = new ExecActionEnum(55, "audiodelayplus");
+        public static readonly ExecActionEnum Subtitleshiftup = new ExecActionEnum(56, "subtitleshiftup");
+        public static readonly ExecActionEnum Subtitleshiftdown = new ExecActionEnum(57, "subtitleshiftdown");
+        public static readonly ExecActionEnum Subtitlealign = new ExecActionEnum(58, "subtitlealign");
+        public static readonly ExecActionEnum Audionextlanguage = new ExecActionEnum(59, "audionextlanguage");
+        public static readonly ExecActionEnum Verticalshiftup = new ExecActionEnum(60, "verticalshiftup");
+        public static readonly ExecActionEnum Verticalshiftdown = new ExecActionEnum(61, "verticalshiftdown");
+        public static readonly ExecActionEnum Nextresolution = new ExecActionEnum(62, "nextresolution");
+        public static readonly ExecActionEnum Audiotoggledigital = new ExecActionEnum(63, "audiotoggledigital");
+        public static readonly ExecActionEnum Number0 = new ExecActionEnum(64, "number0");
+        public static readonly ExecActionEnum Number1 = new ExecActionEnum(65, "number1");
+        public static readonly ExecActionEnum Number2 = new ExecActionEnum(66, "number2");
+        public static readonly ExecActionEnum Number3 = new ExecActionEnum(67, "number3");
+        public static readonly ExecActionEnum Number4 = new ExecActionEnum(68, "number4");
+        public static readonly ExecActionEnum Number5 = new ExecActionEnum(69, "number5");
+        public static readonly ExecActionEnum Number6 = new ExecActionEnum(70, "number6");
+        public static readonly ExecActionEnum Number7 = new ExecActionEnum(71, "number7");
+        public static readonly ExecActionEnum Number8 = new ExecActionEnum(72, "number8");
+        public static readonly ExecActionEnum Number9 = new ExecActionEnum(73, "number9");
+        public static readonly ExecActionEnum Osdleft = new ExecActionEnum(74, "osdleft");
+        public static readonly ExecActionEnum Osdright = new ExecActionEnum(75, "osdright");
+        public static readonly ExecActionEnum Osdup = new ExecActionEnum(76, "osdup");
+        public static readonly ExecActionEnum Osddown = new ExecActionEnum(77, "osddown");
+        public static readonly ExecActionEnum Osdselect = new ExecActionEnum(78, "osdselect");
+        public static readonly ExecActionEnum Osdvalueplus = new ExecActionEnum(79, "osdvalueplus");
+        public static readonly ExecActionEnum Osdvalueminus = new ExecActionEnum(80, "osdvalueminus");
+        public static readonly ExecActionEnum Smallstepback = new ExecActionEnum(81, "smallstepback");
+        public static readonly ExecActionEnum FastForward = new ExecActionEnum(82, "fastforward");
+        public static readonly ExecActionEnum Rewind = new ExecActionEnum(83, "rewind");
+        public static readonly ExecActionEnum Play = new ExecActionEnum(84, "play");
+        public static readonly ExecActionEnum PlayPause = new ExecActionEnum(85, "playpause");
+        public static readonly ExecActionEnum Delete = new ExecActionEnum(86, "delete");
+        public static readonly ExecActionEnum Copy = new ExecActionEnum(87, "copy");
+        public static readonly ExecActionEnum Move = new ExecActionEnum(88, "move");
+        public static readonly ExecActionEnum Mplayerosd = new ExecActionEnum(89, "mplayerosd");
+        public static readonly ExecActionEnum Hidesubmenu = new ExecActionEnum(90, "hidesubmenu");
+        public static readonly ExecActionEnum Screenshot = new ExecActionEnum(91, "screenshot");
+        public static readonly ExecActionEnum Rename = new ExecActionEnum(92, "rename");
+        public static readonly ExecActionEnum Togglewatched = new ExecActionEnum(93, "togglewatched");
+        public static readonly ExecActionEnum Scanitem = new ExecActionEnum(94, "scanitem");
+        public static readonly ExecActionEnum Reloadkeymaps = new ExecActionEnum(95, "reloadkeymaps");
+        public static readonly ExecActionEnum VolumeUp = new ExecActionEnum(96, "volumeup");
+        public static readonly ExecActionEnum VolumeDown = new ExecActionEnum(97, "volumedown");
+        public static readonly ExecActionEnum Mute = new ExecActionEnum(98, "mute");
+        public static readonly ExecActionEnum Backspace = new ExecActionEnum(99, "backspace");
+        public static readonly ExecActionEnum Scrollup = new ExecActionEnum(100, "scrollup");
+        public static readonly ExecActionEnum Scrolldown = new ExecActionEnum(101, "scrolldown");
+        public static readonly ExecActionEnum Analogfastforward = new ExecActionEnum(102, "analogfastforward");
+        public static readonly ExecActionEnum Analogrewind = new ExecActionEnum(103, "analogrewind");
+        public static readonly ExecActionEnum Moveitemup = new ExecActionEnum(104, "moveitemup");
+        public static readonly ExecActionEnum Moveitemdown = new ExecActionEnum(105, "moveitemdown");
+        public static readonly ExecActionEnum Contextmenu = new ExecActionEnum(106, "contextmenu");
+        public static readonly ExecActionEnum Shift = new ExecActionEnum(107, "shift");
+        public static readonly ExecActionEnum Symbols = new ExecActionEnum(108, "symbols");
+        public static readonly ExecActionEnum Cursorleft = new ExecActionEnum(109, "cursorleft");
+        public static readonly ExecActionEnum Cursorright = new ExecActionEnum(110, "cursorright");
+        public static readonly ExecActionEnum Showtime = new ExecActionEnum(111, "showtime");
+        public static readonly ExecActionEnum Analogseekforward = new ExecActionEnum(112, "analogseekforward");
+        public static readonly ExecActionEnum Analogseekback = new ExecActionEnum(113, "analogseekback");
+        public static readonly ExecActionEnum Showpreset = new ExecActionEnum(114, "showpreset");
+        public static readonly ExecActionEnum Presetlist = new ExecActionEnum(115, "presetlist");
+        public static readonly ExecActionEnum Nextpreset = new ExecActionEnum(116, "nextpreset");
+        public static readonly ExecActionEnum Previouspreset = new ExecActionEnum(117, "previouspreset");
+        public static readonly ExecActionEnum Lockpreset = new ExecActionEnum(118, "lockpreset");
+        public static readonly ExecActionEnum Randompreset = new ExecActionEnum(119, "randompreset");
+        public static readonly ExecActionEnum Increasevisrating = new ExecActionEnum(120, "increasevisrating");
+        public static readonly ExecActionEnum Decreasevisrating = new ExecActionEnum(121, "decreasevisrating");
+        public static readonly ExecActionEnum Showvideomenu = new ExecActionEnum(122, "showvideomenu");
+        public static readonly ExecActionEnum Enter = new ExecActionEnum(123, "enter");
+        public static readonly ExecActionEnum Increaserating = new ExecActionEnum(124, "increaserating");
+        public static readonly ExecActionEnum Decreaserating = new ExecActionEnum(125, "decreaserating");
+        public static readonly ExecActionEnum Togglefullscreen = new ExecActionEnum(126, "togglefullscreen");
+        public static readonly ExecActionEnum Nextscene = new ExecActionEnum(127, "nextscene");
+        public static readonly ExecActionEnum Previousscene = new ExecActionEnum(128, "previousscene");
+        public static readonly ExecActionEnum Nextletter = new ExecActionEnum(129, "nextletter");
+        public static readonly ExecActionEnum Prevletter = new ExecActionEnum(130, "prevletter");
+        public static readonly ExecActionEnum Jumpsms2 = new ExecActionEnum(131, "jumpsms2");
+        public static readonly ExecActionEnum Jumpsms3 = new ExecActionEnum(132, "jumpsms3");
+        public static readonly ExecActionEnum Jumpsms4 = new ExecActionEnum(133, "jumpsms4");
+        public static readonly ExecActionEnum Jumpsms5 = new ExecActionEnum(134, "jumpsms5");
+        public static readonly ExecActionEnum Jumpsms6 = new ExecActionEnum(135, "jumpsms6");
+        public static readonly ExecActionEnum Jumpsms7 = new ExecActionEnum(136, "jumpsms7");
+        public static readonly ExecActionEnum Jumpsms8 = new ExecActionEnum(137, "jumpsms8");
+        public static readonly ExecActionEnum Jumpsms9 = new ExecActionEnum(138, "jumpsms9");
+        public static readonly ExecActionEnum Filter = new ExecActionEnum(139, "filter");
+        public static readonly ExecActionEnum Filterclear = new ExecActionEnum(140, "filterclear");
+        public static readonly ExecActionEnum Filtersms2 = new ExecActionEnum(141, "filtersms2");
+        public static readonly ExecActionEnum Filtersms3 = new ExecActionEnum(142, "filtersms3");
+        public static readonly ExecActionEnum Filtersms4 = new ExecActionEnum(143, "filtersms4");
+        public static readonly ExecActionEnum Filtersms5 = new ExecActionEnum(144, "filtersms5");
+        public static readonly ExecActionEnum Filtersms6 = new ExecActionEnum(145, "filtersms6");
+        public static readonly ExecActionEnum Filtersms7 = new ExecActionEnum(146, "filtersms7");
+        public static readonly ExecActionEnum Filtersms8 = new ExecActionEnum(147, "filtersms8");
+        public static readonly ExecActionEnum Filtersms9 = new ExecActionEnum(148, "filtersms9");
+        public static readonly ExecActionEnum Firstpage = new ExecActionEnum(149, "firstpage");
+        public static readonly ExecActionEnum Lastpage = new ExecActionEnum(150, "lastpage");
+        public static readonly ExecActionEnum Guiprofile = new ExecActionEnum(151, "guiprofile");
+        public static readonly ExecActionEnum Red = new ExecActionEnum(152, "red");
+        public static readonly ExecActionEnum Green = new ExecActionEnum(153, "green");
+        public static readonly ExecActionEnum Yellow = new ExecActionEnum(154, "yellow");
+        public static readonly ExecActionEnum Blue = new ExecActionEnum(155, "blue");
+        public static readonly ExecActionEnum Increasepar = new ExecActionEnum(156, "increasepar");
+        public static readonly ExecActionEnum Decreasepar = new ExecActionEnum(157, "decreasepar");
+        public static readonly ExecActionEnum Volampup = new ExecActionEnum(158, "volampup");
+        public static readonly ExecActionEnum Volampdown = new ExecActionEnum(159, "volampdown");
+        public static readonly ExecActionEnum Channelup = new ExecActionEnum(160, "channelup");
+        public static readonly ExecActionEnum Channeldown = new ExecActionEnum(161, "channeldown");
+        public static readonly ExecActionEnum Previouschannelgroup = new ExecActionEnum(162, "previouschannelgroup");
+        public static readonly ExecActionEnum Nextchannelgroup = new ExecActionEnum(163, "nextchannelgroup");
+        public static readonly ExecActionEnum Leftclick = new ExecActionEnum(164, "leftclick");
+        public static readonly ExecActionEnum Rightclick = new ExecActionEnum(165, "rightclick");
+        public static readonly ExecActionEnum Middleclick = new ExecActionEnum(166, "middleclick");
+        public static readonly ExecActionEnum Doubleclick = new ExecActionEnum(167, "doubleclick");
+        public static readonly ExecActionEnum Wheelup = new ExecActionEnum(168, "wheelup");
+        public static readonly ExecActionEnum Wheeldown = new ExecActionEnum(169, "wheeldown");
+        public static readonly ExecActionEnum Mousedrag = new ExecActionEnum(170, "mousedrag");
+        public static readonly ExecActionEnum Mousemove = new ExecActionEnum(171, "mousemove");
+        public static readonly ExecActionEnum Noop = new ExecActionEnum(172, "noop");
+
+        private ExecActionEnum(int value, string name) : base(value, name) { }
+    }
     public enum OrderEnum { ascending, descending }
     public enum MethodEnum { none, label, date, size, file, path, drivetype, title, track, time, artist, album, albumtype, genre, country, year, rating, votes, top250, programcount, playlist, episode, season, totalepisodes, watchedepisodes, tvshowstatus, tvshowtitle, sorttitle, productioncode, mpaa, studio, dateadded, lastplayed, playcount, listeners, bitrate, random }
     public enum MediaEnum { NULL, video, music, pictures, files, programs }
@@ -97,7 +273,7 @@ namespace KodiRemote.Code.JSON.Enums {
     public enum AlbumartistonlyEnum { NULL, True, False }
     public enum WindowsEnum { home, programs, pictures, filemanager, files, settings, music, video, videos, tv, pvr, pvrguideinfo, pvrrecordinginfo, pvrtimersetting, pvrgroupmanager, pvrchannelmanager, pvrguidesearch, pvrchannelscan, pvrupdateprogress, pvrosdchannels, pvrosdguide, pvrosddirector, pvrosdcutter, pvrosdteletext, systeminfo, testpattern, screencalibration, guicalibration, picturessettings, programssettings, weathersettings, musicsettings, systemsettings, videossettings, networksettings, servicesettings, appearancesettings, pvrsettings, tvsettings, scripts, videofiles, videolibrary, videoplaylist, loginscreen, profiles, skinsettings, addonbrowser, yesnodialog, progressdialog, virtualkeyboard, volumebar, submenu, favourites, contextmenu, infodialog, numericinput, gamepadinput, shutdownmenu, mutebug, playercontrols, seekbar, musicosd, addonsettings, visualisationsettings, visualisationpresetlist, osdvideosettings, osdaudiosettings, videobookmarks, filebrowser, networksetup, mediasource, profilesettings, locksettings, contentsettings, songinformation, smartplaylisteditor, smartplaylistrule, busydialog, pictureinfo, accesspoints, fullscreeninfo, karaokeselector, karaokelargeselector, sliderdialog, addoninformation, musicplaylist, musicfiles, musiclibrary, musicplaylisteditor, teletext, selectdialog, musicinformation, okdialog, movieinformation, textviewer, fullscreenvideo, fullscreenlivetv, visualisation, slideshow, filestackingdialog, karaoke, weather, screensaver, videoosd, videomenu, videotimeseek, musicoverlay, videooverlay, startwindow, startup, peripherals, peripheralsettings, extendedprogressdialog, mediafilter }
     public enum ImageEnum { Null, info, warning, error }
-    public enum ExecActionEnum { left, right, up, down, pageup, pagedown, select, highlight, parentdir, parentfolder, back, previousmenu, info, pause, stop, skipnext, skipprevious, fullscreen, aspectratio, stepforward, stepback, bigstepforward, bigstepback, osd, showsubtitles, nextsubtitle, codecinfo, nextpicture, previouspicture, zoomout, zoomin, playlist, queue, zoomnormal, zoomlevel1, zoomlevel2, zoomlevel3, zoomlevel4, zoomlevel5, zoomlevel6, zoomlevel7, zoomlevel8, zoomlevel9, nextcalibration, resetcalibration, analogmove, rotate, rotateccw, close, subtitledelayminus, subtitledelay, subtitledelayplus, audiodelayminus, audiodelay, audiodelayplus, subtitleshiftup, subtitleshiftdown, subtitlealign, audionextlanguage, verticalshiftup, verticalshiftdown, nextresolution, audiotoggledigital, number0, number1, number2, number3, number4, number5, number6, number7, number8, number9, osdleft, osdright, osdup, osddown, osdselect, osdvalueplus, osdvalueminus, smallstepback, fastforward, rewind, play, playpause, delete, copy, move, mplayerosd, hidesubmenu, screenshot, rename, togglewatched, scanitem, reloadkeymaps, volumeup, volumedown, mute, backspace, scrollup, scrolldown, analogfastforward, analogrewind, moveitemup, moveitemdown, contextmenu, shift, symbols, cursorleft, cursorright, showtime, analogseekforward, analogseekback, showpreset, presetlist, nextpreset, previouspreset, lockpreset, randompreset, increasevisrating, decreasevisrating, showvideomenu, enter, increaserating, decreaserating, togglefullscreen, nextscene, previousscene, nextletter, prevletter, jumpsms2, jumpsms3, jumpsms4, jumpsms5, jumpsms6, jumpsms7, jumpsms8, jumpsms9, filter, filterclear, filtersms2, filtersms3, filtersms4, filtersms5, filtersms6, filtersms7, filtersms8, filtersms9, firstpage, lastpage, guiprofile, red, green, yellow, blue, increasepar, decreasepar, volampup, volampdown, channelup, channeldown, previouschannelgroup, nextchannelgroup, leftclick, rightclick, middleclick, doubleclick, wheelup, wheeldown, mousedrag, mousemove, noop }
+    //public enum ExecActionEnum { left, right, up, down, pageup, pagedown, select, highlight, parentdir, parentfolder, back, previousmenu, info, pause, stop, skipnext, skipprevious, fullscreen, aspectratio, stepforward, stepback, bigstepforward, bigstepback, osd, showsubtitles, nextsubtitle, codecinfo, nextpicture, previouspicture, zoomout, zoomin, playlist, queue, zoomnormal, zoomlevel1, zoomlevel2, zoomlevel3, zoomlevel4, zoomlevel5, zoomlevel6, zoomlevel7, zoomlevel8, zoomlevel9, nextcalibration, resetcalibration, analogmove, rotate, rotateccw, close, subtitledelayminus, subtitledelay, subtitledelayplus, audiodelayminus, audiodelay, audiodelayplus, subtitleshiftup, subtitleshiftdown, subtitlealign, audionextlanguage, verticalshiftup, verticalshiftdown, nextresolution, audiotoggledigital, number0, number1, number2, number3, number4, number5, number6, number7, number8, number9, osdleft, osdright, osdup, osddown, osdselect, osdvalueplus, osdvalueminus, smallstepback, fastforward, rewind, play, playpause, delete, copy, move, mplayerosd, hidesubmenu, screenshot, rename, togglewatched, scanitem, reloadkeymaps, volumeup, volumedown, mute, backspace, scrollup, scrolldown, analogfastforward, analogrewind, moveitemup, moveitemdown, contextmenu, shift, symbols, cursorleft, cursorright, showtime, analogseekforward, analogseekback, showpreset, presetlist, nextpreset, previouspreset, lockpreset, randompreset, increasevisrating, decreasevisrating, showvideomenu, enter, increaserating, decreaserating, togglefullscreen, nextscene, previousscene, nextletter, prevletter, jumpsms2, jumpsms3, jumpsms4, jumpsms5, jumpsms6, jumpsms7, jumpsms8, jumpsms9, filter, filterclear, filtersms2, filtersms3, filtersms4, filtersms5, filtersms6, filtersms7, filtersms8, filtersms9, firstpage, lastpage, guiprofile, red, green, yellow, blue, increasepar, decreasepar, volampup, volampdown, channelup, channeldown, previouschannelgroup, nextchannelgroup, leftclick, rightclick, middleclick, doubleclick, wheelup, wheeldown, mousedrag, mousemove, noop }
 
     //public enum RepeatEnum { Null, off, one, all }
 

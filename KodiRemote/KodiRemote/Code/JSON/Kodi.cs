@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace KodiRemote.Code.JSON {
-    public class Kodi : PropertyChangedBase {
-        public IPlayerService Player { get; private set; }
-        public string Hostname { get; private set; }
-        public string Port { get; private set; }
+    public class ActiveKodi : Kodi {
         private WebSocketHelper Connection { get; set; }
+        public IPlayerService Player { get; private set; }
+        public IInputService Input { get; private set; }
+
         private bool connected = true;
         public bool Connected {
             get {
@@ -33,16 +33,16 @@ namespace KodiRemote.Code.JSON {
             }
         }
         private DispatcherTimer timer;
-        public Kodi(string hostname, string port, ConnectionType type) {
+
+        private ActiveKodi(string hostname, string port, ConnectionType type) : base(hostname, port, type) {
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(15);
             timer.Tick += Timer_Tick;
 
-            Hostname = hostname;
-            Port = port;
             if (type == ConnectionType.Websocket) {
                 Connection = new WebSocketHelper();
                 Connection.ConnectionClosed += ConnectionClosed;
+                Input = new InputWebSocketService(Connection);
                 Player = new PlayerWebSocketService(Connection);
                 Player.OnPauseReceived += Player_OnPauseReceived;
                 Player.OnPlayReceived += Player_OnPlayReceived;
@@ -50,6 +50,24 @@ namespace KodiRemote.Code.JSON {
                 Player.OnStopReceived += Player_OnStopReceived;
             }
             Connected = false;
+        }
+        private static ActiveKodi instance;
+        public static ActiveKodi Instance {
+            get {
+                if (instance == null) {
+                    throw new UnauthorizedAccessException("ActiveKodi has to be initialised first");
+                }
+                return instance;
+            }
+            private set {
+                instance = value;
+                KodiChanged?.Invoke(instance, null);
+            }
+        }
+        public static event KodiChangedEventHandler KodiChanged;
+        public static async void Init(string hostname, string port, ConnectionType type) {
+            Instance = new ActiveKodi(hostname, port, type);
+            await Instance.Connect();
         }
 
         private bool currentlyPlaying;
@@ -105,6 +123,18 @@ namespace KodiRemote.Code.JSON {
         public async Task Connect() {
             Connected = await Connection.Connect(new Uri("ws://" + Hostname + ":" + Port + "/jsonrpc"));
         }
+    }
+    public class Kodi : PropertyChangedBase {
+        public string Hostname { get; private set; }
+        public string Port { get; private set; }
+        public ConnectionType Type { get; private set; }
+
+        public Kodi(string hostname, string port, ConnectionType type) {
+            Hostname = hostname;
+            Port = port;
+            Type = type;
+        }
+
     }
     public enum ConnectionType { Websocket/*, HTTP*/ }
 }

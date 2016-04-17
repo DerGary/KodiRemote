@@ -8,16 +8,18 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.ViewModel {
     public abstract class ViewModelBase : PropertyChangedBase {
-        private static Kodi kodi;
-        public static Kodi Kodi {
+        private ActiveKodi kodi;
+        public ActiveKodi Kodi {
             get {
-                return kodi;
-            }
-            set {
-                kodi = value;
-                KodiChanged?.Invoke(kodi, null);
+                return ActiveKodi.Instance;
             }
         }
-        public static event KodiChangedEventHandler KodiChanged;
+        public ViewModelBase() {
+            ActiveKodi.KodiChanged += ActiveKodiChanged;
+        }
+
+        private void ActiveKodiChanged(object sender, EventArgs e) {
+            RaisePropertyChanged(nameof(Kodi));
+        }
     }
 }

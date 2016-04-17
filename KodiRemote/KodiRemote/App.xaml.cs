@@ -42,9 +42,8 @@ namespace KodiRemote {
         /// werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
         /// </summary>
         /// <param name="e">Details über Startanforderung und -prozess.</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e) {
-            ViewModelBase.Kodi = new Kodi("localhost", "9090", ConnectionType.Websocket);
-            await ViewModelBase.Kodi.Connect();
+        protected override void OnLaunched(LaunchActivatedEventArgs e) {
+            ActiveKodi.Init("localhost", "9090", ConnectionType.Websocket);
 
             PrepareRootFrame();
 

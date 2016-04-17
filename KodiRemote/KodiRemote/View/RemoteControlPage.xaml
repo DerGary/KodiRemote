@@ -70,15 +70,15 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="PowerButton" Content="{StaticResource Power}" Grid.Row="0" Grid.Column="0" Style="{StaticResource IconButtonStyle}" Command="{Binding TurnOffCommand}"/>
-                <Button x:Name="MovieButton" Content="{StaticResource MovieStrip}" Grid.Row="0" Grid.Column="1" Style="{StaticResource IconButtonStyle}" Command="{Binding MovieCommand}"/>
-                <Button x:Name="TVShowButton" Content="{StaticResource TV}" Grid.Row="0" Grid.Column="2" Style="{StaticResource IconButtonStyle}" Command="{Binding SeriesCommand}"/>
-                <Button x:Name="MusicButton" Content="{StaticResource MusicNote}" Grid.Row="0" Grid.Column="3" Style="{StaticResource IconButtonStyle}" Command="{Binding MusicCommand}" />
-                <Button x:Name="KeyboardButton" Content="{StaticResource Keyboard}" Grid.Row="0" Grid.Column="4"  Command="{Binding KeyboardCommand}" Style="{StaticResource IconButtonStyle}"/>
+                <Button x:Name="PowerButton" Content="{StaticResource Power}" Grid.Row="0" Grid.Column="0" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.TurnOffCommand}"/>
+                <Button x:Name="MovieButton" Content="{StaticResource MovieStrip}" Grid.Row="0" Grid.Column="1" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.MovieCommand}"/>
+                <Button x:Name="TVShowButton" Content="{StaticResource TV}" Grid.Row="0" Grid.Column="2" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.SeriesCommand}"/>
+                <Button x:Name="MusicButton" Content="{StaticResource MusicNote}" Grid.Row="0" Grid.Column="3" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.MusicCommand}" />
+                <Button x:Name="KeyboardButton" Content="{StaticResource Keyboard}" Grid.Row="0" Grid.Column="4"  Command="{x:Bind ViewModel.KeyboardCommand}" Style="{StaticResource IconButtonStyle}"/>
 
-                <RepeatButton   x:Name="SpeakerLessButton" Content="{StaticResource SpeakerLess}" Grid.Row="0" Grid.Column="5" Command="{Binding VolumeDownCommand}" Delay="500" Interval="500" Style="{StaticResource IconRepeatButtonStyle}"/>
-                <Button         x:Name="SpeakerMuteButton" Content="{StaticResource SpeakerMute}" Grid.Row="0" Grid.Column="6" Command="{Binding VolumeMuteCommand}" Style="{StaticResource IconButtonStyle}"/>
-                <RepeatButton   x:Name="SpeakerMoreButton" Content="{StaticResource SpeakerMore}" Grid.Row="0" Grid.Column="7" Command="{Binding VolumeUpCommand}" Delay="500" Interval="500" Style="{StaticResource IconRepeatButtonStyle}"/>
+                <RepeatButton   x:Name="SpeakerLessButton" Content="{StaticResource SpeakerLess}" Grid.Row="0" Grid.Column="5" Command="{x:Bind ViewModel.VolumeDownCommand}" Delay="500" Interval="500" Style="{StaticResource IconRepeatButtonStyle}"/>
+                <Button         x:Name="SpeakerMuteButton" Content="{StaticResource SpeakerMute}" Grid.Row="0" Grid.Column="6" Command="{x:Bind ViewModel.VolumeMuteCommand}" Style="{StaticResource IconButtonStyle}"/>
+                <RepeatButton   x:Name="SpeakerMoreButton" Content="{StaticResource SpeakerMore}" Grid.Row="0" Grid.Column="7" Command="{x:Bind ViewModel.VolumeUpCommand}" Delay="500" Interval="500" Style="{StaticResource IconRepeatButtonStyle}"/>
             </Grid>
 
             <Grid Grid.Row="2">
@@ -91,12 +91,12 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="SkipBackButton" Content="{StaticResource SkipBack}" Grid.Column="0" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PreviousCommand}" />
-                <Button x:Name="FastBackwardButton" Content="{StaticResource FastBackward}" Grid.Column="1" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding FastBackwardCommand}" />
-                <Button x:Name="StopButton" Content="{StaticResource Stop}" Grid.Column="2" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding StopCommand}" />
-                <Button x:Name="PlayButton" Content="{Binding Kodi.Paused, Mode=OneWay,Converter={StaticResource PlayPauseConverter}}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" />
-                <Button x:Name="FastForwardButton" Content="{StaticResource FastForward}" Grid.Column="4" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding FastForwardCommand}" />
-                <Button x:Name="SkipForwardButton" Content="{StaticResource SkipForward}" Grid.Column="5" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{Binding NextCommand}" />
+                <Button x:Name="SkipBackButton" Content="{StaticResource SkipBack}" Grid.Column="0" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.PreviousCommand}" />
+                <Button x:Name="FastBackwardButton" Content="{StaticResource FastBackward}" Grid.Column="1" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.FastBackwardCommand}" />
+                <Button x:Name="StopButton" Content="{StaticResource Stop}" Grid.Column="2" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.StopCommand}" />
+                <Button x:Name="PlayButton" Content="{x:Bind ViewModel.Kodi.Paused, Mode=OneWay, Converter={StaticResource PlayPauseConverter}, FallbackValue={StaticResource Pause}}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.PlayPauseCommand}" />
+                <Button x:Name="FastForwardButton" Content="{StaticResource FastForward}" Grid.Column="4" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.FastForwardCommand}" />
+                <Button x:Name="SkipForwardButton" Content="{StaticResource SkipForward}" Grid.Column="5" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.NextCommand}" />
             </Grid>
             <Rectangle Grid.Row="4" 
                        Fill="{StaticResource TransparentGrey}" 
