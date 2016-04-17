@@ -52,7 +52,7 @@ namespace KodiRemote.ViewModel {
             get {
                 if (homeCommand == null) {
                     homeCommand = new RelayCommand(() => {
-                        //GoToWindow(WindowsEnum.home);
+                        Kodi.GUI.ActivateWindow(WindowEnum.Home);
                     });
                 }
                 return homeCommand;
@@ -160,7 +160,7 @@ namespace KodiRemote.ViewModel {
             get {
                 if (turnOffCommand == null) {
                     turnOffCommand = new RelayCommand(() => {
-                        //GoToWindow(WindowsEnum.shutdownmenu);
+                        Kodi.GUI.ActivateWindow(WindowEnum.Shutdownmenu);
                     });
                 }
                 return turnOffCommand;
@@ -172,7 +172,7 @@ namespace KodiRemote.ViewModel {
             get {
                 if (movieCommand == null) {
                     movieCommand = new RelayCommand(() => {
-                        //GoToWindow(WindowsEnum.video, new String[1] { "movietitles" });
+                        Kodi.GUI.ActivateWindow(WindowEnum.Video, new List<string>() { "movietitles" });
                     });
                 }
                 return movieCommand;
@@ -184,7 +184,7 @@ namespace KodiRemote.ViewModel {
             get {
                 if (seriesCommand == null) {
                     seriesCommand = new RelayCommand(() => {
-                        //GoToWindow(WindowsEnum.video, new String[1] { "tvshowtitles" });
+                        Kodi.GUI.ActivateWindow(WindowEnum.Video, new List<string>() { "tvshowtitles" });
                     });
                 }
                 return seriesCommand;
@@ -196,7 +196,7 @@ namespace KodiRemote.ViewModel {
             get {
                 if (musicCommand == null) {
                     musicCommand = new RelayCommand(() => {
-                        //GoToWindow(WindowsEnum.musiclibrary);
+                        Kodi.GUI.ActivateWindow(WindowEnum.Musiclibrary);
                     });
                 }
                 return musicCommand;
@@ -273,22 +273,5 @@ namespace KodiRemote.ViewModel {
                 return playPauseCommand;
             }
         }
-
-
-        //private async void SetVolume(IncDecEnum incDec) {
-        //    //await OnXbmcDo(async xbmc => await xbmc.Application.SetVolume(incDec));
-        //}
-
-        //private async void ToggleMute() {
-        //    await OnXbmcDo(async xbmc => await xbmc.Application.SetMute(ToggleEnum.Toggle));
-        //}
-
-        //private async void GoToWindow(WindowsEnum window, string[] optionalParameter = null) {
-        //    await OnXbmcDo(async xbmc => await xbmc.GUI.ActivateWindow(window, optionalParameter));
-        //}
-
-        //private async void InputMethod(ExecActionEnum inputAction) {
-        //    await OnXbmcDo(async xbmc => await xbmc.Input.ExecuteAction(inputAction));
-        //}
     }
 }

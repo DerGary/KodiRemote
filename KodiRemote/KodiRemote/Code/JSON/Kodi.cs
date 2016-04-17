@@ -15,6 +15,7 @@ namespace KodiRemote.Code.JSON {
         public IPlayerService Player { get; private set; }
         public IInputService Input { get; private set; }
         public IApplicationService Application { get; private set; }
+        public IGUIService GUI { get; private set; }
 
         private bool connected = true;
         public bool Connected {
@@ -43,6 +44,8 @@ namespace KodiRemote.Code.JSON {
             if (type == ConnectionType.Websocket) {
                 Connection = new WebSocketHelper();
                 Connection.ConnectionClosed += ConnectionClosed;
+
+                GUI = new GUIWebSocketService(Connection);
                 Application = new ApplicationWebSocketService(Connection);
                 Application.OnVolumeChanged += Application_OnVolumeChanged;
                 Input = new InputWebSocketService(Connection);

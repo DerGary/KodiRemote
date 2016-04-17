@@ -264,6 +264,132 @@ namespace KodiRemote.Code.JSON.Enums {
 
         private ExecActionEnum(int value, string name) : base(value, name) { }
     }
+    public class WindowEnum : StringEnum {
+        public static readonly WindowEnum Home = new WindowEnum(1, "home");
+        public static readonly WindowEnum Programs = new WindowEnum(2, "programs");
+        public static readonly WindowEnum Pictures = new WindowEnum(3, "pictures");
+        public static readonly WindowEnum Filemanager = new WindowEnum(4, "filemanager");
+        public static readonly WindowEnum Files = new WindowEnum(5, "files");
+        public static readonly WindowEnum Settings = new WindowEnum(6, "settings");
+        public static readonly WindowEnum Music = new WindowEnum(7, "music");
+        public static readonly WindowEnum Video = new WindowEnum(8, "video");
+        public static readonly WindowEnum Videos = new WindowEnum(9, "videos");
+        public static readonly WindowEnum Tv = new WindowEnum(10, "tv");
+        public static readonly WindowEnum Pvr = new WindowEnum(11, "pvr");
+        public static readonly WindowEnum Pvrguideinfo = new WindowEnum(12, "pvrguideinfo");
+        public static readonly WindowEnum Pvrrecordinginfo = new WindowEnum(13, "pvrrecordinginfo");
+        public static readonly WindowEnum Pvrtimersetting = new WindowEnum(14, "pvrtimersetting");
+        public static readonly WindowEnum Pvrgroupmanager = new WindowEnum(15, "pvrgroupmanager");
+        public static readonly WindowEnum Pvrchannelmanager = new WindowEnum(16, "pvrchannelmanager");
+        public static readonly WindowEnum Pvrguidesearch = new WindowEnum(17, "pvrguidesearch");
+        public static readonly WindowEnum Pvrchannelscan = new WindowEnum(18, "pvrchannelscan");
+        public static readonly WindowEnum Pvrupdateprogress = new WindowEnum(19, "pvrupdateprogress");
+        public static readonly WindowEnum Pvrosdchannels = new WindowEnum(20, "pvrosdchannels");
+        public static readonly WindowEnum Pvrosdguide = new WindowEnum(21, "pvrosdguide");
+        public static readonly WindowEnum Pvrosddirector = new WindowEnum(22, "pvrosddirector");
+        public static readonly WindowEnum Pvrosdcutter = new WindowEnum(23, "pvrosdcutter");
+        public static readonly WindowEnum Pvrosdteletext = new WindowEnum(24, "pvrosdteletext");
+        public static readonly WindowEnum Systeminfo = new WindowEnum(25, "systeminfo");
+        public static readonly WindowEnum Testpattern = new WindowEnum(26, "testpattern");
+        public static readonly WindowEnum Screencalibration = new WindowEnum(27, "screencalibration");
+        public static readonly WindowEnum Guicalibration = new WindowEnum(28, "guicalibration");
+        public static readonly WindowEnum Picturessettings = new WindowEnum(29, "picturessettings");
+        public static readonly WindowEnum Programssettings = new WindowEnum(30, "programssettings");
+        public static readonly WindowEnum Weathersettings = new WindowEnum(31, "weathersettings");
+        public static readonly WindowEnum Musicsettings = new WindowEnum(32, "musicsettings");
+        public static readonly WindowEnum Systemsettings = new WindowEnum(33, "systemsettings");
+        public static readonly WindowEnum Videossettings = new WindowEnum(34, "videossettings");
+        public static readonly WindowEnum Networksettings = new WindowEnum(35, "networksettings");
+        public static readonly WindowEnum Servicesettings = new WindowEnum(36, "servicesettings");
+        public static readonly WindowEnum Appearancesettings = new WindowEnum(37, "appearancesettings");
+        public static readonly WindowEnum Pvrsettings = new WindowEnum(38, "pvrsettings");
+        public static readonly WindowEnum Tvsettings = new WindowEnum(39, "tvsettings");
+        public static readonly WindowEnum Scripts = new WindowEnum(40, "scripts");
+        public static readonly WindowEnum Videofiles = new WindowEnum(41, "videofiles");
+        public static readonly WindowEnum Videolibrary = new WindowEnum(42, "videolibrary");
+        public static readonly WindowEnum Videoplaylist = new WindowEnum(43, "videoplaylist");
+        public static readonly WindowEnum Loginscreen = new WindowEnum(44, "loginscreen");
+        public static readonly WindowEnum Profiles = new WindowEnum(45, "profiles");
+        public static readonly WindowEnum Skinsettings = new WindowEnum(46, "skinsettings");
+        public static readonly WindowEnum Addonbrowser = new WindowEnum(47, "addonbrowser");
+        public static readonly WindowEnum Yesnodialog = new WindowEnum(48, "yesnodialog");
+        public static readonly WindowEnum Progressdialog = new WindowEnum(49, "progressdialog");
+        public static readonly WindowEnum Virtualkeyboard = new WindowEnum(50, "virtualkeyboard");
+        public static readonly WindowEnum Volumebar = new WindowEnum(51, "volumebar");
+        public static readonly WindowEnum Submenu = new WindowEnum(52, "submenu");
+        public static readonly WindowEnum Favourites = new WindowEnum(53, "favourites");
+        public static readonly WindowEnum Contextmenu = new WindowEnum(54, "contextmenu");
+        public static readonly WindowEnum Infodialog = new WindowEnum(55, "infodialog");
+        public static readonly WindowEnum Numericinput = new WindowEnum(56, "numericinput");
+        public static readonly WindowEnum Gamepadinput = new WindowEnum(57, "gamepadinput");
+        public static readonly WindowEnum Shutdownmenu = new WindowEnum(58, "shutdownmenu");
+        public static readonly WindowEnum Mutebug = new WindowEnum(59, "mutebug");
+        public static readonly WindowEnum Playercontrols = new WindowEnum(60, "playercontrols");
+        public static readonly WindowEnum Seekbar = new WindowEnum(61, "seekbar");
+        public static readonly WindowEnum Musicosd = new WindowEnum(62, "musicosd");
+        public static readonly WindowEnum Addonsettings = new WindowEnum(63, "addonsettings");
+        public static readonly WindowEnum Visualisationsettings = new WindowEnum(64, "visualisationsettings");
+        public static readonly WindowEnum Visualisationpresetlist = new WindowEnum(65, "visualisationpresetlist");
+        public static readonly WindowEnum Osdvideosettings = new WindowEnum(66, "osdvideosettings");
+        public static readonly WindowEnum Osdaudiosettings = new WindowEnum(67, "osdaudiosettings");
+        public static readonly WindowEnum Videobookmarks = new WindowEnum(68, "videobookmarks");
+        public static readonly WindowEnum Filebrowser = new WindowEnum(69, "filebrowser");
+        public static readonly WindowEnum Networksetup = new WindowEnum(70, "networksetup");
+        public static readonly WindowEnum Mediasource = new WindowEnum(71, "mediasource");
+        public static readonly WindowEnum Profilesettings = new WindowEnum(72, "profilesettings");
+        public static readonly WindowEnum Locksettings = new WindowEnum(73, "locksettings");
+        public static readonly WindowEnum Contentsettings = new WindowEnum(74, "contentsettings");
+        public static readonly WindowEnum Songinformation = new WindowEnum(75, "songinformation");
+        public static readonly WindowEnum Smartplaylisteditor = new WindowEnum(76, "smartplaylisteditor");
+        public static readonly WindowEnum Smartplaylistrule = new WindowEnum(77, "smartplaylistrule");
+        public static readonly WindowEnum Busydialog = new WindowEnum(78, "busydialog");
+        public static readonly WindowEnum Pictureinfo = new WindowEnum(79, "pictureinfo");
+        public static readonly WindowEnum Accesspoints = new WindowEnum(80, "accesspoints");
+        public static readonly WindowEnum Fullscreeninfo = new WindowEnum(81, "fullscreeninfo");
+        public static readonly WindowEnum Karaokeselector = new WindowEnum(82, "karaokeselector");
+        public static readonly WindowEnum Karaokelargeselector = new WindowEnum(83, "karaokelargeselector");
+        public static readonly WindowEnum Sliderdialog = new WindowEnum(84, "sliderdialog");
+        public static readonly WindowEnum Addoninformation = new WindowEnum(85, "addoninformation");
+        public static readonly WindowEnum Musicplaylist = new WindowEnum(86, "musicplaylist");
+        public static readonly WindowEnum Musicfiles = new WindowEnum(87, "musicfiles");
+        public static readonly WindowEnum Musiclibrary = new WindowEnum(88, "musiclibrary");
+        public static readonly WindowEnum Musicplaylisteditor = new WindowEnum(89, "musicplaylisteditor");
+        public static readonly WindowEnum Teletext = new WindowEnum(90, "teletext");
+        public static readonly WindowEnum Selectdialog = new WindowEnum(91, "selectdialog");
+        public static readonly WindowEnum Musicinformation = new WindowEnum(92, "musicinformation");
+        public static readonly WindowEnum Okdialog = new WindowEnum(93, "okdialog");
+        public static readonly WindowEnum Movieinformation = new WindowEnum(94, "movieinformation");
+        public static readonly WindowEnum Textviewer = new WindowEnum(95, "textviewer");
+        public static readonly WindowEnum Fullscreenvideo = new WindowEnum(96, "fullscreenvideo");
+        public static readonly WindowEnum Fullscreenlivetv = new WindowEnum(97, "fullscreenlivetv");
+        public static readonly WindowEnum Visualisation = new WindowEnum(98, "visualisation");
+        public static readonly WindowEnum Slideshow = new WindowEnum(99, "slideshow");
+        public static readonly WindowEnum Filestackingdialog = new WindowEnum(100, "filestackingdialog");
+        public static readonly WindowEnum Karaoke = new WindowEnum(101, "karaoke");
+        public static readonly WindowEnum Weather = new WindowEnum(102, "weather");
+        public static readonly WindowEnum Screensaver = new WindowEnum(103, "screensaver");
+        public static readonly WindowEnum Videoosd = new WindowEnum(104, "videoosd");
+        public static readonly WindowEnum Videomenu = new WindowEnum(105, "videomenu");
+        public static readonly WindowEnum Videotimeseek = new WindowEnum(106, "videotimeseek");
+        public static readonly WindowEnum Musicoverlay = new WindowEnum(107, "musicoverlay");
+        public static readonly WindowEnum Videooverlay = new WindowEnum(108, "videooverlay");
+        public static readonly WindowEnum Startwindow = new WindowEnum(109, "startwindow");
+        public static readonly WindowEnum Startup = new WindowEnum(110, "startup");
+        public static readonly WindowEnum Peripherals = new WindowEnum(111, "peripherals");
+        public static readonly WindowEnum Peripheralsettings = new WindowEnum(112, "peripheralsettings");
+        public static readonly WindowEnum Extendedprogressdialog = new WindowEnum(113, "extendedprogressdialog");
+        public static readonly WindowEnum Mediafilter = new WindowEnum(114, "mediafilter");
+
+        private WindowEnum(int value, string name) : base(value, name) { }
+    }
+    public class ImageEnum : StringEnum {
+        public static readonly ImageEnum Null = new ImageEnum(1, null);
+        public static readonly ImageEnum Info = new ImageEnum(2, "info");
+        public static readonly ImageEnum Warning = new ImageEnum(3, "warning");
+        public static readonly ImageEnum Error = new ImageEnum(4, "error");
+
+        private ImageEnum(int value, string name) : base(value, name) { }
+    }
     public enum OrderEnum { ascending, descending }
     public enum MethodEnum { none, label, date, size, file, path, drivetype, title, track, time, artist, album, albumtype, genre, country, year, rating, votes, top250, programcount, playlist, episode, season, totalepisodes, watchedepisodes, tvshowstatus, tvshowtitle, sorttitle, productioncode, mpaa, studio, dateadded, lastplayed, playcount, listeners, bitrate, random }
     public enum MediaEnum { NULL, video, music, pictures, files, programs }
@@ -271,8 +397,8 @@ namespace KodiRemote.Code.JSON.Enums {
     public enum EnabledEnum { All, True, False }
     public enum ContentEnum { Null, unknown, video, audio, image, executable }
     public enum AlbumartistonlyEnum { NULL, True, False }
-    public enum WindowsEnum { home, programs, pictures, filemanager, files, settings, music, video, videos, tv, pvr, pvrguideinfo, pvrrecordinginfo, pvrtimersetting, pvrgroupmanager, pvrchannelmanager, pvrguidesearch, pvrchannelscan, pvrupdateprogress, pvrosdchannels, pvrosdguide, pvrosddirector, pvrosdcutter, pvrosdteletext, systeminfo, testpattern, screencalibration, guicalibration, picturessettings, programssettings, weathersettings, musicsettings, systemsettings, videossettings, networksettings, servicesettings, appearancesettings, pvrsettings, tvsettings, scripts, videofiles, videolibrary, videoplaylist, loginscreen, profiles, skinsettings, addonbrowser, yesnodialog, progressdialog, virtualkeyboard, volumebar, submenu, favourites, contextmenu, infodialog, numericinput, gamepadinput, shutdownmenu, mutebug, playercontrols, seekbar, musicosd, addonsettings, visualisationsettings, visualisationpresetlist, osdvideosettings, osdaudiosettings, videobookmarks, filebrowser, networksetup, mediasource, profilesettings, locksettings, contentsettings, songinformation, smartplaylisteditor, smartplaylistrule, busydialog, pictureinfo, accesspoints, fullscreeninfo, karaokeselector, karaokelargeselector, sliderdialog, addoninformation, musicplaylist, musicfiles, musiclibrary, musicplaylisteditor, teletext, selectdialog, musicinformation, okdialog, movieinformation, textviewer, fullscreenvideo, fullscreenlivetv, visualisation, slideshow, filestackingdialog, karaoke, weather, screensaver, videoosd, videomenu, videotimeseek, musicoverlay, videooverlay, startwindow, startup, peripherals, peripheralsettings, extendedprogressdialog, mediafilter }
-    public enum ImageEnum { Null, info, warning, error }
+    //public enum WindowsEnum { home, programs, pictures, filemanager, files, settings, music, video, videos, tv, pvr, pvrguideinfo, pvrrecordinginfo, pvrtimersetting, pvrgroupmanager, pvrchannelmanager, pvrguidesearch, pvrchannelscan, pvrupdateprogress, pvrosdchannels, pvrosdguide, pvrosddirector, pvrosdcutter, pvrosdteletext, systeminfo, testpattern, screencalibration, guicalibration, picturessettings, programssettings, weathersettings, musicsettings, systemsettings, videossettings, networksettings, servicesettings, appearancesettings, pvrsettings, tvsettings, scripts, videofiles, videolibrary, videoplaylist, loginscreen, profiles, skinsettings, addonbrowser, yesnodialog, progressdialog, virtualkeyboard, volumebar, submenu, favourites, contextmenu, infodialog, numericinput, gamepadinput, shutdownmenu, mutebug, playercontrols, seekbar, musicosd, addonsettings, visualisationsettings, visualisationpresetlist, osdvideosettings, osdaudiosettings, videobookmarks, filebrowser, networksetup, mediasource, profilesettings, locksettings, contentsettings, songinformation, smartplaylisteditor, smartplaylistrule, busydialog, pictureinfo, accesspoints, fullscreeninfo, karaokeselector, karaokelargeselector, sliderdialog, addoninformation, musicplaylist, musicfiles, musiclibrary, musicplaylisteditor, teletext, selectdialog, musicinformation, okdialog, movieinformation, textviewer, fullscreenvideo, fullscreenlivetv, visualisation, slideshow, filestackingdialog, karaoke, weather, screensaver, videoosd, videomenu, videotimeseek, musicoverlay, videooverlay, startwindow, startup, peripherals, peripheralsettings, extendedprogressdialog, mediafilter }
+    //public enum ImageEnum { Null, info, warning, error }
     //public enum ExecActionEnum { left, right, up, down, pageup, pagedown, select, highlight, parentdir, parentfolder, back, previousmenu, info, pause, stop, skipnext, skipprevious, fullscreen, aspectratio, stepforward, stepback, bigstepforward, bigstepback, osd, showsubtitles, nextsubtitle, codecinfo, nextpicture, previouspicture, zoomout, zoomin, playlist, queue, zoomnormal, zoomlevel1, zoomlevel2, zoomlevel3, zoomlevel4, zoomlevel5, zoomlevel6, zoomlevel7, zoomlevel8, zoomlevel9, nextcalibration, resetcalibration, analogmove, rotate, rotateccw, close, subtitledelayminus, subtitledelay, subtitledelayplus, audiodelayminus, audiodelay, audiodelayplus, subtitleshiftup, subtitleshiftdown, subtitlealign, audionextlanguage, verticalshiftup, verticalshiftdown, nextresolution, audiotoggledigital, number0, number1, number2, number3, number4, number5, number6, number7, number8, number9, osdleft, osdright, osdup, osddown, osdselect, osdvalueplus, osdvalueminus, smallstepback, fastforward, rewind, play, playpause, delete, copy, move, mplayerosd, hidesubmenu, screenshot, rename, togglewatched, scanitem, reloadkeymaps, volumeup, volumedown, mute, backspace, scrollup, scrolldown, analogfastforward, analogrewind, moveitemup, moveitemdown, contextmenu, shift, symbols, cursorleft, cursorright, showtime, analogseekforward, analogseekback, showpreset, presetlist, nextpreset, previouspreset, lockpreset, randompreset, increasevisrating, decreasevisrating, showvideomenu, enter, increaserating, decreaserating, togglefullscreen, nextscene, previousscene, nextletter, prevletter, jumpsms2, jumpsms3, jumpsms4, jumpsms5, jumpsms6, jumpsms7, jumpsms8, jumpsms9, filter, filterclear, filtersms2, filtersms3, filtersms4, filtersms5, filtersms6, filtersms7, filtersms8, filtersms9, firstpage, lastpage, guiprofile, red, green, yellow, blue, increasepar, decreasepar, volampup, volampdown, channelup, channeldown, previouschannelgroup, nextchannelgroup, leftclick, rightclick, middleclick, doubleclick, wheelup, wheeldown, mousedrag, mousemove, noop }
 
     //public enum RepeatEnum { Null, off, one, all }
