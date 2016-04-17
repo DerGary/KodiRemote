@@ -14,7 +14,8 @@ namespace KodiRemote.ViewModel {
             get {
                 if (volumeUpCommand == null) {
                     volumeUpCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.VolumeUp);
+                        Kodi.Application.SetVolume(IncDecEnum.Increment);
+                        //Kodi.Input.ExecuteAction(ExecActionEnum.VolumeUp);
                     });
                 }
                 return volumeUpCommand;
@@ -26,7 +27,8 @@ namespace KodiRemote.ViewModel {
             get {
                 if (volumeDownCommand == null) {
                     volumeDownCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.VolumeDown);
+                        Kodi.Application.SetVolume(IncDecEnum.Decrement);
+                        //Kodi.Input.ExecuteAction(ExecActionEnum.VolumeDown);
                     });
                 }
                 return volumeDownCommand;
@@ -38,6 +40,7 @@ namespace KodiRemote.ViewModel {
             get {
                 if (volumeMuteCommand == null) {
                     volumeMuteCommand = new RelayCommand(() => {
+                        Kodi.Application.SetMute(ToggleEnum.Toggle);
                     });
                 }
                 return volumeMuteCommand;

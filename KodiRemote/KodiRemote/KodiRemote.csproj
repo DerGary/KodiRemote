@@ -113,10 +113,16 @@
     <Compile Include="Code\Common\RelayCommand.cs" />
     <Compile Include="Code\JSON\Delegates.cs" />
     <Compile Include="Code\JSON\Enums.cs" />
+    <Compile Include="Code\JSON\Fields\ApplicationField.cs" />
     <Compile Include="Code\JSON\Fields\IField.cs" />
     <Compile Include="Code\JSON\Fields\ItemField.cs" />
     <Compile Include="Code\JSON\Fields\PlayerField.cs" />
     <Compile Include="Code\JSON\General\Time.cs" />
+    <Compile Include="Code\JSON\KApplication\Method.cs" />
+    <Compile Include="Code\JSON\KApplication\Notification.cs" />
+    <Compile Include="Code\JSON\KApplication\Notifications.cs" />
+    <Compile Include="Code\JSON\KApplication\Params.cs" />
+    <Compile Include="Code\JSON\KApplication\Results.cs" />
     <Compile Include="Code\JSON\KInput\Method.cs" />
     <Compile Include="Code\JSON\KInput\Notification.cs" />
     <Compile Include="Code\JSON\KInput\Notifications.cs" />
@@ -128,8 +134,10 @@
     <Compile Include="Code\JSON\KPlayer\Params.cs" />
     <Compile Include="Code\JSON\KPlayer\Results.cs" />
     <Compile Include="Code\JSON\RPCBase.cs" />
+    <Compile Include="Code\JSON\ServiceInterfaces\IApplicationService.cs" />
     <Compile Include="Code\JSON\ServiceInterfaces\IInputService.cs" />
     <Compile Include="Code\JSON\ServiceInterfaces\IPlayerService.cs" />
+    <Compile Include="Code\JSON\WebSocketServices\ApplicationWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\InputWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\PlayerWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\WebSocketServiceBase.cs" />

@@ -23,6 +23,5 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         void ExecuteAction(ExecActionEnum action);
         void ShowCodec();
         void ShowOSD();
-
     }
 }

@@ -37,14 +37,14 @@ namespace KodiRemote.View {
             this.singleTap = true;
             await Task.Delay(200);
             if (this.singleTap) {
-                //defaultViewModel.GoCommand.Execute(null);
+                ViewModel.GoCommand.Execute(null);
                 Debug.WriteLine("Single Tapped");
             }
         }
 
         private void Rectangle_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {
             this.singleTap = false;
-            //defaultViewModel.BackCommand.Execute(null);
+            ViewModel.BackCommand.Execute(null);
             Debug.WriteLine("Double Tapped");
         }
 
@@ -53,7 +53,7 @@ namespace KodiRemote.View {
         }
 
         private void Rectangle_RightTapped(object sender, RightTappedRoutedEventArgs e) {
-            //defaultViewModel.OptionsCommand.Execute(null);
+            ViewModel.OptionsCommand.Execute(null);
             Debug.WriteLine("Right Tapped");
         }
         double x;
@@ -72,14 +72,18 @@ namespace KodiRemote.View {
         void StartCommand() {
             if (Math.Abs(x) > Math.Abs(y)) {
                 if (x >= 0) {
+                    ViewModel.RightCommand.Execute(null);
                     Debug.WriteLine("Right");
                 } else {
+                    ViewModel.LeftCommand.Execute(null);
                     Debug.WriteLine("Left");
                 }
             } else {
                 if (y >= 0) {
+                    ViewModel.DownCommand.Execute(null);
                     Debug.WriteLine("Down");
                 } else {
+                    ViewModel.UpCommand.Execute(null);
                     Debug.WriteLine("Up");
                 }
             }

@@ -14,6 +14,7 @@ namespace KodiRemote.Code.JSON {
         private WebSocketHelper Connection { get; set; }
         public IPlayerService Player { get; private set; }
         public IInputService Input { get; private set; }
+        public IApplicationService Application { get; private set; }
 
         private bool connected = true;
         public bool Connected {
@@ -42,6 +43,8 @@ namespace KodiRemote.Code.JSON {
             if (type == ConnectionType.Websocket) {
                 Connection = new WebSocketHelper();
                 Connection.ConnectionClosed += ConnectionClosed;
+                Application = new ApplicationWebSocketService(Connection);
+                Application.OnVolumeChanged += Application_OnVolumeChanged;
                 Input = new InputWebSocketService(Connection);
                 Player = new PlayerWebSocketService(Connection);
                 Player.OnPauseReceived += Player_OnPauseReceived;
@@ -51,6 +54,15 @@ namespace KodiRemote.Code.JSON {
             }
             Connected = false;
         }
+
+        private void Application_OnVolumeChanged(KApplication.Notifications.Data item) {
+            if (item.Muted) {
+                Muted = true;
+            } else {
+                Muted = false;
+            }
+        }
+
         private static ActiveKodi instance;
         public static ActiveKodi Instance {
             get {
@@ -88,6 +100,16 @@ namespace KodiRemote.Code.JSON {
             }
             set {
                 paused = value;
+                RaisePropertyChanged();
+            }
+        }
+        private bool muted;
+        public bool Muted {
+            get {
+                return muted;
+            }
+            set {
+                muted = value;
                 RaisePropertyChanged();
             }
         }

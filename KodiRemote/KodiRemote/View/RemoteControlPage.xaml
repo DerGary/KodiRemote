@@ -10,6 +10,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <converter:BooleanResourceConverter OnTrue="{StaticResource Play}" OnFalse="{StaticResource Pause}" x:Key="PlayPauseConverter"/>
+        <converter:BooleanResourceConverter OnTrue="{StaticResource SpeakerMore}" OnFalse="{StaticResource SpeakerMute}" x:Key="MuteUnMuteConverter"/>
     </Page.Resources>
 
     <Grid Name="rootGrid" Background="{StaticResource TransparentBlack}">
@@ -76,9 +77,9 @@
                 <Button x:Name="MusicButton" Content="{StaticResource MusicNote}" Grid.Row="0" Grid.Column="3" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.MusicCommand}" />
                 <Button x:Name="KeyboardButton" Content="{StaticResource Keyboard}" Grid.Row="0" Grid.Column="4"  Command="{x:Bind ViewModel.KeyboardCommand}" Style="{StaticResource IconButtonStyle}"/>
 
-                <RepeatButton   x:Name="SpeakerLessButton" Content="{StaticResource SpeakerLess}" Grid.Row="0" Grid.Column="5" Command="{x:Bind ViewModel.VolumeDownCommand}" Delay="500" Interval="500" Style="{StaticResource IconRepeatButtonStyle}"/>
-                <Button         x:Name="SpeakerMuteButton" Content="{StaticResource SpeakerMute}" Grid.Row="0" Grid.Column="6" Command="{x:Bind ViewModel.VolumeMuteCommand}" Style="{StaticResource IconButtonStyle}"/>
-                <RepeatButton   x:Name="SpeakerMoreButton" Content="{StaticResource SpeakerMore}" Grid.Row="0" Grid.Column="7" Command="{x:Bind ViewModel.VolumeUpCommand}" Delay="500" Interval="500" Style="{StaticResource IconRepeatButtonStyle}"/>
+                <RepeatButton   x:Name="SpeakerLessButton" Content="{StaticResource SpeakerLess}" Grid.Row="0" Grid.Column="5" Command="{x:Bind ViewModel.VolumeDownCommand}" Delay="500" Interval="200" Style="{StaticResource IconRepeatButtonStyle}"/>
+                <Button         x:Name="SpeakerMuteButton" Content="{x:Bind ViewModel.Kodi.Muted, Mode=OneWay, Converter={StaticResource MuteUnMuteConverter}, FallbackValue={StaticResource SpeakerMute}}" Grid.Row="0" Grid.Column="6" Command="{x:Bind ViewModel.VolumeMuteCommand}" Style="{StaticResource IconButtonStyle}"/>
+                <RepeatButton   x:Name="SpeakerMoreButton" Content="{StaticResource SpeakerMore}" Grid.Row="0" Grid.Column="7" Command="{x:Bind ViewModel.VolumeUpCommand}" Delay="500" Interval="200" Style="{StaticResource IconRepeatButtonStyle}"/>
             </Grid>
 
             <Grid Grid.Row="2">
