@@ -17,6 +17,7 @@ namespace KodiRemote.Code.JSON {
         public IApplicationService Application { get; private set; }
         public IGUIService GUI { get; private set; }
         public ISystemService System { get; private set; }
+        public IAddonsService Addons { get; private set; }
 
         private bool connected = true;
         public bool Connected {
@@ -47,6 +48,7 @@ namespace KodiRemote.Code.JSON {
                 Connection.ConnectionClosed += ConnectionClosed;
 
                 GUI = new GUIWebSocketService(Connection);
+                Addons = new AddonsWebSocketService(Connection);
                 System = new SystemWebSocketService(Connection);
                 Application = new ApplicationWebSocketService(Connection);
                 Application.OnVolumeChanged += Application_OnVolumeChanged;

@@ -390,12 +390,38 @@ namespace KodiRemote.Code.JSON.Enums {
 
         private ImageEnum(int value, string name) : base(value, name) { }
     }
+    public class ContentEnum : StringEnum {
+        public static readonly ContentEnum Null = new ContentEnum(1, null);
+        public static readonly ContentEnum Unknown = new ContentEnum(2, "unknown");
+        public static readonly ContentEnum Video = new ContentEnum(3, "video");
+        public static readonly ContentEnum Audio = new ContentEnum(4, "audio");
+        public static readonly ContentEnum Image = new ContentEnum(5, "image");
+        public static readonly ContentEnum Executable = new ContentEnum(6, "executable");
+
+        private ContentEnum(int value, string name) : base(value, name) { }
+    }
+    public class EnabledEnum : StringEnum {
+        public static readonly EnabledEnum All = new EnabledEnum(1, null);
+        public static readonly EnabledEnum True = new EnabledEnum(2, "true");
+        public static readonly EnabledEnum False = new EnabledEnum(3, "false");
+
+        private EnabledEnum(int value, string name) : base(value, name) { }
+        static public implicit operator bool? (EnabledEnum method) {
+            if (method == EnabledEnum.True) {
+                return true;
+            } else if (method == EnabledEnum.False) {
+                return false;
+            }
+            return null;
+        }
+
+    }
     public enum OrderEnum { ascending, descending }
     public enum MethodEnum { none, label, date, size, file, path, drivetype, title, track, time, artist, album, albumtype, genre, country, year, rating, votes, top250, programcount, playlist, episode, season, totalepisodes, watchedepisodes, tvshowstatus, tvshowtitle, sorttitle, productioncode, mpaa, studio, dateadded, lastplayed, playcount, listeners, bitrate, random }
     public enum MediaEnum { NULL, video, music, pictures, files, programs }
     public enum MediaNotNullEnum { video, music, pictures, files, programs }
-    public enum EnabledEnum { All, True, False }
-    public enum ContentEnum { Null, unknown, video, audio, image, executable }
+    //public enum EnabledEnum { All, True, False }
+    //public enum ContentEnum { Null, unknown, video, audio, image, executable }
     public enum AlbumartistonlyEnum { NULL, True, False }
     //public enum WindowsEnum { home, programs, pictures, filemanager, files, settings, music, video, videos, tv, pvr, pvrguideinfo, pvrrecordinginfo, pvrtimersetting, pvrgroupmanager, pvrchannelmanager, pvrguidesearch, pvrchannelscan, pvrupdateprogress, pvrosdchannels, pvrosdguide, pvrosddirector, pvrosdcutter, pvrosdteletext, systeminfo, testpattern, screencalibration, guicalibration, picturessettings, programssettings, weathersettings, musicsettings, systemsettings, videossettings, networksettings, servicesettings, appearancesettings, pvrsettings, tvsettings, scripts, videofiles, videolibrary, videoplaylist, loginscreen, profiles, skinsettings, addonbrowser, yesnodialog, progressdialog, virtualkeyboard, volumebar, submenu, favourites, contextmenu, infodialog, numericinput, gamepadinput, shutdownmenu, mutebug, playercontrols, seekbar, musicosd, addonsettings, visualisationsettings, visualisationpresetlist, osdvideosettings, osdaudiosettings, videobookmarks, filebrowser, networksetup, mediasource, profilesettings, locksettings, contentsettings, songinformation, smartplaylisteditor, smartplaylistrule, busydialog, pictureinfo, accesspoints, fullscreeninfo, karaokeselector, karaokelargeselector, sliderdialog, addoninformation, musicplaylist, musicfiles, musiclibrary, musicplaylisteditor, teletext, selectdialog, musicinformation, okdialog, movieinformation, textviewer, fullscreenvideo, fullscreenlivetv, visualisation, slideshow, filestackingdialog, karaoke, weather, screensaver, videoosd, videomenu, videotimeseek, musicoverlay, videooverlay, startwindow, startup, peripherals, peripheralsettings, extendedprogressdialog, mediafilter }
     //public enum ImageEnum { Null, info, warning, error }
