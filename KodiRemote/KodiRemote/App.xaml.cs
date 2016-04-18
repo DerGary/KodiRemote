@@ -43,7 +43,7 @@ namespace KodiRemote {
         /// </summary>
         /// <param name="e">Details über Startanforderung und -prozess.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e) {
-            ActiveKodi.Init("localhost", "9090", ConnectionType.Websocket);
+            ActiveKodi.Init("openelec", "9090", ConnectionType.Websocket);
 
             PrepareRootFrame();
 

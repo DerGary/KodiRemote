@@ -17,7 +17,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Filter {
         [DataMember(Name = "studio", EmitDefaultValue = false)]
         public string Studio { get; set; }
     }
-
+    [DataContract]
     public abstract class VideoFilterBase : FilterBase {
         [DataMember(Name = "actor", EmitDefaultValue = false)]
         public string Actor { get; set; }

@@ -10,6 +10,46 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
     [DataContract]
+    public class LibraryCollectionResultBase {
+        [DataMember(Name = "limits")]
+        public LimitsWithTotal Limits { get; set; }
+    }
+    [DataContract]
+    public class TVShowResult : LibraryCollectionResultBase {
+        [DataMember(Name = "tvshows")]
+        public List<TVShow> TVShows { get; set; }
+    }
+    [DataContract]
+    public class MovieResult : LibraryCollectionResultBase {
+        [DataMember(Name = "movies")]
+        public List<Movie> Movies { get; set; }
+    }
+    [DataContract]
+    public class MusicVideoResult : LibraryCollectionResultBase {
+        [DataMember(Name = "musicvideos")]
+        public List<MusicVideo> MusicVideos { get; set; }
+    }
+    [DataContract]
+    public class EpisodeResult : LibraryCollectionResultBase {
+        [DataMember(Name = "episodes")]
+        public List<Episode> Episodes { get; set; }
+    }
+    [DataContract]
+    public class GenreResult : LibraryCollectionResultBase {
+        [DataMember(Name = "genres")]
+        public List<Genre> Genres { get; set; }
+    }
+    [DataContract]
+    public class MovieSetResult : LibraryCollectionResultBase {
+        [DataMember(Name = "moviesets")]
+        public List<MovieSet> MovieSets { get; set; }
+    }
+    [DataContract]
+    public class TVShowSeasonResult : LibraryCollectionResultBase {
+        [DataMember(Name = "tvshowseasons")]
+        public List<TVShowSeason> TVShowSeasons { get; set; }
+    }
+    [DataContract]
     public abstract class Video {
         [DataMember(Name = "cast")]
         public Actor[] Cast { get; set; }
@@ -214,7 +254,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         public string Poster { get; set; }
     }
     [DataContract]
-    public class TvShowSeason {
+    public class TVShowSeason {
         [DataMember(Name = "art")]
         public TvShowSeasonArt Art { get; set; }
         [DataMember(Name = "episode")]
@@ -248,7 +288,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         public string Poster { get; set; }
     }
     [DataContract]
-    public class TvShow {
+    public class TVShow {
         [DataMember(Name = "art")]
         public TvShowArt Art { get; set; }
         [DataMember(Name = "episode")]

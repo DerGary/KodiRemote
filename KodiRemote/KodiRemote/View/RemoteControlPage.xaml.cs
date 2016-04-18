@@ -1,4 +1,5 @@
-﻿using KodiRemote.ViewModel;
+﻿using KodiRemote.Code.JSON.KVideoLibrary.Filter;
+using KodiRemote.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using KodiRemote.Code.JSON.KVideoLibrary.Results;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -31,7 +33,17 @@ namespace KodiRemote.View {
         }
 
         private void RemoteControlPage_Loaded(object sender, RoutedEventArgs e) {
+            ViewModel.Kodi.VideoLibrary.GetTVShowsReceived += VideoLibrary_GetTVShowsReceived;
+            ViewModel.Kodi.VideoLibrary.GetMoviesReceived += VideoLibrary_GetMoviesReceived;
+            ViewModel.Kodi.VideoLibrary.GetMovies();
+        }
 
+        private void VideoLibrary_GetMoviesReceived(MovieResult item) {
+            Debug.WriteLine(item);
+        }
+
+        private void VideoLibrary_GetTVShowsReceived(TVShowResult item) {
+            Debug.WriteLine(item);
         }
 
         private void Rectangle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) {

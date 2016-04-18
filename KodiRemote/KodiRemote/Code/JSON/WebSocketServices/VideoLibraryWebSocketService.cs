@@ -29,20 +29,20 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<bool> CleanReceived;
         public event ReceivedEventHandler<bool> ExportReceived;
         public event ReceivedEventHandler<Episode> GetEpisodeDetailsReceived;
-        public event ReceivedEventHandler<List<Episode>> GetEpisodesReceived;
-        public event ReceivedEventHandler<List<Genre>> GetGenresReceived;
+        public event ReceivedEventHandler<EpisodeResult> GetEpisodesReceived;
+        public event ReceivedEventHandler<GenreResult> GetGenresReceived;
         public event ReceivedEventHandler<Movie> GetMovieDetailsReceived;
         public event ReceivedEventHandler<MovieSetDetails> GetMovieSetDetailsReceived;
-        public event ReceivedEventHandler<List<MovieSet>> GetMovieSetsReceived;
-        public event ReceivedEventHandler<List<Movie>> GetMoviesReceived;
+        public event ReceivedEventHandler<MovieSetResult> GetMovieSetsReceived;
+        public event ReceivedEventHandler<MovieResult> GetMoviesReceived;
         public event ReceivedEventHandler<MusicVideo> GetMusicVideoDetailsReceived;
-        public event ReceivedEventHandler<List<MusicVideo>> GetMusicVideosReceived;
-        public event ReceivedEventHandler<List<Episode>> GetRecentlyAddedEpisodesReceived;
-        public event ReceivedEventHandler<List<Movie>> GetRecentlyAddedMoviesReceived;
-        public event ReceivedEventHandler<List<MusicVideo>> GetRecentlyAddedMusicVideosReceived;
-        public event ReceivedEventHandler<List<TvShowSeason>> GetSeasonsReceived;
-        public event ReceivedEventHandler<TvShow> GetTVShowDetailsReceived;
-        public event ReceivedEventHandler<List<TvShow>> GetTVShowsReceived;
+        public event ReceivedEventHandler<MusicVideoResult> GetMusicVideosReceived;
+        public event ReceivedEventHandler<EpisodeResult> GetRecentlyAddedEpisodesReceived;
+        public event ReceivedEventHandler<MovieResult> GetRecentlyAddedMoviesReceived;
+        public event ReceivedEventHandler<MusicVideoResult> GetRecentlyAddedMusicVideosReceived;
+        public event ReceivedEventHandler<TVShowSeasonResult> GetSeasonsReceived;
+        public event ReceivedEventHandler<TVShow> GetTVShowDetailsReceived;
+        public event ReceivedEventHandler<TVShowResult> GetTVShowsReceived;
         public event ReceivedEventHandler<bool> RemoveEpisodeReceived;
         public event ReceivedEventHandler<bool> RemoveMovieReceived;
         public event ReceivedEventHandler<bool> RemoveMusicVideoReceived;
@@ -64,10 +64,10 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 var item = JsonSerializer.FromJson<RPCResponse<Episode>>(message);
                 GetEpisodeDetailsReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetEpisodes.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<Episode>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<EpisodeResult>>(message);
                 GetEpisodesReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetGenres.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<Genre>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<GenreResult>>(message);
                 GetGenresReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetMovieDetails.ToInt()) {
                 var item = JsonSerializer.FromJson<RPCResponse<Movie>>(message);
@@ -76,34 +76,34 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 var item = JsonSerializer.FromJson<RPCResponse<MovieSetDetails>>(message);
                 GetMovieSetDetailsReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetMovieSets.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<MovieSet>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<MovieSetResult>>(message);
                 GetMovieSetsReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetMovies.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<Movie>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<MovieResult>>(message);
                 GetMoviesReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetMusicVideoDetails.ToInt()) {
                 var item = JsonSerializer.FromJson<RPCResponse<MusicVideo>>(message);
                 GetMusicVideoDetailsReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetMusicVideos.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<MusicVideo>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<MusicVideoResult>>(message);
                 GetMusicVideosReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetRecentlyAddedEpisodes.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<Episode>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<EpisodeResult>>(message);
                 GetRecentlyAddedEpisodesReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetRecentlyAddedMovies.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<Movie>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<MovieResult>>(message);
                 GetRecentlyAddedMoviesReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetRecentlyAddedMusicVideos.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<MusicVideo>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<MusicVideoResult>>(message);
                 GetRecentlyAddedMusicVideosReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetSeasons.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<TvShowSeason>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<TVShowSeasonResult>>(message);
                 GetSeasonsReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetTVShowDetails.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<TvShow>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<TVShow>>(message);
                 GetTVShowDetailsReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.GetTVShows.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<TvShow>>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<TVShowResult>>(message);
                 GetTVShowsReceived?.Invoke(item.Result);
             } else if (id == KVideoLibrary.Method.RemoveEpisode.ToInt()) {
                 ConvertResultToBool(RemoveEpisodeReceived, message);

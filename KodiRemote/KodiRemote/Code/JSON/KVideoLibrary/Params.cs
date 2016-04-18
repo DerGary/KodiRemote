@@ -1,5 +1,4 @@
 ﻿using KodiRemote.Code.JSON.General;
-using KodiRemote.Code.JSON.KVideoLibrary.DAO;
 using KodiRemote.Code.JSON.KVideoLibrary.Filter;
 using System;
 using System.Collections.Generic;
@@ -24,9 +23,9 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Params {
         public Sort Sort { get; set; }
     }
     [DataContract]
-    public class FilterLimitSortPropertyBase : LimitSortPropertyBase {
-        [DataMember(Name = "filter")]
-        public FilterBase Filter { get; set; }
+    public class FilterLimitSortPropertyBase<T> : LimitSortPropertyBase where T : FilterBase {
+        [DataMember(Name = "filter", EmitDefaultValue = false)]
+        public T Filter { get; set; }
     }
     [DataContract]
     public abstract class Options { }
@@ -93,7 +92,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Params {
     public class GetMovieSets : LimitSortPropertyBase { }
 
     [DataContract]
-    public class GetMovies : FilterLimitSortPropertyBase {
+    public class GetMovies : FilterLimitSortPropertyBase<MovieFilter> {
     }
 
     [DataContract]
@@ -103,7 +102,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Params {
     }
 
     [DataContract]
-    public class GetMusicVideos : FilterLimitSortPropertyBase { }
+    public class GetMusicVideos : FilterLimitSortPropertyBase<MusicVideoFilter> { }
 
     [DataContract]
     public class GetRecentlyAddedEpisodes : LimitSortPropertyBase { }
@@ -127,7 +126,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Params {
     }
 
     [DataContract]
-    public class GetTVShows : FilterLimitSortPropertyBase { }
+    public class GetTVShows : FilterLimitSortPropertyBase<TVShowFilter> { }
 
     [DataContract]
     public class RemoveEpisode {
