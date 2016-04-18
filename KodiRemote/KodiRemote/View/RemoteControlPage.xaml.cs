@@ -27,6 +27,11 @@ namespace KodiRemote.View {
 
         public RemoteControlPage() {
             this.InitializeComponent();
+            Loaded += RemoteControlPage_Loaded;
+        }
+
+        private void RemoteControlPage_Loaded(object sender, RoutedEventArgs e) {
+
         }
 
         private void Rectangle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) {

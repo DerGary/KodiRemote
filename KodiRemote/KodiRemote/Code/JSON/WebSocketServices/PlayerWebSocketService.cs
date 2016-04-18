@@ -279,52 +279,52 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             SendRequest(method, param);
         }
 
-        public void OpenPlaylist(int playListID, OptionalRepeatEnum repeat, int position = 0, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenPlaylist, new Playlist() { PlaylistId = playListID, Position = position }, new Options(shuffled, repeat, resume));
+        public void OpenPlaylist(int playListID, OptionalRepeatEnum repeat, int position = 0, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenPlaylist, new Playlist() { PlaylistId = playListID, Position = position }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenPicture, new Picture() { Path = path, Recursive = recursive }, new Options(shuffled, repeat, resume));
+        public void OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenPicture, new Picture() { Path = path, Recursive = recursive }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenMovie(int movieId, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenMovie, new Movie() { MovieId = movieId }, new Options(shuffled, repeat, resume));
+        public void OpenMovie(int movieId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenMovie, new Movie() { MovieId = movieId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenEpisode(int episodeId, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenEpisode, new Episode() { EpisodeId = episodeId }, new Options(shuffled, repeat, resume));
+        public void OpenEpisode(int episodeId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenEpisode, new Episode() { EpisodeId = episodeId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenMusicVideo(int musicVideoId, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenMusicVideo, new MusicVideo() { MusicVideoId = musicVideoId }, new Options(shuffled, repeat, resume));
+        public void OpenMusicVideo(int musicVideoId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenMusicVideo, new MusicVideo() { MusicVideoId = musicVideoId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenArtist(int artistId, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenArtist, new Artist() { ArtistId = artistId }, new Options(shuffled, repeat, resume));
+        public void OpenArtist(int artistId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenArtist, new Artist() { ArtistId = artistId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenAlbum(int albumId, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenAlbum, new Album() { AlbumId = albumId }, new Options(shuffled, repeat, resume));
+        public void OpenAlbum(int albumId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenAlbum, new Album() { AlbumId = albumId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenSong(int songId, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenSong, new Song() { SongId = songId }, new Options(shuffled, repeat, resume));
+        public void OpenSong(int songId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenSong, new Song() { SongId = songId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenGenre(int genreId, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenGenre, new Genre() { GenreId = genreId }, new Options(shuffled, repeat, resume));
+        public void OpenGenre(int genreId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenGenre, new Genre() { GenreId = genreId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenPartyMode, new PartyMode() { PartyModeValue = partymode }, new Options(shuffled, repeat, resume));
+        public void OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenPartyMode, new PartyMode() { PartyModeValue = partymode }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenPartyMode, new PartyMode() { PartyModeValue = smartPlayListPath }, new Options(shuffled, repeat, resume));
+        public void OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenPartyMode, new PartyMode() { PartyModeValue = smartPlayListPath }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
 
-        public void OpenChannel(int channelId, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null) {
-            Open(Method.OpenChannel, new Channel() { ChannelId = channelId }, new Options(shuffled, repeat, resume));
+        public void OpenChannel(int channelId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            Open(Method.OpenChannel, new Channel() { ChannelId = channelId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
         }
     }
 }

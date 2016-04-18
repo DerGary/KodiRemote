@@ -77,18 +77,18 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         event ReceivedEventHandler<bool> OpenGenreReceived;
         event ReceivedEventHandler<bool> OpenPartyModeReceived;
         event ReceivedEventHandler<bool> OpenChannelReceived;
-        void OpenPlaylist(int playListID, OptionalRepeatEnum repeat, int position = 0, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenMovie(int movieID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenEpisode(int episodeID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenMusicVideo(int musicVideoID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenArtist(int artistID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenAlbum(int albumID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenSong(int songID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenGenre(int genreID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
-        void OpenChannel(int channelID, OptionalRepeatEnum repeat, OptionalBooleanEnum shuffled = OptionalBooleanEnum.Null, OptionalBooleanEnum resume = OptionalBooleanEnum.Null);
+        void OpenPlaylist(int playListID, OptionalRepeatEnum repeat, int position = 0, bool? shuffled = null, bool? resume = null);
+        void OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, bool? shuffled = null, bool? resume = null);
+        void OpenMovie(int movieID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenEpisode(int episodeID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenMusicVideo(int musicVideoID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenArtist(int artistID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenAlbum(int albumID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenSong(int songID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenGenre(int genreID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        void OpenChannel(int channelID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
         //#endregion openThings
     }
 }

@@ -18,6 +18,9 @@ namespace KodiRemote.Code.JSON {
         public IGUIService GUI { get; private set; }
         public ISystemService System { get; private set; }
         public IAddonsService Addons { get; private set; }
+        public IFilesService Files { get; private set; }
+        public IJSONRPCService JSONRPC { get; private set; }
+        public IPVRService PVR { get; private set; }
 
         private bool connected = true;
         public bool Connected {
@@ -47,9 +50,12 @@ namespace KodiRemote.Code.JSON {
                 Connection = new WebSocketHelper();
                 Connection.ConnectionClosed += ConnectionClosed;
 
+                PVR = new PVRWebSocketService(Connection);
+                JSONRPC = new JSONRPCWebSocketService(Connection);
                 GUI = new GUIWebSocketService(Connection);
                 Addons = new AddonsWebSocketService(Connection);
                 System = new SystemWebSocketService(Connection);
+                Files = new FilesWebSocketService(Connection);
                 Application = new ApplicationWebSocketService(Connection);
                 Application.OnVolumeChanged += Application_OnVolumeChanged;
                 Input = new InputWebSocketService(Connection);

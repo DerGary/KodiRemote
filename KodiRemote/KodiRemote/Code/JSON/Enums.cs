@@ -2,7 +2,6 @@
 
 namespace KodiRemote.Code.JSON.Enums {
     //public enum ToggleEnum { Toggle, True, False }
-    public enum OptionalBooleanEnum { Null, True, False }
     public class IncDecEnum : StringEnum {
         public static readonly IncDecEnum Increment = new IncDecEnum(1, "increment");
         public static readonly IncDecEnum Decrement = new IncDecEnum(2, "decrement");
@@ -22,7 +21,14 @@ namespace KodiRemote.Code.JSON.Enums {
                 return false;
             }
         }
-
+        static public implicit operator bool? (ToggleEnum method) {
+            if (method == ToggleEnum.True) {
+                return true;
+            } else if (method == ToggleEnum.False) {
+                return false;
+            }
+            return null;
+        }
     }
     public class ToEnum : StringEnum {
         public static readonly ToEnum Previous = new ToEnum(1, "previous");
@@ -75,7 +81,7 @@ namespace KodiRemote.Code.JSON.Enums {
         private ExtendRepeatEnum(int value, string name) : base(value, name) { }
     }
     public class OptionalRepeatEnum : StringEnum {
-        public static readonly OptionalRepeatEnum Null = new OptionalRepeatEnum(1, "null");
+        public static readonly OptionalRepeatEnum Null = new OptionalRepeatEnum(1, null);
         public static readonly OptionalRepeatEnum Off = new OptionalRepeatEnum(2, "off");
         public static readonly OptionalRepeatEnum One = new OptionalRepeatEnum(3, "one");
         public static readonly OptionalRepeatEnum All = new OptionalRepeatEnum(4, "all");
@@ -416,10 +422,35 @@ namespace KodiRemote.Code.JSON.Enums {
         }
 
     }
+    public class MediaEnum : StringEnum {
+        public static readonly MediaEnum Null = new MediaEnum(1, null);
+        public static readonly MediaEnum Video = new MediaEnum(2, "video");
+        public static readonly MediaEnum Music = new MediaEnum(3, "music");
+        public static readonly MediaEnum Pictures = new MediaEnum(4, "pictures");
+        public static readonly MediaEnum Files = new MediaEnum(5, "files");
+        public static readonly MediaEnum Programs = new MediaEnum(6, "programs");
+
+        private MediaEnum(int value, string name) : base(value, name) { }
+    }
+    public class MediaNotNullEnum : StringEnum {
+        public static readonly MediaNotNullEnum Video = new MediaNotNullEnum(2, "video");
+        public static readonly MediaNotNullEnum Music = new MediaNotNullEnum(3, "music");
+        public static readonly MediaNotNullEnum Pictures = new MediaNotNullEnum(4, "pictures");
+        public static readonly MediaNotNullEnum Files = new MediaNotNullEnum(5, "files");
+        public static readonly MediaNotNullEnum Programs = new MediaNotNullEnum(6, "programs");
+
+        private MediaNotNullEnum(int value, string name) : base(value, name) { }
+    }
+    public class ChannelTypeEnum : StringEnum {
+        public static readonly ChannelTypeEnum TV = new ChannelTypeEnum(1, "tv");
+        public static readonly ChannelTypeEnum Radio = new ChannelTypeEnum(2, "radio");
+
+        private ChannelTypeEnum(int value, string name) : base(value, name) { }
+    }
     public enum OrderEnum { ascending, descending }
     public enum MethodEnum { none, label, date, size, file, path, drivetype, title, track, time, artist, album, albumtype, genre, country, year, rating, votes, top250, programcount, playlist, episode, season, totalepisodes, watchedepisodes, tvshowstatus, tvshowtitle, sorttitle, productioncode, mpaa, studio, dateadded, lastplayed, playcount, listeners, bitrate, random }
-    public enum MediaEnum { NULL, video, music, pictures, files, programs }
-    public enum MediaNotNullEnum { video, music, pictures, files, programs }
+    //public enum MediaEnum { NULL, video, music, pictures, files, programs }
+    //public enum MediaNotNullEnum { video, music, pictures, files, programs }
     //public enum EnabledEnum { All, True, False }
     //public enum ContentEnum { Null, unknown, video, audio, image, executable }
     public enum AlbumartistonlyEnum { NULL, True, False }
@@ -433,6 +464,6 @@ namespace KodiRemote.Code.JSON.Enums {
     public enum SpeedNumbersEnum : int { minusthirtytwo = -32, minussixteen = -16, minuseight = -8, minusfour = -4, minustwo = -2, minusone = -1, zero = 0, one = 1, two = 2, four = 4, eight = 8, sixteen = 16, thirtytwo = 32 }
 
     public enum ZoomNumbersEnum : int { one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8, nine = 9, ten = 10 }
-    public enum ChannelTypeEnum { tv, radio }
+    //public enum ChannelTypeEnum { tv, radio }
     public enum TypeEnum { movie, tvshow, musicvideo }
 }

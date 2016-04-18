@@ -214,25 +214,6 @@ namespace KodiRemote.Code.JSON.KPlayer.Params {
     }
     [DataContract]
     public class Options {
-        public Options() { }
-        public Options(OptionalBooleanEnum shuffled, OptionalRepeatEnum repeat, OptionalBooleanEnum resume) {
-            if (shuffled == OptionalBooleanEnum.True) {
-                Shuffled = true;
-            } else if (shuffled == OptionalBooleanEnum.False) {
-                Shuffled = false;
-            }
-
-            if (repeat != OptionalRepeatEnum.Null) {
-                Repeat = repeat;
-            }
-
-            if (resume == OptionalBooleanEnum.True) {
-                Resume = true;
-            } else if (resume == OptionalBooleanEnum.False) {
-                Resume = false;
-            }
-        }
-
         [DataMember(Name = "shuffled", EmitDefaultValue = false)]
         public bool? Shuffled { get; set; }
         [DataMember(Name = "repeat", EmitDefaultValue = false)]
