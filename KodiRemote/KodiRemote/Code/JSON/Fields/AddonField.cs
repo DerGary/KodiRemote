@@ -36,7 +36,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Rating = true;
             Enabled = true;
         }
-        public List<String> ToList() {
+        public List<string> ToList() {
             List<string> list = new List<string>();
             if (Name)
                 list.Add("name");

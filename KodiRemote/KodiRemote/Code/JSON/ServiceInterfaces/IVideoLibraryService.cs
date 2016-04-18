@@ -1,6 +1,7 @@
 ﻿using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General;
+using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.KVideoLibrary.Filter;
 using KodiRemote.Code.JSON.KVideoLibrary.Notifications;
 using KodiRemote.Code.JSON.KVideoLibrary.Params;
@@ -25,20 +26,20 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
 
         event ReceivedEventHandler<bool> CleanReceived;
         event ReceivedEventHandler<bool> ExportReceived;
-        event ReceivedEventHandler<Episode> GetEpisodeDetailsReceived;
+        event ReceivedEventHandler<KVideoLibrary.Results.Episode> GetEpisodeDetailsReceived;
         event ReceivedEventHandler<EpisodeResult> GetEpisodesReceived;
         event ReceivedEventHandler<GenreResult> GetGenresReceived;
-        event ReceivedEventHandler<Movie> GetMovieDetailsReceived;
+        event ReceivedEventHandler<KVideoLibrary.Results.Movie> GetMovieDetailsReceived;
         event ReceivedEventHandler<MovieSetDetails> GetMovieSetDetailsReceived;
         event ReceivedEventHandler<MovieSetResult> GetMovieSetsReceived;
         event ReceivedEventHandler<MovieResult> GetMoviesReceived;
-        event ReceivedEventHandler<MusicVideo> GetMusicVideoDetailsReceived;
+        event ReceivedEventHandler<KVideoLibrary.Results.MusicVideo> GetMusicVideoDetailsReceived;
         event ReceivedEventHandler<MusicVideoResult> GetMusicVideosReceived;
         event ReceivedEventHandler<EpisodeResult> GetRecentlyAddedEpisodesReceived;
         event ReceivedEventHandler<MovieResult> GetRecentlyAddedMoviesReceived;
         event ReceivedEventHandler<MusicVideoResult> GetRecentlyAddedMusicVideosReceived;
         event ReceivedEventHandler<TVShowSeasonResult> GetSeasonsReceived;
-        event ReceivedEventHandler<TVShow> GetTVShowDetailsReceived;
+        event ReceivedEventHandler<KVideoLibrary.Results.TVShow> GetTVShowDetailsReceived;
         event ReceivedEventHandler<TVShowResult> GetTVShowsReceived;
         event ReceivedEventHandler<bool> RemoveEpisodeReceived;
         event ReceivedEventHandler<bool> RemoveMovieReceived;
@@ -73,9 +74,9 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         void RemoveMusicVideo(int musicVideoId);
         void RemoveTVShow(int tvShowId);
         void Scan(string directory = null);
-        void SetEpisodeDetails(EpisodeDetails details);
-        void SetMovieDetails(MovieDetails details);
-        void SetMusicVideoDetails(MusicVideoDetails details);
-        void SetTVShowDetails(TVShowDetails details);
+        void SetEpisodeDetails(KVideoLibrary.Params.SetEpisodeDetails details);
+        void SetMovieDetails(KVideoLibrary.Params.SetMovieDetails details);
+        void SetMusicVideoDetails(KVideoLibrary.Params.SetMusicVideoDetails details);
+        void SetTVShowDetails(KVideoLibrary.Params.SetTVShowDetails details);
     }
 }

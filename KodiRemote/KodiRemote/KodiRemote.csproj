@@ -114,7 +114,9 @@
     <Compile Include="Code\JSON\Delegates.cs" />
     <Compile Include="Code\JSON\Enums.cs" />
     <Compile Include="Code\JSON\Fields\AddonField.cs" />
+    <Compile Include="Code\JSON\Fields\AlbumField.cs" />
     <Compile Include="Code\JSON\Fields\ApplicationField.cs" />
+    <Compile Include="Code\JSON\Fields\ArtistField.cs" />
     <Compile Include="Code\JSON\Fields\EpisodeField.cs" />
     <Compile Include="Code\JSON\Fields\FileField.cs" />
     <Compile Include="Code\JSON\Fields\GenreField.cs" />
@@ -128,11 +130,15 @@
     <Compile Include="Code\JSON\Fields\PVRChannelField.cs" />
     <Compile Include="Code\JSON\Fields\PVRField.cs" />
     <Compile Include="Code\JSON\Fields\SeasonField.cs" />
+    <Compile Include="Code\JSON\Fields\SongField.cs" />
     <Compile Include="Code\JSON\Fields\SystemField.cs" />
     <Compile Include="Code\JSON\Fields\TVShowField.cs" />
     <Compile Include="Code\JSON\General\Actor.cs" />
+    <Compile Include="Code\JSON\General\Filter.cs" />
     <Compile Include="Code\JSON\General\Limit.cs" />
     <Compile Include="Code\JSON\General\Limits.cs" />
+    <Compile Include="Code\JSON\General\Params.cs" />
+    <Compile Include="Code\JSON\General\Results.cs" />
     <Compile Include="Code\JSON\General\ResumeTime.cs" />
     <Compile Include="Code\JSON\General\Sort.cs" />
     <Compile Include="Code\JSON\General\Streams.cs" />
@@ -146,6 +152,12 @@
     <Compile Include="Code\JSON\KApplication\Notifications.cs" />
     <Compile Include="Code\JSON\KApplication\Params.cs" />
     <Compile Include="Code\JSON\KApplication\Results.cs" />
+    <Compile Include="Code\JSON\KAudioLibrary\Filter.cs" />
+    <Compile Include="Code\JSON\KAudioLibrary\Method.cs" />
+    <Compile Include="Code\JSON\KAudioLibrary\Notification.cs" />
+    <Compile Include="Code\JSON\KAudioLibrary\Notifications.cs" />
+    <Compile Include="Code\JSON\KAudioLibrary\Params.cs" />
+    <Compile Include="Code\JSON\KAudioLibrary\Results.cs" />
     <Compile Include="Code\JSON\KFiles\Method.cs" />
     <Compile Include="Code\JSON\KFiles\Params.cs" />
     <Compile Include="Code\JSON\KFiles\Results.cs" />
@@ -172,7 +184,6 @@
     <Compile Include="Code\JSON\KSystem\Notification.cs" />
     <Compile Include="Code\JSON\KSystem\Params.cs" />
     <Compile Include="Code\JSON\KSystem\Results.cs" />
-    <Compile Include="Code\JSON\KVideoLibrary\DAO.cs" />
     <Compile Include="Code\JSON\KVideoLibrary\Filter.cs" />
     <Compile Include="Code\JSON\KVideoLibrary\Method.cs" />
     <Compile Include="Code\JSON\KVideoLibrary\Notification.cs" />
@@ -182,6 +193,7 @@
     <Compile Include="Code\JSON\RPCBase.cs" />
     <Compile Include="Code\JSON\ServiceInterfaces\IAddonsService.cs" />
     <Compile Include="Code\JSON\ServiceInterfaces\IApplicationService.cs" />
+    <Compile Include="Code\JSON\ServiceInterfaces\IAudioLibraryService.cs" />
     <Compile Include="Code\JSON\ServiceInterfaces\IFilesService.cs" />
     <Compile Include="Code\JSON\ServiceInterfaces\IGUIService.cs" />
     <Compile Include="Code\JSON\ServiceInterfaces\IInputService.cs" />

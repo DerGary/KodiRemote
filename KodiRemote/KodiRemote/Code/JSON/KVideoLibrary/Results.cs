@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.JSON.General;
+using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.KFiles.Params;
 using KodiRemote.Code.JSON.KJSONRPC.Params;
 using System;
@@ -9,11 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
-    [DataContract]
-    public class LibraryCollectionResultBase {
-        [DataMember(Name = "limits")]
-        public LimitsWithTotal Limits { get; set; }
-    }
     [DataContract]
     public class TVShowResult : LibraryCollectionResultBase {
         [DataMember(Name = "tvshows")]
@@ -35,11 +31,6 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         public List<Episode> Episodes { get; set; }
     }
     [DataContract]
-    public class GenreResult : LibraryCollectionResultBase {
-        [DataMember(Name = "genres")]
-        public List<Genre> Genres { get; set; }
-    }
-    [DataContract]
     public class MovieSetResult : LibraryCollectionResultBase {
         [DataMember(Name = "moviesets")]
         public List<MovieSet> MovieSets { get; set; }
@@ -49,6 +40,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         [DataMember(Name = "tvshowseasons")]
         public List<TVShowSeason> TVShowSeasons { get; set; }
     }
+
     [DataContract]
     public abstract class Video {
         [DataMember(Name = "cast")]
@@ -130,17 +122,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         [DataMember(Name = "thumb")]
         public string Thumb { get; set; }
     }
-    [DataContract]
-    public class Genre {
-        [DataMember(Name = "genreid")]
-        public int GenreId { get; set; }
-        [DataMember(Name = "label")]
-        public string Label { get; set; }
-        [DataMember(Name = "title")]
-        public string Title { get; set; }
-        [DataMember(Name = "thumbnail")]
-        public string Thumbnail { get; set; }
-    }
+
     [DataContract]
     public class Movie : Video {
         [DataMember(Name = "movieid")]

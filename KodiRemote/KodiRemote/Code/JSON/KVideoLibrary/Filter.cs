@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KodiRemote.Code.JSON.General.Filter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -7,27 +8,23 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.KVideoLibrary.Filter {
     [DataContract]
-    public class FilterBase {
-        [DataMember(Name = "genreid", EmitDefaultValue = false)]
-        public int GenreId { get; set; }
-        [DataMember(Name = "genre", EmitDefaultValue = false)]
-        public string Genre { get; set; }
+    public class VideoLibraryFilterBase : FilterBase {
         [DataMember(Name = "year", EmitDefaultValue = false)]
         public int Year { get; set; }
         [DataMember(Name = "studio", EmitDefaultValue = false)]
         public string Studio { get; set; }
     }
     [DataContract]
-    public abstract class VideoFilterBase : FilterBase {
+    public abstract class VideoFilterBase : VideoLibraryFilterBase {
         [DataMember(Name = "actor", EmitDefaultValue = false)]
         public string Actor { get; set; }
     }
 
     [DataContract]
-    public class TVShowFilter : FilterBase { }
+    public class TVShowFilter : VideoLibraryFilterBase { }
 
     [DataContract]
-    public class MusicVideoFilter : FilterBase {
+    public class MusicVideoFilter : VideoLibraryFilterBase {
         [DataMember(Name = "artist", EmitDefaultValue = false)]
         public string Artist { get; set; }
         [DataMember(Name = "director", EmitDefaultValue = false)]
