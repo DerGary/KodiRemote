@@ -465,5 +465,12 @@ namespace KodiRemote.Code.JSON.Enums {
 
     public enum ZoomNumbersEnum : int { one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8, nine = 9, ten = 10 }
     //public enum ChannelTypeEnum { tv, radio }
-    public enum TypeEnum { movie, tvshow, musicvideo }
+    public class TypeEnum : StringEnum {
+        public static readonly TypeEnum Movie = new TypeEnum(1, "movie");
+        public static readonly TypeEnum TVShow = new TypeEnum(2, "tvshow");
+        public static readonly TypeEnum MusicVideo = new TypeEnum(3, "musicvideo");
+
+        private TypeEnum(int value, string name) : base(value, name) { }
+    }
+    //public enum TypeEnum { movie, tvshow, musicvideo }
 }

@@ -21,6 +21,7 @@ namespace KodiRemote.Code.JSON {
         public IFilesService Files { get; private set; }
         public IJSONRPCService JSONRPC { get; private set; }
         public IPVRService PVR { get; private set; }
+        public IVideoLibraryService VideoLibrary { get; private set; }
 
         private bool connected = true;
         public bool Connected {
@@ -50,6 +51,7 @@ namespace KodiRemote.Code.JSON {
                 Connection = new WebSocketHelper();
                 Connection.ConnectionClosed += ConnectionClosed;
 
+                VideoLibrary = new VideoLibraryWebSocketService(Connection);
                 PVR = new PVRWebSocketService(Connection);
                 JSONRPC = new JSONRPCWebSocketService(Connection);
                 GUI = new GUIWebSocketService(Connection);

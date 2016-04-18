@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XBMCRemote.JSONRPCClasses {
+namespace KodiRemote.Code.JSON.General {
     [DataContract]
     public class Sort {
         [DataMember(Name = "order")]

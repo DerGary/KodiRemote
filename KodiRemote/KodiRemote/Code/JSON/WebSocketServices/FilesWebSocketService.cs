@@ -8,7 +8,6 @@ using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KFiles.Results;
-using XBMCRemote.JSONRPCClasses;
 using KodiRemote.Code.Utils;
 using KodiRemote.Code.JSON.KFiles;
 using KodiRemote.Code.JSON.KFiles.Params;
@@ -66,7 +65,5 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public void PrepareDownload(string path) {
             SendRequest(Method.PrepareDownload, new PrepareDownload() { Path = path });
         }
-
-
     }
 }

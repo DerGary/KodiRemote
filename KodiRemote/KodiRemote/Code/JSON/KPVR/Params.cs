@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using XBMCRemote.JSONRPCClasses;
 
 namespace KodiRemote.Code.JSON.KPVR.Params {
 

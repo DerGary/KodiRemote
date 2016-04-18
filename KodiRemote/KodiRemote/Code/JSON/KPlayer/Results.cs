@@ -69,7 +69,7 @@ namespace KodiRemote.Code.JSON.KPlayer.Results {
         [DataMember(Name = "position")]
         public int Position { get; set; }
         [DataMember(Name = "repeat")]
-        public String Repeat { get; set; }
+        public string Repeat { get; set; }
         [DataMember(Name = "shuffled")]
         public bool Shuffled { get; set; }
         [DataMember(Name = "speed")]
@@ -83,15 +83,7 @@ namespace KodiRemote.Code.JSON.KPlayer.Results {
         [DataMember(Name = "totaltime")]
         public Time TotalTime { get; set; }
         [DataMember(Name = "type")]
-        public String Type { get; set; }
-    }
-
-    [DataContract]
-    public class ResumeTime {
-        [DataMember(Name = "position")]
-        public float Position { get; set; }
-        [DataMember(Name = "total")]
-        public float Total { get; set; }
+        public string Type { get; set; }
     }
 
     [DataContract]
@@ -258,50 +250,5 @@ namespace KodiRemote.Code.JSON.KPlayer.Results {
         public int endtime { get; set; }
     }
 
-    [DataContract]
-    public class Actor {
-        [DataMember(Name = "name")]
-        public string name { get; set; }
-        [DataMember(Name = "role")]
-        public string role { get; set; }
-        [DataMember(Name = "thumbnail")]
-        public string thumbnail { get; set; }
-    }
-    [DataContract]
-    public class AudioStream {
-        [DataMember(Name = "channels")]
-        public int Channels { get; set; }
-        [DataMember(Name = "bitrate")]
-        public int Bitrate { get; set; }
-        [DataMember(Name = "codec")]
-        public String Codec { get; set; }
-        [DataMember(Name = "language")]
-        public String Language { get; set; }
-        [DataMember(Name = "index")]
-        public int Index { get; set; }
-        [DataMember(Name = "name")]
-        public String Name { get; set; }
-    }
-    [DataContract]
-    public class SubtitleStream {
-        [DataMember(Name = "language")]
-        public String Language { get; set; }
-        [DataMember(Name = "index")]
-        public int Index { get; set; }
-        [DataMember(Name = "name")]
-        public String Name { get; set; }
-    }
-    [DataContract]
-    public class VideoStream {
-        [DataMember(Name = "aspect")]
-        public float Aspect { get; set; }
-        [DataMember(Name = "codec")]
-        public String Codec { get; set; }
-        [DataMember(Name = "duration")]
-        public int Duration { get; set; }
-        [DataMember(Name = "height")]
-        public int Height { get; set; }
-        [DataMember(Name = "width")]
-        public int Width { get; set; }
-    }
+
 }
