@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON;
+﻿using KodiRemote.Code;
+using KodiRemote.Code.JSON;
 using KodiRemote.View;
 using KodiRemote.View.Base;
 using KodiRemote.ViewModel;
@@ -42,9 +43,9 @@ namespace KodiRemote {
         /// werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
         /// </summary>
         /// <param name="e">Details über Startanforderung und -prozess.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e) {
-            ActiveKodi.Init("openelec", "9090", ConnectionType.Websocket);
-
+        protected override async void OnLaunched(LaunchActivatedEventArgs e) {
+            await ActiveKodi.Init("localhost", "9090", ConnectionType.Websocket);
+            Test.StartTest();
             PrepareRootFrame();
 
             if (_rootFrame.Content == null) {

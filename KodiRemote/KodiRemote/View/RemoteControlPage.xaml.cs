@@ -33,9 +33,9 @@ namespace KodiRemote.View {
         }
 
         private void RemoteControlPage_Loaded(object sender, RoutedEventArgs e) {
-            ViewModel.Kodi.VideoLibrary.GetTVShowsReceived += VideoLibrary_GetTVShowsReceived;
-            ViewModel.Kodi.VideoLibrary.GetMoviesReceived += VideoLibrary_GetMoviesReceived;
-            ViewModel.Kodi.VideoLibrary.GetMovies();
+            //ViewModel.Kodi.VideoLibrary.GetTVShowsReceived += VideoLibrary_GetTVShowsReceived;
+            //ViewModel.Kodi.VideoLibrary.GetMoviesReceived += VideoLibrary_GetMoviesReceived;
+            //ViewModel.Kodi.VideoLibrary.GetMovies();
         }
 
         private void VideoLibrary_GetMoviesReceived(MovieResult item) {

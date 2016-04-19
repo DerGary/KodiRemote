@@ -204,6 +204,7 @@
     <Compile Include="Code\JSON\ServiceInterfaces\IVideoLibraryService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\AddonsWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\ApplicationWebSocketService.cs" />
+    <Compile Include="Code\JSON\WebSocketServices\AudioLibraryWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\FilesWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\GUIWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\InputWebSocketService.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Code\JSON\WebSocketServices\SystemWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\VideoLibraryWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\WebSocketServiceBase.cs" />
+    <Compile Include="Code\Test.cs" />
     <Compile Include="Code\Utils\JsonSerializer.cs" />
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />

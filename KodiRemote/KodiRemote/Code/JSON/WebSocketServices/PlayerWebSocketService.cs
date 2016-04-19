@@ -11,6 +11,7 @@ using KodiRemote.Code.JSON.KPlayer;
 using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KPlayer.Params;
+using KodiRemote.Code.JSON.KPlayer.Results;
 
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public class PlayerWebSocketService : WebSocketServiceBase, IPlayerService {
@@ -27,7 +28,6 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<KPlayer.Results.Item> ItemReceived;
         public event ReceivedEventHandler<List<KPlayer.Results.Player>> PlayersReceived;
         public event ReceivedEventHandler<KPlayer.Results.Properties> PropertiesReceived;
-        public event ReceivedEventHandler<KPlayer.Results.Speed> SpeedChangedReceived;
         public event ReceivedEventHandler<KPlayer.Results.Seek> SeekReceived;
         public event ReceivedEventHandler<bool> StopReceived;
         public event ReceivedEventHandler<bool> GoToReceived;
@@ -50,6 +50,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<bool> OpenGenreReceived;
         public event ReceivedEventHandler<bool> OpenPartyModeReceived;
         public event ReceivedEventHandler<bool> OpenChannelReceived;
+        public event ReceivedEventHandler<bool> PlayPauseReceived;
+        public event ReceivedEventHandler<Speed> SetSpeedReceived;
         #endregion events
 
         public PlayerWebSocketService(WebSocketHelper helper) : base(helper) { }
@@ -68,7 +70,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 PropertiesReceived?.Invoke(item.Result);
             } else if (id == KPlayer.Method.SetSpeed.ToInt() || id == KPlayer.Method.PlayPause.ToInt()) {
                 var item = JsonSerializer.FromJson<RPCResponse<KPlayer.Results.Speed>>(message);
-                SpeedChangedReceived?.Invoke(item.Result);
+                SetSpeedReceived?.Invoke(item.Result);
             } else if (id == KPlayer.Method.Seek.ToInt()) {
                 var item = JsonSerializer.FromJson<RPCResponse<KPlayer.Results.Seek>>(message);
                 SeekReceived?.Invoke(item.Result);
@@ -114,6 +116,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 ConvertResultToBool(OpenPartyModeReceived, message);
             } else if (id == KPlayer.Method.OpenChannel.ToInt()) {
                 ConvertResultToBool(OpenChannelReceived, message);
+            } else if (id == KPlayer.Method.PlayPause.ToInt()) {
+                ConvertResultToBool(PlayPauseReceived, message);
             }
         }
 
@@ -271,7 +275,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             }
         }
 
-        private void Open<T>(Method method, T item, Options options) where T : Item {
+        private void Open<T>(Method method, T item, Options options) where T : KPlayer.Params.Item {
             var param = new Open<T>() {
                 Item = item,
                 Options = options

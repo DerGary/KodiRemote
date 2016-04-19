@@ -92,7 +92,7 @@ namespace KodiRemote.Code.JSON {
             }
         }
         public static event KodiChangedEventHandler KodiChanged;
-        public static async void Init(string hostname, string port, ConnectionType type) {
+        public static async Task Init(string hostname, string port, ConnectionType type) {
             Instance = new ActiveKodi(hostname, port, type);
             await Instance.Connect();
         }

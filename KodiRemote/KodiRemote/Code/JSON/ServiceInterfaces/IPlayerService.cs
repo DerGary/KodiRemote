@@ -26,11 +26,11 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         void GetItem(int playerid, ItemField properties = null);
         void GetProperties(int playerid, PlayerField properties = null);
 
-
-        event ReceivedEventHandler<KPlayer.Results.Speed> SpeedChangedReceived;
-        event ReceivedEventHandler<KPlayer.Results.Seek> SeekReceived;
+        event ReceivedEventHandler<bool> PlayPauseReceived;
+        event ReceivedEventHandler<KPlayer.Results.Speed> SetSpeedReceived;
         event ReceivedEventHandler<bool> StopReceived;
         event ReceivedEventHandler<bool> GoToReceived;
+        event ReceivedEventHandler<KPlayer.Results.Seek> SeekReceived;
         void PlayPause(int playerID, ToggleEnum play);
         void SetSpeed(int playerID, SpeedNumbersEnum speed);
         void SetSpeed(int playerID, IncDecEnum speed);

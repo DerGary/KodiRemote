@@ -16,7 +16,7 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         event ReceivedEventHandler<KApplication.Results.ApplicationProperties> GetPropertiesReceived;
         event ReceivedEventHandler<bool> QuitReceived;
         event ReceivedEventHandler<bool> SetMuteReceived;
-        event ReceivedEventHandler<bool> SetVolumeReceived;
+        event ReceivedEventHandler<int> SetVolumeReceived;
         void GetProperties(ApplicationField properties);
         void Quit();
         void SetMute(ToggleEnum mute);

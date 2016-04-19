@@ -41,6 +41,19 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 eventHandler?.Invoke(false);
             }
         }
+        protected void DeserializeMessageAndTriggerEvent<T>(ReceivedEventHandler<T> eventHandler, string message) {
+            var item = JsonSerializer.FromJson<RPCResponse<T>>(message);
+            eventHandler?.Invoke(item.Result);
+        }
+        protected void DeserializeNotificationAndTriggerEvent<T>(ReceivedEventHandler<T> eventHandler, string notification) {
+            var item = JsonSerializer.FromJson<RPCNotification<NotificationParams<T>>>(notification);
+            eventHandler?.Invoke(item.Params.Data);
+        }
+        protected void DeserializeNotificationAndTriggerEvent(ReceivedEventHandler eventHandler, string notification) {
+            eventHandler?.Invoke();
+        }
+
+
         protected void SendRequest<T>(StringEnum method, T param) {
             RPCRequest<T> request = new RPCRequest<T>(method) {
                 Params = param

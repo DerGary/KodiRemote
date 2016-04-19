@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class ApplicationField : IField {
+    public class ApplicationField : Field<ApplicationField> {
         public bool Volume { get; set; }
         public bool Muted { get; set; }
         public bool Name { get; set; }
         public bool Version { get; set; }
-        public void All() {
+        public override void All() {
             Volume = true;
             Muted = true;
             Name = true;
             Version = true;
         }
-        public List<string> ToList() {
+        public override List<string> ToList() {
             List<string> list = new List<string>();
             if (Volume)
                 list.Add("volume");

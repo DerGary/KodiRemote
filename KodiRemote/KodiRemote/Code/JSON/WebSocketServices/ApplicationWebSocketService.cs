@@ -22,21 +22,20 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<ApplicationProperties> GetPropertiesReceived;
         public event ReceivedEventHandler<bool> QuitReceived;
         public event ReceivedEventHandler<bool> SetMuteReceived;
-        public event ReceivedEventHandler<bool> SetVolumeReceived;
+        public event ReceivedEventHandler<int> SetVolumeReceived;
         #endregion Events
 
         public ApplicationWebSocketService(WebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(int id, string message) {
             if (id == Method.GetProperties.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<ApplicationProperties>>(message);
-                GetPropertiesReceived?.Invoke(item.Result);
+                DeserializeMessageAndTriggerEvent(GetPropertiesReceived, message);
             } else if (id == Method.Quit.ToInt()) {
                 ConvertResultToBool(QuitReceived, message);
             } else if (id == Method.SetMute.ToInt()) {
-                ConvertResultToBool(SetMuteReceived, message);
+                DeserializeMessageAndTriggerEvent(SetMuteReceived, message);
             } else if (id == Method.SetVolume.ToInt()) {
-                ConvertResultToBool(SetVolumeReceived, message);
+                DeserializeMessageAndTriggerEvent(SetVolumeReceived, message);
             }
         }
 
@@ -49,10 +48,9 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
 
         public void GetProperties(ApplicationField properties) {
             if (properties == null) {
-                SendRequest(Method.GetProperties);
-            } else {
-                SendRequest(Method.GetProperties, new Properties() { PropertiesValue = properties.ToList() });
+                throw new ArgumentException("properties");
             }
+            SendRequest(Method.GetProperties, new Properties() { PropertiesValue = properties.ToList() });
         }
 
         public void Quit() {
