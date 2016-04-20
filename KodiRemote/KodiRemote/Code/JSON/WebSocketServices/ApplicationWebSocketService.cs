@@ -18,59 +18,60 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<Data> OnVolumeChanged;
         #endregion Notifications
 
-        #region Events
-        public event ReceivedEventHandler<ApplicationProperties> GetPropertiesReceived;
-        public event ReceivedEventHandler<bool> QuitReceived;
-        public event ReceivedEventHandler<bool> SetMuteReceived;
-        public event ReceivedEventHandler<int> SetVolumeReceived;
-        #endregion Events
 
         public ApplicationWebSocketService(WebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(int id, string message) {
-            if (id == Method.GetProperties.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetPropertiesReceived, message);
-            } else if (id == Method.Quit.ToInt()) {
-                ConvertResultToBool(QuitReceived, message);
-            } else if (id == Method.SetMute.ToInt()) {
-                DeserializeMessageAndTriggerEvent(SetMuteReceived, message);
-            } else if (id == Method.SetVolume.ToInt()) {
-                DeserializeMessageAndTriggerEvent(SetVolumeReceived, message);
-            }
         }
 
         protected override void WebSocketNotificationReceived(string method, string notification) {
             if (method == KApplication.Notification.OnVolumeChanged.ToString()) {
-                var item = JsonSerializer.FromJson<RPCNotification<NotificationParams<KApplication.Notifications.Data>>>(notification);
+                var item = JsonSerializer.FromJson<RPCNotification<NotificationParams<Data>>>(notification);
                 OnVolumeChanged?.Invoke(item.Params.Data);
             }
         }
 
-        public void GetProperties(ApplicationField properties) {
+
+        protected override void WebSocketMessageReceived(string guid, string message) {
+            if (!methods.ContainsKey(guid)) {
+                return;
+            }
+            if (methods[guid] == Method.GetProperties.ToInt()) {
+                DeserializeMessageAndTriggerTask<ApplicationProperties>(guid, message);
+            } else if (methods[guid] == Method.Quit.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.SetMute.ToInt()) {
+                DeserializeMessageAndTriggerTask<bool>(guid, message);
+            } else if (methods[guid] == Method.SetVolume.ToInt()) {
+                DeserializeMessageAndTriggerTask<int>(guid, message);
+            }
+        }
+
+        public Task<ApplicationProperties> GetProperties(ApplicationField properties) {
             if (properties == null) {
                 throw new ArgumentException("properties");
             }
-            SendRequest(Method.GetProperties, new Properties() { PropertiesValue = properties.ToList() });
+            return SendRequest<ApplicationProperties, GetProperties>(Method.GetProperties, new GetProperties() { Properties = properties.ToList() });
         }
 
-        public void Quit() {
-            SendRequest(Method.Quit);
+        public Task<bool> Quit() {
+            return SendRequest<bool>(Method.Quit);
         }
 
-        public void SetMute(ToggleEnum mute) {
+        public Task<bool> SetMute(ToggleEnum mute) {
             if (mute == ToggleEnum.Toggle) {
-                SendRequest(Method.SetMute, new Mute<string>() { MuteValue = mute });
+                return SendRequest<bool, SetMute<string>>(Method.SetMute, new SetMute<string>() { MuteValue = mute });
             } else {
-                SendRequest(Method.SetMute, new Mute<bool>() { MuteValue = mute });
+                return SendRequest<bool, SetMute<bool>>(Method.SetMute, new SetMute<bool>() { MuteValue = mute });
             }
         }
 
-        public void SetVolume(int volume) {
-            SendRequest(Method.SetVolume, new Volume<int>() { VolumeValue = volume });
+        public Task<int> SetVolume(int volume) {
+            return SendRequest<int, SetVolume<int>>(Method.SetVolume, new SetVolume<int>() { VolumeValue = volume });
         }
 
-        public void SetVolume(IncDecEnum volume) {
-            SendRequest(Method.SetVolume, new Volume<string>() { VolumeValue = volume });
+        public Task<int> SetVolume(IncDecEnum volume) {
+            return SendRequest<int, SetVolume<string>>(Method.SetVolume, new SetVolume<string>() { VolumeValue = volume });
         }
     }
 }

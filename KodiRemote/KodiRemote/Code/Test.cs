@@ -25,38 +25,18 @@ namespace KodiRemote.Code {
                 Debug.WriteLine(item);
             };
 
-            //results
-            kodi.Application.GetPropertiesReceived += (JSON.KApplication.Results.ApplicationProperties item) => {
-                Debug.WriteLine(item);
-            };
-            kodi.Application.QuitReceived += (bool b) => {
-                Debug.WriteLine(b);
-            };
-            kodi.Application.SetMuteReceived += (bool b) => {
-                Debug.WriteLine(b);
-            };
-            kodi.Application.SetVolumeReceived += (int b) => {
-                Debug.WriteLine(b);
-            };
 
-            kodi.Application.GetProperties(JSON.Fields.ApplicationField.WithAll());
-            kodi.Application.SetMute(ToggleEnum.True);
-            await Task.Delay(2000);
-            kodi.Application.SetMute(ToggleEnum.False);
-            await Task.Delay(2000);
-            kodi.Application.SetMute(ToggleEnum.Toggle);
-            await Task.Delay(2000);
-            kodi.Application.SetVolume(IncDecEnum.Decrement);
-            await Task.Delay(2000);
-            kodi.Application.SetVolume(IncDecEnum.Increment);
-            await Task.Delay(2000);
-            kodi.Application.SetVolume(0);
-            await Task.Delay(2000);
-            kodi.Application.SetVolume(50);
-            await Task.Delay(2000);
-            kodi.Application.SetVolume(100);
-            await Task.Delay(2000);
-            kodi.Application.Quit();
+            var props = await kodi.Application.GetProperties(JSON.Fields.ApplicationField.WithAll());
+            Debug.WriteLine(props);
+            var mute = await kodi.Application.SetMute(ToggleEnum.True);
+            mute = await kodi.Application.SetMute(ToggleEnum.False);
+            mute = await kodi.Application.SetMute(ToggleEnum.Toggle);
+            var volume = await kodi.Application.SetVolume(IncDecEnum.Decrement);
+            volume = await kodi.Application.SetVolume(IncDecEnum.Increment);
+            volume = await kodi.Application.SetVolume(0);
+            volume = await kodi.Application.SetVolume(50);
+            volume = await kodi.Application.SetVolume(100);
+            var quit = await kodi.Application.Quit();
         }
     }
 }

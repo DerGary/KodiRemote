@@ -24,10 +24,9 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             if (id == KGUI.Method.ActivateWindow.ToInt()) {
                 ConvertResultToBool(ActivateWindowReceived, message);
             } else if (id == KGUI.Method.GetProperties.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<GUIProperties>>(message);
-                GetPropertiesReceived?.Invoke(item.Result);
+                DeserializeMessageAndTriggerEvent(GetPropertiesReceived, message);
             } else if (id == KGUI.Method.SetFullscreen.ToInt()) {
-                ConvertResultToBool(SetFullscreenReceived, message);
+                DeserializeMessageAndTriggerEvent(SetFullscreenReceived, message);
             } else if (id == KGUI.Method.ShowNotification.ToInt()) {
                 ConvertResultToBool(ShowNotificationReceived, message);
             }

@@ -12,15 +12,10 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         event ReceivedEventHandler<KApplication.Notifications.Data> OnVolumeChanged;
         #endregion Notifications
 
-
-        event ReceivedEventHandler<KApplication.Results.ApplicationProperties> GetPropertiesReceived;
-        event ReceivedEventHandler<bool> QuitReceived;
-        event ReceivedEventHandler<bool> SetMuteReceived;
-        event ReceivedEventHandler<int> SetVolumeReceived;
-        void GetProperties(ApplicationField properties);
-        void Quit();
-        void SetMute(ToggleEnum mute);
-        void SetVolume(IncDecEnum volume);
-        void SetVolume(int volume);
+        Task<KApplication.Results.ApplicationProperties> GetProperties(ApplicationField properties);
+        Task<bool> Quit();
+        Task<bool> SetMute(ToggleEnum mute);
+        Task<int> SetVolume(IncDecEnum volume);
+        Task<int> SetVolume(int volume);
     }
 }

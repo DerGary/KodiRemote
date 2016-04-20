@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="UnitTestProject2.App"
+    x:Class="TestProject.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UnitTestProject2"
+    xmlns:local="using:TestProject"
     RequestedTheme="Light">
 
 </Application>

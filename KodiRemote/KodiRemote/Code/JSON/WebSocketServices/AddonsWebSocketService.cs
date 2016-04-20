@@ -15,24 +15,21 @@ using KodiRemote.Code.JSON.KAddons.Params;
 
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public class AddonsWebSocketService : WebSocketServiceBase, IAddonsService {
-        public event ReceivedEventHandler<bool> ExecuteAddonReceived;
-        public event ReceivedEventHandler<Addon> GetAddonDetailsReceived;
-        public event ReceivedEventHandler<List<Addon>> GetAddonsReceived;
-        public event ReceivedEventHandler<bool> SetAddonEnabledReceived;
 
         public AddonsWebSocketService(WebSocketHelper helper) : base(helper) { }
 
-        protected override void WebSocketMessageReceived(int id, string message) {
-            if (id == Method.ExecuteAddon.ToInt()) {
-                ConvertResultToBool(ExecuteAddonReceived, message);
-            } else if (id == Method.GetAddonDetails.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<Addon>>(message);
-                GetAddonDetailsReceived?.Invoke(item.Result);
-            } else if (id == Method.GetAddons.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<Addon>>>(message);
-                GetAddonsReceived?.Invoke(item.Result);
-            } else if (id == Method.SetAddonEnabled.ToInt()) {
-                ConvertResultToBool(SetAddonEnabledReceived, message);
+        protected override void WebSocketMessageReceived(string guid, string message) {
+            if (!methods.ContainsKey(guid)) {
+                return;//when guid not present in dictionary then the Message is for another class
+            }
+            if (methods[guid] == Method.ExecuteAddon.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.GetAddonDetails.ToInt()) {
+                DeserializeMessageAndTriggerTask<Addon>(guid, message);
+            } else if (methods[guid] == Method.GetAddons.ToInt()) {
+                DeserializeMessageAndTriggerTask<Addon>(guid, message);
+            } else if (methods[guid] == Method.SetAddonEnabled.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
             }
         }
 
@@ -41,25 +38,28 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         }
 
 
-        public void ExecuteAddon(string addonid, List<string> parameter = null, bool wait = false) {
-            SendRequest(Method.ExecuteAddon, new ExecuteAddon() { AddonId = addonid, Wait = wait, Params = parameter });
+        public Task<bool> ExecuteAddon(string addonid, List<string> parameter = null, bool wait = false) {
+            return SendRequest<bool, ExecuteAddon>(Method.ExecuteAddon, new ExecuteAddon() { AddonId = addonid, Wait = wait, Params = parameter });
         }
 
-        public void GetAddonDetails(string addonid, AddonField properties = null) {
-            SendRequest(Method.GetAddonDetails, new GetAddonDetails() { AddonId = addonid, Properties = properties?.ToList() });
+        public Task<Addon> GetAddonDetails(string addonid, AddonField properties = null) {
+            return SendRequest<Addon, GetAddonDetails>(Method.GetAddonDetails, new GetAddonDetails() { AddonId = addonid, Properties = properties?.ToList() });
         }
 
-        public void GetAddons(ContentEnum content, EnabledEnum enabled, AddonField properties = null, string type = null, Limits limits = null) {
-            SendRequest(Method.GetAddons, new GetAddons() { Properties = properties?.ToList(), Type = type, Limits = limits, Content = content, Enabled = enabled });
+        public Task<List<Addon>> GetAddons(ContentEnum content, EnabledEnum enabled, AddonField properties = null, string type = null, Limits limits = null) {
+            return SendRequest<List<Addon>, GetAddons>(Method.GetAddons, new GetAddons() { Properties = properties?.ToList(), Type = type, Limits = limits, Content = content, Enabled = enabled });
         }
 
-        public void SetAddonEnabled(string addonid, ToggleEnum enabled) {
+        public Task<bool> SetAddonEnabled(string addonid, ToggleEnum enabled) {
             if (enabled == ToggleEnum.Toggle) {
-                SendRequest(Method.SetAddonEnabled, new SetAddonEnabled<string>() { AddonId = addonid, Enabled = enabled });
+                return SendRequest<bool, SetAddonEnabled<string>>(Method.SetAddonEnabled, new SetAddonEnabled<string>() { AddonId = addonid, Enabled = enabled });
             } else {
-                SendRequest(Method.SetAddonEnabled, new SetAddonEnabled<bool>() { AddonId = addonid, Enabled = enabled });
+                return SendRequest<bool, SetAddonEnabled<bool>>(Method.SetAddonEnabled, new SetAddonEnabled<bool>() { AddonId = addonid, Enabled = enabled });
             }
         }
 
+        protected override void WebSocketMessageReceived(int id, string message) {
+
+        }
     }
 }

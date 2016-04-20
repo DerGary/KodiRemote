@@ -221,7 +221,6 @@
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\Base\AppBase.cs" />
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
     <Compile Include="View\Converter\BooleanResourceConverter.cs" />

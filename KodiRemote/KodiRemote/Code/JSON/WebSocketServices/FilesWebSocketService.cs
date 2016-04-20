@@ -28,17 +28,13 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             if (id == Method.Download.ToInt()) {
                 DownloadReceived?.Invoke(message);
             } else if (id == Method.GetDirectory.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<FileDetails>>>(message);
-                GetDirectoryReceived?.Invoke(item.Result);
+                DeserializeMessageAndTriggerEvent(GetDirectoryReceived, message);
             } else if (id == Method.GetFileDetails.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<FileDetails>>(message);
-                GetFileDetailsReceived?.Invoke(item.Result);
+                DeserializeMessageAndTriggerEvent(GetFileDetailsReceived, message);
             } else if (id == Method.GetSources.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<string>>>(message);
-                GetSourcesReceived?.Invoke(item.Result);
+                DeserializeMessageAndTriggerEvent(GetSourcesReceived, message);
             } else if (id == Method.PrepareDownload.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<PrepareDownloadResult>>(message);
-                PrepareDownloadReceived?.Invoke(item.Result);
+                DeserializeMessageAndTriggerEvent(PrepareDownloadReceived, message);
             }
         }
 

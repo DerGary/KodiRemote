@@ -83,7 +83,7 @@ namespace KodiRemote.Code.Utils {
             // Send the data as one complete message.
             await messageWriter.StoreAsync();
         }
-        public void SendRequest(RPCRequest request) {
+        public void SendRequest(RPCBase request) {
             string message = JsonSerializer.ToJson(request);
             SendMessage(message);
         }

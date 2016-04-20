@@ -10,13 +10,9 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.ServiceInterfaces {
     public interface IAddonsService {
-        event ReceivedEventHandler<bool> ExecuteAddonReceived;
-        event ReceivedEventHandler<Addon> GetAddonDetailsReceived;
-        event ReceivedEventHandler<List<Addon>> GetAddonsReceived;
-        event ReceivedEventHandler<bool> SetAddonEnabledReceived;
-        void ExecuteAddon(string addonid, List<string> parameter = null, bool wait = false);
-        void GetAddonDetails(string addonid, AddonField properties = null);
-        void GetAddons(ContentEnum content, EnabledEnum enabled, AddonField properties = null, string type = null, Limits limits = null);
-        void SetAddonEnabled(string addonid, ToggleEnum enabled);
+        Task<bool> ExecuteAddon(string addonid, List<string> parameter = null, bool wait = false);
+        Task<Addon> GetAddonDetails(string addonid, AddonField properties = null);
+        Task<List<Addon>> GetAddons(ContentEnum content, EnabledEnum enabled, AddonField properties = null, string type = null, Limits limits = null);
+        Task<bool> SetAddonEnabled(string addonid, ToggleEnum enabled);
     }
 }

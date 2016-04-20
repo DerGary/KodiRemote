@@ -87,4 +87,53 @@ namespace KodiRemote.Code.JSON {
         [DataMember(Name = "data")]
         public T Data { get; set; }
     }
+
+
+
+
+
+
+
+
+
+    [DataContract]
+    public class RPCWithStringId : RPCBase {
+        [DataMember(Name = "id")]
+        public string Id { get; set; }
+    }
+
+
+    [DataContract]
+    public class RPCRequestWithStringId : RPCWithStringId {
+        [DataMember(Name = "method")]
+        public string Method { get; set; }
+
+        public RPCRequestWithStringId() { }
+        public RPCRequestWithStringId(StringEnum method, string guid) : this() {
+            Method = method;
+            Id = guid;
+        }
+
+    }
+
+    [DataContract]
+    public class RPCRequestWithStringId<T> : RPCRequestWithStringId {
+        [DataMember(Name = "params")]
+        public T Params { get; set; }
+        public RPCRequestWithStringId() : base() { }
+        public RPCRequestWithStringId(StringEnum method, string guid) : base(method, guid) {
+        }
+    }
+    [DataContract]
+    public class RPCResponseWithStringId : RPCWithStringId {
+        [DataMember(Name = "error")]
+        public RPCError Error { get; set; }
+    }
+
+    [DataContract]
+    public class RPCResponseWithStringId<T> : RPCResponseWithStringId {
+        [DataMember(Name = "result")]
+        public T Result { get; set; }
+    }
+
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
@@ -32,42 +33,43 @@ namespace KodiRemote.Code.JSON {
                 if (connected != value) {
                     connected = value;
                     if (!value) {
-                        timer.Start();
-                    } else if (timer.IsEnabled) {
-                        timer.Stop();
+                        timer = new Timer(Timer_Tick, null, 0, (int)TimeSpan.FromSeconds(15).TotalMilliseconds);
+                    } else if (timer != null) {
+                        timer.Dispose();
+                        timer = null;
                     }
                     RaisePropertyChanged();
                 }
             }
         }
-        private DispatcherTimer timer;
+        private Timer timer;
 
         private ActiveKodi(string hostname, string port, ConnectionType type) : base(hostname, port, type) {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(15);
-            timer.Tick += Timer_Tick;
-
             if (type == ConnectionType.Websocket) {
                 Connection = new WebSocketHelper();
                 Connection.ConnectionClosed += ConnectionClosed;
 
-                VideoLibrary = new VideoLibraryWebSocketService(Connection);
-                PVR = new PVRWebSocketService(Connection);
-                JSONRPC = new JSONRPCWebSocketService(Connection);
-                GUI = new GUIWebSocketService(Connection);
-                Addons = new AddonsWebSocketService(Connection);
-                System = new SystemWebSocketService(Connection);
-                Files = new FilesWebSocketService(Connection);
+                //VideoLibrary = new VideoLibraryWebSocketService(Connection);
+                //PVR = new PVRWebSocketService(Connection);
+                //JSONRPC = new JSONRPCWebSocketService(Connection);
+                //GUI = new GUIWebSocketService(Connection);
+                //Addons = new AddonsWebSocketService(Connection);
+                //System = new SystemWebSocketService(Connection);
+                //Files = new FilesWebSocketService(Connection);
                 Application = new ApplicationWebSocketService(Connection);
                 Application.OnVolumeChanged += Application_OnVolumeChanged;
-                Input = new InputWebSocketService(Connection);
-                Player = new PlayerWebSocketService(Connection);
-                Player.OnPauseReceived += Player_OnPauseReceived;
-                Player.OnPlayReceived += Player_OnPlayReceived;
-                Player.OnSpeedChangedReceived += Player_OnSpeedChangedReceived;
-                Player.OnStopReceived += Player_OnStopReceived;
+                //Input = new InputWebSocketService(Connection);
+                //Player = new PlayerWebSocketService(Connection);
+                //Player.OnPauseReceived += Player_OnPauseReceived;
+                //Player.OnPlayReceived += Player_OnPlayReceived;
+                //Player.OnSpeedChangedReceived += Player_OnSpeedChangedReceived;
+                //Player.OnStopReceived += Player_OnStopReceived;
             }
             Connected = false;
+        }
+
+        private async void Timer_Tick(object state) {
+            await Connect();
         }
 
         private void Application_OnVolumeChanged(KApplication.Notifications.Data item) {
@@ -151,10 +153,6 @@ namespace KodiRemote.Code.JSON {
 
         private void ConnectionClosed(string message) {
             Connected = false;
-        }
-
-        private async void Timer_Tick(object sender, object e) {
-            Connected = await Connection.Connect(new Uri("ws://" + Hostname + ":" + Port + "/jsonrpc"));
         }
 
         public async Task Connect() {
