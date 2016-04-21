@@ -13,71 +13,60 @@ using Windows.Data.Json;
 
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public class JSONRPCWebSocketService : WebSocketServiceBase, IJSONRPCService {
-        #region Events
-        public event ReceivedEventHandler<Configuration> GetConfigurationReceived;
-        public event ReceivedEventHandler<JsonObject> IntrospectReceived;
-        public event ReceivedEventHandler<bool> NotifyAllReceived;
-        public event ReceivedEventHandler<Permissions> PermissionReceived;
-        public event ReceivedEventHandler<bool> PingReceived;
-        public event ReceivedEventHandler<Configuration> SetConfigurationReceived;
-        public event ReceivedEventHandler<APIVersion> VersionReceived;
-        #endregion Events
-
         public JSONRPCWebSocketService(WebSocketHelper helper) : base(helper) { }
-        protected override void WebSocketMessageReceived(int id, string message) {
-            if (id == Method.GetConfiguration.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<Configuration>>(message);
-                GetConfigurationReceived?.Invoke(item.Result);
-            } else if (id == Method.Introspect.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<JsonObject>>(message);
-                IntrospectReceived?.Invoke(item.Result);
-            } else if (id == Method.NotifyAll.ToInt()) {
-                ConvertResultToBool(NotifyAllReceived, message);
-            } else if (id == Method.Permission.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<Permissions>>(message);
-                PermissionReceived?.Invoke(item.Result);
-            } else if (id == Method.Ping.ToInt()) {
+
+
+        protected override void WebSocketMessageReceived(string guid, string message) {
+            if (methods[guid] == Method.GetConfiguration.ToInt()) {
+                DeserializeMessageAndTriggerTask<Configuration>(guid, message);
+            } else if (methods[guid] == Method.Introspect.ToInt()) {
+                DeserializeMessageAndTriggerTask<JsonObject>(guid, message);
+            } else if (methods[guid] == Method.NotifyAll.ToInt()) {
+                DeserializeMessageAndTriggerTask<bool>(guid, message);
+            } else if (methods[guid] == Method.Permission.ToInt()) {
+                DeserializeMessageAndTriggerTask<Permissions>(guid, message);
+            } else if (methods[guid] == Method.Ping.ToInt()) {
                 var item = JsonSerializer.FromJson<RPCResponse<string>>(message);
                 if (item.Result == "pong") {
-                    PingReceived?.Invoke(true);
+                    returnValues[guid] = true;
                 } else {
-                    PingReceived?.Invoke(false);
+                    returnValues[guid] = false;
                 }
-            } else if (id == Method.SetConfiguration.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<Configuration>>(message);
-                SetConfigurationReceived?.Invoke(item.Result);
-            } else if (id == Method.Version.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<KJSONRPC.Results.Version>>(message);
-                VersionReceived?.Invoke(item.Result.VersionValue);
+                tasks[guid].Start();
+            } else if (methods[guid] == Method.SetConfiguration.ToInt()) {
+                DeserializeMessageAndTriggerTask<Configuration>(guid, message);
+            } else if (methods[guid] == Method.Version.ToInt()) {
+                DeserializeMessageAndTriggerTask<APIVersion>(guid, message);
             }
         }
+
 
         protected override void WebSocketNotificationReceived(string method, string notification) {
             //dont need that
         }
 
-        public void GetConfiguration() {
-            SendRequest(Method.GetConfiguration);
+        public Task<Configuration> GetConfiguration() {
+            return SendRequest<Configuration>(Method.GetConfiguration);
         }
 
-        public void Introspect(bool? getdescriptions = null, bool? getmetadata = null, bool? filterbytransport = null, Dictionary<string, object> filter = null) {
-            SendRequest(Method.Introspect, new Introspect() { Filter = filter, FilterByTransport = filterbytransport, GetDescriptions = getdescriptions, GetMetadata = getmetadata });
+        public Task<JsonObject> Introspect(bool? getdescriptions = default(bool?), bool? getmetadata = default(bool?), bool? filterbytransport = default(bool?), Dictionary<string, object> filter = null) {
+            return SendRequest<JsonObject, Introspect>(Method.Introspect, new Introspect() { Filter = filter, FilterByTransport = filterbytransport, GetDescriptions = getdescriptions, GetMetadata = getmetadata });
         }
 
-        public void NotifyAll(string sender, string message) {
-            SendRequest(Method.NotifyAll, new NotifyAll() { Message = message, Sender = sender });
+        public Task<bool> NotifyAll(string sender, string message) {
+            return SendRequest<bool, NotifyAll>(Method.NotifyAll, new NotifyAll() { Message = message, Sender = sender });
         }
 
-        public void Permission() {
-            SendRequest(Method.Permission);
+        public Task<Permissions> Permission() {
+            return SendRequest<Permissions>(Method.Permission);
         }
 
-        public void Ping() {
-            SendRequest(Method.Ping);
+        public Task<bool> Ping() {
+            return SendRequest<bool>(Method.Ping);
         }
 
-        public void SetConfiguration(bool? gui = null, bool? other = null, bool? input = null, bool? videolibrary = null, bool? audiolibrary = null, bool? playlist = null, bool? system = null, bool? player = null, bool? application = null, bool? pvr = null) {
-            SendRequest(Method.SetConfiguration, new SetConfiguration() {
+        public Task<Configuration> SetConfiguration(bool? gui = default(bool?), bool? other = default(bool?), bool? input = default(bool?), bool? videolibrary = default(bool?), bool? audiolibrary = default(bool?), bool? playlist = default(bool?), bool? system = default(bool?), bool? player = default(bool?), bool? application = default(bool?), bool? pvr = default(bool?)) {
+            return SendRequest<Configuration, SetConfiguration>(Method.SetConfiguration, new SetConfiguration() {
                 Notifications = new Notifications() {
                     Application = application,
                     AudioLibrary = audiolibrary,
@@ -93,8 +82,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             });
         }
 
-        public void Version() {
-            SendRequest(Method.Version);
+        public Task<APIVersion> Version() {
+            return SendRequest<APIVersion>(Method.Version);
         }
     }
 }

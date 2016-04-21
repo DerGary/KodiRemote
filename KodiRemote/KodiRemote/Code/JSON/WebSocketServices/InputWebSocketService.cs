@@ -16,27 +16,19 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<KInput.Notifications.Data> OnInputRequested;
         #endregion
 
-        #region Events
-        public event ReceivedEventHandler<bool> ExecuteActionReceived;
-        public event ReceivedEventHandler<bool> HomeReceived;
-        public event ReceivedEventHandler<bool> SendTextReceived;
-        public event ReceivedEventHandler<bool> ShowCodecReceived;
-        public event ReceivedEventHandler<bool> ShowOSDReceived;
-        #endregion
-
         public InputWebSocketService(WebSocketHelper helper) : base(helper) { }
 
-        protected override void WebSocketMessageReceived(int id, string message) {
-            if (id == KInput.Method.ExecuteAction.ToInt()) {
-                ConvertResultToBool(ExecuteActionReceived, message);
-            } else if (id == KInput.Method.Home.ToInt()) {
-                ConvertResultToBool(HomeReceived, message);
-            } else if (id == KInput.Method.SendText.ToInt()) {
-                ConvertResultToBool(SendTextReceived, message);
-            } else if (id == KInput.Method.ShowCodec.ToInt()) {
-                ConvertResultToBool(ShowCodecReceived, message);
-            } else if (id == KInput.Method.ShowOSD.ToInt()) {
-                ConvertResultToBool(ShowOSDReceived, message);
+        protected override void WebSocketMessageReceived(string guid, string message) {
+            if (methods[guid] == Method.ExecuteAction.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.Home.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.SendText.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.ShowCodec.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.ShowOSD.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
             }
         }
 
@@ -49,26 +41,24 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             }
         }
 
-        public void ExecuteAction(ExecActionEnum action) {
-            SendRequest(Method.ExecuteAction, new ExecAction() { Action = action });
+        public Task<bool> ExecuteAction(ExecActionEnum action) {
+            return SendRequest<bool, ExecAction>(Method.ExecuteAction, new ExecAction() { Action = action });
         }
 
-        public void Home() {
-            SendRequest(Method.Home);
+        public Task<bool> Home() {
+            return SendRequest<bool>(Method.Home);
         }
 
-        public void SendText(string text, bool done = true) {
-            SendRequest(Method.ExecuteAction, new SendText() { Text = text, Done = done });
+        public Task<bool> SendText(string text, bool done = true) {
+            return SendRequest<bool, SendText>(Method.ExecuteAction, new SendText() { Text = text, Done = done });
         }
 
-        public void ShowCodec() {
-            SendRequest(Method.ShowCodec);
+        public Task<bool> ShowCodec() {
+            return SendRequest<bool>(Method.ShowCodec);
         }
 
-        public void ShowOSD() {
-            SendRequest(Method.ShowOSD);
+        public Task<bool> ShowOSD() {
+            return SendRequest<bool>(Method.ShowOSD);
         }
-
-
     }
 }

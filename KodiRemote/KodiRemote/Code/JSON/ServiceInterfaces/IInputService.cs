@@ -12,16 +12,10 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         event ReceivedEventHandler<KInput.Notifications.Data> OnInputRequested;
         #endregion Notifications
 
-
-        event ReceivedEventHandler<bool> SendTextReceived;
-        event ReceivedEventHandler<bool> HomeReceived;
-        event ReceivedEventHandler<bool> ExecuteActionReceived;
-        event ReceivedEventHandler<bool> ShowCodecReceived;
-        event ReceivedEventHandler<bool> ShowOSDReceived;
-        void SendText(string text, bool done = true);
-        void Home();
-        void ExecuteAction(ExecActionEnum action);
-        void ShowCodec();
-        void ShowOSD();
+        Task<bool> SendText(string text, bool done = true);
+        Task<bool> Home();
+        Task<bool> ExecuteAction(ExecActionEnum action);
+        Task<bool> ShowCodec();
+        Task<bool> ShowOSD();
     }
 }

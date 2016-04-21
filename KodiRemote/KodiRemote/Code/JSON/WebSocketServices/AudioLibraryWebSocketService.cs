@@ -25,63 +25,45 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler OnScanStarted;
         public event ReceivedEventHandler<Item> OnUpdate;
         #endregion Notifications
-        #region Events
-        public event ReceivedEventHandler<bool> CleanReceived;
-        public event ReceivedEventHandler<bool> ExportReceived;
-        public event ReceivedEventHandler<Album> GetAlbumDetailsReceived;
-        public event ReceivedEventHandler<AlbumResult> GetAlbumsReceived;
-        public event ReceivedEventHandler<Artist> GetArtistDetailsReceived;
-        public event ReceivedEventHandler<ArtistResult> GetArtistsReceived;
-        public event ReceivedEventHandler<GenreResult> GetGenresReceived;
-        public event ReceivedEventHandler<AlbumResult> GetRecentlyAddedAlbumsReceived;
-        public event ReceivedEventHandler<SongResult> GetRecentlyAddedSongsReceived;
-        public event ReceivedEventHandler<AlbumResult> GetRecentlyPlayedAlbumsReceived;
-        public event ReceivedEventHandler<SongResult> GetRecentlyPlayedSongsReceived;
-        public event ReceivedEventHandler<Song> GetSongDetailsReceived;
-        public event ReceivedEventHandler<SongResult> GetSongsReceived;
-        public event ReceivedEventHandler<bool> ScanReceived;
-        public event ReceivedEventHandler<bool> SetAlbumDetailsReceived;
-        public event ReceivedEventHandler<bool> SetArtistDetailsReceived;
-        public event ReceivedEventHandler<bool> SetSongDetailsReceived;
-        #endregion Events
+
 
         public AudioLibraryWebSocketService(WebSocketHelper helper) : base(helper) { }
 
-        protected override void WebSocketMessageReceived(int id, string message) {
-            if (id == Method.Clean.ToInt()) {
-                DeserializeMessageAndTriggerEvent(CleanReceived, message);
-            } else if (id == Method.Export.ToInt()) {
-                DeserializeMessageAndTriggerEvent(ExportReceived, message);
-            } else if (id == Method.GetAlbumDetails.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetAlbumDetailsReceived, message);
-            } else if (id == Method.GetAlbums.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetAlbumsReceived, message);
-            } else if (id == Method.GetArtistDetails.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetArtistDetailsReceived, message);
-            } else if (id == Method.GetArtists.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetArtistsReceived, message);
-            } else if (id == Method.GetGenres.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetGenresReceived, message);
-            } else if (id == Method.GetRecentlyAddedAlbums.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetRecentlyAddedAlbumsReceived, message);
-            } else if (id == Method.GetRecentlyAddedSongs.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetRecentlyAddedSongsReceived, message);
-            } else if (id == Method.GetRecentlyPlayedAlbums.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetRecentlyPlayedAlbumsReceived, message);
-            } else if (id == Method.GetRecentlyPlayedSongs.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetRecentlyPlayedSongsReceived, message);
-            } else if (id == Method.GetSongDetails.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetSongDetailsReceived, message);
-            } else if (id == Method.GetSongs.ToInt()) {
-                DeserializeMessageAndTriggerEvent(GetSongsReceived, message);
-            } else if (id == Method.Scan.ToInt()) {
-                DeserializeMessageAndTriggerEvent(ScanReceived, message);
-            } else if (id == Method.SetAlbumDetails.ToInt()) {
-                DeserializeMessageAndTriggerEvent(SetAlbumDetailsReceived, message);
-            } else if (id == Method.SetArtistDetails.ToInt()) {
-                DeserializeMessageAndTriggerEvent(SetArtistDetailsReceived, message);
-            } else if (id == Method.SetSongDetails.ToInt()) {
-                DeserializeMessageAndTriggerEvent(SetSongDetailsReceived, message);
+        protected override void WebSocketMessageReceived(string guid, string message) {
+            if (methods[guid] == Method.Clean.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.Export.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.GetAlbumDetails.ToInt()) {
+                DeserializeMessageAndTriggerTask<Album>(guid, message);
+            } else if (methods[guid] == Method.GetAlbums.ToInt()) {
+                DeserializeMessageAndTriggerTask<AlbumResult>(guid, message);
+            } else if (methods[guid] == Method.GetArtistDetails.ToInt()) {
+                DeserializeMessageAndTriggerTask<Artist>(guid, message);
+            } else if (methods[guid] == Method.GetArtists.ToInt()) {
+                DeserializeMessageAndTriggerTask<ArtistResult>(guid, message);
+            } else if (methods[guid] == Method.GetGenres.ToInt()) {
+                DeserializeMessageAndTriggerTask<GenreResult>(guid, message);
+            } else if (methods[guid] == Method.GetRecentlyAddedAlbums.ToInt()) {
+                DeserializeMessageAndTriggerTask<AlbumResult>(guid, message);
+            } else if (methods[guid] == Method.GetRecentlyAddedSongs.ToInt()) {
+                DeserializeMessageAndTriggerTask<SongResult>(guid, message);
+            } else if (methods[guid] == Method.GetRecentlyPlayedAlbums.ToInt()) {
+                DeserializeMessageAndTriggerTask<AlbumResult>(guid, message);
+            } else if (methods[guid] == Method.GetRecentlyPlayedSongs.ToInt()) {
+                DeserializeMessageAndTriggerTask<SongResult>(guid, message);
+            } else if (methods[guid] == Method.GetSongDetails.ToInt()) {
+                DeserializeMessageAndTriggerTask<Song>(guid, message);
+            } else if (methods[guid] == Method.GetSongs.ToInt()) {
+                DeserializeMessageAndTriggerTask<SongResult>(guid, message);
+            } else if (methods[guid] == Method.Scan.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.SetAlbumDetails.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.SetArtistDetails.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.SetSongDetails.ToInt()) {
+                DeserializeMessageAndTriggerTask(guid, message);
             }
         }
 
@@ -101,77 +83,76 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             }
         }
 
-
-        public void Clean() {
-            SendRequest(Method.Clean);
+        public Task<bool> Clean() {
+            return SendRequest<bool>(Method.Clean);
         }
 
-        public void Export(string path = null) {
-            SendRequest(Method.Export, new Export { Options = new PathOption { Path = path } });
+        public Task<bool> Export(string path = null) {
+            return SendRequest<bool, Export<PathOption>>(Method.Export, new Export<PathOption> { Options = new PathOption { Path = path } });
         }
 
-        public void Export(bool overwrite = false, bool images = false) {
-            SendRequest(Method.Export, new Export { Options = new ExportOption { Images = images, Overwrite = overwrite } });
+        public Task<bool> Export(bool overwrite = false, bool images = false) {
+            return SendRequest<bool, Export<ExportOption>>(Method.Export, new Export<ExportOption> { Options = new ExportOption { Images = images, Overwrite = overwrite } });
         }
 
-        public void GetAlbumDetails(int albumID, AlbumField properties = null) {
-            SendRequest(Method.GetAlbumDetails, new GetAlbumDetails { AlbumId = albumID, Properties = properties?.ToList() });
+        public Task<Album> GetAlbumDetails(int albumID, AlbumField properties = null) {
+            return SendRequest<Album, GetAlbumDetails>(Method.GetAlbumDetails, new GetAlbumDetails { AlbumId = albumID, Properties = properties?.ToList() });
         }
 
-        public void GetAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null, AlbumFilter filter = null) {
-            SendRequest(Method.GetAlbums, new GetAlbums { Properties = properties?.ToList(), Filter = filter, Limits = limits, Sort = sort });
+        public Task<AlbumResult> GetAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null, AlbumFilter filter = null) {
+            return SendRequest<AlbumResult, GetAlbums>(Method.GetAlbums, new GetAlbums { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
         }
 
-        public void GetArtistDetails(int artistID, ArtistField properties = null) {
-            SendRequest(Method.GetArtistDetails, new GetArtistDetails { Properties = properties?.ToList(), ArtistId = artistID });
+        public Task<Artist> GetArtistDetails(int artistID, ArtistField properties = null) {
+            throw new NotImplementedException();
         }
 
-        public void GetArtists(ArtistField properties = null, bool? albumartistsonly = null, ArtistFilter filter = null, Limits limits = null, Sort sort = null) {
-            SendRequest(Method.GetArtists, new GetArtists { Properties = properties?.ToList(), AlbumArtistsOnly = albumartistsonly, Filter = filter, Limits = limits, Sort = sort });
+        public Task<ArtistResult> GetArtists(ArtistField properties = null, bool? albumartistsonly = null, ArtistFilter filter = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<ArtistResult, GetArtists>(Method.GetArtists, new GetArtists { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter, AlbumArtistsOnly = albumartistsonly });
         }
 
-        public void GetGenres(GenreField properties = null, Limits limits = null, Sort sort = null) {
-            SendRequest(Method.GetGenres, new GetGenres { Properties = properties?.ToList(), Limits = limits, Sort = sort });
+        public Task<GenreResult> GetGenres(GenreField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<GenreResult, GetGenres>(Method.GetGenres, new GetGenres { Properties = properties?.ToList(), Limits = limits, Sort = sort });
         }
 
-        public void GetRecentlyAddedAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null) {
-            SendRequest(Method.GetRecentlyAddedAlbums, new GetRecentlyAddedAlbums { Properties = properties?.ToList(), Limits = limits, Sort = sort });
+        public Task<AlbumResult> GetRecentlyAddedAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<AlbumResult, GetRecentlyAddedAlbums>(Method.GetRecentlyAddedAlbums, new GetRecentlyAddedAlbums { Properties = properties?.ToList(), Limits = limits, Sort = sort });
         }
 
-        public void GetRecentlyAddedSongs(SongField properties = null, int? albumlimit = null, Limits limits = null, Sort sort = null) {
-            SendRequest(Method.GetRecentlyAddedSongs, new GetRecentlyAddedSongs { Properties = properties?.ToList(), Limits = limits, Sort = sort, AlbumLimit = albumlimit });
+        public Task<SongResult> GetRecentlyAddedSongs(SongField properties = null, int? albumlimit = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<SongResult, GetRecentlyAddedSongs>(Method.GetRecentlyAddedSongs, new GetRecentlyAddedSongs { Properties = properties?.ToList(), Limits = limits, Sort = sort, AlbumLimit = albumlimit });
         }
 
-        public void GetRecentlyPlayedAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null) {
-            SendRequest(Method.GetRecentlyPlayedAlbums, new GetRecentlyPlayedAlbums { Properties = properties?.ToList(), Limits = limits, Sort = sort });
+        public Task<AlbumResult> GetRecentlyPlayedAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<AlbumResult, GetRecentlyPlayedAlbums>(Method.GetRecentlyPlayedAlbums, new GetRecentlyPlayedAlbums { Properties = properties?.ToList(), Limits = limits, Sort = sort });
         }
 
-        public void GetRecentlyPlayedSongs(SongField properties = null, int? albumlimit = null, Limits limits = null, Sort sort = null) {
-            SendRequest(Method.GetRecentlyPlayedSongs, new GetRecentlyPlayedSongs { Properties = properties?.ToList(), Limits = limits, Sort = sort, AlbumLimit = albumlimit });
+        public Task<SongResult> GetRecentlyPlayedSongs(SongField properties = null, int? albumlimit = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<SongResult, GetRecentlyPlayedSongs>(Method.GetRecentlyPlayedSongs, new GetRecentlyPlayedSongs { Properties = properties?.ToList(), Limits = limits, Sort = sort, AlbumLimit = albumlimit });
         }
 
-        public void GetSongDetails(int songId, SongField properties = null) {
-            SendRequest(Method.GetSongDetails, new GetSongDetails { Properties = properties?.ToList(), SongId = songId });
+        public Task<Song> GetSongDetails(int songID, SongField properties = null) {
+            return SendRequest<Song, GetSongDetails>(Method.GetSongDetails, new GetSongDetails { Properties = properties?.ToList(), SongId = songID });
         }
 
-        public void GetSongs(SongField properties = null, Limits limits = null, Sort sort = null, SongFilter filter = null) {
-            SendRequest(Method.GetSongs, new GetSongs { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
+        public Task<SongResult> GetSongs(SongField properties = null, Limits limits = null, Sort sort = null, SongFilter filter = null) {
+            return SendRequest<SongResult, GetSongs>(Method.GetSongs, new GetSongs { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
         }
 
-        public void Scan(string directory = null) {
-            SendRequest(Method.Scan, new Scan { Directory = directory });
+        public Task<bool> Scan(string directory = null) {
+            return SendRequest<bool, Scan>(Method.Scan, new Scan { Directory = directory });
         }
 
-        public void SetAlbumDetails(SetAlbumDetails album) {
-            SendRequest(Method.SetAlbumDetails, album);
+        public Task<bool> SetAlbumDetails(SetAlbumDetails album) {
+            return SendRequest<bool, SetAlbumDetails>(Method.SetAlbumDetails, album);
         }
 
-        public void SetArtistDetails(SetArtistDetails artist) {
-            SendRequest(Method.SetArtistDetails, artist);
+        public Task<bool> SetArtistDetails(SetArtistDetails artist) {
+            return SendRequest<bool, SetArtistDetails>(Method.SetArtistDetails, artist);
         }
 
-        public void SetSongDetails(SetSongDetails song) {
-            SendRequest(Method.SetSongDetails, song);
+        public Task<bool> SetSongDetails(SetSongDetails song) {
+            return SendRequest<bool, SetSongDetails>(Method.SetSongDetails, song);
         }
     }
 }

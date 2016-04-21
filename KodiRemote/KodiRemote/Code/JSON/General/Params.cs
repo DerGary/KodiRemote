@@ -34,9 +34,9 @@ namespace KodiRemote.Code.JSON.General.Params {
 
 
     [DataContract]
-    public class Export {
+    public class Export<T> where T : Options {
         [DataMember(Name = "options")]
-        public Options Options { get; set; }
+        public T Options { get; set; }
     }
 
     [DataContract]

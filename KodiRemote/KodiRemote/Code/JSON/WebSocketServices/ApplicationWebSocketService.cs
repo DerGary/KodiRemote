@@ -21,9 +21,6 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
 
         public ApplicationWebSocketService(WebSocketHelper helper) : base(helper) { }
 
-        protected override void WebSocketMessageReceived(int id, string message) {
-        }
-
         protected override void WebSocketNotificationReceived(string method, string notification) {
             if (method == KApplication.Notification.OnVolumeChanged.ToString()) {
                 var item = JsonSerializer.FromJson<RPCNotification<NotificationParams<Data>>>(notification);
@@ -33,9 +30,6 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
 
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (!methods.ContainsKey(guid)) {
-                return;
-            }
             if (methods[guid] == Method.GetProperties.ToInt()) {
                 DeserializeMessageAndTriggerTask<ApplicationProperties>(guid, message);
             } else if (methods[guid] == Method.Quit.ToInt()) {

@@ -9,13 +9,9 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.ServiceInterfaces {
     public interface IGUIService {
-        event ReceivedEventHandler<bool> ActivateWindowReceived;
-        event ReceivedEventHandler<GUIProperties> GetPropertiesReceived;
-        event ReceivedEventHandler<bool> SetFullscreenReceived;
-        event ReceivedEventHandler<bool> ShowNotificationReceived;
-        void ActivateWindow(WindowEnum window, List<string> parameters = null);
-        void GetProperties(GUIField properties);
-        void SetFullscreen(ToggleEnum fullscreen);
-        void ShowNotification(string title, string message, ImageEnum image, int displaytime = 0);
+        Task<bool> ActivateWindow(WindowEnum window, List<string> parameters = null);
+        Task<GUIProperties> GetProperties(GUIField properties);
+        Task<bool> SetFullscreen(ToggleEnum fullscreen);
+        Task<bool> ShowNotification(string title, string message, ImageEnum image, int displaytime = 0);
     }
 }

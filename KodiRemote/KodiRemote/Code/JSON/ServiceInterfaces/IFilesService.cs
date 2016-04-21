@@ -10,15 +10,10 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.ServiceInterfaces {
     public interface IFilesService {
-        event ReceivedEventHandler<string> DownloadReceived;
-        event ReceivedEventHandler<List<FileDetails>> GetDirectoryReceived;
-        event ReceivedEventHandler<FileDetails> GetFileDetailsReceived;
-        event ReceivedEventHandler<List<string>> GetSourcesReceived;
-        event ReceivedEventHandler<PrepareDownloadResult> PrepareDownloadReceived;
-        void Download(string path);
-        void GetDirectory(string directory, MediaEnum media, FileField properties = null, Sort sort = null);
-        void GetFileDetails(string file, MediaEnum media, FileField properties = null);
-        void GetSources(MediaNotNullEnum media, Limits limits = null, Sort sort = null);
-        void PrepareDownload(string path);
+        Task<string> Download(string path);
+        Task<List<FileDetails>> GetDirectory(string directory, MediaEnum media, FileField properties = null, Sort sort = null);
+        Task<FileDetails> GetFileDetails(string file, MediaEnum media, FileField properties = null);
+        Task<List<string>> GetSources(MediaNotNullEnum media, Limits limits = null, Sort sort = null);
+        Task<PrepareDownloadResult> PrepareDownload(string path);
     }
 }

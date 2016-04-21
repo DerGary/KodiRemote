@@ -18,6 +18,9 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             RPCResponseWithStringId response = JsonSerializer.FromJson<RPCResponseWithStringId>(message);
             if (response.Id != null) {
                 if (response.Error == null) {
+                    if (!methods.ContainsKey(response.Id)) {
+                        return;
+                    }
                     WebSocketMessageReceived(response.Id, message);
                 } else {
                     //Todo: Panik
@@ -30,8 +33,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             }
         }
 
-        protected virtual void WebSocketMessageReceived(string guid, string message) { }
-        protected abstract void WebSocketMessageReceived(int id, string message);
+        protected abstract void WebSocketMessageReceived(string guid, string message);
         protected abstract void WebSocketNotificationReceived(string method, string notification);
 
         protected void ConvertResultToBool(ReceivedEventHandler<bool> eventHandler, string message) {
@@ -72,6 +74,11 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             returnValues[guid] = item.Result;
             tasks[guid].Start();
         }
+        /// <summary>
+        /// Deserializes the message string to a RPCResponse and interprets the result string
+        /// If the string is equal to OK, the return Value of the Task will be true otherwise false.
+        /// If the Return Value is not of type string use the generics Method and provide the Return type as generic param
+        /// </summary>
         protected void DeserializeMessageAndTriggerTask(string guid, string message) {
             var item = JsonSerializer.FromJson<RPCResponseWithStringId<string>>(message);
             if (item.Result == "OK") {

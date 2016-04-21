@@ -16,18 +16,11 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         event ReceivedEventHandler OnWake;
         #endregion Notifications
 
-
-        event ReceivedEventHandler<bool> EjectOpticalDriveReceived;
-        event ReceivedEventHandler<SystemProperties> GetPropertiesReceived;
-        event ReceivedEventHandler<bool> HibernateReceived;
-        event ReceivedEventHandler<bool> RebootReceived;
-        event ReceivedEventHandler<bool> ShutdownReceived;
-        event ReceivedEventHandler<bool> SuspendReceived;
-        void EjectOpticalDrive();
-        void GetProperties(SystemField properties = null);
-        void Hibernate();
-        void Reboot();
-        void Shutdown();
-        void Suspend();
+        Task<bool> EjectOpticalDrive();
+        Task<SystemProperties> GetProperties(SystemField properties = null);
+        Task<bool> Hibernate();
+        Task<bool> Reboot();
+        Task<bool> Shutdown();
+        Task<bool> Suspend();
     }
 }

@@ -4,6 +4,7 @@ using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.KAudioLibrary.Filter;
 using KodiRemote.Code.JSON.KAudioLibrary.Notifications;
 using KodiRemote.Code.JSON.KAudioLibrary.Params;
+using KodiRemote.Code.JSON.KAudioLibrary.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,42 +22,23 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         event ReceivedEventHandler<Item> OnUpdate;
         #endregion Notifications
 
-
-        event ReceivedEventHandler<bool> CleanReceived;
-        event ReceivedEventHandler<bool> ExportReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.Album> GetAlbumDetailsReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.AlbumResult> GetAlbumsReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.Artist> GetArtistDetailsReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.ArtistResult> GetArtistsReceived;
-        event ReceivedEventHandler<GenreResult> GetGenresReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.AlbumResult> GetRecentlyAddedAlbumsReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.SongResult> GetRecentlyAddedSongsReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.AlbumResult> GetRecentlyPlayedAlbumsReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.SongResult> GetRecentlyPlayedSongsReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.Song> GetSongDetailsReceived;
-        event ReceivedEventHandler<KAudioLibrary.Results.SongResult> GetSongsReceived;
-        event ReceivedEventHandler<bool> ScanReceived;
-        event ReceivedEventHandler<bool> SetAlbumDetailsReceived;
-        event ReceivedEventHandler<bool> SetArtistDetailsReceived;
-        event ReceivedEventHandler<bool> SetSongDetailsReceived;
-
-        void Clean();
-        void Export(string path = null);
-        void Export(bool overwrite = false, bool images = false);
-        void GetAlbumDetails(int albumID, AlbumField properties = null);
-        void GetAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null, AlbumFilter filter = null);
-        void GetArtistDetails(int artistID, ArtistField properties = null);
-        void GetArtists(ArtistField properties = null, bool? albumartistsonly = null, ArtistFilter filter = null, Limits limits = null, Sort sort = null);
-        void GetGenres(GenreField properties = null, Limits limits = null, Sort sort = null);
-        void GetRecentlyAddedAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null);
-        void GetRecentlyAddedSongs(SongField properties = null, int? albumlimit = null, Limits limits = null, Sort sort = null);
-        void GetRecentlyPlayedAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null);
-        void GetRecentlyPlayedSongs(SongField properties = null, int? albumlimit = null, Limits limits = null, Sort sort = null);
-        void GetSongDetails(int songID, SongField properties = null);
-        void GetSongs(SongField properties = null, Limits limits = null, Sort sort = null, SongFilter filter = null);
-        void Scan(string directory = null);
-        void SetAlbumDetails(SetAlbumDetails album);
-        void SetArtistDetails(SetArtistDetails artist);
-        void SetSongDetails(SetSongDetails song);
+        Task<bool> Clean();
+        Task<bool> Export(string path = null);
+        Task<bool> Export(bool overwrite = false, bool images = false);
+        Task<Album> GetAlbumDetails(int albumID, AlbumField properties = null);
+        Task<AlbumResult> GetAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null, AlbumFilter filter = null);
+        Task<Artist> GetArtistDetails(int artistID, ArtistField properties = null);
+        Task<ArtistResult> GetArtists(ArtistField properties = null, bool? albumartistsonly = null, ArtistFilter filter = null, Limits limits = null, Sort sort = null);
+        Task<GenreResult> GetGenres(GenreField properties = null, Limits limits = null, Sort sort = null);
+        Task<AlbumResult> GetRecentlyAddedAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null);
+        Task<SongResult> GetRecentlyAddedSongs(SongField properties = null, int? albumlimit = null, Limits limits = null, Sort sort = null);
+        Task<AlbumResult> GetRecentlyPlayedAlbums(AlbumField properties = null, Limits limits = null, Sort sort = null);
+        Task<SongResult> GetRecentlyPlayedSongs(SongField properties = null, int? albumlimit = null, Limits limits = null, Sort sort = null);
+        Task<Song> GetSongDetails(int songID, SongField properties = null);
+        Task<SongResult> GetSongs(SongField properties = null, Limits limits = null, Sort sort = null, SongFilter filter = null);
+        Task<bool> Scan(string directory = null);
+        Task<bool> SetAlbumDetails(SetAlbumDetails album);
+        Task<bool> SetArtistDetails(SetArtistDetails artist);
+        Task<bool> SetSongDetails(SetSongDetails song);
     }
 }

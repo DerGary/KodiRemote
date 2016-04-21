@@ -19,9 +19,6 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public AddonsWebSocketService(WebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (!methods.ContainsKey(guid)) {
-                return;//when guid not present in dictionary then the Message is for another class
-            }
             if (methods[guid] == Method.ExecuteAddon.ToInt()) {
                 DeserializeMessageAndTriggerTask(guid, message);
             } else if (methods[guid] == Method.GetAddonDetails.ToInt()) {
@@ -56,10 +53,6 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else {
                 return SendRequest<bool, SetAddonEnabled<bool>>(Method.SetAddonEnabled, new SetAddonEnabled<bool>() { AddonId = addonid, Enabled = enabled });
             }
-        }
-
-        protected override void WebSocketMessageReceived(int id, string message) {
-
         }
     }
 }

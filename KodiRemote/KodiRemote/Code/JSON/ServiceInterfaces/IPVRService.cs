@@ -10,20 +10,12 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.ServiceInterfaces {
     public interface IPVRService {
-        event ReceivedEventHandler<ChannelDetails> GetChannelDetailsReceived;
-        event ReceivedEventHandler<List<ChannelGroupDetails>> GetChannelGroupDetailsReceived;
-        event ReceivedEventHandler<List<ChannelGroup>> GetChannelGroupsReceived;
-        event ReceivedEventHandler<List<ChannelDetails>> GetChannelsReceived;
-        event ReceivedEventHandler<PVRProperties> GetPropertiesReceived;
-        event ReceivedEventHandler<bool> RecordReceived;
-        event ReceivedEventHandler<bool> ScanReceived;
-
-        void GetChannelDetails(int channelId, PVRChannelField properties = null);
-        void GetChannelGroupDetails(int channelGroupId, PVRChannelField properties = null, Limits limits = null);
-        void GetChannelGroups(ChannelTypeEnum channelType, Limits limits = null);
-        void GetChannels(int channelGroupId, PVRChannelField properties = null, Limits limits = null);
-        void GetProperties(PVRField properties, Limits limits = null);
-        void Record(ToggleEnum record, int? channelId = null);
-        void Scan();
+        Task<ChannelDetails> GetChannelDetails(int channelId, PVRChannelField properties = null);
+        Task<List<ChannelGroupDetails>> GetChannelGroupDetails(int channelGroupId, PVRChannelField properties = null, Limits limits = null);
+        Task<List<ChannelGroup>> GetChannelGroups(ChannelTypeEnum channelType, Limits limits = null);
+        Task<List<ChannelDetails>> GetChannels(int channelGroupId, PVRChannelField properties = null, Limits limits = null);
+        Task<PVRProperties> GetProperties(PVRField properties, Limits limits = null);
+        Task<bool> Record(ToggleEnum record, int? channelId = null);
+        Task<bool> Scan();
     }
 }
