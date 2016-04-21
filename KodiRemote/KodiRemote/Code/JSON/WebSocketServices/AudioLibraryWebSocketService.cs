@@ -30,40 +30,35 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public AudioLibraryWebSocketService(WebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (methods[guid] == Method.Clean.ToInt()) {
+            if (methods[guid] == Method.Clean
+                || methods[guid] == Method.Export
+                || methods[guid] == Method.Scan
+                || methods[guid] == Method.SetAlbumDetails
+                || methods[guid] == Method.SetArtistDetails
+                || methods[guid] == Method.SetSongDetails) {
                 DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.Export.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.GetAlbumDetails.ToInt()) {
+            } else if (methods[guid] == Method.GetAlbumDetails) {
                 DeserializeMessageAndTriggerTask<Album>(guid, message);
-            } else if (methods[guid] == Method.GetAlbums.ToInt()) {
+            } else if (methods[guid] == Method.GetAlbums) {
                 DeserializeMessageAndTriggerTask<AlbumResult>(guid, message);
-            } else if (methods[guid] == Method.GetArtistDetails.ToInt()) {
+            } else if (methods[guid] == Method.GetArtistDetails) {
                 DeserializeMessageAndTriggerTask<Artist>(guid, message);
-            } else if (methods[guid] == Method.GetArtists.ToInt()) {
+            } else if (methods[guid] == Method.GetArtists) {
                 DeserializeMessageAndTriggerTask<ArtistResult>(guid, message);
-            } else if (methods[guid] == Method.GetGenres.ToInt()) {
+            } else if (methods[guid] == Method.GetGenres) {
                 DeserializeMessageAndTriggerTask<GenreResult>(guid, message);
-            } else if (methods[guid] == Method.GetRecentlyAddedAlbums.ToInt()) {
+            } else if (methods[guid] == Method.GetRecentlyAddedAlbums) {
                 DeserializeMessageAndTriggerTask<AlbumResult>(guid, message);
-            } else if (methods[guid] == Method.GetRecentlyAddedSongs.ToInt()) {
+            } else if (methods[guid] == Method.GetRecentlyAddedSongs) {
                 DeserializeMessageAndTriggerTask<SongResult>(guid, message);
-            } else if (methods[guid] == Method.GetRecentlyPlayedAlbums.ToInt()) {
+            } else if (methods[guid] == Method.GetRecentlyPlayedAlbums) {
                 DeserializeMessageAndTriggerTask<AlbumResult>(guid, message);
-            } else if (methods[guid] == Method.GetRecentlyPlayedSongs.ToInt()) {
+            } else if (methods[guid] == Method.GetRecentlyPlayedSongs) {
                 DeserializeMessageAndTriggerTask<SongResult>(guid, message);
-            } else if (methods[guid] == Method.GetSongDetails.ToInt()) {
+            } else if (methods[guid] == Method.GetSongDetails) {
                 DeserializeMessageAndTriggerTask<Song>(guid, message);
-            } else if (methods[guid] == Method.GetSongs.ToInt()) {
+            } else if (methods[guid] == Method.GetSongs) {
                 DeserializeMessageAndTriggerTask<SongResult>(guid, message);
-            } else if (methods[guid] == Method.Scan.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.SetAlbumDetails.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.SetArtistDetails.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.SetSongDetails.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
             }
         }
 

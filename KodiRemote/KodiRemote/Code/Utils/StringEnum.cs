@@ -13,6 +13,7 @@ namespace KodiRemote.Code.Utils {
             this.name = name;
             this.value = value;
         }
+
         public override string ToString() {
             return name;
         }

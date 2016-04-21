@@ -30,13 +30,13 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
 
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (methods[guid] == Method.GetProperties.ToInt()) {
+            if (methods[guid] == Method.GetProperties) {
                 DeserializeMessageAndTriggerTask<ApplicationProperties>(guid, message);
-            } else if (methods[guid] == Method.Quit.ToInt()) {
+            } else if (methods[guid] == Method.Quit) {
                 DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.SetMute.ToInt()) {
+            } else if (methods[guid] == Method.SetMute) {
                 DeserializeMessageAndTriggerTask<bool>(guid, message);
-            } else if (methods[guid] == Method.SetVolume.ToInt()) {
+            } else if (methods[guid] == Method.SetVolume) {
                 DeserializeMessageAndTriggerTask<int>(guid, message);
             }
         }

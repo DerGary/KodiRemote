@@ -25,11 +25,11 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         Task<Properties> GetProperties(int playerid, PlayerField properties = null);
 
 
-        Task<bool> PlayPause(int playerID, ToggleEnum play);
-        Task<Speed> SetSpeed(int playerID, SpeedNumbersEnum speed);
-        Task<Speed> SetSpeed(int playerID, IncDecEnum speed);
-        Task<bool> Stop(int playerID);
-        Task<bool> GoTo(int playerid, ToEnum to);
+        Task<bool> PlayPause(int playerId, ToggleEnum play);
+        Task<Speed> SetSpeed(int playerId, SpeedNumbersEnum speed);
+        Task<Speed> SetSpeed(int playerId, IncDecEnum speed);
+        Task<bool> Stop(int playerId);
+        Task<bool> GoTo(int playerId, ToEnum to);
         Task<bool> GoTo(int playerid, int to);
         Task<Seek> Seek(int playerID, double percentage);
         Task<Seek> Seek(int playerID, Time time);

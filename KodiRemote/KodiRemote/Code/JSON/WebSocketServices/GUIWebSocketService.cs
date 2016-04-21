@@ -16,14 +16,13 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public GUIWebSocketService(WebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (methods[guid] == Method.ActivateWindow.ToInt()) {
+            if (methods[guid] == Method.ActivateWindow
+                || methods[guid] == Method.ShowNotification) {
                 DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.GetProperties.ToInt()) {
+            } else if (methods[guid] == Method.GetProperties) {
                 DeserializeMessageAndTriggerTask<GUIProperties>(guid, message);
-            } else if (methods[guid] == Method.SetFullscreen.ToInt()) {
+            } else if (methods[guid] == Method.SetFullscreen) {
                 DeserializeMessageAndTriggerTask<bool>(guid, message);
-            } else if (methods[guid] == Method.ShowNotification.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
             }
         }
 

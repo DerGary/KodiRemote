@@ -102,7 +102,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
 
         protected Dictionary<string, Task> tasks = new Dictionary<string, Task>();
         protected Dictionary<string, object> returnValues = new Dictionary<string, object>();
-        protected Dictionary<string, int> methods = new Dictionary<string, int>();
+        protected Dictionary<string, StringEnum> methods = new Dictionary<string, StringEnum>();
 
         protected Task<T> SendRequest<T>(StringEnum method) {
             string guid = new Guid().ToString();
@@ -121,7 +121,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 return (T)returnValues[guid];
             });
             tasks[guid] = t;
-            methods[guid] = method.ToInt();
+            methods[guid] = method;
             return t;
         }
     }

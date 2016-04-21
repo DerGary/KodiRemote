@@ -20,31 +20,16 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler OnWake;
         #endregion Notifications
 
-        #region Events
-        public event ReceivedEventHandler<bool> EjectOpticalDriveReceived;
-        public event ReceivedEventHandler<SystemProperties> GetPropertiesReceived;
-        public event ReceivedEventHandler<bool> HibernateReceived;
-        public event ReceivedEventHandler<bool> RebootReceived;
-        public event ReceivedEventHandler<bool> ShutdownReceived;
-        public event ReceivedEventHandler<bool> SuspendReceived;
-        #endregion Events
-
         public SystemWebSocketService(WebSocketHelper helper) : base(helper) { }
-
-        protected override void WebSocketMessageReceived(int id, string message) {
-            if (id == KSystem.Method.EjectOpticalDrive.ToInt()) {
-                ConvertResultToBool(EjectOpticalDriveReceived, message);
-            } else if (id == KSystem.Method.GetProperties.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<SystemProperties>>(message);
-                GetPropertiesReceived?.Invoke(item.Result);
-            } else if (id == KSystem.Method.Hibernate.ToInt()) {
-                ConvertResultToBool(HibernateReceived, message);
-            } else if (id == KSystem.Method.Reboot.ToInt()) {
-                ConvertResultToBool(RebootReceived, message);
-            } else if (id == KSystem.Method.Shutdown.ToInt()) {
-                ConvertResultToBool(ShutdownReceived, message);
-            } else if (id == KSystem.Method.Suspend.ToInt()) {
-                ConvertResultToBool(SuspendReceived, message);
+        protected override void WebSocketMessageReceived(string guid, string message) {
+            if (methods[guid] == Method.EjectOpticalDrive
+                || methods[guid] == Method.Hibernate
+                || methods[guid] == Method.Reboot
+                || methods[guid] == Method.Shutdown
+                || methods[guid] == Method.Suspend) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.GetProperties) {
+                DeserializeMessageAndTriggerTask<SystemProperties>(guid, message);
             }
         }
 
@@ -63,28 +48,28 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         }
 
 
-        public void EjectOpticalDrive() {
-            SendRequest(Method.EjectOpticalDrive);
+        public Task<bool> EjectOpticalDrive() {
+            return SendRequest<bool>(Method.EjectOpticalDrive);
         }
 
-        public void GetProperties(SystemField properties = null) {
-            SendRequest(Method.EjectOpticalDrive, new GetProperties() { Properties = properties.ToList() });
+        public Task<SystemProperties> GetProperties(SystemField properties = null) {
+            return SendRequest<SystemProperties, GetProperties>(Method.EjectOpticalDrive, new GetProperties() { Properties = properties.ToList() });
         }
 
-        public void Hibernate() {
-            SendRequest(Method.Hibernate);
+        public Task<bool> Hibernate() {
+            return SendRequest<bool>(Method.Hibernate);
         }
 
-        public void Reboot() {
-            SendRequest(Method.Reboot);
+        public Task<bool> Reboot() {
+            return SendRequest<bool>(Method.Reboot);
         }
 
-        public void Shutdown() {
-            SendRequest(Method.Shutdown);
+        public Task<bool> Shutdown() {
+            return SendRequest<bool>(Method.Shutdown);
         }
 
-        public void Suspend() {
-            SendRequest(Method.Suspend);
+        public Task<bool> Suspend() {
+            return SendRequest<bool>(Method.Suspend);
         }
     }
 }

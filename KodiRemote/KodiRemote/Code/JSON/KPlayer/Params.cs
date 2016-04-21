@@ -1,5 +1,6 @@
 ﻿using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
+using KodiRemote.Code.JSON.General.Params;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,137 +10,91 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.KPlayer.Params {
     [DataContract]
-    public class PlayerID {
-        public PlayerID() { }
-
-        public PlayerID(int playerId) {
-            PlayerId = playerId;
-        }
-
+    public class PlayerIdBase {
+        [DataMember(Name = "playerid")]
+        public int PlayerId { get; set; }
+    }
+    [DataContract]
+    public class PlayerIdPropertyBase : PropertyBase {
         [DataMember(Name = "playerid")]
         public int PlayerId { get; set; }
     }
 
     [DataContract]
-    public class ActivePlayer : PlayerID {
-        public ActivePlayer() : base() { }
-        public ActivePlayer(int playerId, IField properties) : base(playerId) {
-            Properties = properties.ToList();
-        }
-        [DataMember(Name = "properties")]
-        public List<string> Properties { get; set; }
-    }
+    public class GetItem : PlayerIdPropertyBase { }
+    [DataContract]
+    public class GetProperties : PlayerIdPropertyBase { }
+
 
     [DataContract]
-    public class PlayPause : PlayerID {
-        public PlayPause() : base() { }
-        public PlayPause(int playerId, ToggleEnum toggle) : base(playerId) {
-            if (toggle == ToggleEnum.True) {
-                Play = true;
-            } else if (toggle == ToggleEnum.False) {
-                Play = false;
-            }
-        }
-
+    public class PlayPause : PlayerIdBase {
         [DataMember(Name = "play", EmitDefaultValue = false)]
         public bool? Play { get; set; }
     }
 
     [DataContract]
-    public class Speed<T> : PlayerID {
-        public Speed() : base() { }
-        public Speed(int playerId, T speed) : base(playerId) {
-            SpeedValue = speed;
-        }
+    public class SetSpeed<T> : PlayerIdBase {
         [DataMember(Name = "speed")]
-        public T SpeedValue { get; set; }
+        public T Speed { get; set; }
     }
+    [DataContract]
+    public class Stop : PlayerIdBase { }
 
     [DataContract]
-    public class GoTo<T> : PlayerID {
-        public GoTo() : base() { }
-        public GoTo(int playerId, T to) : base(playerId) {
-            To = to;
-        }
+    public class GoTo<T> : PlayerIdBase {
         [DataMember(Name = "to")]
         public T To { get; set; }
     }
 
     [DataContract]
-    public class Value<T> : PlayerID {
-        public Value() : base() { }
-        public Value(int playerId, T value) : base(playerId) {
-            ValueValue = value;
-        }
+    public abstract class ValuePlayerIdBase<T> : PlayerIdBase {
+
         [DataMember(Name = "value")]
-        public T ValueValue { get; set; }
+        public T Value { get; set; }
     }
+
     [DataContract]
-    public class Direction : PlayerID {
-        public Direction() : base() { }
-        public Direction(int playerId, string direction) : base(playerId) {
-            DirectionValue = direction;
-        }
+    public class Seek<T> : ValuePlayerIdBase<T> { }
+    [DataContract]
+    public class Move : PlayerIdBase {
         [DataMember(Name = "direction")]
-        public string DirectionValue { get; set; }
+        public string Direction { get; set; }
     }
     [DataContract]
-    public class Zoom<T> : PlayerID {
-        public Zoom() : base() { }
-        public Zoom(int playerId, T zoom) : base(playerId) {
-            ZoomValue = zoom;
-        }
+    public class Rotate : ValuePlayerIdBase<string> { }
+
+    [DataContract]
+    public class Zoom<T> : PlayerIdBase {
         [DataMember(Name = "zoom")]
         public T ZoomValue { get; set; }
     }
     [DataContract]
-    public class Stream<T> : PlayerID {
-        public Stream() : base() { }
-        public Stream(int playerId, T stream) : base(playerId) {
-            StreamValue = stream;
-        }
+    public class SetAudioStream<T> : PlayerIdBase {
         [DataMember(Name = "stream")]
-        public T StreamValue { get; set; }
+        public T Stream { get; set; }
     }
     [DataContract]
-    public class Subtitle<T> : PlayerID {
-        public Subtitle() : base() { }
-        public Subtitle(int playerId, T subtitle, bool enable) : base(playerId) {
-            SubtitleValue = subtitle;
-            Enable = enable;
-        }
+    public class SetSubtitle<T> : PlayerIdBase {
         [DataMember(Name = "subtitle")]
-        public T SubtitleValue { get; set; }
+        public T Subtitle { get; set; }
         [DataMember(Name = "enable", EmitDefaultValue = false)]
         public bool Enable { get; set; }
     }
     [DataContract]
-    public class PartyMode<T> : PlayerID {
-        public PartyMode() : base() { }
-        public PartyMode(int playerId, T partymode) : base(playerId) {
-            PartyModeValue = partymode;
-        }
+    public class SetPartymode<T> : PlayerIdBase {
         [DataMember(Name = "partymode")]
-        public T PartyModeValue { get; set; }
+        public T PartyMode { get; set; }
     }
 
     [DataContract]
-    public class Repeat : PlayerID {
-        public Repeat() : base() { }
-        public Repeat(int playerId, string repeat) : base(playerId) {
-            RepeatValue = repeat;
-        }
+    public class SetRepeat : PlayerIdBase {
         [DataMember(Name = "repeat")]
-        public string RepeatValue { get; set; }
+        public string Repeat { get; set; }
     }
     [DataContract]
-    public class Shuffle<T> : PlayerID {
-        public Shuffle() : base() { }
-        public Shuffle(int playerId, T shuffle) : base(playerId) {
-            ShuffleValue = shuffle;
-        }
+    public class SetShuffle<T> : PlayerIdBase {
         [DataMember(Name = "shuffle")]
-        public T ShuffleValue { get; set; }
+        public T Shuffle { get; set; }
     }
 
     [DataContract]
@@ -149,10 +104,20 @@ namespace KodiRemote.Code.JSON.KPlayer.Params {
         [DataMember(Name = "options", EmitDefaultValue = false)]
         public Options Options { get; set; }
     }
-    [DataContract]
-    public abstract class Item {
 
+    [DataContract]
+    public class Options {
+        [DataMember(Name = "shuffled", EmitDefaultValue = false)]
+        public bool? Shuffled { get; set; }
+        [DataMember(Name = "repeat", EmitDefaultValue = false)]
+        public string Repeat { get; set; }
+        [DataMember(Name = "resume", EmitDefaultValue = false)]
+        public bool? Resume { get; set; }
     }
+
+    [DataContract]
+    public abstract class Item { }
+
     [DataContract]
     public class Playlist : Item {
         [DataMember(Name = "playlistid")]
@@ -212,13 +177,5 @@ namespace KodiRemote.Code.JSON.KPlayer.Params {
         [DataMember(Name = "channelid")]
         public int ChannelId { get; set; }
     }
-    [DataContract]
-    public class Options {
-        [DataMember(Name = "shuffled", EmitDefaultValue = false)]
-        public bool? Shuffled { get; set; }
-        [DataMember(Name = "repeat", EmitDefaultValue = false)]
-        public string Repeat { get; set; }
-        [DataMember(Name = "resume", EmitDefaultValue = false)]
-        public bool? Resume { get; set; }
-    }
+
 }

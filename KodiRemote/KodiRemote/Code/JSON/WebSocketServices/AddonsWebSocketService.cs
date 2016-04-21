@@ -19,14 +19,13 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public AddonsWebSocketService(WebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (methods[guid] == Method.ExecuteAddon.ToInt()) {
+            if (methods[guid] == Method.ExecuteAddon
+                || methods[guid] == Method.SetAddonEnabled) {
                 DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.GetAddonDetails.ToInt()) {
+            } else if (methods[guid] == Method.GetAddonDetails) {
                 DeserializeMessageAndTriggerTask<Addon>(guid, message);
-            } else if (methods[guid] == Method.GetAddons.ToInt()) {
+            } else if (methods[guid] == Method.GetAddons) {
                 DeserializeMessageAndTriggerTask<Addon>(guid, message);
-            } else if (methods[guid] == Method.SetAddonEnabled.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
             }
         }
 

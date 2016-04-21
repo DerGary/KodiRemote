@@ -19,15 +19,11 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public InputWebSocketService(WebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (methods[guid] == Method.ExecuteAction.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.Home.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.SendText.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.ShowCodec.ToInt()) {
-                DeserializeMessageAndTriggerTask(guid, message);
-            } else if (methods[guid] == Method.ShowOSD.ToInt()) {
+            if (methods[guid] == Method.ExecuteAction
+                || methods[guid] == Method.Home
+                || methods[guid] == Method.SendText
+                || methods[guid] == Method.ShowCodec
+                || methods[guid] == Method.ShowOSD) {
                 DeserializeMessageAndTriggerTask(guid, message);
             }
         }

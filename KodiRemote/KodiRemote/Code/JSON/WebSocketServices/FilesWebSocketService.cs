@@ -17,15 +17,15 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public FilesWebSocketService(WebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (methods[guid] == Method.Download.ToInt()) {
+            if (methods[guid] == Method.Download) {
                 DeserializeMessageAndTriggerTask<string>(guid, message);
-            } else if (methods[guid] == Method.GetDirectory.ToInt()) {
+            } else if (methods[guid] == Method.GetDirectory) {
                 DeserializeMessageAndTriggerTask<List<FileDetails>>(guid, message);
-            } else if (methods[guid] == Method.GetFileDetails.ToInt()) {
+            } else if (methods[guid] == Method.GetFileDetails) {
                 DeserializeMessageAndTriggerTask<FileDetails>(guid, message);
-            } else if (methods[guid] == Method.GetSources.ToInt()) {
+            } else if (methods[guid] == Method.GetSources) {
                 DeserializeMessageAndTriggerTask<List<string>>(guid, message);
-            } else if (methods[guid] == Method.PrepareDownload.ToInt()) {
+            } else if (methods[guid] == Method.PrepareDownload) {
                 DeserializeMessageAndTriggerTask<PrepareDownloadResult>(guid, message);
             }
         }

@@ -17,15 +17,15 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
 
 
         protected override void WebSocketMessageReceived(string guid, string message) {
-            if (methods[guid] == Method.GetConfiguration.ToInt()) {
+            if (methods[guid] == Method.GetConfiguration) {
                 DeserializeMessageAndTriggerTask<Configuration>(guid, message);
-            } else if (methods[guid] == Method.Introspect.ToInt()) {
+            } else if (methods[guid] == Method.Introspect) {
                 DeserializeMessageAndTriggerTask<JsonObject>(guid, message);
-            } else if (methods[guid] == Method.NotifyAll.ToInt()) {
+            } else if (methods[guid] == Method.NotifyAll) {
                 DeserializeMessageAndTriggerTask<bool>(guid, message);
-            } else if (methods[guid] == Method.Permission.ToInt()) {
+            } else if (methods[guid] == Method.Permission) {
                 DeserializeMessageAndTriggerTask<Permissions>(guid, message);
-            } else if (methods[guid] == Method.Ping.ToInt()) {
+            } else if (methods[guid] == Method.Ping) {
                 var item = JsonSerializer.FromJson<RPCResponse<string>>(message);
                 if (item.Result == "pong") {
                     returnValues[guid] = true;
@@ -33,9 +33,9 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                     returnValues[guid] = false;
                 }
                 tasks[guid].Start();
-            } else if (methods[guid] == Method.SetConfiguration.ToInt()) {
+            } else if (methods[guid] == Method.SetConfiguration) {
                 DeserializeMessageAndTriggerTask<Configuration>(guid, message);
-            } else if (methods[guid] == Method.Version.ToInt()) {
+            } else if (methods[guid] == Method.Version) {
                 DeserializeMessageAndTriggerTask<APIVersion>(guid, message);
             }
         }

@@ -24,102 +24,47 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<KPlayer.Notifications.Stop> OnStopReceived;
         #endregion Notifications
 
-        #region events
-        public event ReceivedEventHandler<KPlayer.Results.Item> ItemReceived;
-        public event ReceivedEventHandler<List<KPlayer.Results.Player>> PlayersReceived;
-        public event ReceivedEventHandler<KPlayer.Results.Properties> PropertiesReceived;
-        public event ReceivedEventHandler<KPlayer.Results.Seek> SeekReceived;
-        public event ReceivedEventHandler<bool> StopReceived;
-        public event ReceivedEventHandler<bool> GoToReceived;
-        public event ReceivedEventHandler<bool> MoveReceived;
-        public event ReceivedEventHandler<bool> RotateReceived;
-        public event ReceivedEventHandler<bool> ZoomReceived;
-        public event ReceivedEventHandler<bool> SetAudioStreamReceived;
-        public event ReceivedEventHandler<bool> SetSubtitleReceived;
-        public event ReceivedEventHandler<bool> SetPartymodeReceived;
-        public event ReceivedEventHandler<bool> SetRepeatReceived;
-        public event ReceivedEventHandler<bool> SetShuffleReceived;
-        public event ReceivedEventHandler<bool> OpenPlaylistReceived;
-        public event ReceivedEventHandler<bool> OpenPictureReceived;
-        public event ReceivedEventHandler<bool> OpenMovieReceived;
-        public event ReceivedEventHandler<bool> OpenEpisodeReceived;
-        public event ReceivedEventHandler<bool> OpenMusicVideoReceived;
-        public event ReceivedEventHandler<bool> OpenArtistReceived;
-        public event ReceivedEventHandler<bool> OpenAlbumReceived;
-        public event ReceivedEventHandler<bool> OpenSongReceived;
-        public event ReceivedEventHandler<bool> OpenGenreReceived;
-        public event ReceivedEventHandler<bool> OpenPartyModeReceived;
-        public event ReceivedEventHandler<bool> OpenChannelReceived;
-        public event ReceivedEventHandler<bool> PlayPauseReceived;
-        public event ReceivedEventHandler<Speed> SetSpeedReceived;
-        #endregion events
-
         public PlayerWebSocketService(WebSocketHelper helper) : base(helper) { }
 
 
-
-        protected override void WebSocketMessageReceived(int id, string message) {
-            if (id == KPlayer.Method.GetItem.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<KPlayer.Results.ItemResult>>(message);
-                ItemReceived?.Invoke(item.Result.Item);
-            } else if (id == KPlayer.Method.GetActivePlayers.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<List<KPlayer.Results.Player>>>(message);
-                PlayersReceived?.Invoke(item.Result);
-            } else if (id == KPlayer.Method.GetProperties.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<KPlayer.Results.Properties>>(message);
-                PropertiesReceived?.Invoke(item.Result);
-            } else if (id == KPlayer.Method.SetSpeed.ToInt() || id == KPlayer.Method.PlayPause.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<KPlayer.Results.Speed>>(message);
-                SetSpeedReceived?.Invoke(item.Result);
-            } else if (id == KPlayer.Method.Seek.ToInt()) {
-                var item = JsonSerializer.FromJson<RPCResponse<KPlayer.Results.Seek>>(message);
-                SeekReceived?.Invoke(item.Result);
-            } else if (id == KPlayer.Method.Stop.ToInt()) {
-                ConvertResultToBool(StopReceived, message);
-            } else if (id == KPlayer.Method.GoTo.ToInt()) {
-                ConvertResultToBool(GoToReceived, message);
-            } else if (id == KPlayer.Method.Move.ToInt()) {
-                ConvertResultToBool(MoveReceived, message);
-            } else if (id == KPlayer.Method.Rotate.ToInt()) {
-                ConvertResultToBool(RotateReceived, message);
-            } else if (id == KPlayer.Method.Zoom.ToInt()) {
-                ConvertResultToBool(ZoomReceived, message);
-            } else if (id == KPlayer.Method.SetAudioStream.ToInt()) {
-                ConvertResultToBool(SetAudioStreamReceived, message);
-            } else if (id == KPlayer.Method.SetSubtitle.ToInt()) {
-                ConvertResultToBool(SetSubtitleReceived, message);
-            } else if (id == KPlayer.Method.SetPartymode.ToInt()) {
-                ConvertResultToBool(SetPartymodeReceived, message);
-            } else if (id == KPlayer.Method.SetRepeat.ToInt()) {
-                ConvertResultToBool(SetRepeatReceived, message);
-            } else if (id == KPlayer.Method.SetShuffle.ToInt()) {
-                ConvertResultToBool(SetShuffleReceived, message);
-            } else if (id == KPlayer.Method.OpenPlaylist.ToInt()) {
-                ConvertResultToBool(OpenPlaylistReceived, message);
-            } else if (id == KPlayer.Method.OpenPicture.ToInt()) {
-                ConvertResultToBool(OpenPictureReceived, message);
-            } else if (id == KPlayer.Method.OpenMovie.ToInt()) {
-                ConvertResultToBool(OpenMovieReceived, message);
-            } else if (id == KPlayer.Method.OpenEpisode.ToInt()) {
-                ConvertResultToBool(OpenEpisodeReceived, message);
-            } else if (id == KPlayer.Method.OpenMusicVideo.ToInt()) {
-                ConvertResultToBool(OpenMusicVideoReceived, message);
-            } else if (id == KPlayer.Method.OpenArtist.ToInt()) {
-                ConvertResultToBool(OpenArtistReceived, message);
-            } else if (id == KPlayer.Method.OpenAlbum.ToInt()) {
-                ConvertResultToBool(OpenAlbumReceived, message);
-            } else if (id == KPlayer.Method.OpenSong.ToInt()) {
-                ConvertResultToBool(OpenSongReceived, message);
-            } else if (id == KPlayer.Method.OpenGenre.ToInt()) {
-                ConvertResultToBool(OpenGenreReceived, message);
-            } else if (id == KPlayer.Method.OpenPartyMode.ToInt()) {
-                ConvertResultToBool(OpenPartyModeReceived, message);
-            } else if (id == KPlayer.Method.OpenChannel.ToInt()) {
-                ConvertResultToBool(OpenChannelReceived, message);
-            } else if (id == KPlayer.Method.PlayPause.ToInt()) {
-                ConvertResultToBool(PlayPauseReceived, message);
+        protected override void WebSocketMessageReceived(string guid, string message) {
+            if (methods[guid] == Method.GoTo
+                || methods[guid] == Method.Move
+                || methods[guid] == Method.OpenAlbum
+                || methods[guid] == Method.OpenArtist
+                || methods[guid] == Method.OpenChannel
+                || methods[guid] == Method.OpenEpisode
+                || methods[guid] == Method.OpenGenre
+                || methods[guid] == Method.OpenMovie
+                || methods[guid] == Method.OpenMusicVideo
+                || methods[guid] == Method.OpenPartyMode
+                || methods[guid] == Method.OpenPicture
+                || methods[guid] == Method.OpenPlaylist
+                || methods[guid] == Method.OpenSong
+                || methods[guid] == Method.Rotate
+                || methods[guid] == Method.SetAudioStream
+                || methods[guid] == Method.SetPartymode
+                || methods[guid] == Method.SetRepeat
+                || methods[guid] == Method.SetShuffle
+                || methods[guid] == Method.SetSubtitle
+                || methods[guid] == Method.Stop
+                || methods[guid] == Method.Zoom) {
+                DeserializeMessageAndTriggerTask(guid, message);
+            } else if (methods[guid] == Method.GetActivePlayers) {
+                DeserializeMessageAndTriggerTask<List<Player>>(guid, message);
+            } else if (methods[guid] == Method.GetItem) {
+                DeserializeMessageAndTriggerTask<KPlayer.Results.Item>(guid, message);
+            } else if (methods[guid] == Method.GetProperties) {
+                DeserializeMessageAndTriggerTask<Properties>(guid, message);
+            } else if (methods[guid] == Method.PlayPause) {
+                DeserializeMessageAndTriggerTask<Speed>(guid, message);
+            } else if (methods[guid] == Method.Seek) {
+                DeserializeMessageAndTriggerTask<Seek>(guid, message);
+            } else if (methods[guid] == Method.SetSpeed) {
+                DeserializeMessageAndTriggerTask<Speed>(guid, message);
             }
         }
+
 
         protected override void WebSocketNotificationReceived(string method, string notification) {
             if (method == Notification.OnPause.ToString()) {
@@ -143,192 +88,160 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             }
         }
 
-        public void GetItem(int playerId, ItemField properties = null) {
-            if (properties == null) {
-                properties = new ItemField();
-                properties.All();
-            }
-            SendRequest(Method.GetItem, new ActivePlayer(playerId, properties));
+        public Task<List<Player>> GetActivePlayers() {
+            return SendRequest<List<Player>>(Method.GetActivePlayers);
         }
 
-        public void GetActivePlayers() {
-            SendRequest(Method.GetActivePlayers);
+        public Task<KPlayer.Results.Item> GetItem(int playerId, ItemField properties = null) {
+            return SendRequest<KPlayer.Results.Item, GetItem>(Method.GetItem, new GetItem { PlayerId = playerId, Properties = properties?.ToList() });
         }
 
-        public void GetProperties(int playerId, PlayerField properties = null) {
-            if (properties == null) {
-                properties = new PlayerField();
-                properties.All();
-            }
-            SendRequest(Method.GetProperties, new ActivePlayer(playerId, properties));
+        public Task<Properties> GetProperties(int playerId, PlayerField properties = null) {
+            return SendRequest<Properties, GetProperties>(Method.GetProperties, new GetProperties { PlayerId = playerId, Properties = properties?.ToList() });
         }
 
-        public void PlayPause(int playerId, ToggleEnum play) {
-            SendRequest(Method.PlayPause, new PlayPause(playerId, play));
+        public Task<bool> PlayPause(int playerId, ToggleEnum play) {
+            return SendRequest<bool, PlayPause>(Method.PlayPause, new PlayPause { PlayerId = playerId, Play = play });
         }
 
-        private void SetSpeed<T>(int playerId, T value) {
-            SendRequest(Method.SetSpeed, new Speed<T>(playerId, value));
+        public Task<Speed> SetSpeed(int playerId, SpeedNumbersEnum speed) {
+            return SendRequest<Speed, SetSpeed<int>>(Method.SetSpeed, new SetSpeed<int> { PlayerId = playerId, Speed = (int)speed });
         }
 
-        public void SetSpeed(int playerId, SpeedNumbersEnum speed) {
-            SetSpeed<int>(playerId, (int)speed);
+        public Task<Speed> SetSpeed(int playerId, IncDecEnum speed) {
+            return SendRequest<Speed, SetSpeed<string>>(Method.SetSpeed, new SetSpeed<string> { PlayerId = playerId, Speed = speed });
         }
 
-        public void SetSpeed(int playerId, IncDecEnum speed) {
-            SetSpeed<string>(playerId, speed);
+        public Task<bool> Stop(int playerId) {
+            return SendRequest<bool, Stop>(Method.Stop, new Stop { PlayerId = playerId });
         }
 
-        public void Stop(int playerId) {
-            SendRequest(Method.Stop, new PlayerID(playerId));
+        public Task<bool> GoTo(int playerId, ToEnum to) {
+            return SendRequest<bool, GoTo<string>>(Method.GoTo, new GoTo<string> { PlayerId = playerId, To = to });
         }
 
-        private void GoTo<T>(int playerId, T value) {
-            SendRequest(Method.GoTo, new GoTo<T>(playerId, value));
+        public Task<bool> GoTo(int playerId, int to) {
+            return SendRequest<bool, GoTo<int>>(Method.GoTo, new GoTo<int> { PlayerId = playerId, To = to });
         }
 
-        public void GoTo(int playerId, ToEnum to) {
-            GoTo<string>(playerId, to);
+        public Task<Seek> Seek(int playerId, double percentage) {
+            return SendRequest<Seek, Seek<double>>(Method.Seek, new Seek<double> { PlayerId = playerId, Value = percentage });
         }
 
-        public void GoTo(int playerId, int to) {
-            GoTo<int>(playerId, to);
+        public Task<Seek> Seek(int playerId, Time time) {
+            return SendRequest<Seek, Seek<Time>>(Method.Seek, new Seek<Time> { PlayerId = playerId, Value = time });
         }
 
-        private void Seek<T>(int playerId, T value) {
-            SendRequest(Method.Seek, new Value<T>(playerId, value));
+        public Task<Seek> Seek(int playerId, SeekEnum step) {
+            return SendRequest<Seek, Seek<string>>(Method.Seek, new Seek<string> { PlayerId = playerId, Value = step });
         }
 
-        public void Seek(int playerId, double percentage) {
-            Seek<double>(playerId, percentage);
+        public Task<bool> Move(int playerId, DirectionEnum direction) {
+            return SendRequest<bool, Move>(Method.Move, new Move { PlayerId = playerId, Direction = direction });
         }
 
-        public void Seek(int playerId, Time time) {
-            Seek<Time>(playerId, time);
+        public Task<bool> Rotate(int playerId, RotateEnum value) {
+            return SendRequest<bool, Rotate>(Method.Rotate, new Rotate { PlayerId = playerId, Value = value });
         }
 
-        public void Seek(int playerId, SeekEnum step) {
-            Seek<string>(playerId, step);
+        public Task<bool> Zoom(int playerId, ZoomEnum zoom) {
+            return SendRequest<bool, Zoom<string>>(Method.Zoom, new Zoom<string> { PlayerId = playerId, ZoomValue = zoom });
         }
 
-        public void Move(int playerId, DirectionEnum direction) {
-            SendRequest(Method.Move, new Direction(playerId, direction));
+        public Task<bool> Zoom(int playerId, ZoomNumbersEnum zoom) {
+            return SendRequest<bool, Zoom<int>>(Method.Zoom, new Zoom<int> { PlayerId = playerId, ZoomValue = (int)zoom });
         }
 
-        public void Rotate(int playerId, RotateEnum value) {
-            SendRequest(Method.Rotate, new Value<string>(playerId, value));
+        public Task<bool> SetAudioStream(int playerId, int audioStreamId) {
+            return SendRequest<bool, SetAudioStream<int>>(Method.SetAudioStream, new SetAudioStream<int> { PlayerId = playerId, Stream = audioStreamId });
         }
 
-        private void Zoom<T>(int playerId, T zoom) {
-            SendRequest(Method.Zoom, new Zoom<T>(playerId, zoom));
+        public Task<bool> SetAudioStream(int playerId, ToEnum stream) {
+            return SendRequest<bool, SetAudioStream<string>>(Method.SetAudioStream, new SetAudioStream<string> { PlayerId = playerId, Stream = stream });
         }
 
-        public void Zoom(int playerId, ZoomEnum zoom) {
-            Zoom<string>(playerId, zoom);
+        public Task<bool> SetSubtitle(int playerId, SubtitleEnum subtitle, bool enable = false) {
+            return SendRequest<bool, SetSubtitle<string>>(Method.SetSubtitle, new SetSubtitle<string> { PlayerId = playerId, Subtitle = subtitle, Enable = enable });
         }
 
-        public void Zoom(int playerId, ZoomNumbersEnum zoom) {
-            Zoom<int>(playerId, (int)zoom);
+        public Task<bool> SetSubtitle(int playerId, int subtitleId, bool enable = false) {
+            return SendRequest<bool, SetSubtitle<int>>(Method.SetSubtitle, new SetSubtitle<int> { PlayerId = playerId, Subtitle = subtitleId, Enable = enable });
         }
 
-        public void SetAudioStream<T>(int playerId, T audioStream) {
-            SendRequest(Method.SetAudioStream, new Stream<T>(playerId, audioStream));
-        }
-
-        public void SetAudioStream(int playerId, int audioStreamID) {
-            SetAudioStream<int>(playerId, audioStreamID);
-        }
-
-        public void SetAudioStream(int playerId, ToEnum stream) {
-            SetAudioStream<string>(playerId, stream);
-        }
-
-        private void SetSubtitle<T>(int playerId, bool enable, T subtitle) {
-            SendRequest(Method.SetSubtitle, new Subtitle<T>(playerId, subtitle, enable));
-        }
-
-        public void SetSubtitle(int playerId, SubtitleEnum subtitle, bool enable = false) {
-            SetSubtitle<string>(playerId, enable, subtitle);
-        }
-
-        public void SetSubtitle(int playerId, int subtitleID, bool enable = false) {
-            SetSubtitle<int>(playerId, enable, subtitleID);
-        }
-
-        public void SetPartymode(int playerId, ToggleEnum partymode) {
+        public Task<bool> SetPartymode(int playerId, ToggleEnum partymode) {
             if (partymode == ToggleEnum.Toggle) {
-                SendRequest(Method.SetPartymode, new PartyMode<string>(playerId, partymode));
+                return SendRequest<bool, SetPartymode<string>>(Method.SetPartymode, new SetPartymode<string> { PlayerId = playerId, PartyMode = partymode });
             } else {
-                SendRequest(Method.SetPartymode, new PartyMode<bool>(playerId, partymode));
+                return SendRequest<bool, SetPartymode<bool>>(Method.SetPartymode, new SetPartymode<bool> { PlayerId = playerId, PartyMode = partymode });
             }
         }
 
-        public void SetRepeat(int playerId, ExtendRepeatEnum repeat) {
-            SendRequest(Method.SetRepeat, new Repeat(playerId, repeat));
+        public Task<bool> SetRepeat(int playerId, ExtendRepeatEnum repeat) {
+            return SendRequest<bool, SetRepeat>(Method.SetRepeat, new SetRepeat { PlayerId = playerId, Repeat = repeat });
         }
 
-        public void SetShuffle(int playerId, ToggleEnum shuffle) {
+        public Task<bool> SetShuffle(int playerId, ToggleEnum shuffle) {
             if (shuffle == ToggleEnum.Toggle) {
-                SendRequest(Method.SetPartymode, new Shuffle<string>(playerId, shuffle));
+                return SendRequest<bool, SetShuffle<string>>(Method.SetShuffle, new SetShuffle<string> { PlayerId = playerId, Shuffle = shuffle });
             } else {
-                SendRequest(Method.SetPartymode, new Shuffle<bool>(playerId, shuffle));
+                return SendRequest<bool, SetShuffle<bool>>(Method.SetShuffle, new SetShuffle<bool> { PlayerId = playerId, Shuffle = shuffle });
             }
         }
 
-        private void Open<T>(Method method, T item, Options options) where T : KPlayer.Params.Item {
+        private Task<bool> Open<T>(Method method, T item, Options options) where T : KPlayer.Params.Item {
             var param = new Open<T>() {
                 Item = item,
                 Options = options
             };
-            SendRequest(method, param);
+            return SendRequest<bool, Open<T>>(method, param);
         }
 
-        public void OpenPlaylist(int playListID, OptionalRepeatEnum repeat, int position = 0, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenPlaylist, new Playlist() { PlaylistId = playListID, Position = position }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenPlaylist(int playListId, OptionalRepeatEnum repeat, int position = 0, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenPlaylist, new Playlist { PlaylistId = playListId, Position = position }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenPicture, new Picture() { Path = path, Recursive = recursive }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenPicture, new Picture { Path = path, Recursive = recursive }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenMovie(int movieId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenMovie, new Movie() { MovieId = movieId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenMovie(int movieId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenMovie, new Movie { MovieId = movieId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenEpisode(int episodeId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenEpisode, new Episode() { EpisodeId = episodeId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenEpisode(int episodeId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenEpisode, new Episode { EpisodeId = episodeId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenMusicVideo(int musicVideoId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenMusicVideo, new MusicVideo() { MusicVideoId = musicVideoId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenMusicVideo(int musicVideoId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenMusicVideo, new MusicVideo { MusicVideoId = musicVideoId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenArtist(int artistId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenArtist, new Artist() { ArtistId = artistId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenArtist(int artistId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenArtist, new Artist { ArtistId = artistId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenAlbum(int albumId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenAlbum, new Album() { AlbumId = albumId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenAlbum(int albumId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenAlbum, new Album { AlbumId = albumId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenSong(int songId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenSong, new Song() { SongId = songId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenSong(int songId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenSong, new Song { SongId = songId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenGenre(int genreId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenGenre, new Genre() { GenreId = genreId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenGenre(int genreId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenGenre, new Genre { GenreId = genreId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenPartyMode, new PartyMode() { PartyModeValue = partymode }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenPartyMode, new PartyMode { PartyModeValue = partymode }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenPartyMode, new PartyMode() { PartyModeValue = smartPlayListPath }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenPartyMode, new PartyMode { PartyModeValue = smartPlayListPath }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
 
-        public void OpenChannel(int channelId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            Open(Method.OpenChannel, new Channel() { ChannelId = channelId }, new Options() { Repeat = repeat, Shuffled = shuffled, Resume = resume });
+        public Task<bool> OpenChannel(int channelId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
+            return Open(Method.OpenChannel, new Channel { ChannelId = channelId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
         }
     }
 }
