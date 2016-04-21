@@ -2,7 +2,6 @@
 using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.KAudioLibrary.Filter;
-using KodiRemote.Code.JSON.KAudioLibrary.Notifications;
 using KodiRemote.Code.JSON.KAudioLibrary.Params;
 using KodiRemote.Code.JSON.KAudioLibrary.Results;
 using System;
@@ -16,10 +15,10 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         #region Notifications
         event ReceivedEventHandler OnCleanFinished;
         event ReceivedEventHandler OnCleanStarted;
-        event ReceivedEventHandler<Item> OnRemove;
+        event ReceivedEventHandler<KAudioLibrary.Notifications.Item> OnRemove;
         event ReceivedEventHandler OnScanFinished;
         event ReceivedEventHandler OnScanStarted;
-        event ReceivedEventHandler<Item> OnUpdate;
+        event ReceivedEventHandler<KAudioLibrary.Notifications.Item> OnUpdate;
         #endregion Notifications
 
         Task<bool> Clean();

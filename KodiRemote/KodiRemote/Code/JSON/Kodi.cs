@@ -23,6 +23,8 @@ namespace KodiRemote.Code.JSON {
         public IJSONRPCService JSONRPC { get; private set; }
         public IPVRService PVR { get; private set; }
         public IVideoLibraryService VideoLibrary { get; private set; }
+        public IAudioLibraryService AudioLibrary { get; private set; }
+        public IPlaylistService Playlist { get; private set; }
 
         private bool connected = true;
         public bool Connected {
@@ -49,21 +51,23 @@ namespace KodiRemote.Code.JSON {
                 Connection = new WebSocketHelper();
                 Connection.ConnectionClosed += ConnectionClosed;
 
-                //VideoLibrary = new VideoLibraryWebSocketService(Connection);
-                //PVR = new PVRWebSocketService(Connection);
-                //JSONRPC = new JSONRPCWebSocketService(Connection);
-                //GUI = new GUIWebSocketService(Connection);
-                //Addons = new AddonsWebSocketService(Connection);
-                //System = new SystemWebSocketService(Connection);
-                //Files = new FilesWebSocketService(Connection);
+                Playlist = new PlaylistWebSocketService(Connection);
+                AudioLibrary = new AudioLibraryWebSocketService(Connection);
+                VideoLibrary = new VideoLibraryWebSocketService(Connection);
+                PVR = new PVRWebSocketService(Connection);
+                JSONRPC = new JSONRPCWebSocketService(Connection);
+                GUI = new GUIWebSocketService(Connection);
+                Addons = new AddonsWebSocketService(Connection);
+                System = new SystemWebSocketService(Connection);
+                Files = new FilesWebSocketService(Connection);
                 Application = new ApplicationWebSocketService(Connection);
                 Application.OnVolumeChanged += Application_OnVolumeChanged;
-                //Input = new InputWebSocketService(Connection);
-                //Player = new PlayerWebSocketService(Connection);
-                //Player.OnPauseReceived += Player_OnPauseReceived;
-                //Player.OnPlayReceived += Player_OnPlayReceived;
-                //Player.OnSpeedChangedReceived += Player_OnSpeedChangedReceived;
-                //Player.OnStopReceived += Player_OnStopReceived;
+                Input = new InputWebSocketService(Connection);
+                Player = new PlayerWebSocketService(Connection);
+                Player.OnPauseReceived += Player_OnPauseReceived;
+                Player.OnPlayReceived += Player_OnPlayReceived;
+                Player.OnSpeedChangedReceived += Player_OnSpeedChangedReceived;
+                Player.OnStopReceived += Player_OnStopReceived;
             }
             Connected = false;
         }

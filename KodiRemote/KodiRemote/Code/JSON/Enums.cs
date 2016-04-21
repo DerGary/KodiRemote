@@ -420,7 +420,6 @@ namespace KodiRemote.Code.JSON.Enums {
             }
             return null;
         }
-
     }
     public class MediaEnum : StringEnum {
         public static readonly MediaEnum Null = new MediaEnum(1, null);
@@ -449,21 +448,8 @@ namespace KodiRemote.Code.JSON.Enums {
     }
     public enum OrderEnum { ascending, descending }
     public enum MethodEnum { none, label, date, size, file, path, drivetype, title, track, time, artist, album, albumtype, genre, country, year, rating, votes, top250, programcount, playlist, episode, season, totalepisodes, watchedepisodes, tvshowstatus, tvshowtitle, sorttitle, productioncode, mpaa, studio, dateadded, lastplayed, playcount, listeners, bitrate, random }
-    //public enum MediaEnum { NULL, video, music, pictures, files, programs }
-    //public enum MediaNotNullEnum { video, music, pictures, files, programs }
-    //public enum EnabledEnum { All, True, False }
-    //public enum ContentEnum { Null, unknown, video, audio, image, executable }
-    //public enum WindowsEnum { home, programs, pictures, filemanager, files, settings, music, video, videos, tv, pvr, pvrguideinfo, pvrrecordinginfo, pvrtimersetting, pvrgroupmanager, pvrchannelmanager, pvrguidesearch, pvrchannelscan, pvrupdateprogress, pvrosdchannels, pvrosdguide, pvrosddirector, pvrosdcutter, pvrosdteletext, systeminfo, testpattern, screencalibration, guicalibration, picturessettings, programssettings, weathersettings, musicsettings, systemsettings, videossettings, networksettings, servicesettings, appearancesettings, pvrsettings, tvsettings, scripts, videofiles, videolibrary, videoplaylist, loginscreen, profiles, skinsettings, addonbrowser, yesnodialog, progressdialog, virtualkeyboard, volumebar, submenu, favourites, contextmenu, infodialog, numericinput, gamepadinput, shutdownmenu, mutebug, playercontrols, seekbar, musicosd, addonsettings, visualisationsettings, visualisationpresetlist, osdvideosettings, osdaudiosettings, videobookmarks, filebrowser, networksetup, mediasource, profilesettings, locksettings, contentsettings, songinformation, smartplaylisteditor, smartplaylistrule, busydialog, pictureinfo, accesspoints, fullscreeninfo, karaokeselector, karaokelargeselector, sliderdialog, addoninformation, musicplaylist, musicfiles, musiclibrary, musicplaylisteditor, teletext, selectdialog, musicinformation, okdialog, movieinformation, textviewer, fullscreenvideo, fullscreenlivetv, visualisation, slideshow, filestackingdialog, karaoke, weather, screensaver, videoosd, videomenu, videotimeseek, musicoverlay, videooverlay, startwindow, startup, peripherals, peripheralsettings, extendedprogressdialog, mediafilter }
-    //public enum ImageEnum { Null, info, warning, error }
-    //public enum ExecActionEnum { left, right, up, down, pageup, pagedown, select, highlight, parentdir, parentfolder, back, previousmenu, info, pause, stop, skipnext, skipprevious, fullscreen, aspectratio, stepforward, stepback, bigstepforward, bigstepback, osd, showsubtitles, nextsubtitle, codecinfo, nextpicture, previouspicture, zoomout, zoomin, playlist, queue, zoomnormal, zoomlevel1, zoomlevel2, zoomlevel3, zoomlevel4, zoomlevel5, zoomlevel6, zoomlevel7, zoomlevel8, zoomlevel9, nextcalibration, resetcalibration, analogmove, rotate, rotateccw, close, subtitledelayminus, subtitledelay, subtitledelayplus, audiodelayminus, audiodelay, audiodelayplus, subtitleshiftup, subtitleshiftdown, subtitlealign, audionextlanguage, verticalshiftup, verticalshiftdown, nextresolution, audiotoggledigital, number0, number1, number2, number3, number4, number5, number6, number7, number8, number9, osdleft, osdright, osdup, osddown, osdselect, osdvalueplus, osdvalueminus, smallstepback, fastforward, rewind, play, playpause, delete, copy, move, mplayerosd, hidesubmenu, screenshot, rename, togglewatched, scanitem, reloadkeymaps, volumeup, volumedown, mute, backspace, scrollup, scrolldown, analogfastforward, analogrewind, moveitemup, moveitemdown, contextmenu, shift, symbols, cursorleft, cursorright, showtime, analogseekforward, analogseekback, showpreset, presetlist, nextpreset, previouspreset, lockpreset, randompreset, increasevisrating, decreasevisrating, showvideomenu, enter, increaserating, decreaserating, togglefullscreen, nextscene, previousscene, nextletter, prevletter, jumpsms2, jumpsms3, jumpsms4, jumpsms5, jumpsms6, jumpsms7, jumpsms8, jumpsms9, filter, filterclear, filtersms2, filtersms3, filtersms4, filtersms5, filtersms6, filtersms7, filtersms8, filtersms9, firstpage, lastpage, guiprofile, red, green, yellow, blue, increasepar, decreasepar, volampup, volampdown, channelup, channeldown, previouschannelgroup, nextchannelgroup, leftclick, rightclick, middleclick, doubleclick, wheelup, wheeldown, mousedrag, mousemove, noop }
-
-    //public enum RepeatEnum { Null, off, one, all }
-
-
     public enum SpeedNumbersEnum : int { minusthirtytwo = -32, minussixteen = -16, minuseight = -8, minusfour = -4, minustwo = -2, minusone = -1, zero = 0, one = 1, two = 2, four = 4, eight = 8, sixteen = 16, thirtytwo = 32 }
-
     public enum ZoomNumbersEnum : int { one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8, nine = 9, ten = 10 }
-    //public enum ChannelTypeEnum { tv, radio }
     public class TypeEnum : StringEnum {
         public static readonly TypeEnum Movie = new TypeEnum(1, "movie");
         public static readonly TypeEnum TVShow = new TypeEnum(2, "tvshow");
@@ -471,5 +457,4 @@ namespace KodiRemote.Code.JSON.Enums {
 
         private TypeEnum(int value, string name) : base(value, name) { }
     }
-    //public enum TypeEnum { movie, tvshow, musicvideo }
 }

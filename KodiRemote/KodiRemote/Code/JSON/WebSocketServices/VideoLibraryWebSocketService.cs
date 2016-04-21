@@ -21,7 +21,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         #region Notifications
         public event ReceivedEventHandler OnCleanFinished;
         public event ReceivedEventHandler OnCleanStarted;
-        public event ReceivedEventHandler<Item> OnRemove;
+        public event ReceivedEventHandler<KVideoLibrary.Notifications.Item> OnRemove;
         public event ReceivedEventHandler OnScanFinished;
         public event ReceivedEventHandler OnScanStarted;
         public event ReceivedEventHandler<UpdateItem> OnUpdate;
@@ -80,7 +80,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else if (method == KVideoLibrary.Notification.OnCleanStarted.ToString()) {
                 OnCleanStarted?.Invoke();
             } else if (method == KVideoLibrary.Notification.OnRemove.ToString()) {
-                var item = JsonSerializer.FromJson<RPCNotification<NotificationParams<Item>>>(notification);
+                var item = JsonSerializer.FromJson<RPCNotification<NotificationParams<KVideoLibrary.Notifications.Item>>>(notification);
                 OnRemove?.Invoke(item.Params.Data);
             } else if (method == KVideoLibrary.Notification.OnScanFinished.ToString()) {
                 OnScanFinished?.Invoke();

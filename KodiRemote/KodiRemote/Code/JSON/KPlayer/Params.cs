@@ -98,7 +98,7 @@ namespace KodiRemote.Code.JSON.KPlayer.Params {
     }
 
     [DataContract]
-    public class Open<T> where T : Item {
+    public class Open<T> where T : OpenAble {
         [DataMember(Name = "item")]
         public T Item { get; set; }
         [DataMember(Name = "options", EmitDefaultValue = false)]
@@ -116,64 +116,64 @@ namespace KodiRemote.Code.JSON.KPlayer.Params {
     }
 
     [DataContract]
-    public abstract class Item { }
+    public abstract class OpenAble { }
 
     [DataContract]
-    public class Playlist : Item {
+    public class Playlist : OpenAble {
         [DataMember(Name = "playlistid")]
         public int PlaylistId { get; set; }
         [DataMember(Name = "position")]
         public int Position { get; set; }
     }
     [DataContract]
-    public class Picture : Item {
+    public class Picture : OpenAble {
         [DataMember(Name = "path")]
         public string Path { get; set; }
         [DataMember(Name = "recursive")]
         public bool Recursive { get; set; }
     }
     [DataContract]
-    public class Movie : Item {
+    public class Movie : OpenAble {
         [DataMember(Name = "movieid")]
         public int MovieId { get; set; }
     }
     [DataContract]
-    public class Episode : Item {
+    public class Episode : OpenAble {
         [DataMember(Name = "episodeid")]
         public int EpisodeId { get; set; }
     }
     [DataContract]
-    public class MusicVideo : Item {
+    public class MusicVideo : OpenAble {
         [DataMember(Name = "musicvideoid")]
         public int MusicVideoId { get; set; }
     }
     [DataContract]
-    public class Artist : Item {
+    public class Artist : OpenAble {
         [DataMember(Name = "artistid")]
         public int ArtistId { get; set; }
     }
     [DataContract]
-    public class Album : Item {
+    public class Album : OpenAble {
         [DataMember(Name = "albumid")]
         public int AlbumId { get; set; }
     }
     [DataContract]
-    public class Song : Item {
+    public class Song : OpenAble {
         [DataMember(Name = "songid")]
         public int SongId { get; set; }
     }
     [DataContract]
-    public class Genre : Item {
+    public class Genre : OpenAble {
         [DataMember(Name = "genreid")]
         public int GenreId { get; set; }
     }
     [DataContract]
-    public class PartyMode : Item {
+    public class PartyMode : OpenAble {
         [DataMember(Name = "partymode")]
         public string PartyModeValue { get; set; }
     }
     [DataContract]
-    public class Channel : Item {
+    public class Channel : OpenAble {
         [DataMember(Name = "channelid")]
         public int ChannelId { get; set; }
     }

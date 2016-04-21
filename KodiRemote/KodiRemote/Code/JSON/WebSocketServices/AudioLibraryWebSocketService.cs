@@ -20,10 +20,10 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         #region Notifications
         public event ReceivedEventHandler OnCleanFinished;
         public event ReceivedEventHandler OnCleanStarted;
-        public event ReceivedEventHandler<Item> OnRemove;
+        public event ReceivedEventHandler<KAudioLibrary.Notifications.Item> OnRemove;
         public event ReceivedEventHandler OnScanFinished;
         public event ReceivedEventHandler OnScanStarted;
-        public event ReceivedEventHandler<Item> OnUpdate;
+        public event ReceivedEventHandler<KAudioLibrary.Notifications.Item> OnUpdate;
         #endregion Notifications
 
 

@@ -30,17 +30,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         protected override void WebSocketMessageReceived(string guid, string message) {
             if (methods[guid] == Method.GoTo
                 || methods[guid] == Method.Move
-                || methods[guid] == Method.OpenAlbum
-                || methods[guid] == Method.OpenArtist
-                || methods[guid] == Method.OpenChannel
-                || methods[guid] == Method.OpenEpisode
-                || methods[guid] == Method.OpenGenre
-                || methods[guid] == Method.OpenMovie
-                || methods[guid] == Method.OpenMusicVideo
-                || methods[guid] == Method.OpenPartyMode
-                || methods[guid] == Method.OpenPicture
-                || methods[guid] == Method.OpenPlaylist
-                || methods[guid] == Method.OpenSong
+                || methods[guid] == Method.Open
                 || methods[guid] == Method.Rotate
                 || methods[guid] == Method.SetAudioStream
                 || methods[guid] == Method.SetPartymode
@@ -53,7 +43,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else if (methods[guid] == Method.GetActivePlayers) {
                 DeserializeMessageAndTriggerTask<List<Player>>(guid, message);
             } else if (methods[guid] == Method.GetItem) {
-                DeserializeMessageAndTriggerTask<KPlayer.Results.Item>(guid, message);
+                DeserializeMessageAndTriggerTask<OpenAble>(guid, message);
             } else if (methods[guid] == Method.GetProperties) {
                 DeserializeMessageAndTriggerTask<Properties>(guid, message);
             } else if (methods[guid] == Method.PlayPause) {
@@ -92,8 +82,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return SendRequest<List<Player>>(Method.GetActivePlayers);
         }
 
-        public Task<KPlayer.Results.Item> GetItem(int playerId, ItemField properties = null) {
-            return SendRequest<KPlayer.Results.Item, GetItem>(Method.GetItem, new GetItem { PlayerId = playerId, Properties = properties?.ToList() });
+        public Task<General.Results.Item> GetItem(int playerId, ItemField properties = null) {
+            return SendRequest<General.Results.Item, GetItem>(Method.GetItem, new GetItem { PlayerId = playerId, Properties = properties?.ToList() });
         }
 
         public Task<Properties> GetProperties(int playerId, PlayerField properties = null) {
@@ -188,60 +178,12 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             }
         }
 
-        private Task<bool> Open<T>(Method method, T item, Options options) where T : KPlayer.Params.Item {
+        public Task<bool> Open<T>(T item, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) where T : OpenAble {
             var param = new Open<T>() {
                 Item = item,
-                Options = options
+                Options = new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled }
             };
-            return SendRequest<bool, Open<T>>(method, param);
-        }
-
-        public Task<bool> OpenPlaylist(int playListId, OptionalRepeatEnum repeat, int position = 0, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenPlaylist, new Playlist { PlaylistId = playListId, Position = position }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenPicture, new Picture { Path = path, Recursive = recursive }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenMovie(int movieId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenMovie, new Movie { MovieId = movieId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenEpisode(int episodeId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenEpisode, new Episode { EpisodeId = episodeId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenMusicVideo(int musicVideoId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenMusicVideo, new MusicVideo { MusicVideoId = musicVideoId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenArtist(int artistId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenArtist, new Artist { ArtistId = artistId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenAlbum(int albumId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenAlbum, new Album { AlbumId = albumId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenSong(int songId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenSong, new Song { SongId = songId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenGenre(int genreId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenGenre, new Genre { GenreId = genreId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenPartyMode, new PartyMode { PartyModeValue = partymode }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenPartyMode, new PartyMode { PartyModeValue = smartPlayListPath }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
-        }
-
-        public Task<bool> OpenChannel(int channelId, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) {
-            return Open(Method.OpenChannel, new Channel { ChannelId = channelId }, new Options { Repeat = repeat, Resume = resume, Shuffled = shuffled });
+            return SendRequest<bool, Open<T>>(Method.Open, param);
         }
     }
 }

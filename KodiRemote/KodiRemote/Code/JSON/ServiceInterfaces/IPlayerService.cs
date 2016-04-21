@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KodiRemote.Code.JSON.KPlayer.Results;
+using KodiRemote.Code.JSON.General.Results;
+using KodiRemote.Code.JSON.KPlayer.Params;
 
 namespace KodiRemote.Code.JSON.ServiceInterfaces {
     public interface IPlayerService {
@@ -21,8 +23,8 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
 
 
         Task<List<Player>> GetActivePlayers();
-        Task<Item> GetItem(int playerid, ItemField properties = null);
-        Task<Properties> GetProperties(int playerid, PlayerField properties = null);
+        Task<Item> GetItem(int playerId, ItemField properties = null);
+        Task<Properties> GetProperties(int playerId, PlayerField properties = null);
 
 
         Task<bool> PlayPause(int playerId, ToggleEnum play);
@@ -30,40 +32,29 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         Task<Speed> SetSpeed(int playerId, IncDecEnum speed);
         Task<bool> Stop(int playerId);
         Task<bool> GoTo(int playerId, ToEnum to);
-        Task<bool> GoTo(int playerid, int to);
-        Task<Seek> Seek(int playerID, double percentage);
-        Task<Seek> Seek(int playerID, Time time);
-        Task<Seek> Seek(int playerID, SeekEnum step);
+        Task<bool> GoTo(int playerId, int to);
+        Task<Seek> Seek(int playerId, double percentage);
+        Task<Seek> Seek(int playerId, Time time);
+        Task<Seek> Seek(int playerId, SeekEnum step);
 
 
-        Task<bool> Move(int playerid, DirectionEnum direction);
-        Task<bool> Rotate(int playerID, RotateEnum value);
-        Task<bool> Zoom(int playerID, ZoomEnum zoom);
-        Task<bool> Zoom(int playerID, ZoomNumbersEnum zoom);
+        Task<bool> Move(int playerId, DirectionEnum direction);
+        Task<bool> Rotate(int playerId, RotateEnum value);
+        Task<bool> Zoom(int playerId, ZoomEnum zoom);
+        Task<bool> Zoom(int playerId, ZoomNumbersEnum zoom);
 
 
-        Task<bool> SetAudioStream(int playerID, int audioStreamID);
-        Task<bool> SetAudioStream(int playerID, ToEnum stream);
-        Task<bool> SetSubtitle(int playerID, SubtitleEnum subtitle, bool enable = false);
-        Task<bool> SetSubtitle(int playerID, int subtitleID, bool enable = false);
-        Task<bool> SetPartymode(int playerID, ToggleEnum partymode);
-        Task<bool> SetRepeat(int playerID, ExtendRepeatEnum repeat);
-        Task<bool> SetShuffle(int playerID, ToggleEnum shuffle);
+        Task<bool> SetAudioStream(int playerId, int audioStreamID);
+        Task<bool> SetAudioStream(int playerId, ToEnum stream);
+        Task<bool> SetSubtitle(int playerId, SubtitleEnum subtitle, bool enable = false);
+        Task<bool> SetSubtitle(int playerId, int subtitleID, bool enable = false);
+        Task<bool> SetPartymode(int playerId, ToggleEnum partymode);
+        Task<bool> SetRepeat(int playerId, ExtendRepeatEnum repeat);
+        Task<bool> SetShuffle(int playerId, ToggleEnum shuffle);
 
 
         //#region openThings
-        Task<bool> OpenPlaylist(int playListID, OptionalRepeatEnum repeat, int position = 0, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenPicture(string path, OptionalRepeatEnum repeat, bool recursive = true, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenMovie(int movieID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenEpisode(int episodeID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenMusicVideo(int musicVideoID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenArtist(int artistID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenAlbum(int albumID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenSong(int songID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenGenre(int genreID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenPartyMode(PartymodeEnum partymode, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenPartyMode(string smartPlayListPath, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
-        Task<bool> OpenChannel(int channelID, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null);
+        Task<bool> Open<T>(T item, OptionalRepeatEnum repeat, bool? shuffled = null, bool? resume = null) where T : OpenAble;
         //#endregion openThings
     }
 }

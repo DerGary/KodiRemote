@@ -17,7 +17,7 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         #region Notifications
         event ReceivedEventHandler OnCleanFinished;
         event ReceivedEventHandler OnCleanStarted;
-        event ReceivedEventHandler<Item> OnRemove;
+        event ReceivedEventHandler<KVideoLibrary.Notifications.Item> OnRemove;
         event ReceivedEventHandler OnScanFinished;
         event ReceivedEventHandler OnScanStarted;
         event ReceivedEventHandler<UpdateItem> OnUpdate;
