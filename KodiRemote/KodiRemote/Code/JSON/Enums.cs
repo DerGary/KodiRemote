@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Utils;
+using System.Collections.Generic;
 
 namespace KodiRemote.Code.JSON.Enums {
     //public enum ToggleEnum { Toggle, True, False }
@@ -95,6 +96,7 @@ namespace KodiRemote.Code.JSON.Enums {
         private PartymodeEnum(int value, string name) : base(value, name) { }
     }
     public class ExecActionEnum : StringEnum {
+        protected static Dictionary<int, ExecActionEnum> values = new Dictionary<int, ExecActionEnum>();
         public static readonly ExecActionEnum Left = new ExecActionEnum(1, "left");
         public static readonly ExecActionEnum Right = new ExecActionEnum(2, "right");
         public static readonly ExecActionEnum Up = new ExecActionEnum(3, "up");
@@ -268,7 +270,16 @@ namespace KodiRemote.Code.JSON.Enums {
         public static readonly ExecActionEnum Mousemove = new ExecActionEnum(171, "mousemove");
         public static readonly ExecActionEnum Noop = new ExecActionEnum(172, "noop");
 
-        private ExecActionEnum(int value, string name) : base(value, name) { }
+        private ExecActionEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+
+        public static ExecActionEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
+            }
+            return null;
+        }
     }
     public class WindowEnum : StringEnum {
         public static readonly WindowEnum Home = new WindowEnum(1, "home");
@@ -397,6 +408,8 @@ namespace KodiRemote.Code.JSON.Enums {
         private ImageEnum(int value, string name) : base(value, name) { }
     }
     public class ContentEnum : StringEnum {
+        protected static Dictionary<int, ContentEnum> values = new Dictionary<int, ContentEnum>();
+
         public static readonly ContentEnum Null = new ContentEnum(1, null);
         public static readonly ContentEnum Unknown = new ContentEnum(2, "unknown");
         public static readonly ContentEnum Video = new ContentEnum(3, "video");
@@ -404,19 +417,39 @@ namespace KodiRemote.Code.JSON.Enums {
         public static readonly ContentEnum Image = new ContentEnum(5, "image");
         public static readonly ContentEnum Executable = new ContentEnum(6, "executable");
 
-        private ContentEnum(int value, string name) : base(value, name) { }
+        private ContentEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+
+        public static ContentEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
+            }
+            return null;
+        }
     }
     public class EnabledEnum : StringEnum {
+        protected static Dictionary<int, EnabledEnum> values = new Dictionary<int, EnabledEnum>();
         public static readonly EnabledEnum All = new EnabledEnum(1, null);
         public static readonly EnabledEnum True = new EnabledEnum(2, "true");
         public static readonly EnabledEnum False = new EnabledEnum(3, "false");
 
-        private EnabledEnum(int value, string name) : base(value, name) { }
+        private EnabledEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+
         static public implicit operator bool? (EnabledEnum method) {
             if (method == EnabledEnum.True) {
                 return true;
             } else if (method == EnabledEnum.False) {
                 return false;
+            }
+            return null;
+        }
+
+        public static EnabledEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
             }
             return null;
         }

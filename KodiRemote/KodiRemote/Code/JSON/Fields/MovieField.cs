@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class MovieField : IField {
+    public class MovieField : Field<MovieField> {
         public bool Title { get; set; }
         public bool Genre { get; set; }
         public bool Year { get; set; }
@@ -39,7 +39,7 @@ namespace KodiRemote.Code.JSON.Fields {
         public bool Dateadded { get; set; }
         public bool Tag { get; set; }
         public bool Art { get; set; }
-        public void All() {
+        public override void All() {
             Title = true;
             Genre = true;
             Year = true;
@@ -90,7 +90,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Cast = true;
             Dateadded = true;
         }
-        public List<String> ToList() {
+        public override List<String> ToList() {
             List<String> list = new List<String>();
             if (Title)
                 list.Add("title");

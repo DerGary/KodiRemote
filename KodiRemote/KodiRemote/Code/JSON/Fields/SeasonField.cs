@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class SeasonField : IField {
+    public class SeasonField : Field<SeasonField> {
         public bool Season { get; set; }
         public bool Showtitle { get; set; }
         public bool Playcount { get; set; }
@@ -15,7 +15,7 @@ namespace KodiRemote.Code.JSON.Fields {
         public bool Tvshowid { get; set; }
         public bool Watchedepisodes { get; set; }
         public bool Art { get; set; }
-        public void All() {
+        public override void All() {
             Season = true;
             Showtitle = true;
             Playcount = true;
@@ -33,7 +33,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Watchedepisodes = true;
             Art = true;
         }
-        public List<string> ToList() {
+        public override List<string> ToList() {
             List<string> list = new List<string>();
             if (Season)
                 list.Add("season");

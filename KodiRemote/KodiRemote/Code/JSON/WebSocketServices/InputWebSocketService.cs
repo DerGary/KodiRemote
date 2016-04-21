@@ -46,7 +46,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         }
 
         public Task<bool> SendText(string text, bool done = true) {
-            return SendRequest<bool, SendText>(Method.ExecuteAction, new SendText() { Text = text, Done = done });
+            return SendRequest<bool, SendText>(Method.SendText, new SendText() { Text = text, Done = done });
         }
 
         public Task<bool> ShowCodec() {

@@ -12,17 +12,17 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.JSON.KAudioLibrary.Results {
 
     [DataContract]
-    public class AlbumResult : LibraryCollectionResultBase {
+    public class AlbumResult : CollectionResultBase {
         [DataMember(Name = "albums")]
         public List<Album> Albums { get; set; }
     }
     [DataContract]
-    public class ArtistResult : LibraryCollectionResultBase {
+    public class ArtistResult : CollectionResultBase {
         [DataMember(Name = "artists")]
         public List<Artist> Artists { get; set; }
     }
     [DataContract]
-    public class SongResult : LibraryCollectionResultBase {
+    public class SongResult : CollectionResultBase {
         [DataMember(Name = "songs")]
         public List<Song> Songs { get; set; }
     }

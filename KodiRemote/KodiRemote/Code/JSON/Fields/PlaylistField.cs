@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class PlaylistField : IField {
+    public class PlaylistField : Field<PlaylistField> {
         public bool Type { get; set; }
         public bool Size { get; set; }
-        public void All() {
+        public override void All() {
             Type = true;
             Size = true;
         }
-        public List<string> ToList() {
+        public override List<string> ToList() {
             List<string> list = new List<string>();
             if (Type)
                 list.Add("type");

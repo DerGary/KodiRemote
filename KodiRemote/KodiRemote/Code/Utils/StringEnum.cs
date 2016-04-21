@@ -22,6 +22,7 @@ namespace KodiRemote.Code.Utils {
             return value;
         }
 
+
         static public implicit operator string(StringEnum method) {
             return method.ToString();
         }

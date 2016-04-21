@@ -11,32 +11,32 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
     [DataContract]
-    public class TVShowResult : LibraryCollectionResultBase {
+    public class TVShowResult : CollectionResultBase {
         [DataMember(Name = "tvshows")]
         public List<TVShow> TVShows { get; set; }
     }
     [DataContract]
-    public class MovieResult : LibraryCollectionResultBase {
+    public class MovieResult : CollectionResultBase {
         [DataMember(Name = "movies")]
         public List<Movie> Movies { get; set; }
     }
     [DataContract]
-    public class MusicVideoResult : LibraryCollectionResultBase {
+    public class MusicVideoResult : CollectionResultBase {
         [DataMember(Name = "musicvideos")]
         public List<MusicVideo> MusicVideos { get; set; }
     }
     [DataContract]
-    public class EpisodeResult : LibraryCollectionResultBase {
+    public class EpisodeResult : CollectionResultBase {
         [DataMember(Name = "episodes")]
         public List<Episode> Episodes { get; set; }
     }
     [DataContract]
-    public class MovieSetResult : LibraryCollectionResultBase {
+    public class MovieSetResult : CollectionResultBase {
         [DataMember(Name = "moviesets")]
         public List<MovieSet> MovieSets { get; set; }
     }
     [DataContract]
-    public class TVShowSeasonResult : LibraryCollectionResultBase {
+    public class TVShowSeasonResult : CollectionResultBase {
         [DataMember(Name = "tvshowseasons")]
         public List<TVShowSeason> TVShowSeasons { get; set; }
     }

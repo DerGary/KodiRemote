@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KodiRemote.Code.JSON.General.Results;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -6,6 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.KAddons.Results {
+    [DataContract]
+    public class AddonsResult : CollectionResultBase {
+        [DataMember(Name = "addons")]
+        public List<Addon> Addons { get; set; }
+    }
+    [DataContract]
+    public class AddonResult {
+        [DataMember(Name = "addon")]
+        public Addon Addon { get; set; }
+    }
     [DataContract]
     public class Addon {
         [DataMember(Name = "addonid")]

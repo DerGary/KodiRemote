@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.General.Results {
     [DataContract]
-    public class LibraryCollectionResultBase {
+    public class CollectionResultBase {
         [DataMember(Name = "limits")]
         public LimitsWithTotal Limits { get; set; }
     }
     [DataContract]
-    public class GenreResult : LibraryCollectionResultBase {
+    public class GenreResult : CollectionResultBase {
         [DataMember(Name = "genres")]
         public List<Genre> Genres { get; set; }
     }

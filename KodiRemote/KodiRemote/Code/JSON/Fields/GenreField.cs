@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class GenreField : IField {
+    public class GenreField : Field<GenreField> {
         public bool Title { get; set; }
         public bool Thumbnail { get; set; }
-        public void All() {
+        public override void All() {
             Title = true;
             Thumbnail = true;
         }
-        public List<String> ToList() {
+        public override List<String> ToList() {
             List<String> list = new List<string>();
             if (Title)
                 list.Add("title");

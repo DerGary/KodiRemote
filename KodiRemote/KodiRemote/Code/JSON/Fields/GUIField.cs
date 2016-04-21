@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class GUIField : IField {
+    public class GUIField : Field<GUIField> {
         public bool Currentwindow { get; set; }
         public bool Currentcontrol { get; set; }
         public bool Skin { get; set; }
         public bool Fullscreen { get; set; }
-        public void All() {
+        public override void All() {
             Currentwindow = true;
             Currentcontrol = true;
             Skin = true;
             Fullscreen = true;
         }
-        public List<String> ToList() {
+        public override List<String> ToList() {
             List<string> list = new List<string>();
             if (Currentwindow)
                 list.Add("currentwindow");

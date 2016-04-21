@@ -34,12 +34,12 @@ namespace KodiRemote.Code.JSON {
             private set {
                 if (connected != value) {
                     connected = value;
-                    if (!value) {
-                        timer = new Timer(Timer_Tick, null, 0, (int)TimeSpan.FromSeconds(15).TotalMilliseconds);
-                    } else if (timer != null) {
-                        timer.Dispose();
-                        timer = null;
-                    }
+                    //if (!value) {
+                    //    timer = new Timer(Timer_Tick, null, 0, (int)TimeSpan.FromSeconds(15).TotalMilliseconds);
+                    //} else if (timer != null) {
+                    //    timer.Dispose();
+                    //    timer = null;
+                    //}
                     RaisePropertyChanged();
                 }
             }

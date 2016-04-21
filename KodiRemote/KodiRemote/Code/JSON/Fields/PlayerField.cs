@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class PlayerField : IField {
+    public class PlayerField : Field<PlayerField> {
         public bool Type { get; set; }
         public bool Partymode { get; set; }
         public bool Speed { get; set; }
@@ -29,7 +29,7 @@ namespace KodiRemote.Code.JSON.Fields {
         public bool Currentsubtitle { get; set; }
         public bool Subtitles { get; set; }
         public bool Live { get; set; }
-        public void All() {
+        public override void All() {
             Type = true;
             Partymode = true;
             Speed = true;
@@ -54,7 +54,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Subtitles = true;
             Live = true;
         }
-        public List<string> ToList() {
+        public override List<string> ToList() {
             List<string> list = new List<string>();
             if (Type)
                 list.Add("type");

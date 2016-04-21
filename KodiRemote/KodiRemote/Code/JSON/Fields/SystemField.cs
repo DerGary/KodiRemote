@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class SystemField : IField {
+    public class SystemField : Field<SystemField> {
         public bool Canshutdown { get; set; }
         public bool Cansuspend { get; set; }
         public bool Canhibernate { get; set; }
         public bool Canreboot { get; set; }
-        public void All() {
+        public override void All() {
             Canshutdown = true;
             Cansuspend = true;
             Canhibernate = true;
             Canreboot = true;
         }
-        public List<string> ToList() {
+        public override List<string> ToList() {
             List<string> list = new List<string>();
             if (Canshutdown)
                 list.Add("canshutdown");

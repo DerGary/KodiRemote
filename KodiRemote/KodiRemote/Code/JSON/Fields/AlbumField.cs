@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class AlbumField : IField {
+    public class AlbumField : Field<AlbumField> {
         public bool Title { get; set; }
         public bool Description { get; set; }
         public bool Artist { get; set; }
@@ -25,7 +25,7 @@ namespace KodiRemote.Code.JSON.Fields {
         public bool Genreid { get; set; }
         public bool Artistid { get; set; }
         public bool Displayartist { get; set; }
-        public void All() {
+        public override void All() {
             Title = true;
             Description = true;
             Artist = true;
@@ -46,7 +46,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Artistid = true;
             Displayartist = true;
         }
-        public List<String> ToList() {
+        public override List<String> ToList() {
             List<String> list = new List<string>();
             if (Title)
                 list.Add("title");

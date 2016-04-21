@@ -23,9 +23,9 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 || methods[guid] == Method.SetAddonEnabled) {
                 DeserializeMessageAndTriggerTask(guid, message);
             } else if (methods[guid] == Method.GetAddonDetails) {
-                DeserializeMessageAndTriggerTask<Addon>(guid, message);
+                DeserializeMessageAndTriggerTask<AddonResult>(guid, message);
             } else if (methods[guid] == Method.GetAddons) {
-                DeserializeMessageAndTriggerTask<Addon>(guid, message);
+                DeserializeMessageAndTriggerTask<AddonsResult>(guid, message);
             }
         }
 
@@ -38,12 +38,12 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return SendRequest<bool, ExecuteAddon>(Method.ExecuteAddon, new ExecuteAddon() { AddonId = addonid, Wait = wait, Params = parameter });
         }
 
-        public Task<Addon> GetAddonDetails(string addonid, AddonField properties = null) {
-            return SendRequest<Addon, GetAddonDetails>(Method.GetAddonDetails, new GetAddonDetails() { AddonId = addonid, Properties = properties?.ToList() });
+        public Task<AddonResult> GetAddonDetails(string addonid, AddonField properties = null) {
+            return SendRequest<AddonResult, GetAddonDetails>(Method.GetAddonDetails, new GetAddonDetails() { AddonId = addonid, Properties = properties?.ToList() });
         }
 
-        public Task<List<Addon>> GetAddons(ContentEnum content, EnabledEnum enabled, AddonField properties = null, string type = null, Limits limits = null) {
-            return SendRequest<List<Addon>, GetAddons>(Method.GetAddons, new GetAddons() { Properties = properties?.ToList(), Type = type, Limits = limits, Content = content, Enabled = enabled });
+        public Task<AddonsResult> GetAddons(ContentEnum content, EnabledEnum enabled, AddonField properties = null, string type = null, Limits limits = null) {
+            return SendRequest<AddonsResult, GetAddons>(Method.GetAddons, new GetAddons() { Properties = properties?.ToList(), Type = type, Limits = limits, Content = content, Enabled = enabled });
         }
 
         public Task<bool> SetAddonEnabled(string addonid, ToggleEnum enabled) {

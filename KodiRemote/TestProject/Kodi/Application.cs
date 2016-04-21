@@ -7,17 +7,13 @@ using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.KApplication.Results;
 using Xunit;
 
-namespace TestProject {
-    public class KodiApplicationFixture {
-        public KodiApplicationFixture() {
-            ActiveKodi.Init("localhost", "9090", ConnectionType.Websocket).Wait();
-        }
-    }
-    public class KodiApplicationTestxUnit : IClassFixture<KodiApplicationFixture> {
+namespace Test.Kodi {
+    [Collection("Kodi")]
+    public class Application {
         [Fact]
-        public async Task ApplicationGetProperties() {
-            await ApplicationSetMute(false);
-            await ApplicationSetVolume(100);
+        public async Task GetProperties() {
+            await SetMute(false);
+            await SetVolume(100);
             ApplicationProperties result = await ActiveKodi.Instance.Application.GetProperties(ApplicationField.WithAll());
             Assert.True(result.Volume == 100);
             Assert.True(result.Version.major == 16);
@@ -31,25 +27,25 @@ namespace TestProject {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public async Task ApplicationSetMute(bool b) {
+        public async Task SetMute(bool b) {
             bool result = await ActiveKodi.Instance.Application.SetMute(b == true ? ToggleEnum.True : ToggleEnum.False);
             Assert.True(result == b);
         }
 
         [Fact]
-        public async Task ApplicationSetMuteToToggle() {
-            await ApplicationSetMute(true);
+        public async Task SetMuteToToggle() {
+            await SetMute(true);
             bool result = await ActiveKodi.Instance.Application.SetMute(ToggleEnum.Toggle);
             Assert.False(result);
         }
 
         [Fact]
-        public async Task ApplicationSetVolumeDecrement() {
+        public async Task SetVolumeDecrement() {
             int result = await ActiveKodi.Instance.Application.SetVolume(IncDecEnum.Decrement);
             Assert.True(result > 95 && result < 100);
         }
         [Fact]
-        public async Task ApplicationSetVolumeIncrement() {
+        public async Task SetVolumeIncrement() {
             int result = await ActiveKodi.Instance.Application.SetVolume(IncDecEnum.Increment);
             Assert.True(result == 100);
         }
@@ -57,12 +53,12 @@ namespace TestProject {
         [InlineData(1)]
         [InlineData(50)]
         [InlineData(100)]
-        public async Task ApplicationSetVolume(int volume) {
+        public async Task SetVolume(int volume) {
             int result = await ActiveKodi.Instance.Application.SetVolume(volume);
             Assert.True(result == volume);
         }
         //[Fact]
-        //public async Task ApplicationQuit() {
+        //public async Task Quit() {
         //    bool result = await ActiveKodi.Instance.Application.Quit();
         //    Assert.True(result);
         //}

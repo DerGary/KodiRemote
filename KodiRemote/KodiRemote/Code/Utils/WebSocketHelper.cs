@@ -35,6 +35,7 @@ namespace KodiRemote.Code.Utils {
                 await webSocket.ConnectAsync(uri);
                 messageWebSocket = webSocket;
                 messageWriter = new DataWriter(webSocket.OutputStream);
+                Debug.WriteLine("Connected");
                 return true;
             } catch (Exception ex) {
                 WebErrorStatus status = WebSocketError.GetStatus(ex.GetBaseException().HResult);
@@ -49,6 +50,7 @@ namespace KodiRemote.Code.Utils {
 
             // This is invoked on another thread so use Interlocked 
             // to avoid races with the Start/Close/Reset methods.
+            Debug.WriteLine("ConnectionClosed Code: " + args.Code + " Reason: " + args.Reason);
             MessageWebSocket webSocket = Interlocked.Exchange(ref messageWebSocket, null);
             if (webSocket != null) {
                 webSocket.Dispose();

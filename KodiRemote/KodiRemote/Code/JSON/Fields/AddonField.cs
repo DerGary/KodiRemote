@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.Fields {
-    public class AddonField : IField {
+    public class AddonField : Field<AddonField> {
         public bool Name { get; set; }
         public bool Version { get; set; }
         public bool Summary { get; set; }
@@ -20,7 +20,7 @@ namespace KodiRemote.Code.JSON.Fields {
         public bool Extrainfo { get; set; }
         public bool Rating { get; set; }
         public bool Enabled { get; set; }
-        public void All() {
+        public override void All() {
             Name = true;
             Version = true;
             Summary = true;
@@ -36,7 +36,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Rating = true;
             Enabled = true;
         }
-        public List<string> ToList() {
+        public override List<string> ToList() {
             List<string> list = new List<string>();
             if (Name)
                 list.Add("name");

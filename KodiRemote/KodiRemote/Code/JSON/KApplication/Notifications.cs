@@ -9,7 +9,7 @@ namespace KodiRemote.Code.JSON.KApplication.Notifications {
     [DataContract]
     public class Data {
         [DataMember(Name = "volume")]
-        public int Volume { get; set; }
+        public double Volume { get; set; }
         [DataMember(Name = "muted")]
         public bool Muted { get; set; }
     }
