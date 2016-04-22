@@ -12,6 +12,7 @@ using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KPlayer.Params;
 using KodiRemote.Code.JSON.KPlayer.Results;
+using KodiRemote.Code.JSON.General.Results;
 
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public class PlayerWebSocketService : WebSocketServiceBase, IPlayerService {
@@ -43,7 +44,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else if (methods[guid] == Method.GetActivePlayers) {
                 DeserializeMessageAndTriggerTask<List<Player>>(guid, message);
             } else if (methods[guid] == Method.GetItem) {
-                DeserializeMessageAndTriggerTask<OpenAble>(guid, message);
+                DeserializeMessageAndTriggerTask<ItemResult>(guid, message);
             } else if (methods[guid] == Method.GetProperties) {
                 DeserializeMessageAndTriggerTask<Properties>(guid, message);
             } else if (methods[guid] == Method.PlayPause) {
@@ -82,16 +83,16 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return SendRequest<List<Player>>(Method.GetActivePlayers);
         }
 
-        public Task<General.Results.Item> GetItem(int playerId, ItemField properties = null) {
-            return SendRequest<General.Results.Item, GetItem>(Method.GetItem, new GetItem { PlayerId = playerId, Properties = properties?.ToList() });
+        public Task<General.Results.ItemResult> GetItem(int playerId, ItemField properties = null) {
+            return SendRequest<General.Results.ItemResult, GetItem>(Method.GetItem, new GetItem { PlayerId = playerId, Properties = properties?.ToList() });
         }
 
-        public Task<Properties> GetProperties(int playerId, PlayerField properties = null) {
-            return SendRequest<Properties, GetProperties>(Method.GetProperties, new GetProperties { PlayerId = playerId, Properties = properties?.ToList() });
+        public Task<Properties> GetProperties(int playerId, PlayerField properties) {
+            return SendRequest<Properties, GetProperties>(Method.GetProperties, new GetProperties { PlayerId = playerId, Properties = properties.ToList() });
         }
 
-        public Task<bool> PlayPause(int playerId, ToggleEnum play) {
-            return SendRequest<bool, PlayPause>(Method.PlayPause, new PlayPause { PlayerId = playerId, Play = play });
+        public Task<Speed> PlayPause(int playerId, ToggleEnum play) {
+            return SendRequest<Speed, PlayPause>(Method.PlayPause, new PlayPause { PlayerId = playerId, Play = play });
         }
 
         public Task<Speed> SetSpeed(int playerId, SpeedNumbersEnum speed) {

@@ -43,6 +43,11 @@ namespace KodiRemote.Code.JSON.General.Results {
         public Item Item { get; set; }
     }
     [DataContract]
+    public class ItemsResult {
+        [DataMember(Name = "items")]
+        public List<Item> Items { get; set; }
+    }
+    [DataContract]
     public class Item {
         [DataMember(Name = "album")]
         public string album { get; set; }
@@ -83,11 +88,11 @@ namespace KodiRemote.Code.JSON.General.Results {
         [DataMember(Name = "mood")]
         public string[] mood { get; set; }
         [DataMember(Name = "musicbrainzalbumartistid")]
-        public string musicbrainzalbumartistid { get; set; }
+        public List<string> musicbrainzalbumartistid { get; set; }
         [DataMember(Name = "musicbrainzalbumid")]
         public string musicbrainzalbumid { get; set; }
         [DataMember(Name = "musicbrainzartistid")]
-        public string musicbrainzartistid { get; set; }
+        public List<string> musicbrainzartistid { get; set; }
         [DataMember(Name = "musicbrainztrackid")]
         public string musicbrainztrackid { get; set; }
         [DataMember(Name = "playcount")]

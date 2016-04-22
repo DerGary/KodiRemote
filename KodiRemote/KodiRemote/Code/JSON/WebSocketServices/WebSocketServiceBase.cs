@@ -111,7 +111,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return t;
         }
         protected Task<T> SendRequest<T, U>(StringEnum method, U param) {
-            string guid = new Guid().ToString();
+            string guid = Guid.NewGuid().ToString();
             var t = PrepareTask<T>(method, guid);
             SendRequestWithGuid<U>(method, guid, param);
             return t;

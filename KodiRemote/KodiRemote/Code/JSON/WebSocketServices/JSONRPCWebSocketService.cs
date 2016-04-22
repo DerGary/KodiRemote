@@ -22,11 +22,11 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else if (methods[guid] == Method.Introspect) {
                 DeserializeMessageAndTriggerTask<JsonObject>(guid, message);
             } else if (methods[guid] == Method.NotifyAll) {
-                DeserializeMessageAndTriggerTask<bool>(guid, message);
+                DeserializeMessageAndTriggerTask(guid, message);
             } else if (methods[guid] == Method.Permission) {
                 DeserializeMessageAndTriggerTask<Permissions>(guid, message);
             } else if (methods[guid] == Method.Ping) {
-                var item = JsonSerializer.FromJson<RPCResponse<string>>(message);
+                var item = JsonSerializer.FromJson<RPCResponseWithStringId<string>>(message);
                 if (item.Result == "pong") {
                     returnValues[guid] = true;
                 } else {
@@ -36,7 +36,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else if (methods[guid] == Method.SetConfiguration) {
                 DeserializeMessageAndTriggerTask<Configuration>(guid, message);
             } else if (methods[guid] == Method.Version) {
-                DeserializeMessageAndTriggerTask<APIVersion>(guid, message);
+                DeserializeMessageAndTriggerTask<KJSONRPC.Results.Version>(guid, message);
             }
         }
 
@@ -82,8 +82,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             });
         }
 
-        public Task<APIVersion> Version() {
-            return SendRequest<APIVersion>(Method.Version);
+        public Task<KJSONRPC.Results.Version> Version() {
+            return SendRequest<KJSONRPC.Results.Version>(Method.Version);
         }
     }
 }

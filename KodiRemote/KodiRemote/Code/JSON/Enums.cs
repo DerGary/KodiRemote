@@ -82,12 +82,22 @@ namespace KodiRemote.Code.JSON.Enums {
         private ExtendRepeatEnum(int value, string name) : base(value, name) { }
     }
     public class OptionalRepeatEnum : StringEnum {
+        protected static Dictionary<int, OptionalRepeatEnum> values = new Dictionary<int, OptionalRepeatEnum>();
         public static readonly OptionalRepeatEnum Null = new OptionalRepeatEnum(1, null);
         public static readonly OptionalRepeatEnum Off = new OptionalRepeatEnum(2, "off");
         public static readonly OptionalRepeatEnum One = new OptionalRepeatEnum(3, "one");
         public static readonly OptionalRepeatEnum All = new OptionalRepeatEnum(4, "all");
 
-        private OptionalRepeatEnum(int value, string name) : base(value, name) { }
+        private OptionalRepeatEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+
+        public static OptionalRepeatEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
+            }
+            return null;
+        }
     }
     public class PartymodeEnum : StringEnum {
         public static readonly PartymodeEnum Music = new PartymodeEnum(1, "music");
@@ -427,7 +437,6 @@ namespace KodiRemote.Code.JSON.Enums {
         }
     }
     public class ContentEnum : StringEnum {
-        protected static Dictionary<int, ContentEnum> values = new Dictionary<int, ContentEnum>();
 
         public static readonly ContentEnum Null = new ContentEnum(1, null);
         public static readonly ContentEnum Unknown = new ContentEnum(2, "unknown");
@@ -439,6 +448,8 @@ namespace KodiRemote.Code.JSON.Enums {
         private ContentEnum(int value, string name) : base(value, name) {
             values[value] = this;
         }
+
+        protected static Dictionary<int, ContentEnum> values = new Dictionary<int, ContentEnum>();
 
         public static ContentEnum FromInt(int value) {
             if (values.ContainsKey(value)) {

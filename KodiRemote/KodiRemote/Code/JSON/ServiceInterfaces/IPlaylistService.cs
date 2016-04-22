@@ -19,9 +19,9 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
 
         Task<bool> Add<T>(int playlistID, T item) where T : AddAble;
         Task<bool> Clear(int playlistID);
-        Task<List<Item>> GetItems(int playlistID);
+        Task<ItemsResult> GetItems(int playlistID);
         Task<List<Playlist>> GetPlaylists();
-        Task<PlaylistProperties> GetProperties(int playlistID, PlaylistField properties = null);
+        Task<PlaylistProperties> GetProperties(int playlistID, PlaylistField properties);
         Task<bool> Insert<T>(int playlistID, int position, T item) where T : AddAble;
         Task<bool> Remove(int playlistID, int position);
         Task<bool> Swap(int playlistID, int position1, int position2);

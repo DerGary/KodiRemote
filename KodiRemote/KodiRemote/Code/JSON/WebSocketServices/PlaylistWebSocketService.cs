@@ -31,7 +31,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 || methods[guid] == Method.Swap) {
                 DeserializeMessageAndTriggerTask(guid, message);
             } else if (methods[guid] == Method.GetItems) {
-                DeserializeMessageAndTriggerTask<List<Item>>(guid, message);
+                DeserializeMessageAndTriggerTask<ItemsResult>(guid, message);
             } else if (methods[guid] == Method.GetPlaylists) {
                 DeserializeMessageAndTriggerTask<List<Playlist>>(guid, message);
             } else if (methods[guid] == Method.GetProperties) {
@@ -57,15 +57,15 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return SendRequest<bool, Clear>(Method.Clear, new Clear { PlaylistId = playlistID });
         }
 
-        public Task<List<Item>> GetItems(int playlistID) {
-            return SendRequest<List<Item>, GetItems>(Method.GetItems, new GetItems { PlaylistId = playlistID });
+        public Task<ItemsResult> GetItems(int playlistID) {
+            return SendRequest<ItemsResult, GetItems>(Method.GetItems, new GetItems { PlaylistId = playlistID });
         }
 
         public Task<List<Playlist>> GetPlaylists() {
             return SendRequest<List<Playlist>>(Method.GetPlaylists);
         }
 
-        public Task<PlaylistProperties> GetProperties(int playlistID, PlaylistField properties = null) {
+        public Task<PlaylistProperties> GetProperties(int playlistID, PlaylistField properties) {
             return SendRequest<PlaylistProperties, GetProperties>(Method.GetProperties, new GetProperties { PlaylistId = playlistID, Properties = properties?.ToList() });
         }
 
