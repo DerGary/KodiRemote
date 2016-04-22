@@ -282,6 +282,7 @@ namespace KodiRemote.Code.JSON.Enums {
         }
     }
     public class WindowEnum : StringEnum {
+        protected static Dictionary<int, WindowEnum> values = new Dictionary<int, WindowEnum>();
         public static readonly WindowEnum Home = new WindowEnum(1, "home");
         public static readonly WindowEnum Programs = new WindowEnum(2, "programs");
         public static readonly WindowEnum Pictures = new WindowEnum(3, "pictures");
@@ -397,15 +398,33 @@ namespace KodiRemote.Code.JSON.Enums {
         public static readonly WindowEnum Extendedprogressdialog = new WindowEnum(113, "extendedprogressdialog");
         public static readonly WindowEnum Mediafilter = new WindowEnum(114, "mediafilter");
 
-        private WindowEnum(int value, string name) : base(value, name) { }
+        private WindowEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+
+        public static WindowEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
+            }
+            return null;
+        }
     }
     public class ImageEnum : StringEnum {
+        protected static Dictionary<int, ImageEnum> values = new Dictionary<int, ImageEnum>();
         public static readonly ImageEnum Null = new ImageEnum(1, null);
         public static readonly ImageEnum Info = new ImageEnum(2, "info");
         public static readonly ImageEnum Warning = new ImageEnum(3, "warning");
         public static readonly ImageEnum Error = new ImageEnum(4, "error");
 
-        private ImageEnum(int value, string name) : base(value, name) { }
+        private ImageEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+        public static ImageEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
+            }
+            return null;
+        }
     }
     public class ContentEnum : StringEnum {
         protected static Dictionary<int, ContentEnum> values = new Dictionary<int, ContentEnum>();

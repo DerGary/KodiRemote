@@ -99,6 +99,7 @@
     <Compile Include="Kodi\Application.cs" />
     <Compile Include="Kodi\AudioLibrary.cs" />
     <Compile Include="Kodi\Files.cs" />
+    <Compile Include="Kodi\GUI.cs" />
     <Compile Include="Kodi\Input.cs" />
     <Compile Include="Kodi\KodiFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
