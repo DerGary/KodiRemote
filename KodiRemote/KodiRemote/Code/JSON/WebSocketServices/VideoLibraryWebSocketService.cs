@@ -46,7 +46,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else if (methods[guid] == Method.GetEpisodes) {
                 DeserializeMessageAndTriggerTask<EpisodeResult>(guid, message);
             } else if (methods[guid] == Method.GetGenres) {
-                DeserializeMessageAndTriggerTask<GenreResult>(guid, message);
+                DeserializeMessageAndTriggerTask<GenresResult>(guid, message);
             } else if (methods[guid] == Method.GetMovieDetails) {
                 DeserializeMessageAndTriggerTask<Movie>(guid, message);
             } else if (methods[guid] == Method.GetMovieSetDetails) {
@@ -112,8 +112,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return SendRequest<EpisodeResult, GetEpisodes>(Method.GetEpisodes, new GetEpisodes() { Properties = properties?.ToList(), TVShowId = tvShowId, Season = season, Limits = limits, Sort = sort });
         }
 
-        public Task<GenreResult> GetGenres(TypeEnum type, GenreField properties = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<GenreResult, GetGenres>(Method.GetGenres, new GetGenres() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Type = type });
+        public Task<GenresResult> GetGenres(TypeEnum type, GenreField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<GenresResult, GetGenres>(Method.GetGenres, new GetGenres() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Type = type });
         }
 
         public Task<Movie> GetMovieDetails(int movieId, MovieField properties = null) {

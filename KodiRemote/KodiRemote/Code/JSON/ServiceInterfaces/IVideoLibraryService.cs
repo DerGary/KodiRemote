@@ -28,7 +28,7 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         Task<bool> Export(bool overwrite = false, bool actorthumbs = false, bool images = false);
         Task<Episode> GetEpisodeDetails(int episodeId, EpisodeField properties = null);
         Task<EpisodeResult> GetEpisodes(EpisodeField properties = null, int? tvShowId = null, int? season = null, Limits limits = null, Sort sort = null);
-        Task<GenreResult> GetGenres(TypeEnum type, GenreField properties = null, Limits limits = null, Sort sort = null);
+        Task<GenresResult> GetGenres(TypeEnum type, GenreField properties = null, Limits limits = null, Sort sort = null);
         Task<Movie> GetMovieDetails(int movieId, MovieField properties = null);
         Task<MovieSetDetails> GetMovieSetDetails(int setId, MovieSetField properties = null, MovieField movieProperties = null, Limits movieLimits = null, Sort movieSort = null);
         Task<MovieSetResult> GetMovieSets(MovieSetField properties = null, Limits limits = null, Sort sort = null);

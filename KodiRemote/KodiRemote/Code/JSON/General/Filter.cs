@@ -9,7 +9,7 @@ namespace KodiRemote.Code.JSON.General.Filter {
     [DataContract]
     public class FilterBase {
         [DataMember(Name = "genreid", EmitDefaultValue = false)]
-        public int GenreId { get; set; }
+        public int? GenreId { get; set; }
         [DataMember(Name = "genre", EmitDefaultValue = false)]
         public string Genre { get; set; }
     }

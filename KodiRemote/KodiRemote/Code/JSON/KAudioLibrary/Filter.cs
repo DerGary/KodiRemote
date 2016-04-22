@@ -23,6 +23,7 @@ namespace KodiRemote.Code.JSON.KAudioLibrary.Filter {
         [DataMember(Name = "songid", EmitDefaultValue = false)]
         public int? SongId { get; set; }
     }
+    [DataContract]
     public class SongFilter : AlbumFilter {
         [DataMember(Name = "albumid", EmitDefaultValue = false)]
         public int? AlbumId { get; set; }

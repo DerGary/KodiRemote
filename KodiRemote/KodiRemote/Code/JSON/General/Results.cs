@@ -12,7 +12,7 @@ namespace KodiRemote.Code.JSON.General.Results {
         public LimitsWithTotal Limits { get; set; }
     }
     [DataContract]
-    public class GenreResult : CollectionResultBase {
+    public class GenresResult : CollectionResultBase {
         [DataMember(Name = "genres")]
         public List<Genre> Genres { get; set; }
     }

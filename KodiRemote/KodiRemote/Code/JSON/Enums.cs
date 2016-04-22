@@ -479,8 +479,53 @@ namespace KodiRemote.Code.JSON.Enums {
 
         private ChannelTypeEnum(int value, string name) : base(value, name) { }
     }
-    public enum OrderEnum { ascending, descending }
-    public enum MethodEnum { none, label, date, size, file, path, drivetype, title, track, time, artist, album, albumtype, genre, country, year, rating, votes, top250, programcount, playlist, episode, season, totalepisodes, watchedepisodes, tvshowstatus, tvshowtitle, sorttitle, productioncode, mpaa, studio, dateadded, lastplayed, playcount, listeners, bitrate, random }
+    public class OrderEnum : StringEnum {
+        public static readonly OrderEnum ascending = new OrderEnum(1, "ascending");
+        public static readonly OrderEnum descending = new OrderEnum(2, "descending");
+
+        private OrderEnum(int value, string name) : base(value, name) { }
+    }
+    public class MethodEnum : StringEnum {
+        public static readonly MethodEnum None = new MethodEnum(1, "none");
+        public static readonly MethodEnum Label = new MethodEnum(2, "label");
+        public static readonly MethodEnum Date = new MethodEnum(3, "date");
+        public static readonly MethodEnum Size = new MethodEnum(4, "size");
+        public static readonly MethodEnum File = new MethodEnum(5, "file");
+        public static readonly MethodEnum Path = new MethodEnum(6, "path");
+        public static readonly MethodEnum Drivetype = new MethodEnum(7, "drivetype");
+        public static readonly MethodEnum Title = new MethodEnum(8, "title");
+        public static readonly MethodEnum Track = new MethodEnum(9, "track");
+        public static readonly MethodEnum Time = new MethodEnum(10, "time");
+        public static readonly MethodEnum Artist = new MethodEnum(11, "artist");
+        public static readonly MethodEnum Album = new MethodEnum(12, "album");
+        public static readonly MethodEnum Albumtype = new MethodEnum(13, "albumtype");
+        public static readonly MethodEnum Genre = new MethodEnum(14, "genre");
+        public static readonly MethodEnum Country = new MethodEnum(15, "country");
+        public static readonly MethodEnum Year = new MethodEnum(16, "year");
+        public static readonly MethodEnum Rating = new MethodEnum(17, "rating");
+        public static readonly MethodEnum Votes = new MethodEnum(18, "votes");
+        public static readonly MethodEnum Top250 = new MethodEnum(19, "top250");
+        public static readonly MethodEnum Programcount = new MethodEnum(20, "programcount");
+        public static readonly MethodEnum Playlist = new MethodEnum(21, "playlist");
+        public static readonly MethodEnum Episode = new MethodEnum(22, "episode");
+        public static readonly MethodEnum Season = new MethodEnum(23, "season");
+        public static readonly MethodEnum Totalepisodes = new MethodEnum(24, "totalepisodes");
+        public static readonly MethodEnum Watchedepisodes = new MethodEnum(25, "watchedepisodes");
+        public static readonly MethodEnum Tvshowstatus = new MethodEnum(26, "tvshowstatus");
+        public static readonly MethodEnum Tvshowtitle = new MethodEnum(27, "tvshowtitle");
+        public static readonly MethodEnum Sorttitle = new MethodEnum(28, "sorttitle");
+        public static readonly MethodEnum Productioncode = new MethodEnum(29, "productioncode");
+        public static readonly MethodEnum Mpaa = new MethodEnum(30, "mpaa");
+        public static readonly MethodEnum Studio = new MethodEnum(31, "studio");
+        public static readonly MethodEnum Dateadded = new MethodEnum(32, "dateadded");
+        public static readonly MethodEnum Lastplayed = new MethodEnum(33, "lastplayed");
+        public static readonly MethodEnum Playcount = new MethodEnum(34, "playcount");
+        public static readonly MethodEnum Listeners = new MethodEnum(35, "listeners");
+        public static readonly MethodEnum Bitrate = new MethodEnum(36, "bitrate");
+        public static readonly MethodEnum Random = new MethodEnum(37, "random");
+
+        private MethodEnum(int value, string name) : base(value, name) { }
+    }
     public enum SpeedNumbersEnum : int { minusthirtytwo = -32, minussixteen = -16, minuseight = -8, minusfour = -4, minustwo = -2, minusone = -1, zero = 0, one = 1, two = 2, four = 4, eight = 8, sixteen = 16, thirtytwo = 32 }
     public enum ZoomNumbersEnum : int { one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8, nine = 9, ten = 10 }
     public class TypeEnum : StringEnum {

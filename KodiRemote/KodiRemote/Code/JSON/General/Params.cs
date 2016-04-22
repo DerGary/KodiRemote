@@ -41,7 +41,7 @@ namespace KodiRemote.Code.JSON.General.Params {
 
     [DataContract]
     public class PathOption : Options {
-        [DataMember(Name = "path")]
+        [DataMember(Name = "path", EmitDefaultValue = false)]
         public string Path { get; set; }
     }
 }

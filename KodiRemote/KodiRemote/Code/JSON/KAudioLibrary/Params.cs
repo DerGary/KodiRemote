@@ -52,10 +52,7 @@ namespace KodiRemote.Code.JSON.KAudioLibrary.Params {
     [DataContract]
     public class GetRecentlyPlayedAlbums : LimitSortPropertyBase { }
     [DataContract]
-    public class GetRecentlyPlayedSongs : LimitSortPropertyBase {
-        [DataMember(Name = "albumlimit", EmitDefaultValue = false)]
-        public int? AlbumLimit { get; set; }
-    }
+    public class GetRecentlyPlayedSongs : LimitSortPropertyBase { }
     [DataContract]
     public class GetSongDetails : PropertyBase {
         [DataMember(Name = "songid")]
@@ -65,7 +62,7 @@ namespace KodiRemote.Code.JSON.KAudioLibrary.Params {
     public class GetSongs : FilterLimitSortPropertyBase<SongFilter> { }
     [DataContract]
     public class Scan {
-        [DataMember(Name = "directory")]
+        [DataMember(Name = "directory", EmitDefaultValue = false)]
         public string Directory { get; set; }
     }
     [DataContract]

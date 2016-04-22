@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.JSON.General {
     [DataContract]
     public class Sort {
-        [DataMember(Name = "order")]
+        [DataMember(Name = "order", EmitDefaultValue = false)]
         public string Order { get; set; }
-        [DataMember(Name = "ignorearticle")]
-        public bool IgnoreArticle { get; set; }
-        [DataMember(Name = "method")]
+        [DataMember(Name = "ignorearticle", EmitDefaultValue = false)]
+        public bool? IgnoreArticle { get; set; }
+        [DataMember(Name = "method", EmitDefaultValue = false)]
         public string Method { get; set; }
     }
 }

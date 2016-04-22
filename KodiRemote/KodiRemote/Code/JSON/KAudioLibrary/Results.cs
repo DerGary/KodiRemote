@@ -12,20 +12,36 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.JSON.KAudioLibrary.Results {
 
     [DataContract]
-    public class AlbumResult : CollectionResultBase {
+    public class AlbumsResult : CollectionResultBase {
         [DataMember(Name = "albums")]
         public List<Album> Albums { get; set; }
     }
     [DataContract]
-    public class ArtistResult : CollectionResultBase {
+    public class ArtistsResult : CollectionResultBase {
         [DataMember(Name = "artists")]
         public List<Artist> Artists { get; set; }
     }
     [DataContract]
-    public class SongResult : CollectionResultBase {
+    public class SongsResult : CollectionResultBase {
         [DataMember(Name = "songs")]
         public List<Song> Songs { get; set; }
     }
+    [DataContract]
+    public class AlbumResult {
+        [DataMember(Name = "albumdetails")]
+        public Album Album { get; set; }
+    }
+    [DataContract]
+    public class ArtistResult {
+        [DataMember(Name = "artistdetails")]
+        public Artist Artist { get; set; }
+    }
+    [DataContract]
+    public class SongResult {
+        [DataMember(Name = "songdetails")]
+        public Song Song { get; set; }
+    }
+
     [DataContract]
     public class Album {
         [DataMember(Name = "albumid")]
@@ -51,7 +67,7 @@ namespace KodiRemote.Code.JSON.KAudioLibrary.Results {
         [DataMember(Name = "mood")]
         public List<string> Mood { get; set; }
         [DataMember(Name = "musicbrainzalbumartistid")]
-        public string MusicBrainzAlbumArtistId { get; set; }
+        public List<string> MusicBrainzAlbumArtistId { get; set; }
         [DataMember(Name = "musicbrainzalbumid")]
         public string MusicBrainzAlbumId { get; set; }
         [DataMember(Name = "playcount")]
@@ -98,7 +114,7 @@ namespace KodiRemote.Code.JSON.KAudioLibrary.Results {
         [DataMember(Name = "mood")]
         public List<string> Mood { get; set; }
         [DataMember(Name = "musicbrainzartistid")]
-        public string MusicBrainzArtistId { get; set; }
+        public List<string> MusicBrainzArtistId { get; set; }
         [DataMember(Name = "style")]
         public List<string> Style { get; set; }
         [DataMember(Name = "thumbnail")]
@@ -147,7 +163,7 @@ namespace KodiRemote.Code.JSON.KAudioLibrary.Results {
         [DataMember(Name = "musicbrainzalbumid")]
         public string MusicBrainzAlbumId { get; set; }
         [DataMember(Name = "musicbrainzartistid")]
-        public string MusicBrainzArtistId { get; set; }
+        public List<string> MusicBrainzArtistId { get; set; }
         [DataMember(Name = "musicbrainztrackid")]
         public string MusicBrainzTrackId { get; set; }
         [DataMember(Name = "playcount")]
