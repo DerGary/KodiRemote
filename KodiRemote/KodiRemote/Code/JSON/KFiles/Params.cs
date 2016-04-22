@@ -29,7 +29,7 @@ namespace KodiRemote.Code.JSON.KFiles.Params {
     public class GetFileDetails {
         [DataMember(Name = "properties", EmitDefaultValue = false)]
         public List<string> Properties { get; set; }
-        [DataMember(Name = "media")]
+        [DataMember(Name = "media", EmitDefaultValue = false)]
         public string Media { get; set; }
         [DataMember(Name = "file")]
         public string File { get; set; }

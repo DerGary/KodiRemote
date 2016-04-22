@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON.KFiles.Params;
+﻿using KodiRemote.Code.JSON.General.Results;
+using KodiRemote.Code.JSON.KFiles.Params;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.KFiles.Results {
+    [DataContract]
+    public class FilesResult : CollectionResultBase {
+        [DataMember(Name = "files")]
+        public List<FileDetails> Files { get; set; }
+    }
+    [DataContract]
+    public class FileResult {
+        [DataMember(Name = "filedetails")]
+        public FileDetails File { get; set; }
+    }
     [DataContract]
     public class FileDetails {
         //public art  { get; set;}
@@ -42,4 +53,18 @@ namespace KodiRemote.Code.JSON.KFiles.Results {
     }
     [DataContract]
     public class DownloadDetails : Download { }
+
+    [DataContract]
+    public class SourcesResult : CollectionResultBase {
+
+        [DataMember(Name = "sources")]
+        public List<Sources> Sources { get; set; }
+    }
+    [DataContract]
+    public class Sources {
+        [DataMember(Name = "file")]
+        public string File { get; set; }
+        [DataMember(Name = "label")]
+        public string Label { get; set; }
+    }
 }

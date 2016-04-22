@@ -455,6 +455,7 @@ namespace KodiRemote.Code.JSON.Enums {
         }
     }
     public class MediaEnum : StringEnum {
+        protected static Dictionary<int, MediaEnum> values = new Dictionary<int, MediaEnum>();
         public static readonly MediaEnum Null = new MediaEnum(1, null);
         public static readonly MediaEnum Video = new MediaEnum(2, "video");
         public static readonly MediaEnum Music = new MediaEnum(3, "music");
@@ -462,16 +463,33 @@ namespace KodiRemote.Code.JSON.Enums {
         public static readonly MediaEnum Files = new MediaEnum(5, "files");
         public static readonly MediaEnum Programs = new MediaEnum(6, "programs");
 
-        private MediaEnum(int value, string name) : base(value, name) { }
+        private MediaEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+        public static MediaEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
+            }
+            return null;
+        }
     }
     public class MediaNotNullEnum : StringEnum {
+        protected static Dictionary<int, MediaNotNullEnum> values = new Dictionary<int, MediaNotNullEnum>();
         public static readonly MediaNotNullEnum Video = new MediaNotNullEnum(2, "video");
         public static readonly MediaNotNullEnum Music = new MediaNotNullEnum(3, "music");
         public static readonly MediaNotNullEnum Pictures = new MediaNotNullEnum(4, "pictures");
         public static readonly MediaNotNullEnum Files = new MediaNotNullEnum(5, "files");
         public static readonly MediaNotNullEnum Programs = new MediaNotNullEnum(6, "programs");
 
-        private MediaNotNullEnum(int value, string name) : base(value, name) { }
+        private MediaNotNullEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+        public static MediaNotNullEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
+            }
+            return null;
+        }
     }
     public class ChannelTypeEnum : StringEnum {
         public static readonly ChannelTypeEnum TV = new ChannelTypeEnum(1, "tv");

@@ -20,11 +20,11 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             if (methods[guid] == Method.Download) {
                 DeserializeMessageAndTriggerTask<string>(guid, message);
             } else if (methods[guid] == Method.GetDirectory) {
-                DeserializeMessageAndTriggerTask<List<FileDetails>>(guid, message);
+                DeserializeMessageAndTriggerTask<FilesResult>(guid, message);
             } else if (methods[guid] == Method.GetFileDetails) {
-                DeserializeMessageAndTriggerTask<FileDetails>(guid, message);
+                DeserializeMessageAndTriggerTask<FileResult>(guid, message);
             } else if (methods[guid] == Method.GetSources) {
-                DeserializeMessageAndTriggerTask<List<string>>(guid, message);
+                DeserializeMessageAndTriggerTask<SourcesResult>(guid, message);
             } else if (methods[guid] == Method.PrepareDownload) {
                 DeserializeMessageAndTriggerTask<PrepareDownloadResult>(guid, message);
             }
@@ -40,16 +40,16 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return SendRequest<string, Download>(Method.Download, new Download { Path = path });
         }
 
-        public Task<List<FileDetails>> GetDirectory(string directory, MediaEnum media, FileField properties = null, Sort sort = null) {
-            return SendRequest<List<FileDetails>, GetDirectory>(Method.GetDirectory, new GetDirectory { Directory = directory, Media = media, Properties = properties?.ToList(), Sort = sort });
+        public Task<FilesResult> GetDirectory(string directory, MediaEnum media, FileField properties = null, Sort sort = null) {
+            return SendRequest<FilesResult, GetDirectory>(Method.GetDirectory, new GetDirectory { Directory = directory, Media = media, Properties = properties?.ToList(), Sort = sort });
         }
 
-        public Task<FileDetails> GetFileDetails(string file, MediaEnum media, FileField properties = null) {
-            return SendRequest<FileDetails, GetFileDetails>(Method.GetFileDetails, new GetFileDetails { File = file, Media = media, Properties = properties?.ToList() });
+        public Task<FileResult> GetFileDetails(string file, MediaEnum media, FileField properties = null) {
+            return SendRequest<FileResult, GetFileDetails>(Method.GetFileDetails, new GetFileDetails { File = file, Media = media, Properties = properties?.ToList() });
         }
 
-        public Task<List<string>> GetSources(MediaNotNullEnum media, Limits limits = null, Sort sort = null) {
-            return SendRequest<List<string>, GetSources>(Method.GetSources, new GetSources { Media = media, Limits = limits, Sort = sort });
+        public Task<SourcesResult> GetSources(MediaNotNullEnum media, Limits limits = null, Sort sort = null) {
+            return SendRequest<SourcesResult, GetSources>(Method.GetSources, new GetSources { Media = media, Limits = limits, Sort = sort });
         }
 
         public Task<PrepareDownloadResult> PrepareDownload(string path) {
