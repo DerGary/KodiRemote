@@ -42,35 +42,35 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 || methods[guid] == Method.SetTVShowDetails) {
                 DeserializeMessageAndTriggerTask(guid, message);
             } else if (methods[guid] == Method.GetEpisodeDetails) {
-                DeserializeMessageAndTriggerTask<Episode>(guid, message);
-            } else if (methods[guid] == Method.GetEpisodes) {
                 DeserializeMessageAndTriggerTask<EpisodeResult>(guid, message);
+            } else if (methods[guid] == Method.GetEpisodes) {
+                DeserializeMessageAndTriggerTask<EpisodesResult>(guid, message);
             } else if (methods[guid] == Method.GetGenres) {
                 DeserializeMessageAndTriggerTask<GenresResult>(guid, message);
             } else if (methods[guid] == Method.GetMovieDetails) {
-                DeserializeMessageAndTriggerTask<Movie>(guid, message);
+                DeserializeMessageAndTriggerTask<MovieResult>(guid, message);
             } else if (methods[guid] == Method.GetMovieSetDetails) {
-                DeserializeMessageAndTriggerTask<MovieSetDetails>(guid, message);
+                DeserializeMessageAndTriggerTask<MovieSetDetailsResult>(guid, message);
             } else if (methods[guid] == Method.GetMovieSets) {
-                DeserializeMessageAndTriggerTask<MovieSetResult>(guid, message);
+                DeserializeMessageAndTriggerTask<MovieSetsResult>(guid, message);
             } else if (methods[guid] == Method.GetMovies) {
-                DeserializeMessageAndTriggerTask<MovieResult>(guid, message);
+                DeserializeMessageAndTriggerTask<MoviesResult>(guid, message);
             } else if (methods[guid] == Method.GetMusicVideoDetails) {
-                DeserializeMessageAndTriggerTask<MusicVideo>(guid, message);
+                DeserializeMessageAndTriggerTask<MusicVideoResult>(guid, message);
             } else if (methods[guid] == Method.GetMusicVideos) {
-                DeserializeMessageAndTriggerTask<MusicVideoResult>(guid, message);
+                DeserializeMessageAndTriggerTask<MusicVideosResult>(guid, message);
             } else if (methods[guid] == Method.GetRecentlyAddedEpisodes) {
-                DeserializeMessageAndTriggerTask<EpisodeResult>(guid, message);
+                DeserializeMessageAndTriggerTask<EpisodesResult>(guid, message);
             } else if (methods[guid] == Method.GetRecentlyAddedMovies) {
-                DeserializeMessageAndTriggerTask<MovieResult>(guid, message);
+                DeserializeMessageAndTriggerTask<MoviesResult>(guid, message);
             } else if (methods[guid] == Method.GetRecentlyAddedMusicVideos) {
-                DeserializeMessageAndTriggerTask<MusicVideoResult>(guid, message);
+                DeserializeMessageAndTriggerTask<MusicVideosResult>(guid, message);
             } else if (methods[guid] == Method.GetSeasons) {
-                DeserializeMessageAndTriggerTask<TVShowSeasonResult>(guid, message);
+                DeserializeMessageAndTriggerTask<TVShowSeasonsResult>(guid, message);
             } else if (methods[guid] == Method.GetTVShowDetails) {
-                DeserializeMessageAndTriggerTask<TVShow>(guid, message);
-            } else if (methods[guid] == Method.GetTVShows) {
                 DeserializeMessageAndTriggerTask<TVShowResult>(guid, message);
+            } else if (methods[guid] == Method.GetTVShows) {
+                DeserializeMessageAndTriggerTask<TVShowsResult>(guid, message);
             }
         }
 
@@ -104,64 +104,64 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return SendRequest<bool, Export<ExportOption>>(Method.Export, new Export<ExportOption>() { Options = new ExportOption() { ActorThumbs = actorthumbs, Overwrite = overwrite, Images = images } });
         }
 
-        public Task<Episode> GetEpisodeDetails(int episodeId, EpisodeField properties = null) {
-            return SendRequest<Episode, GetEpisodeDetails>(Method.GetEpisodeDetails, new GetEpisodeDetails() { EpisodeId = episodeId, Properties = properties?.ToList() });
+        public Task<EpisodeResult> GetEpisodeDetails(int episodeId, EpisodeField properties = null) {
+            return SendRequest<EpisodeResult, GetEpisodeDetails>(Method.GetEpisodeDetails, new GetEpisodeDetails() { EpisodeId = episodeId, Properties = properties?.ToList() });
         }
 
-        public Task<EpisodeResult> GetEpisodes(EpisodeField properties = null, int? tvShowId = null, int? season = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<EpisodeResult, GetEpisodes>(Method.GetEpisodes, new GetEpisodes() { Properties = properties?.ToList(), TVShowId = tvShowId, Season = season, Limits = limits, Sort = sort });
+        public Task<EpisodesResult> GetEpisodes(EpisodeField properties = null, int? tvShowId = null, int? season = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<EpisodesResult, GetEpisodes>(Method.GetEpisodes, new GetEpisodes() { Properties = properties?.ToList(), TVShowId = tvShowId, Season = season, Limits = limits, Sort = sort });
         }
 
         public Task<GenresResult> GetGenres(TypeEnum type, GenreField properties = null, Limits limits = null, Sort sort = null) {
             return SendRequest<GenresResult, GetGenres>(Method.GetGenres, new GetGenres() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Type = type });
         }
 
-        public Task<Movie> GetMovieDetails(int movieId, MovieField properties = null) {
-            return SendRequest<Movie, GetMovieDetails>(Method.GetMovieDetails, new GetMovieDetails() { Properties = properties?.ToList(), MovieId = movieId });
+        public Task<MovieResult> GetMovieDetails(int movieId, MovieField properties = null) {
+            return SendRequest<MovieResult, GetMovieDetails>(Method.GetMovieDetails, new GetMovieDetails() { Properties = properties?.ToList(), MovieId = movieId });
         }
 
-        public Task<MovieResult> GetMovies(MovieField properties = null, MovieFilter filter = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<MovieResult, GetMovies>(Method.GetMovies, new GetMovies() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
+        public Task<MoviesResult> GetMovies(MovieField properties = null, MovieFilter filter = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<MoviesResult, GetMovies>(Method.GetMovies, new GetMovies() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
         }
 
-        public Task<MovieSetDetails> GetMovieSetDetails(int setId, MovieSetField properties = null, MovieField movieProperties = null, Limits movieLimits = null, Sort movieSort = null) {
-            return SendRequest<MovieSetDetails, GetMovieSetDetails>(Method.GetMovieSetDetails, new GetMovieSetDetails() { Properties = properties?.ToList(), Movies = new LimitSortPropertyBase() { Limits = movieLimits, Properties = movieProperties?.ToList(), Sort = movieSort } });
+        public Task<MovieSetDetailsResult> GetMovieSetDetails(int setId, MovieSetField properties = null, MovieField movieProperties = null, Limits movieLimits = null, Sort movieSort = null) {
+            return SendRequest<MovieSetDetailsResult, GetMovieSetDetails>(Method.GetMovieSetDetails, new GetMovieSetDetails() { SetId = setId, Properties = properties?.ToList(), Movies = new LimitSortPropertyBase() { Limits = movieLimits, Properties = movieProperties?.ToList(), Sort = movieSort } });
         }
 
-        public Task<MovieSetResult> GetMovieSets(MovieSetField properties = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<MovieSetResult, GetMovieSets>(Method.GetMovieSets, new GetMovieSets() { Properties = properties?.ToList(), Limits = limits, Sort = sort });
+        public Task<MovieSetsResult> GetMovieSets(MovieSetField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<MovieSetsResult, GetMovieSets>(Method.GetMovieSets, new GetMovieSets() { Properties = properties?.ToList(), Limits = limits, Sort = sort });
         }
 
-        public Task<MusicVideo> GetMusicVideoDetails(int musicvideoId, MusicVideoField properties = null) {
-            return SendRequest<MusicVideo, GetMusicVideoDetails>(Method.GetMusicVideoDetails, new GetMusicVideoDetails() { Properties = properties?.ToList(), MusicVideoId = musicvideoId });
+        public Task<MusicVideoResult> GetMusicVideoDetails(int musicvideoId, MusicVideoField properties = null) {
+            return SendRequest<MusicVideoResult, GetMusicVideoDetails>(Method.GetMusicVideoDetails, new GetMusicVideoDetails() { Properties = properties?.ToList(), MusicVideoId = musicvideoId });
         }
 
-        public Task<MusicVideoResult> GetMusicVideos(MusicVideoField properties = null, MusicVideoFilter filter = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<MusicVideoResult, GetMusicVideos>(Method.GetMusicVideos, new GetMusicVideos() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
+        public Task<MusicVideosResult> GetMusicVideos(MusicVideoField properties = null, MusicVideoFilter filter = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<MusicVideosResult, GetMusicVideos>(Method.GetMusicVideos, new GetMusicVideos() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
         }
 
-        public Task<EpisodeResult> GetRecentlyAddedEpisodes(EpisodeField properties = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<EpisodeResult, GetRecentlyAddedEpisodes>(Method.GetRecentlyAddedEpisodes, new GetRecentlyAddedEpisodes() { Properties = properties?.ToList(), Limits = limits, Sort = sort });
+        public Task<EpisodesResult> GetRecentlyAddedEpisodes(EpisodeField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<EpisodesResult, GetRecentlyAddedEpisodes>(Method.GetRecentlyAddedEpisodes, new GetRecentlyAddedEpisodes() { Properties = properties?.ToList(), Limits = limits, Sort = sort });
         }
 
-        public Task<MovieResult> GetRecentlyAddedMovies(MovieField properties = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<MovieResult, GetRecentlyAddedMovies>(Method.GetRecentlyAddedMovies, new GetRecentlyAddedMovies() { Properties = properties?.ToList(), Limits = limits, Sort = sort });
+        public Task<MoviesResult> GetRecentlyAddedMovies(MovieField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<MoviesResult, GetRecentlyAddedMovies>(Method.GetRecentlyAddedMovies, new GetRecentlyAddedMovies() { Properties = properties?.ToList(), Limits = limits, Sort = sort });
         }
 
-        public Task<MusicVideoResult> GetRecentlyAddedMusicVideos(MusicVideoField properties = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<MusicVideoResult, GetRecentlyAddedMusicVideos>(Method.GetRecentlyAddedMusicVideos, new GetRecentlyAddedMusicVideos() { Properties = properties?.ToList(), Limits = limits, Sort = sort });
+        public Task<MusicVideosResult> GetRecentlyAddedMusicVideos(MusicVideoField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<MusicVideosResult, GetRecentlyAddedMusicVideos>(Method.GetRecentlyAddedMusicVideos, new GetRecentlyAddedMusicVideos() { Properties = properties?.ToList(), Limits = limits, Sort = sort });
         }
 
-        public Task<TVShowSeasonResult> GetSeasons(int tvShowId, SeasonField properties = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<TVShowSeasonResult, GetSeasons>(Method.GetSeasons, new GetSeasons() { Properties = properties?.ToList(), Limits = limits, Sort = sort, TVShowId = tvShowId });
+        public Task<TVShowSeasonsResult> GetSeasons(int tvShowId, SeasonField properties = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<TVShowSeasonsResult, GetSeasons>(Method.GetSeasons, new GetSeasons() { Properties = properties?.ToList(), Limits = limits, Sort = sort, TVShowId = tvShowId });
         }
 
-        public Task<TVShow> GetTVShowDetails(int tvShowId, TVShowField properties = null) {
-            return SendRequest<TVShow, GetTVShowDetails>(Method.GetTVShowDetails, new GetTVShowDetails() { Properties = properties?.ToList(), TVShowId = tvShowId });
+        public Task<TVShowResult> GetTVShowDetails(int tvShowId, TVShowField properties = null) {
+            return SendRequest<TVShowResult, GetTVShowDetails>(Method.GetTVShowDetails, new GetTVShowDetails() { Properties = properties?.ToList(), TVShowId = tvShowId });
         }
 
-        public Task<TVShowResult> GetTVShows(TVShowField properties = null, TVShowFilter filter = null, Limits limits = null, Sort sort = null) {
-            return SendRequest<TVShowResult, GetTVShows>(Method.GetTVShows, new GetTVShows() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
+        public Task<TVShowsResult> GetTVShows(TVShowField properties = null, TVShowFilter filter = null, Limits limits = null, Sort sort = null) {
+            return SendRequest<TVShowsResult, GetTVShows>(Method.GetTVShows, new GetTVShows() { Properties = properties?.ToList(), Limits = limits, Sort = sort, Filter = filter });
         }
 
         public Task<bool> RemoveEpisode(int episodeId) {

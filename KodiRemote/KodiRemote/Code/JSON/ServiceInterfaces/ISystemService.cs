@@ -17,7 +17,7 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         #endregion Notifications
 
         Task<bool> EjectOpticalDrive();
-        Task<SystemProperties> GetProperties(SystemField properties = null);
+        Task<SystemProperties> GetProperties(SystemField properties);
         Task<bool> Hibernate();
         Task<bool> Reboot();
         Task<bool> Shutdown();

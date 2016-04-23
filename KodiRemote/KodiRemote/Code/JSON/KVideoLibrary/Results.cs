@@ -11,34 +11,64 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
     [DataContract]
-    public class TVShowResult : CollectionResultBase {
+    public class TVShowsResult : CollectionResultBase {
         [DataMember(Name = "tvshows")]
         public List<TVShow> TVShows { get; set; }
     }
     [DataContract]
-    public class MovieResult : CollectionResultBase {
+    public class TVShowResult {
+        [DataMember(Name = "tvshowdetails")]
+        public TVShow TVShow { get; set; }
+    }
+    [DataContract]
+    public class MoviesResult : CollectionResultBase {
         [DataMember(Name = "movies")]
         public List<Movie> Movies { get; set; }
     }
     [DataContract]
-    public class MusicVideoResult : CollectionResultBase {
+    public class MovieResult {
+        [DataMember(Name = "moviedetails")]
+        public Movie Movie { get; set; }
+    }
+    [DataContract]
+    public class MusicVideosResult : CollectionResultBase {
         [DataMember(Name = "musicvideos")]
         public List<MusicVideo> MusicVideos { get; set; }
     }
     [DataContract]
-    public class EpisodeResult : CollectionResultBase {
+    public class MusicVideoResult {
+        [DataMember(Name = "musicvideodetails")]
+        public MusicVideo MusicVideo { get; set; }
+    }
+    [DataContract]
+    public class EpisodesResult : CollectionResultBase {
         [DataMember(Name = "episodes")]
         public List<Episode> Episodes { get; set; }
     }
     [DataContract]
-    public class MovieSetResult : CollectionResultBase {
-        [DataMember(Name = "moviesets")]
+    public class EpisodeResult {
+        [DataMember(Name = "episodedetails")]
+        public Episode Episode { get; set; }
+    }
+    [DataContract]
+    public class MovieSetsResult : CollectionResultBase {
+        [DataMember(Name = "sets")]
         public List<MovieSet> MovieSets { get; set; }
     }
     [DataContract]
-    public class TVShowSeasonResult : CollectionResultBase {
-        [DataMember(Name = "tvshowseasons")]
+    public class MovieSetResult {
+        [DataMember(Name = "moviesetdetails")]
+        public MovieSet MovieSet { get; set; }
+    }
+    [DataContract]
+    public class TVShowSeasonsResult : CollectionResultBase {
+        [DataMember(Name = "seasons")]
         public List<TVShowSeason> TVShowSeasons { get; set; }
+    }
+    [DataContract]
+    public class TVShowSeasonResult {
+        [DataMember(Name = "tvshowseasondetails")]
+        public TVShowSeason TVShowSeason { get; set; }
     }
 
     [DataContract]
@@ -178,9 +208,14 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         public string Thumbnail { get; set; }
     }
     [DataContract]
+    public class MovieSetDetailsResult  {
+        [DataMember(Name = "setdetails")]
+        public MovieSetDetails MovieSet { get; set; }
+    }
+    [DataContract]
     public class MovieSetDetails : MovieSet {
         [DataMember(Name = "movies")]
-        public Movie[] Movies { get; set; } //hier kommt kein vollwertiges Video sondern nur id und string
+        public List<Movie> Movies { get; set; } //hier kommt kein vollwertiges Video sondern nur id und string
         [DataMember(Name = "limits")]
         public LimitsWithTotal Limits { get; set; }
     }

@@ -52,8 +52,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             return SendRequest<bool>(Method.EjectOpticalDrive);
         }
 
-        public Task<SystemProperties> GetProperties(SystemField properties = null) {
-            return SendRequest<SystemProperties, GetProperties>(Method.EjectOpticalDrive, new GetProperties() { Properties = properties.ToList() });
+        public Task<SystemProperties> GetProperties(SystemField properties) {
+            return SendRequest<SystemProperties, GetProperties>(Method.GetProperties, new GetProperties() { Properties = properties.ToList() });
         }
 
         public Task<bool> Hibernate() {

@@ -157,6 +157,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Params {
         public Artwork Art { get; set; }
     }
 
+    [DataContract]
     public class TVBase : Video {
         [DataMember(Name = "rating", EmitDefaultValue = false)]
         public float Rating { get; set; }
@@ -165,7 +166,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Params {
         [DataMember(Name = "originaltitle", EmitDefaultValue = false)]
         public string OriginalTitle { get; set; }
     }
-
+    [DataContract]
     public class MovieEpisodeBase : TVBase {
         [DataMember(Name = "writer", EmitDefaultValue = false)]
         public List<string> Writer { get; set; }
@@ -220,6 +221,8 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Params {
 
     [DataContract]
     public class SetMusicVideoDetails : Video {
+        [DataMember(Name = "musicvideoid")]
+        public int MusicVideoId { get; set; }
         [DataMember(Name = "studio", EmitDefaultValue = false)]
         public List<string> Studio { get; set; }
         [DataMember(Name = "year", EmitDefaultValue = false)]
@@ -236,6 +239,8 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Params {
 
     [DataContract]
     public class SetTVShowDetails : TVBase {
+        [DataMember(Name = "tvshowid")]
+        public int TVShowId { get; set; }
         [DataMember(Name = "studio", EmitDefaultValue = false)]
         public List<string> Studio { get; set; }
         [DataMember(Name = "genre", EmitDefaultValue = false)]

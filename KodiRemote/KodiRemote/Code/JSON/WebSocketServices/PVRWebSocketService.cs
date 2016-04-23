@@ -21,37 +21,39 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
                 || methods[guid] == Method.Scan) {
                 DeserializeMessageAndTriggerTask(guid, message);
             } else if (methods[guid] == Method.GetChannelDetails) {
-                DeserializeMessageAndTriggerTask<ChannelDetails>(guid, message);
+                DeserializeMessageAndTriggerTask<ChannelResult>(guid, message);
             } else if (methods[guid] == Method.GetChannelGroupDetails) {
-                DeserializeMessageAndTriggerTask<List<ChannelGroupDetails>>(guid, message);
+                DeserializeMessageAndTriggerTask<ChannelGroupDetailsResult>(guid, message);
             } else if (methods[guid] == Method.GetChannelGroups) {
-                DeserializeMessageAndTriggerTask<List<ChannelGroup>>(guid, message);
+                DeserializeMessageAndTriggerTask<ChannelGroupResult>(guid, message);
             } else if (methods[guid] == Method.GetProperties) {
                 DeserializeMessageAndTriggerTask<PVRProperties>(guid, message);
+            } else if (methods[guid] == Method.GetChannels) {
+                DeserializeMessageAndTriggerTask<ChannelsResult>(guid, message);
             }
         }
 
         protected override void WebSocketNotificationReceived(string method, string notification) {
             //no notifications
         }
-        public Task<ChannelDetails> GetChannelDetails(int channelId, PVRChannelField properties = null) {
-            return SendRequest<ChannelDetails, GetChannelDetails>(Method.GetChannelDetails, new GetChannelDetails() { ChannelId = channelId, Properties = properties?.ToList() });
+        public Task<ChannelResult> GetChannelDetails(int channelId, PVRChannelField properties = null) {
+            return SendRequest<ChannelResult, GetChannelDetails>(Method.GetChannelDetails, new GetChannelDetails() { ChannelId = channelId, Properties = properties?.ToList() });
         }
 
-        public Task<List<ChannelGroupDetails>> GetChannelGroupDetails(int channelGroupId, PVRChannelField properties = null, Limits limits = null) {
-            return SendRequest<List<ChannelGroupDetails>, GetChannelGroupDetails>(Method.GetChannelGroupDetails, new GetChannelGroupDetails() { ChannelGroupId = channelGroupId, Channels = new Channels { Properties = properties?.ToList(), Limits = limits } });
+        public Task<ChannelGroupDetailsResult> GetChannelGroupDetails(int channelGroupId, PVRChannelField properties = null, Limits limits = null) {
+            return SendRequest<ChannelGroupDetailsResult, GetChannelGroupDetails>(Method.GetChannelGroupDetails, new GetChannelGroupDetails() { ChannelGroupId = channelGroupId, Channels = new Channels { Properties = properties?.ToList(), Limits = limits } });
         }
 
-        public Task<List<ChannelGroup>> GetChannelGroups(ChannelTypeEnum channelType, Limits limits = null) {
-            return SendRequest<List<ChannelGroup>, GetChannelGroups>(Method.GetChannelGroups, new GetChannelGroups() { ChannelType = channelType, Limits = limits });
+        public Task<ChannelGroupResult> GetChannelGroups(ChannelTypeEnum channelType, Limits limits = null) {
+            return SendRequest<ChannelGroupResult, GetChannelGroups>(Method.GetChannelGroups, new GetChannelGroups() { ChannelType = channelType, Limits = limits });
         }
 
-        public Task<List<ChannelDetails>> GetChannels(int channelGroupId, PVRChannelField properties = null, Limits limits = null) {
-            return SendRequest<List<ChannelDetails>, GetChannels>(Method.GetChannels, new GetChannels() { ChannelGroupId = channelGroupId, Properties = properties?.ToList(), Limits = limits });
+        public Task<ChannelsResult> GetChannels(int channelGroupId, PVRChannelField properties = null, Limits limits = null) {
+            return SendRequest<ChannelsResult, GetChannels>(Method.GetChannels, new GetChannels() { ChannelGroupId = channelGroupId, Properties = properties?.ToList(), Limits = limits });
         }
 
-        public Task<PVRProperties> GetProperties(PVRField properties, Limits limits = null) {
-            return SendRequest<PVRProperties, GetProperties>(Method.GetProperties, new GetProperties() { Limits = limits, Properties = properties?.ToList() });
+        public Task<PVRProperties> GetProperties(PVRField properties) {
+            return SendRequest<PVRProperties, GetProperties>(Method.GetProperties, new GetProperties() { Properties = properties?.ToList() });
         }
 
         public Task<bool> Record(ToggleEnum record, int? channelId = default(int?)) {

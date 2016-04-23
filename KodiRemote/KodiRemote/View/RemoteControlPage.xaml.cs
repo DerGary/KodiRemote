@@ -38,11 +38,11 @@ namespace KodiRemote.View {
             //ViewModel.Kodi.VideoLibrary.GetMovies();
         }
 
-        private void VideoLibrary_GetMoviesReceived(MovieResult item) {
+        private void VideoLibrary_GetMoviesReceived(MoviesResult item) {
             Debug.WriteLine(item);
         }
 
-        private void VideoLibrary_GetTVShowsReceived(TVShowResult item) {
+        private void VideoLibrary_GetTVShowsReceived(TVShowsResult item) {
             Debug.WriteLine(item);
         }
 

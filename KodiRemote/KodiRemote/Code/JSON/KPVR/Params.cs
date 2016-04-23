@@ -35,7 +35,7 @@ namespace KodiRemote.Code.JSON.KPVR.Params {
     [DataContract]
     public class GetChannelGroups {
         [DataMember(Name = "channeltype")]
-        public int ChannelType { get; set; }
+        public string ChannelType { get; set; }
         [DataMember(Name = "limits", EmitDefaultValue = false)]
         public Limits Limits { get; set; }
     }
@@ -50,8 +50,6 @@ namespace KodiRemote.Code.JSON.KPVR.Params {
     }
     [DataContract]
     public class GetProperties {
-        [DataMember(Name = "limits", EmitDefaultValue = false)]
-        public Limits Limits { get; set; }
         [DataMember(Name = "properties", EmitDefaultValue = false)]
         public List<string> Properties { get; set; }
     }

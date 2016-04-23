@@ -577,10 +577,19 @@ namespace KodiRemote.Code.JSON.Enums {
     public enum SpeedNumbersEnum : int { minusthirtytwo = -32, minussixteen = -16, minuseight = -8, minusfour = -4, minustwo = -2, minusone = -1, zero = 0, one = 1, two = 2, four = 4, eight = 8, sixteen = 16, thirtytwo = 32 }
     public enum ZoomNumbersEnum : int { one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8, nine = 9, ten = 10 }
     public class TypeEnum : StringEnum {
+        protected static Dictionary<int, TypeEnum> values = new Dictionary<int, TypeEnum>();
         public static readonly TypeEnum Movie = new TypeEnum(1, "movie");
         public static readonly TypeEnum TVShow = new TypeEnum(2, "tvshow");
         public static readonly TypeEnum MusicVideo = new TypeEnum(3, "musicvideo");
-
-        private TypeEnum(int value, string name) : base(value, name) { }
+        private TypeEnum(int value, string name) : base(value, name) {
+            values[value] = this;
+        }
+        public static TypeEnum FromInt(int value) {
+            if (values.ContainsKey(value)) {
+                return values[value];
+            }
+            return null;
+        }
     }
+    public enum PlayerId : int { Audio = 0, Video = 1, Picture = 2 }
 }
