@@ -13,8 +13,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand VolumeUpCommand {
             get {
                 if (volumeUpCommand == null) {
-                    volumeUpCommand = new RelayCommand(() => {
-                        Kodi.Application.SetVolume(IncDecEnum.Increment);
+                    volumeUpCommand = new RelayCommand(async () => {
+                        await Kodi.Application.SetVolume(IncDecEnum.Increment);
                         //Kodi.Input.ExecuteAction(ExecActionEnum.VolumeUp);
                     });
                 }
@@ -26,8 +26,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand VolumeDownCommand {
             get {
                 if (volumeDownCommand == null) {
-                    volumeDownCommand = new RelayCommand(() => {
-                        Kodi.Application.SetVolume(IncDecEnum.Decrement);
+                    volumeDownCommand = new RelayCommand(async () => {
+                        await Kodi.Application.SetVolume(IncDecEnum.Decrement);
                         //Kodi.Input.ExecuteAction(ExecActionEnum.VolumeDown);
                     });
                 }
@@ -39,8 +39,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand VolumeMuteCommand {
             get {
                 if (volumeMuteCommand == null) {
-                    volumeMuteCommand = new RelayCommand(() => {
-                        Kodi.Application.SetMute(ToggleEnum.Toggle);
+                    volumeMuteCommand = new RelayCommand(async () => {
+                        await Kodi.Application.SetMute(ToggleEnum.Toggle);
                     });
                 }
                 return volumeMuteCommand;
@@ -51,8 +51,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand HomeCommand {
             get {
                 if (homeCommand == null) {
-                    homeCommand = new RelayCommand(() => {
-                        Kodi.GUI.ActivateWindow(WindowEnum.Home);
+                    homeCommand = new RelayCommand(async () => {
+                        await Kodi.GUI.ActivateWindow(WindowEnum.Home);
                     });
                 }
                 return homeCommand;
@@ -63,8 +63,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand UpCommand {
             get {
                 if (upCommand == null) {
-                    upCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Up);
+                    upCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Up);
                     });
                 }
                 return upCommand;
@@ -75,8 +75,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand OptionsCommand {
             get {
                 if (optionsCommand == null) {
-                    optionsCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Contextmenu);
+                    optionsCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Contextmenu);
                     });
                 }
                 return optionsCommand;
@@ -87,8 +87,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand LeftCommand {
             get {
                 if (leftCommand == null) {
-                    leftCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Left);
+                    leftCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Left);
                     });
                 }
                 return leftCommand;
@@ -99,8 +99,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand GoCommand {
             get {
                 if (goCommand == null) {
-                    goCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Select);
+                    goCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Select);
                     });
                 }
                 return goCommand;
@@ -111,8 +111,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand RightCommand {
             get {
                 if (rightCommand == null) {
-                    rightCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Right);
+                    rightCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Right);
                     });
                 }
                 return rightCommand;
@@ -123,8 +123,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand BackCommand {
             get {
                 if (backCommand == null) {
-                    backCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Back);
+                    backCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Back);
                     });
                 }
                 return backCommand;
@@ -135,8 +135,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand DownCommand {
             get {
                 if (downCommand == null) {
-                    downCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Down);
+                    downCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Down);
                     });
                 }
                 return downCommand;
@@ -147,7 +147,7 @@ namespace KodiRemote.ViewModel {
         public RelayCommand KeyboardCommand {
             get {
                 if (keyboardCommand == null) {
-                    keyboardCommand = new RelayCommand(() => {
+                    keyboardCommand = new RelayCommand(async () => {
                         //Keyboard anzeigen
                     });
                 }
@@ -159,8 +159,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand TurnOffCommand {
             get {
                 if (turnOffCommand == null) {
-                    turnOffCommand = new RelayCommand(() => {
-                        Kodi.GUI.ActivateWindow(WindowEnum.Shutdownmenu);
+                    turnOffCommand = new RelayCommand(async () => {
+                        await Kodi.GUI.ActivateWindow(WindowEnum.Shutdownmenu);
                     });
                 }
                 return turnOffCommand;
@@ -171,8 +171,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand MovieCommand {
             get {
                 if (movieCommand == null) {
-                    movieCommand = new RelayCommand(() => {
-                        Kodi.GUI.ActivateWindow(WindowEnum.Video, new List<string>() { "movietitles" });
+                    movieCommand = new RelayCommand(async () => {
+                        await Kodi.GUI.ActivateWindow(WindowEnum.Video, new List<string>() { "movietitles" });
                     });
                 }
                 return movieCommand;
@@ -183,8 +183,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand SeriesCommand {
             get {
                 if (seriesCommand == null) {
-                    seriesCommand = new RelayCommand(() => {
-                        Kodi.GUI.ActivateWindow(WindowEnum.Video, new List<string>() { "tvshowtitles" });
+                    seriesCommand = new RelayCommand(async () => {
+                        await Kodi.GUI.ActivateWindow(WindowEnum.Video, new List<string>() { "tvshowtitles" });
                     });
                 }
                 return seriesCommand;
@@ -195,8 +195,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand MusicCommand {
             get {
                 if (musicCommand == null) {
-                    musicCommand = new RelayCommand(() => {
-                        Kodi.GUI.ActivateWindow(WindowEnum.Musiclibrary);
+                    musicCommand = new RelayCommand(async () => {
+                        await Kodi.GUI.ActivateWindow(WindowEnum.Musiclibrary);
                     });
                 }
                 return musicCommand;
@@ -207,8 +207,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand PreviousCommand {
             get {
                 if (previousCommand == null) {
-                    previousCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.SkipPrevious);
+                    previousCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.SkipPrevious);
                     });
                 }
                 return previousCommand;
@@ -219,8 +219,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand NextCommand {
             get {
                 if (nextCommand == null) {
-                    nextCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.SkipNext);
+                    nextCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.SkipNext);
                     });
                 }
                 return nextCommand;
@@ -231,8 +231,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand StopCommand {
             get {
                 if (stopCommand == null) {
-                    stopCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Stop);
+                    stopCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Stop);
                     });
                 }
                 return stopCommand;
@@ -243,8 +243,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand FastBackwardCommand {
             get {
                 if (fastBackwardCommand == null) {
-                    fastBackwardCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.Rewind);
+                    fastBackwardCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.Rewind);
                     });
                 }
                 return fastBackwardCommand;
@@ -255,8 +255,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand FastForwardCommand {
             get {
                 if (fastForwardCommand == null) {
-                    fastForwardCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.FastForward);
+                    fastForwardCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.FastForward);
                     });
                 }
                 return fastForwardCommand;
@@ -266,8 +266,8 @@ namespace KodiRemote.ViewModel {
         public RelayCommand PlayPauseCommand {
             get {
                 if (playPauseCommand == null) {
-                    playPauseCommand = new RelayCommand(() => {
-                        Kodi.Input.ExecuteAction(ExecActionEnum.PlayPause);
+                    playPauseCommand = new RelayCommand(async () => {
+                        await Kodi.Input.ExecuteAction(ExecActionEnum.PlayPause);
                     });
                 }
                 return playPauseCommand;

@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Common;
+using KodiRemote.Code.JSON;
 using KodiRemote.Code.JSON.ServiceInterfaces;
 using KodiRemote.Code.JSON.WebSocketServices;
 using KodiRemote.Code.Utils;
@@ -10,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace KodiRemote.Code.JSON {
+namespace KodiRemote.Code.Utils {
     public class ActiveKodi : Kodi {
-        private WebSocketHelper Connection { get; set; }
+        private RPCWebSocketHelper Connection { get; set; }
         public IPlayerService Player { get; private set; }
         public IInputService Input { get; private set; }
         public IApplicationService Application { get; private set; }
@@ -34,12 +35,12 @@ namespace KodiRemote.Code.JSON {
             private set {
                 if (connected != value) {
                     connected = value;
-                    //if (!value) {
-                    //    timer = new Timer(Timer_Tick, null, 0, (int)TimeSpan.FromSeconds(15).TotalMilliseconds);
-                    //} else if (timer != null) {
-                    //    timer.Dispose();
-                    //    timer = null;
-                    //}
+                    if (!value) {
+                        timer = new Timer(Timer_Tick, null, 0, (int)TimeSpan.FromSeconds(15).TotalMilliseconds);
+                    } else if (timer != null) {
+                        timer.Dispose();
+                        timer = null;
+                    }
                     RaisePropertyChanged();
                 }
             }
@@ -48,7 +49,7 @@ namespace KodiRemote.Code.JSON {
 
         private ActiveKodi(string hostname, string port, ConnectionType type) : base(hostname, port, type) {
             if (type == ConnectionType.Websocket) {
-                Connection = new WebSocketHelper();
+                Connection = new RPCWebSocketHelper();
                 Connection.ConnectionClosed += ConnectionClosed;
 
                 Playlist = new PlaylistWebSocketService(Connection);
@@ -69,14 +70,13 @@ namespace KodiRemote.Code.JSON {
                 Player.OnSpeedChangedReceived += Player_OnSpeedChangedReceived;
                 Player.OnStopReceived += Player_OnStopReceived;
             }
-            Connected = false;
         }
 
         private async void Timer_Tick(object state) {
             await Connect();
         }
 
-        private void Application_OnVolumeChanged(KApplication.Notifications.Data item) {
+        private void Application_OnVolumeChanged(JSON.KApplication.Notifications.Data item) {
             if (item.Muted) {
                 Muted = true;
             } else {
@@ -135,23 +135,23 @@ namespace KodiRemote.Code.JSON {
             }
         }
 
-        private void Player_OnStopReceived(KPlayer.Notifications.Stop item) {
+        private void Player_OnStopReceived(JSON.KPlayer.Notifications.Stop item) {
             CurrentlyPlaying = false;
             Paused = false;
         }
 
-        private void Player_OnSpeedChangedReceived(KPlayer.Notifications.Data item) {
+        private void Player_OnSpeedChangedReceived(JSON.KPlayer.Notifications.Data item) {
             if (item.Player.Speed == 0) {
                 Paused = true;
             }
         }
 
-        private void Player_OnPlayReceived(KPlayer.Notifications.Data item) {
+        private void Player_OnPlayReceived(JSON.KPlayer.Notifications.Data item) {
             CurrentlyPlaying = true;
             Paused = false;
         }
 
-        private void Player_OnPauseReceived(KPlayer.Notifications.Data item) {
+        private void Player_OnPauseReceived(JSON.KPlayer.Notifications.Data item) {
             Paused = true;
         }
 

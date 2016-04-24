@@ -20,7 +20,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<OnRemove> OnRemove;
         #endregion Notifications
 
-        public PlaylistWebSocketService(WebSocketHelper helper) : base(helper) {
+        public PlaylistWebSocketService(RPCWebSocketHelper helper) : base(helper) {
         }
 
         protected override void WebSocketMessageReceived(string guid, string message) {

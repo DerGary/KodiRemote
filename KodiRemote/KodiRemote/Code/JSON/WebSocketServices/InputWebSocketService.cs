@@ -16,7 +16,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<KInput.Notifications.Data> OnInputRequested;
         #endregion
 
-        public InputWebSocketService(WebSocketHelper helper) : base(helper) { }
+        public InputWebSocketService(RPCWebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
             if (methods[guid] == Method.ExecuteAction

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using Windows.Web;
 
 namespace KodiRemote.Code.Utils {
@@ -52,10 +53,22 @@ namespace KodiRemote.Code.Utils {
             // to avoid races with the Start/Close/Reset methods.
             Debug.WriteLine("ConnectionClosed Code: " + args.Code + " Reason: " + args.Reason);
             MessageWebSocket webSocket = Interlocked.Exchange(ref messageWebSocket, null);
+            DataWriter writer = Interlocked.Exchange(ref messageWriter, null);
             if (webSocket != null) {
                 webSocket.Dispose();
+                messageWebSocket = null;
             }
-            ConnectionClosed(args.Reason);
+            if (writer != null) {
+                writer.Dispose();
+                messageWriter = null;
+            }
+            ConnectionClosed?.Invoke(args.Reason);
+        }
+
+        private void Closed(WebErrorStatus status) {
+            if (messageWebSocket != null) {
+                messageWebSocket.Dispose();
+            }
         }
 
         private void Message_Received(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args) {
@@ -64,17 +77,18 @@ namespace KodiRemote.Code.Utils {
                     reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
                     string message = reader.ReadString(reader.UnconsumedBufferLength);
                     Debug.WriteLine("Received Message: " + message);
-                    MessageReceived(message);
+                    MessageReceived?.Invoke(message);
                 }
             } catch (Exception ex) // For debugging
             {
                 WebErrorStatus status = WebSocketError.GetStatus(ex.GetBaseException().HResult);
                 // Add your specific error-handling code here.
                 Debug.WriteLine(status);
+                Closed(status);
             }
         }
 
-        public async void SendMessage(string message) {
+        public async Task SendMessage(string message) {
             if (messageWriter == null) {
                 throw new InvalidOperationException("Websocket must be connected first");
             }
@@ -85,9 +99,7 @@ namespace KodiRemote.Code.Utils {
             // Send the data as one complete message.
             await messageWriter.StoreAsync();
         }
-        public void SendRequest(RPCBase request) {
-            string message = JsonSerializer.ToJson(request);
-            SendMessage(message);
-        }
+
     }
+
 }

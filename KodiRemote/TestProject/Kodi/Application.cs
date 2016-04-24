@@ -6,6 +6,7 @@ using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.KApplication.Results;
 using Xunit;
+using KodiRemote.Code.Utils;
 
 namespace Test.Kodi {
     [Collection("Kodi")]

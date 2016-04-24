@@ -13,7 +13,7 @@ using Windows.Data.Json;
 
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public class JSONRPCWebSocketService : WebSocketServiceBase, IJSONRPCService {
-        public JSONRPCWebSocketService(WebSocketHelper helper) : base(helper) { }
+        public JSONRPCWebSocketService(RPCWebSocketHelper helper) : base(helper) { }
 
 
         protected override void WebSocketMessageReceived(string guid, string message) {
@@ -26,7 +26,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else if (methods[guid] == Method.Permission) {
                 DeserializeMessageAndTriggerTask<Permissions>(guid, message);
             } else if (methods[guid] == Method.Ping) {
-                var item = JsonSerializer.FromJson<RPCResponseWithStringId<string>>(message);
+                var item = JsonSerializer.FromJson<RPCResponse<string>>(message);
                 if (item.Result == "pong") {
                     returnValues[guid] = true;
                 } else {

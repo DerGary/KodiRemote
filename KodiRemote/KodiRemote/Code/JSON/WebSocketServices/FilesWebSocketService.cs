@@ -14,7 +14,7 @@ using KodiRemote.Code.JSON.KFiles.Params;
 
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public class FilesWebSocketService : WebSocketServiceBase, IFilesService {
-        public FilesWebSocketService(WebSocketHelper helper) : base(helper) { }
+        public FilesWebSocketService(RPCWebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
             if (methods[guid] == Method.Download) {

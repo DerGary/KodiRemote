@@ -19,7 +19,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         #endregion Notifications
 
 
-        public ApplicationWebSocketService(WebSocketHelper helper) : base(helper) { }
+        public ApplicationWebSocketService(RPCWebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketNotificationReceived(string method, string notification) {
             if (method == KApplication.Notification.OnVolumeChanged.ToString()) {

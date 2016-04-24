@@ -15,48 +15,6 @@ namespace KodiRemote.Code.JSON {
     }
 
     [DataContract]
-    public class RPCWithId : RPCBase {
-        [DataMember(Name = "id")]
-        public int Id { get; set; }
-    }
-
-
-    [DataContract]
-    public class RPCRequest : RPCWithId {
-        [DataMember(Name = "method")]
-        public string Method { get; set; }
-
-        public RPCRequest() { }
-        public RPCRequest(StringEnum method) : this() {
-            Method = method;
-            Id = method;
-        }
-
-    }
-
-    [DataContract]
-    public class RPCRequest<T> : RPCRequest {
-        [DataMember(Name = "params")]
-        public T Params { get; set; }
-        public RPCRequest() : base() { }
-        public RPCRequest(StringEnum method) : base(method) {
-
-        }
-    }
-
-    [DataContract]
-    public class RPCResponse : RPCWithId {
-        [DataMember(Name = "error")]
-        public RPCError Error { get; set; }
-    }
-
-    [DataContract]
-    public class RPCResponse<T> : RPCResponse {
-        [DataMember(Name = "result")]
-        public T Result { get; set; }
-    }
-
-    [DataContract]
     public class RPCError {
         [DataMember(Name = "code")]
         public int Code { get; set; }
@@ -97,19 +55,19 @@ namespace KodiRemote.Code.JSON {
 
 
     [DataContract]
-    public class RPCWithStringId : RPCBase {
+    public class RPC : RPCBase {
         [DataMember(Name = "id")]
         public string Id { get; set; }
     }
 
 
     [DataContract]
-    public class RPCRequestWithStringId : RPCWithStringId {
+    public class RPCRequest : RPC {
         [DataMember(Name = "method")]
         public string Method { get; set; }
 
-        public RPCRequestWithStringId() { }
-        public RPCRequestWithStringId(StringEnum method, string guid) : this() {
+        public RPCRequest() { }
+        public RPCRequest(StringEnum method, string guid) : this() {
             Method = method;
             Id = guid;
         }
@@ -117,21 +75,21 @@ namespace KodiRemote.Code.JSON {
     }
 
     [DataContract]
-    public class RPCRequestWithStringId<T> : RPCRequestWithStringId {
+    public class RPCRequest<T> : RPCRequest {
         [DataMember(Name = "params")]
         public T Params { get; set; }
-        public RPCRequestWithStringId() : base() { }
-        public RPCRequestWithStringId(StringEnum method, string guid) : base(method, guid) {
+        public RPCRequest() : base() { }
+        public RPCRequest(StringEnum method, string guid) : base(method, guid) {
         }
     }
     [DataContract]
-    public class RPCResponseWithStringId : RPCWithStringId {
+    public class RPCResponse : RPC {
         [DataMember(Name = "error")]
         public RPCError Error { get; set; }
     }
 
     [DataContract]
-    public class RPCResponseWithStringId<T> : RPCResponseWithStringId {
+    public class RPCResponse<T> : RPCResponse {
         [DataMember(Name = "result")]
         public T Result { get; set; }
     }

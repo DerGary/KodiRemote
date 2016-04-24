@@ -173,7 +173,7 @@
     <Compile Include="Code\JSON\KJSONRPC\Method.cs" />
     <Compile Include="Code\JSON\KJSONRPC\Params.cs" />
     <Compile Include="Code\JSON\KJSONRPC\Results.cs" />
-    <Compile Include="Code\JSON\Kodi.cs" />
+    <Compile Include="Code\Utils\Kodi.cs" />
     <Compile Include="Code\JSON\KPlayer\Method.cs" />
     <Compile Include="Code\JSON\KPlayer\Notification.cs" />
     <Compile Include="Code\JSON\KPlayer\Notifications.cs" />
@@ -224,6 +224,7 @@
     <Compile Include="Code\JSON\WebSocketServices\VideoLibraryWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\WebSocketServiceBase.cs" />
     <Compile Include="Code\Utils\JsonSerializer.cs" />
+    <Compile Include="Code\Utils\RPCWebSocketHelper.cs" />
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />

@@ -25,7 +25,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         public event ReceivedEventHandler<KPlayer.Notifications.Stop> OnStopReceived;
         #endregion Notifications
 
-        public PlayerWebSocketService(WebSocketHelper helper) : base(helper) { }
+        public PlayerWebSocketService(RPCWebSocketHelper helper) : base(helper) { }
 
 
         protected override void WebSocketMessageReceived(string guid, string message) {

@@ -16,7 +16,7 @@ using KodiRemote.Code.JSON.KAddons.Params;
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public class AddonsWebSocketService : WebSocketServiceBase, IAddonsService {
 
-        public AddonsWebSocketService(WebSocketHelper helper) : base(helper) { }
+        public AddonsWebSocketService(RPCWebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
             if (methods[guid] == Method.ExecuteAddon

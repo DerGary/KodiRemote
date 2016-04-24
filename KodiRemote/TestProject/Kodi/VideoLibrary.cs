@@ -4,6 +4,7 @@ using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.KVideoLibrary.Filter;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
+using KodiRemote.Code.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

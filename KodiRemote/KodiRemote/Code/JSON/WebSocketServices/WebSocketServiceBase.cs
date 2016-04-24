@@ -8,46 +8,36 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public abstract class WebSocketServiceBase {
-        protected WebSocketHelper helper;
-        public WebSocketServiceBase(WebSocketHelper helper) {
+        protected RPCWebSocketHelper helper;
+        public WebSocketServiceBase(RPCWebSocketHelper helper) {
             this.helper = helper;
-            helper.MessageReceived += MessageReceived;
+            helper.ResponseReceived += ResponseReceived;
+            helper.ErrorReceived += ErrorReceived;
+            helper.NotificationReceived += NotificationReceived;
         }
 
-        protected void MessageReceived(string message) {
-            RPCResponseWithStringId response = JsonSerializer.FromJson<RPCResponseWithStringId>(message);
-            if (response.Id != null) {
-                if (response.Error == null) {
-                    if (!methods.ContainsKey(response.Id)) {
-                        return;
-                    }
-                    WebSocketMessageReceived(response.Id, message);
-                } else {
-                    //Todo: Panik
-                    Debug.WriteLine("error occured: " + message);
-                }
-            } else {
-                //when no id is given the message must be a notification
-                RPCNotification notification = JsonSerializer.FromJson<RPCNotification>(message);
-                WebSocketNotificationReceived(notification.Method, message);
+        private void NotificationReceived(string method, string message) {
+            WebSocketNotificationReceived(method, message);
+        }
+
+        private void ErrorReceived(string guid, RPCError error) {
+            if (tasks.ContainsKey(guid)) {
+                errors[guid] = error;
+                tasks[guid].Start();
             }
         }
+
+        private void ResponseReceived(string guid, string message) {
+            if (!methods.ContainsKey(guid)) {
+                return;
+            }
+            WebSocketMessageReceived(guid, message);
+        }
+
 
         protected abstract void WebSocketMessageReceived(string guid, string message);
         protected abstract void WebSocketNotificationReceived(string method, string notification);
 
-        protected void ConvertResultToBool(ReceivedEventHandler<bool> eventHandler, string message) {
-            var item = JsonSerializer.FromJson<RPCResponse<string>>(message);
-            if (item.Result == "OK") {
-                eventHandler?.Invoke(true);
-            } else {
-                eventHandler?.Invoke(false);
-            }
-        }
-        protected void DeserializeMessageAndTriggerEvent<T>(ReceivedEventHandler<T> eventHandler, string message) {
-            var item = JsonSerializer.FromJson<RPCResponse<T>>(message);
-            eventHandler?.Invoke(item.Result);
-        }
         protected void DeserializeNotificationAndTriggerEvent<T>(ReceivedEventHandler<T> eventHandler, string notification) {
             var item = JsonSerializer.FromJson<RPCNotification<NotificationParams<T>>>(notification);
             eventHandler?.Invoke(item.Params.Data);
@@ -56,21 +46,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             eventHandler?.Invoke();
         }
 
-        #region old
-        protected void SendRequest<T>(StringEnum method, T param) {
-            RPCRequest<T> request = new RPCRequest<T>(method) {
-                Params = param
-            };
-            helper.SendRequest(request);
-        }
-        protected void SendRequest(StringEnum method) {
-            RPCRequest request = new RPCRequest(method);
-            helper.SendRequest(request);
-        }
-        #endregion
-
         protected void DeserializeMessageAndTriggerTask<T>(string guid, string message) {
-            var item = JsonSerializer.FromJson<RPCResponseWithStringId<T>>(message);
+            var item = JsonSerializer.FromJson<RPCResponse<T>>(message);
             returnValues[guid] = item.Result;
             tasks[guid].Start();
         }
@@ -80,7 +57,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         /// If the Return Value is not of type string use the generics Method and provide the Return type as generic param
         /// </summary>
         protected void DeserializeMessageAndTriggerTask(string guid, string message) {
-            var item = JsonSerializer.FromJson<RPCResponseWithStringId<string>>(message);
+            var item = JsonSerializer.FromJson<RPCResponse<string>>(message);
             if (item.Result == "OK") {
                 returnValues[guid] = true;
             } else {
@@ -89,35 +66,39 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             tasks[guid].Start();
         }
 
-        protected void SendRequestWithGuid<T>(StringEnum method, string guid, T param) {
-            RPCRequestWithStringId<T> request = new RPCRequestWithStringId<T>(method, guid) {
+        protected void SendRequest<T>(StringEnum method, string guid, T param) {
+            RPCRequest<T> request = new RPCRequest<T>(method, guid) {
                 Params = param
             };
             helper.SendRequest(request);
         }
-        protected void SendRequestWithGuid(StringEnum method, string guid) {
-            RPCRequestWithStringId request = new RPCRequestWithStringId(method, guid);
+        protected void SendRequest(StringEnum method, string guid) {
+            RPCRequest request = new RPCRequest(method, guid);
             helper.SendRequest(request);
         }
 
         protected Dictionary<string, Task> tasks = new Dictionary<string, Task>();
         protected Dictionary<string, object> returnValues = new Dictionary<string, object>();
         protected Dictionary<string, StringEnum> methods = new Dictionary<string, StringEnum>();
+        protected Dictionary<string, RPCError> errors = new Dictionary<string, RPCError>();
 
         protected Task<T> SendRequest<T>(StringEnum method) {
             string guid = new Guid().ToString();
             var t = PrepareTask<T>(method, guid);
-            SendRequestWithGuid(method, guid);
+            SendRequest(method, guid);
             return t;
         }
         protected Task<T> SendRequest<T, U>(StringEnum method, U param) {
             string guid = Guid.NewGuid().ToString();
             var t = PrepareTask<T>(method, guid);
-            SendRequestWithGuid<U>(method, guid, param);
+            SendRequest<U>(method, guid, param);
             return t;
         }
         private Task<T> PrepareTask<T>(StringEnum method, string guid) {
             var t = new Task<T>(() => {
+                if(errors.ContainsKey(guid) || !returnValues.ContainsKey(guid)) {
+                    return default(T);
+                }
                 return (T)returnValues[guid];
             });
             tasks[guid] = t;

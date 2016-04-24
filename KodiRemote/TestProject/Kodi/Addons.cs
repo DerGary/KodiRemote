@@ -3,6 +3,7 @@ using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KAddons.Results;
+using KodiRemote.Code.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

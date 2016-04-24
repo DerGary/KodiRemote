@@ -27,7 +27,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         #endregion Notifications
 
 
-        public AudioLibraryWebSocketService(WebSocketHelper helper) : base(helper) { }
+        public AudioLibraryWebSocketService(RPCWebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
             if (methods[guid] == Method.Clean

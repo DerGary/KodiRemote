@@ -14,7 +14,7 @@ using KodiRemote.Code.JSON.KPVR.Params;
 
 namespace KodiRemote.Code.JSON.WebSocketServices {
     public class PVRWebSocketService : WebSocketServiceBase, IPVRService {
-        public PVRWebSocketService(WebSocketHelper helper) : base(helper) { }
+        public PVRWebSocketService(RPCWebSocketHelper helper) : base(helper) { }
 
         protected override void WebSocketMessageReceived(string guid, string message) {
             if (methods[guid] == Method.Record
