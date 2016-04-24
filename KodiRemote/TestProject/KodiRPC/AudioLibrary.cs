@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON;
+﻿using KodiRemote.Code.Essentials;
+using KodiRemote.Code.JSON;
 using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General.Results;
@@ -12,17 +13,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Test.Kodi {
+namespace Test.KodiRPC {
     [Collection("Kodi")]
     public class AudioLibrary {
         [Fact]
         public async Task Clean() {
-            bool result = await ActiveKodi.Instance.AudioLibrary.Clean();
+            bool result = await Kodi.ActiveInstance.AudioLibrary.Clean();
             Assert.True(result);
         }
         [Fact]
         public async Task Export() {
-            bool result = await ActiveKodi.Instance.AudioLibrary.Export(null);
+            bool result = await Kodi.ActiveInstance.AudioLibrary.Export(null);
             Assert.True(result);
         }
         [Theory]
@@ -30,7 +31,7 @@ namespace Test.Kodi {
         [InlineData(true, false)]
         [InlineData(false, true)]
         public async Task ExportWithParams(bool overwrite, bool images) {
-            bool result = await ActiveKodi.Instance.AudioLibrary.Export(overwrite, images);
+            bool result = await Kodi.ActiveInstance.AudioLibrary.Export(overwrite, images);
             Assert.True(result);
         }
 
@@ -38,14 +39,14 @@ namespace Test.Kodi {
         [InlineData(false)]
         [InlineData(true)]
         public async Task GetAlbumDetails(bool properties) {
-            AlbumResult result = await ActiveKodi.Instance.AudioLibrary.GetAlbumDetails(1, properties ? AlbumField.WithAll() : null);
+            AlbumResult result = await Kodi.ActiveInstance.AudioLibrary.GetAlbumDetails(1, properties ? AlbumField.WithAll() : null);
             Assert.True(!string.IsNullOrEmpty(result.Album.Label));
         }
         [Theory]
         [InlineData(false, null, false, false)]
         [InlineData(true, 5, true, true)]
         public async Task GetAlbums(bool properties, int? limits, bool sort, bool filter) {
-            AlbumsResult result = await ActiveKodi.Instance.AudioLibrary.GetAlbums(
+            AlbumsResult result = await Kodi.ActiveInstance.AudioLibrary.GetAlbums(
                 properties ? AlbumField.WithAll() : null,
                 limits != null ? new KodiRemote.Code.JSON.General.Limits(0, (int)limits) : null,
                 sort ? new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending } : null,
@@ -64,7 +65,7 @@ namespace Test.Kodi {
         [InlineData(false)]
         [InlineData(true)]
         public async Task GetArtistDetails(bool properties) {
-            ArtistResult result = await ActiveKodi.Instance.AudioLibrary.GetArtistDetails(1, properties ? ArtistField.WithAll() : null);
+            ArtistResult result = await Kodi.ActiveInstance.AudioLibrary.GetArtistDetails(1, properties ? ArtistField.WithAll() : null);
             Assert.True(!string.IsNullOrEmpty(result.Artist.ArtistName));
             Assert.True(!string.IsNullOrEmpty(result.Artist.Label));
         }
@@ -72,7 +73,7 @@ namespace Test.Kodi {
         [InlineData(false, null, null, false, false)]
         [InlineData(true, true, 5, true, true)]
         public async Task GetArtists(bool properties, bool? albumartistsonly, int? limits, bool sort, bool filter) {
-            ArtistsResult result = await ActiveKodi.Instance.AudioLibrary.GetArtists(
+            ArtistsResult result = await Kodi.ActiveInstance.AudioLibrary.GetArtists(
                 properties ? ArtistField.WithAll() : null,
                 albumartistsonly,
                 filter? new KodiRemote.Code.JSON.KAudioLibrary.Filter.ArtistFilter() { GenreId = 1 } : null,
@@ -93,7 +94,7 @@ namespace Test.Kodi {
         [InlineData(false, null, null, false, false)]
         [InlineData(true, true, 5, true, true)]
         public async Task GetGenres(bool properties, bool? albumartistsonly, int? limits, bool sort, bool filter) {
-            GenresResult result = await ActiveKodi.Instance.AudioLibrary.GetGenres(
+            GenresResult result = await Kodi.ActiveInstance.AudioLibrary.GetGenres(
                 properties ? GenreField.WithAll() : null,
                 limits != null ? new KodiRemote.Code.JSON.General.Limits(0, (int)limits) : null,
                 sort ? new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending } : null
@@ -111,7 +112,7 @@ namespace Test.Kodi {
         [InlineData(false, null, false)]
         [InlineData(true, 5, true)]
         public async Task GetRecentlyAddedAlbums(bool properties, int? limits, bool sort) {
-            AlbumsResult result = await ActiveKodi.Instance.AudioLibrary.GetRecentlyAddedAlbums(
+            AlbumsResult result = await Kodi.ActiveInstance.AudioLibrary.GetRecentlyAddedAlbums(
                 properties ? AlbumField.WithAll() : null,
                 limits != null ? new KodiRemote.Code.JSON.General.Limits(0, (int)limits) : null,
                 sort ? new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending } : null
@@ -129,7 +130,7 @@ namespace Test.Kodi {
         [InlineData(false, null, false)]
         [InlineData(true, 5, true)]
         public async Task GetRecentlyPlayedAlbums(bool properties, int? limits, bool sort) {
-            AlbumsResult result = await ActiveKodi.Instance.AudioLibrary.GetRecentlyPlayedAlbums(
+            AlbumsResult result = await Kodi.ActiveInstance.AudioLibrary.GetRecentlyPlayedAlbums(
                 properties ? AlbumField.WithAll() : null,
                 limits != null ? new KodiRemote.Code.JSON.General.Limits(0, (int)limits) : null,
                 sort ? new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending } : null
@@ -147,7 +148,7 @@ namespace Test.Kodi {
         [InlineData(false, null, null, false)]
         [InlineData(true, 1, 5, true)]
         public async Task GetRecentlyAddedSongs(bool properties, int? albumlimit, int? limits, bool sort) {
-            SongsResult result = await ActiveKodi.Instance.AudioLibrary.GetRecentlyAddedSongs(
+            SongsResult result = await Kodi.ActiveInstance.AudioLibrary.GetRecentlyAddedSongs(
                 properties ? SongField.WithAll() : null,
                 albumlimit,
                 limits != null ? new KodiRemote.Code.JSON.General.Limits(0, (int)limits) : null,
@@ -166,7 +167,7 @@ namespace Test.Kodi {
         [InlineData(false, null, false)]
         [InlineData(true, 5, true)]
         public async Task GetRecentlyPlayedSongs(bool properties, int? limits, bool sort) {
-            SongsResult result = await ActiveKodi.Instance.AudioLibrary.GetRecentlyPlayedSongs(
+            SongsResult result = await Kodi.ActiveInstance.AudioLibrary.GetRecentlyPlayedSongs(
                 properties ? SongField.WithAll() : null,
                 limits != null ? new KodiRemote.Code.JSON.General.Limits(0, (int)limits) : null,
                 sort ? new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending } : null
@@ -184,7 +185,7 @@ namespace Test.Kodi {
         [InlineData(false, null, false, false)]
         [InlineData(true, 5, true, true)]
         public async Task GetSongs(bool properties, int? limits, bool sort, bool filter) {
-            SongsResult result = await ActiveKodi.Instance.AudioLibrary.GetSongs(
+            SongsResult result = await Kodi.ActiveInstance.AudioLibrary.GetSongs(
                 properties ? SongField.WithAll() : null,
                 limits != null ? new KodiRemote.Code.JSON.General.Limits(0, (int)limits) : null,
                 sort ? new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending } : null,
@@ -203,29 +204,29 @@ namespace Test.Kodi {
         [InlineData(false)]
         [InlineData(true)]
         public async Task GetSongDetails(bool properties) {
-            SongResult result = await ActiveKodi.Instance.AudioLibrary.GetSongDetails(1, properties ? SongField.WithAll() : null);
+            SongResult result = await Kodi.ActiveInstance.AudioLibrary.GetSongDetails(1, properties ? SongField.WithAll() : null);
             Assert.True(!string.IsNullOrEmpty(result.Song.Label));
         }
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
         public async Task Scan(bool directory) {
-            bool result = await ActiveKodi.Instance.AudioLibrary.Scan(directory ? @"D:\Music\Artists": null);
+            bool result = await Kodi.ActiveInstance.AudioLibrary.Scan(directory ? @"D:\Music\Artists": null);
             Assert.True(result);
         }
         [Fact]
         public async Task SetAlbumDetails() {
-            bool result = await ActiveKodi.Instance.AudioLibrary.SetAlbumDetails(new SetAlbumDetails { Description = "bla", AlbumId = 1 });
+            bool result = await Kodi.ActiveInstance.AudioLibrary.SetAlbumDetails(new SetAlbumDetails { Description = "bla", AlbumId = 1 });
             Assert.True(result);
         }
         [Fact]
         public async Task SetArtistDetails() {
-            bool result = await ActiveKodi.Instance.AudioLibrary.SetArtistDetails(new SetArtistDetails { Description = "bla", ArtistId = 1 });
+            bool result = await Kodi.ActiveInstance.AudioLibrary.SetArtistDetails(new SetArtistDetails { Description = "bla", ArtistId = 1 });
             Assert.True(result);
         }
         [Fact]
         public async Task SetSongDetails() {
-            bool result = await ActiveKodi.Instance.AudioLibrary.SetSongDetails(new SetSongDetails { SongId = 1, Comment = "bla" });
+            bool result = await Kodi.ActiveInstance.AudioLibrary.SetSongDetails(new SetSongDetails { SongId = 1, Comment = "bla" });
             Assert.True(result);
         }
     }

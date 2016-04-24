@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON;
+﻿using KodiRemote.Code.Essentials;
+using KodiRemote.Code.JSON;
 using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.KFiles.Results;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Test.Kodi {
+namespace Test.KodiRPC {
     [Collection("Kodi")]
     public class Files {
         //[Fact] Method not Found
@@ -27,7 +28,7 @@ namespace Test.Kodi {
         [InlineData(true, 5)]
         [InlineData(true, 6)]
         public async Task GetDirectory(bool properties, int media) {
-            FilesResult result = await ActiveKodi.Instance.Files.GetDirectory("Q:", MediaEnum.FromInt(media), properties ? FileField.WithAll() : null, new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending });
+            FilesResult result = await Kodi.ActiveInstance.Files.GetDirectory("Q:", MediaEnum.FromInt(media), properties ? FileField.WithAll() : null, new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending });
             if (result?.Files?.Count > 0) {
                 Assert.True(!string.IsNullOrEmpty(result.Files.First().File));
             }
@@ -41,7 +42,7 @@ namespace Test.Kodi {
         [InlineData(true, 5)]
         [InlineData(true, 6)]
         public async Task GetFileDetails(bool properties, int media) {
-            FileResult result = await ActiveKodi.Instance.Files.GetFileDetails(@"Q:\The Big Bang Theory\Staffel 9 englisch\The Big Bang Theory S09E03.mkv", MediaEnum.FromInt(media), properties ? FileField.WithAll() : null);
+            FileResult result = await Kodi.ActiveInstance.Files.GetFileDetails(@"Q:\The Big Bang Theory\Staffel 9 englisch\The Big Bang Theory S09E03.mkv", MediaEnum.FromInt(media), properties ? FileField.WithAll() : null);
             Assert.True(!string.IsNullOrEmpty(result.File.Label));
         }
         [Theory]
@@ -51,7 +52,7 @@ namespace Test.Kodi {
         [InlineData(5, null, false)]
         [InlineData(6, null, false)]
         public async Task GetSources(int media, int? limits, bool sort) {
-            SourcesResult result = await ActiveKodi.Instance.Files.GetSources(MediaNotNullEnum.FromInt(media),
+            SourcesResult result = await Kodi.ActiveInstance.Files.GetSources(MediaNotNullEnum.FromInt(media),
                 limits != null ? new KodiRemote.Code.JSON.General.Limits(0, (int)limits) : null,
                 sort ? new KodiRemote.Code.JSON.General.Sort() { Order = OrderEnum.descending } : null);
             if (result?.Sources?.Count > 0) {

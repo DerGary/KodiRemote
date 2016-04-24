@@ -32,8 +32,8 @@
         </Style>
 
         <Style x:Key="CategoryButtonSmall" TargetType="GridViewItem" BasedOn="{StaticResource CategoryButton}">
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="200"/>
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="Height" Value="220"/>
         </Style>
 
         <Style x:Key="CategoryButtonText" TargetType="TextBlock">

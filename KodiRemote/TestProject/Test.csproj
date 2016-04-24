@@ -95,19 +95,19 @@
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Kodi\Addons.cs" />
-    <Compile Include="Kodi\Application.cs" />
-    <Compile Include="Kodi\AudioLibrary.cs" />
-    <Compile Include="Kodi\Files.cs" />
-    <Compile Include="Kodi\GUI.cs" />
-    <Compile Include="Kodi\Input.cs" />
-    <Compile Include="Kodi\JSONRPC.cs" />
-    <Compile Include="Kodi\KodiFixture.cs" />
-    <Compile Include="Kodi\Player.cs" />
-    <Compile Include="Kodi\Playlist.cs" />
-    <Compile Include="Kodi\PVR.cs" />
-    <Compile Include="Kodi\System.cs" />
-    <Compile Include="Kodi\VideoLibrary.cs" />
+    <Compile Include="KodiRPC\Addons.cs" />
+    <Compile Include="KodiRPC\Application.cs" />
+    <Compile Include="KodiRPC\AudioLibrary.cs" />
+    <Compile Include="KodiRPC\Files.cs" />
+    <Compile Include="KodiRPC\GUI.cs" />
+    <Compile Include="KodiRPC\Input.cs" />
+    <Compile Include="KodiRPC\JSONRPC.cs" />
+    <Compile Include="KodiRPC\KodiFixture.cs" />
+    <Compile Include="KodiRPC\Player.cs" />
+    <Compile Include="KodiRPC\Playlist.cs" />
+    <Compile Include="KodiRPC\PVR.cs" />
+    <Compile Include="KodiRPC\System.cs" />
+    <Compile Include="KodiRPC\VideoLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestApp.xaml.cs">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>

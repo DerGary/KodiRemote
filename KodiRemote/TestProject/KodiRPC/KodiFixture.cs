@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON;
+﻿using KodiRemote.Code.Essentials;
+using KodiRemote.Code.JSON;
 using KodiRemote.Code.Utils;
 using System;
 using System.Collections.Generic;
@@ -7,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Test.Kodi {
+namespace Test.KodiRPC {
     public class KodiFixture {
         public KodiFixture() {
-            ActiveKodi.Init("localhost", "9090", ConnectionType.Websocket).Wait();
+            Kodi.Init(new KodiSettings("localhost", "9090", ConnectionType.Websocket)).Wait();
         }
     }
 

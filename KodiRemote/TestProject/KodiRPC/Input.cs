@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON;
+﻿using KodiRemote.Code.Essentials;
+using KodiRemote.Code.JSON;
 using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.Utils;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Test.Kodi {
+namespace Test.KodiRPC {
     [Collection("Kodi")]
     public class Input {
         [Theory]
@@ -185,12 +186,12 @@ namespace Test.Kodi {
         [InlineData(171)]
         [InlineData(172)]
         public async Task ExecuteAction(int action) {
-            bool result = await ActiveKodi.Instance.Input.ExecuteAction(ExecActionEnum.FromInt(action));
+            bool result = await Kodi.ActiveInstance.Input.ExecuteAction(ExecActionEnum.FromInt(action));
             Assert.True(result);
         }
         [Fact]
         public async Task Home() {
-            bool result = await ActiveKodi.Instance.Input.Home();
+            bool result = await Kodi.ActiveInstance.Input.Home();
             Assert.True(result);
         }
         [Theory]
@@ -199,17 +200,17 @@ namespace Test.Kodi {
         [InlineData("test2", false)]
         [InlineData("", true)]
         public async Task SendText(string text, bool done) {
-            bool result = await ActiveKodi.Instance.Input.SendText(text, done);
+            bool result = await Kodi.ActiveInstance.Input.SendText(text, done);
             Assert.True(result);
         }
         [Fact]
         public async Task ShowCodec() {
-            bool result = await ActiveKodi.Instance.Input.ShowCodec();
+            bool result = await Kodi.ActiveInstance.Input.ShowCodec();
             Assert.True(result);
         }
         [Fact]
         public async Task ShowOSD() {
-            bool result = await ActiveKodi.Instance.Input.ShowOSD();
+            bool result = await Kodi.ActiveInstance.Input.ShowOSD();
             Assert.True(result);
         }
     }

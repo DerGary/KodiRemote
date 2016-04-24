@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON;
+﻿using KodiRemote.Code.Essentials;
+using KodiRemote.Code.JSON;
 using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General;
@@ -11,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Test.Kodi {
+namespace Test.KodiRPC {
     [Collection("Kodi")]
     public class Addons {
         [Theory]
@@ -25,7 +26,7 @@ namespace Test.Kodi {
         [InlineData(1, 3, true, null, 5)]
         [InlineData(1, 1, true, "kodi.audiodecoder", 5)]
         public async Task GetAddons(int content, int enabled, bool? properties, string type, int? limit) {
-            AddonsResult result = await ActiveKodi.Instance.Addons.GetAddons(
+            AddonsResult result = await Kodi.ActiveInstance.Addons.GetAddons(
                 ContentEnum.FromInt(content),
                 EnabledEnum.FromInt(enabled),
                 properties == true ? AddonField.WithAll() : null,
@@ -46,21 +47,21 @@ namespace Test.Kodi {
         [InlineData(false)]
         [InlineData(true)]
         public async Task ExecuteAddon(bool wait) {
-            bool result = await ActiveKodi.Instance.Addons.ExecuteAddon("screensaver.stars",wait: wait );
+            bool result = await Kodi.ActiveInstance.Addons.ExecuteAddon("screensaver.stars",wait: wait );
             Assert.True(result);
         }
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
         public async Task GetAddonDetails(bool properties) {
-            AddonResult result = await ActiveKodi.Instance.Addons.GetAddonDetails("screensaver.stars", properties ? AddonField.WithAll() : null);
+            AddonResult result = await Kodi.ActiveInstance.Addons.GetAddonDetails("screensaver.stars", properties ? AddonField.WithAll() : null);
             Assert.True(result.Addon.AddonId == "screensaver.stars");
         }
         [Theory]
         //[InlineData(false)] False and Toggle do not work
         [InlineData(true)]
         public async Task SetAddonEnabled(bool enabled) {
-            bool result = await ActiveKodi.Instance.Addons.SetAddonEnabled("screensaver.stars", enabled ? ToggleEnum.True : ToggleEnum.False);
+            bool result = await Kodi.ActiveInstance.Addons.SetAddonEnabled("screensaver.stars", enabled ? ToggleEnum.True : ToggleEnum.False);
             Assert.True(result);
         }
         //[Fact]

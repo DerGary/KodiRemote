@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code;
+using KodiRemote.Code.Essentials;
 using KodiRemote.Code.JSON;
 using KodiRemote.Code.Utils;
 using KodiRemote.View;
@@ -46,8 +47,7 @@ namespace KodiRemote {
         /// </summary>
         /// <param name="e">Details über Startanforderung und -prozess.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e) {
-            await ActiveKodi.Init("localhost", "9090", ConnectionType.Websocket);
-            //Test.StartTest();
+            await Kodi.Init(new KodiSettings("localhost", "9090", ConnectionType.Websocket));
             PrepareRootFrame();
 
             if (_rootFrame.Content == null) {
@@ -70,6 +70,7 @@ namespace KodiRemote {
         private void OnSuspending(object sender, SuspendingEventArgs e) {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
+            Kodi.ActiveInstance.Dispose();
             deferral.Complete();
         }
 

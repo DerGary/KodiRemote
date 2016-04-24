@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace KodiRemote.Code.Utils {
-    public class RPCWebSocketHelper {
+    public class RPCWebSocketHelper : IDisposable {
         private WebSocketHelper helper;
 
         public delegate void ErrorReceivedEventHandler(string guid, RPCError error);
@@ -53,5 +53,37 @@ namespace KodiRemote.Code.Utils {
                 ErrorReceived?.Invoke(request.Id, null);
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // Dient zur Erkennung redundanter Aufrufe.
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                if (disposing) {
+                    // TODO: verwalteten Zustand (verwaltete Objekte) entsorgen.
+                }
+
+                helper.Dispose();
+                // TODO: nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer weiter unten überschreiben.
+                // TODO: große Felder auf Null setzen.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: Finalizer nur überschreiben, wenn Dispose(bool disposing) weiter oben Code für die Freigabe nicht verwalteter Ressourcen enthält.
+        ~RPCWebSocketHelper() {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in Dispose(bool disposing) weiter oben ein.
+            Dispose(false);
+        }
+
+        // Dieser Code wird hinzugefügt, um das Dispose-Muster richtig zu implementieren.
+        public void Dispose() {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in Dispose(bool disposing) weiter oben ein.
+            Dispose(true);
+            // TODO: Auskommentierung der folgenden Zeile aufheben, wenn der Finalizer weiter oben überschrieben wird.
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

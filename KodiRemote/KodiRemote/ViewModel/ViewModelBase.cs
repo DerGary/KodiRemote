@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Common;
+using KodiRemote.Code.Essentials;
 using KodiRemote.Code.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.ViewModel {
     public abstract class ViewModelBase : PropertyChangedBase {
-        private ActiveKodi kodi;
-        public ActiveKodi Kodi {
+        private Kodi kodi;
+        public Kodi Kodi {
             get {
-                return ActiveKodi.Instance;
+                return Kodi.ActiveInstance;
             }
         }
         public ViewModelBase() {
-            ActiveKodi.KodiChanged += ActiveKodiChanged;
+            Kodi.KodiChanged += ActiveKodiChanged;
         }
 
         private void ActiveKodiChanged(object sender, EventArgs e) {

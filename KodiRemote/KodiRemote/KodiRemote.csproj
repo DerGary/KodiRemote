@@ -111,6 +111,9 @@
     </Compile>
     <Compile Include="Code\Common\PropertyChangedBase.cs" />
     <Compile Include="Code\Common\RelayCommand.cs" />
+    <Compile Include="Code\Essentials\ConnectionType.cs" />
+    <Compile Include="Code\Essentials\KodiSettings.cs" />
+    <Compile Include="Code\Essentials\KodiWebSocket.cs" />
     <Compile Include="Code\JSON\Delegates.cs" />
     <Compile Include="Code\JSON\Enums.cs" />
     <Compile Include="Code\JSON\Fields\AddonField.cs" />
@@ -173,7 +176,7 @@
     <Compile Include="Code\JSON\KJSONRPC\Method.cs" />
     <Compile Include="Code\JSON\KJSONRPC\Params.cs" />
     <Compile Include="Code\JSON\KJSONRPC\Results.cs" />
-    <Compile Include="Code\Utils\Kodi.cs" />
+    <Compile Include="Code\Essentials\Kodi.cs" />
     <Compile Include="Code\JSON\KPlayer\Method.cs" />
     <Compile Include="Code\JSON\KPlayer\Notification.cs" />
     <Compile Include="Code\JSON\KPlayer\Notifications.cs" />

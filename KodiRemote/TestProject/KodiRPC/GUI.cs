@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON;
+﻿using KodiRemote.Code.Essentials;
+using KodiRemote.Code.JSON;
 using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.KGUI.Results;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Test.Kodi {
+namespace Test.KodiRPC {
     [Collection("Kodi")]
     public class GUI {
         [Theory]
@@ -129,17 +130,17 @@ namespace Test.Kodi {
         [InlineData(113)]
         [InlineData(114)]
         public async Task ActiveWindow(int window) {
-            bool result = await ActiveKodi.Instance.GUI.ActivateWindow(WindowEnum.FromInt(window));
+            bool result = await Kodi.ActiveInstance.GUI.ActivateWindow(WindowEnum.FromInt(window));
             Assert.True(result);
         }
         [Fact]
         public async Task ActiveWindowWithParam() {
-            bool result = await ActiveKodi.Instance.GUI.ActivateWindow(WindowEnum.Video, new List<string>() { "movietitles" });
+            bool result = await Kodi.ActiveInstance.GUI.ActivateWindow(WindowEnum.Video, new List<string>() { "movietitles" });
             Assert.True(result);
         }
         [Fact]
         public async Task GetProperties() {
-            GUIProperties result = await ActiveKodi.Instance.GUI.GetProperties(GUIField.WithAll());
+            GUIProperties result = await Kodi.ActiveInstance.GUI.GetProperties(GUIField.WithAll());
             Assert.True(!string.IsNullOrEmpty(result.Skin.Id));
         }
         //Doesnt work
@@ -164,7 +165,7 @@ namespace Test.Kodi {
         [InlineData(4, 1500)]
         [InlineData(4, 2154666)]
         public async Task ShowNotification(int image, int displaytime) {
-            bool result = await ActiveKodi.Instance.GUI.ShowNotification("title","message", ImageEnum.FromInt(image), displaytime);
+            bool result = await Kodi.ActiveInstance.GUI.ShowNotification("title","message", ImageEnum.FromInt(image), displaytime);
             Assert.True(result);
         }
     }
