@@ -1,11 +1,13 @@
 ﻿using KodiRemote.Code.Common;
 using KodiRemote.Code.JSON;
 using KodiRemote.Code.JSON.General.Notifications;
+using KodiRemote.Code.JSON.KAudioLibrary.Results;
 using KodiRemote.Code.JSON.ServiceInterfaces;
 using KodiRemote.Code.JSON.WebSocketServices;
 using KodiRemote.Code.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -33,6 +35,11 @@ namespace KodiRemote.Code.Essentials {
         public abstract bool Paused { get; protected set; }
         public abstract Item CurrentlyPlayingItem { get; protected set; }
         public abstract bool Connected { get; protected set; }
+
+
+        public abstract ObservableCollection<Song> CurrentAudioPlaylist { get; protected set; }
+        public abstract ObservableCollection<object> CurrentVideoPlaylist { get; protected set; }
+        public abstract ObservableCollection<object> CurrentPicturePlaylist { get; protected set; }
 
         private static Kodi instance;
         public static Kodi ActiveInstance {

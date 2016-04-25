@@ -50,155 +50,155 @@ namespace KodiRemote.Code.JSON.General.Results {
     [DataContract]
     public class Item {
         [DataMember(Name = "album")]
-        public string album { get; set; }
+        public string Album { get; set; }
         [DataMember(Name = "albumartist")]
-        public string[] albumartist { get; set; }
+        public string[] AlbumArtist { get; set; }
         [DataMember(Name = "albumid")]
-        public int albumid { get; set; }
+        public int AlbumId { get; set; }
         [DataMember(Name = "art")]
-        public ItemArt art { get; set; }
+        public ItemArt Art { get; set; }
         [DataMember(Name = "artist")]
-        public string[] artist { get; set; }
+        public string[] Artist { get; set; }
         [DataMember(Name = "comment")]
-        public string comment { get; set; }
+        public string Comment { get; set; }
         [DataMember(Name = "description")]
-        public string description { get; set; }
+        public string Description { get; set; }
         [DataMember(Name = "disc")]
-        public int disc { get; set; }
+        public int Disc { get; set; }
         [DataMember(Name = "displayartist")]
-        public string displayartist { get; set; }
+        public string DisplayArtist { get; set; }
         [DataMember(Name = "duration")]
-        public int duration { get; set; }
+        public int Duration { get; set; }
         [DataMember(Name = "fanart")]
-        public string fanart { get; set; }
+        public string Fanart { get; set; }
         [DataMember(Name = "file")]
-        public string file { get; set; }
+        public string File { get; set; }
         [DataMember(Name = "genre")]
-        public string[] genre { get; set; }
+        public string[] Genre { get; set; }
         [DataMember(Name = "genreid")]
-        public int[] genreid { get; set; }
+        public int[] GenreId { get; set; }
         [DataMember(Name = "id")]
-        public int id { get; set; }
+        public int Id { get; set; }
         [DataMember(Name = "label")]
-        public string label { get; set; }
+        public string Label { get; set; }
         [DataMember(Name = "lastplayed")]
-        public string lastplayed { get; set; }
+        public string LastPlayed { get; set; }
         [DataMember(Name = "lyrics")]
-        public string lyrics { get; set; }
+        public string Lyrics { get; set; }
         [DataMember(Name = "mood")]
-        public string[] mood { get; set; }
+        public string[] Mood { get; set; }
         [DataMember(Name = "musicbrainzalbumartistid")]
-        public List<string> musicbrainzalbumartistid { get; set; }
+        public List<string> MusicBrainzAlbumArtistId { get; set; }
         [DataMember(Name = "musicbrainzalbumid")]
-        public string musicbrainzalbumid { get; set; }
+        public string MusicBrainzAlbumId { get; set; }
         [DataMember(Name = "musicbrainzartistid")]
-        public List<string> musicbrainzartistid { get; set; }
+        public List<string> MusicBrainzArtistId { get; set; }
         [DataMember(Name = "musicbrainztrackid")]
-        public string musicbrainztrackid { get; set; }
+        public string MusicBrainzTrackId { get; set; }
         [DataMember(Name = "playcount")]
-        public int playcount { get; set; }
+        public int PlayCount { get; set; }
         [DataMember(Name = "rating")]
-        public float rating { get; set; }
+        public float Rating { get; set; }
         [DataMember(Name = "style")]
-        public string[] style { get; set; }
+        public string[] Style { get; set; }
         [DataMember(Name = "thumbnail")]
-        public string thumbnail { get; set; }
+        public string Thumbnail { get; set; }
         [DataMember(Name = "title")]
-        public string title { get; set; }
+        public string Title { get; set; }
         [DataMember(Name = "track")]
-        public int track { get; set; }
+        public int Track { get; set; }
         [DataMember(Name = "type")]
-        public string type { get; set; }
+        public string Type { get; set; }
         [DataMember(Name = "year")]
-        public int year { get; set; }
+        public int Year { get; set; }
         [DataMember(Name = "director")]
-        public string[] director { get; set; }
+        public string[] Director { get; set; }
         [DataMember(Name = "trailer")]
-        public string trailer { get; set; }
+        public string Trailer { get; set; }
         [DataMember(Name = "tagline")]
-        public string tagline { get; set; }
+        public string Tagline { get; set; }
         [DataMember(Name = "plot")]
-        public string plot { get; set; }
+        public string Plot { get; set; }
         [DataMember(Name = "plotoutline")]
-        public string plotoutline { get; set; }
+        public string PlotOutline { get; set; }
         [DataMember(Name = "originaltitle")]
-        public string originaltitle { get; set; }
+        public string OriginalTitle { get; set; }
         [DataMember(Name = "writer")]
-        public string[] writer { get; set; }
+        public string[] Writer { get; set; }
         [DataMember(Name = "studio")]
-        public string[] studio { get; set; }
+        public string[] Studio { get; set; }
         [DataMember(Name = "mpaa")]
-        public string mpaa { get; set; }
+        public string MPAA { get; set; }
         [DataMember(Name = "cast")]
-        public Actor[] cast { get; set; }
+        public Actor[] Cast { get; set; }
         [DataMember(Name = "country")]
-        public string[] country { get; set; }
+        public string[] Country { get; set; }
         [DataMember(Name = "imdbnumber")]
-        public string imdbnumber { get; set; }
+        public string IMDBNumber { get; set; }
         [DataMember(Name = "premiered")]
-        public string premiered { get; set; }
+        public string Premiered { get; set; }
         [DataMember(Name = "productioncode")]
-        public string productioncode { get; set; }
+        public string ProductionCode { get; set; }
         [DataMember(Name = "runtime")]
-        public int runtime { get; set; }
+        public int Runtime { get; set; }
         [DataMember(Name = "set")]
-        public string set { get; set; }
+        public string Set { get; set; }
         [DataMember(Name = "showlink")]
-        public string[] showlink { get; set; }
+        public string[] ShowLink { get; set; }
         //[DataMember(Name = "streamdetails")]
         //public MovieStreamDetails streamdetails { get; set; }
         [DataMember(Name = "top250")]
-        public int top250 { get; set; }
+        public int Top250 { get; set; }
         [DataMember(Name = "votes")]
-        public string votes { get; set; }
+        public string Votes { get; set; }
         [DataMember(Name = "firstaired")]
-        public string firstaired { get; set; }
+        public string FirstAired { get; set; }
         [DataMember(Name = "season")]
-        public int season { get; set; }
+        public int Season { get; set; }
         [DataMember(Name = "episode")]
-        public int episode { get; set; }
+        public int Episode { get; set; }
         [DataMember(Name = "showtitle")]
-        public string showtitle { get; set; }
+        public string ShowTitle { get; set; }
         [DataMember(Name = "resume")]
-        public ResumeTime resume { get; set; }
+        public ResumeTime Resume { get; set; }
         [DataMember(Name = "artistid")]
-        public int[] artistid { get; set; }
+        public int[] ArtistId { get; set; }
         [DataMember(Name = "tvshowid")]
-        public int tvshowid { get; set; }
+        public int TVShowId { get; set; }
         [DataMember(Name = "setid")]
-        public int setid { get; set; }
+        public int SetId { get; set; }
         [DataMember(Name = "watchedepisodes")]
-        public int watchedepisodes { get; set; }
+        public int WatchedEpisodes { get; set; }
         [DataMember(Name = "tag")]
-        public string[] tag { get; set; }
+        public string[] Tag { get; set; }
         [DataMember(Name = "albumartistid")]
-        public int[] albumartistid { get; set; }
+        public int[] AlbumArtistId { get; set; }
         [DataMember(Name = "theme")]
-        public string theme { get; set; }
+        public string Theme { get; set; }
         [DataMember(Name = "albumlabel")]
-        public string albumlabel { get; set; }
+        public string AlbumLabel { get; set; }
         [DataMember(Name = "sorttitle")]
-        public string sorttitle { get; set; }
+        public string SortTitle { get; set; }
         [DataMember(Name = "episodeguide")]
-        public string episodeguide { get; set; }
+        public string EpisodeGuide { get; set; }
         //[DataMember(Name = "uniqueid")]
         //public UniqueID uniqueid { get; set; }
         [DataMember(Name = "dateadded")]
-        public string dateadded { get; set; }
+        public string DateAdded { get; set; }
         [DataMember(Name = "channel")]
-        public string channel { get; set; }
+        public string Channel { get; set; }
         [DataMember(Name = "channeltype")]
-        public string channeltype { get; set; }
+        public string ChannelType { get; set; }
         [DataMember(Name = "hidden")]
-        public bool hidden { get; set; }
+        public bool Hidden { get; set; }
         [DataMember(Name = "locked")]
-        public bool locked { get; set; }
+        public bool Locked { get; set; }
         [DataMember(Name = "channelnumber")]
-        public int channelnumber { get; set; }
+        public int ChannelNumber { get; set; }
         [DataMember(Name = "starttime")]
-        public int starttime { get; set; }
+        public int StartTime { get; set; }
         [DataMember(Name = "endtime")]
-        public int endtime { get; set; }
+        public int EndTime { get; set; }
     }
 
 }

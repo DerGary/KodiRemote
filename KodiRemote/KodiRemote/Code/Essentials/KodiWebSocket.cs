@@ -1,8 +1,16 @@
-﻿using KodiRemote.Code.JSON.General.Notifications;
+﻿using KodiRemote.Code.JSON.Enums;
+using KodiRemote.Code.JSON.Fields;
+using KodiRemote.Code.JSON.General.Notifications;
+using KodiRemote.Code.JSON.General.Results;
+using KodiRemote.Code.JSON.KAudioLibrary.Results;
+using KodiRemote.Code.JSON.KPlayer.Results;
+using KodiRemote.Code.JSON.KPlaylist.Results;
+using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using KodiRemote.Code.JSON.WebSocketServices;
 using KodiRemote.Code.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,8 +21,8 @@ namespace KodiRemote.Code.Essentials {
         protected RPCWebSocketHelper Connection { get; set; }
         private Timer timer;
 
-        private Item currentlyPlayingItem;
-        public override Item CurrentlyPlayingItem {
+        private JSON.General.Notifications.Item currentlyPlayingItem;
+        public override JSON.General.Notifications.Item CurrentlyPlayingItem {
             get {
                 return currentlyPlayingItem;
             }
@@ -70,6 +78,9 @@ namespace KodiRemote.Code.Essentials {
             Connection.ConnectionClosed += ConnectionClosed;
 
             Playlist = new PlaylistWebSocketService(Connection);
+            Playlist.OnAdd += Playlist_OnAdd;
+            Playlist.OnClear += Playlist_OnClear;
+            Playlist.OnRemove += Playlist_OnRemove;
             AudioLibrary = new AudioLibraryWebSocketService(Connection);
             VideoLibrary = new VideoLibraryWebSocketService(Connection);
             PVR = new PVRWebSocketService(Connection);
@@ -86,6 +97,90 @@ namespace KodiRemote.Code.Essentials {
             Player.OnPlayReceived += Player_OnPlayReceived;
             Player.OnSpeedChangedReceived += Player_OnSpeedChangedReceived;
             Player.OnStopReceived += Player_OnStopReceived;
+        }
+        public class ItemTypeEnum : StringEnum {
+            public static readonly ItemTypeEnum Unknown = new ItemTypeEnum(0,"unknown" );
+            public static readonly ItemTypeEnum Movie  = new ItemTypeEnum(1,"movie"  );
+            public static readonly ItemTypeEnum Episode  = new ItemTypeEnum(2,"episode"  );
+            public static readonly ItemTypeEnum Musicvideo  = new ItemTypeEnum(3,"musicvideo"  );
+            public static readonly ItemTypeEnum Song  = new ItemTypeEnum(4,"song"  );
+            public static readonly ItemTypeEnum Picture  = new ItemTypeEnum(5,"picture"  );
+            public static readonly ItemTypeEnum Channel = new ItemTypeEnum(6,"channel" );
+
+            public ItemTypeEnum(int value, string name) : base(value, name) {
+            }
+        }
+        public class PlayerTypeEnum : StringEnum {
+            public static readonly PlayerTypeEnum Audio = new PlayerTypeEnum(0, "audio");
+            public static readonly PlayerTypeEnum Video = new PlayerTypeEnum(1, "video");
+            public static readonly PlayerTypeEnum Picture = new PlayerTypeEnum(2, "picture");
+
+            public PlayerTypeEnum(int value, string name) : base(value, name) {
+            }
+        }
+        public class PlaylistTypeEnum : StringEnum {
+            public static readonly PlaylistTypeEnum Audio = new PlaylistTypeEnum(0, "audio");
+            public static readonly PlaylistTypeEnum Video = new PlaylistTypeEnum(1, "video");
+            public static readonly PlaylistTypeEnum Picture = new PlaylistTypeEnum(2, "picture");
+            public static readonly PlaylistTypeEnum Unkown = new PlaylistTypeEnum(3, "unknown");
+            public static readonly PlaylistTypeEnum Mixed = new PlaylistTypeEnum(4, "mixed");
+
+            public PlaylistTypeEnum(int value, string name) : base(value, name) {
+            }
+        }
+
+        public ObservableCollection<Song> CurrentAudioPlaylist { get; protected set; } = new ObservableCollection<Song>();
+        public ObservableCollection<object> CurrentVideoPlaylist { get; protected set; } = new ObservableCollection<object>();
+        public ObservableCollection<object> CurrentPicturePlaylist { get; protected set; } = new ObservableCollection<object>();
+
+        private async void Playlist_OnRemove(JSON.KPlaylist.Notifications.OnRemove item) {
+            if (item.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
+                CurrentAudioPlaylist.RemoveAt(item.Position);
+            } else if (item.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
+                CurrentVideoPlaylist.RemoveAt(item.Position);
+            } //else if (item.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {
+            //    CurrentPicturePlaylist.RemoveAt(item.Position);
+            //}
+        }
+
+        private void Playlist_OnClear(JSON.KPlaylist.Notifications.OnClear item) {
+            if (item.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
+                CurrentAudioPlaylist.Clear();
+            } else if (item.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
+                CurrentVideoPlaylist.Clear();
+            } //else if (item.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {
+            //    CurrentPicturePlaylist.Clear();
+            //}
+        }
+
+        private async void Playlist_OnAdd(JSON.KPlaylist.Notifications.OnAdd item) {
+            if (item.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
+                SongField properties = new SongField();
+                properties.Mine();
+                CurrentAudioPlaylist.Insert(item.Position, null);
+                SongResult song = await AudioLibrary.GetSongDetails(item.Item.Id, properties);
+                CurrentAudioPlaylist.Insert(item.Position, song.Song);
+            } else if (item.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
+                CurrentVideoPlaylist.Insert(item.Position, null);
+                if (item.Item.Type == ItemTypeEnum.Episode.ToString()) {
+                    var properties = new EpisodeField();
+                    properties.Mine();
+                    EpisodeResult episode = await VideoLibrary.GetEpisodeDetails(item.Item.Id, properties);
+                    CurrentVideoPlaylist.Add(episode.Episode);
+                } else if (item.Item.Type == ItemTypeEnum.Movie.ToString()) {
+                    var properties = new MovieField();
+                    properties.Mine();
+                    MovieResult movie = await VideoLibrary.GetMovieDetails(item.Item.Id, properties);
+                    CurrentVideoPlaylist.Add(movie.Movie);
+                } else if (item.Item.Type == ItemTypeEnum.Musicvideo.ToString()) {
+                    var properties = new MusicVideoField();
+                    properties.Mine();
+                    MusicVideoResult musicvideo = await VideoLibrary.GetMusicVideoDetails(item.Item.Id, properties);
+                    CurrentVideoPlaylist.Add(musicvideo.MusicVideo);
+                }
+            } //else if (item.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {
+            //    CurrentPicturePlaylist.Insert(item.Position, item.Item);
+            //}
         }
 
         private async void Timer_Tick(object state) {
@@ -123,12 +218,68 @@ namespace KodiRemote.Code.Essentials {
 
         private void ConnectionClosed(string message) {
             Connected = false;
+
+        }
+
+        private void ResetProperties() {
+            CurrentAudioPlaylist.Clear();
+            CurrentVideoPlaylist.Clear();
+            CurrentPicturePlaylist.Clear();
+            CurrentlyPlayingItem = null;
+            Paused = false;
+            Muted = false;
         }
 
         public override async Task Connect() {
             Connected = await Connection.Connect(new Uri("ws://" + settings.Hostname + ":" + settings.Port + "/jsonrpc"));
+            if (Connected) {
+                await InitPlaylists();
+                List<Player> players = await Player.GetActivePlayers();
+                foreach (Player player in players) {
+                    if (player.PlayerId == PlayerTypeEnum.Picture.ToInt()) {
+                        continue;
+                    }
+                    ItemResult item = await Player.GetItem(player.PlayerId, ItemField.WithAll());
+                    //CurrentlyPlayingItem = item.Item;
+                }
+            }
         }
 
+        private async Task InitPlaylists() {
+            List<Playlist> playlists = await Playlist.GetPlaylists();
+            foreach (Playlist list in playlists) {
+                ItemsResult items = await Playlist.GetItems(list.PlaylistId);
+                if (items.Items != null) {
+                    foreach (JSON.General.Results.Item item in items.Items) {
+                        if (list.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
+                            SongField properties = new SongField();
+                            properties.Mine();
+                            SongResult song = await AudioLibrary.GetSongDetails(item.Id, properties);
+                            CurrentAudioPlaylist.Add(song.Song);
+                        } else if (list.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
+                            if (item.Type == ItemTypeEnum.Episode.ToString()) {
+                                var properties = new EpisodeField();
+                                properties.Mine();
+                                EpisodeResult episode = await VideoLibrary.GetEpisodeDetails(item.Id, properties);
+                                CurrentVideoPlaylist.Add(episode.Episode);
+                            } else if (item.Type == ItemTypeEnum.Movie.ToString()) {
+                                var properties = new MovieField();
+                                properties.Mine();
+                                MovieResult movie = await VideoLibrary.GetMovieDetails(item.Id, properties);
+                                CurrentVideoPlaylist.Add(movie.Movie);
+                            } else if (item.Type == ItemTypeEnum.Musicvideo.ToString()) {
+                                var properties = new MusicVideoField();
+                                properties.Mine();
+                                MusicVideoResult musicvideo = await VideoLibrary.GetMusicVideoDetails(item.Id, properties);
+                                CurrentVideoPlaylist.Add(musicvideo.MusicVideo);
+                            }
+                        } else if (list.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {
+                            CurrentPicturePlaylist.Insert(item.Id, item);
+                        }
+                    }
+                }
+            }
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // Dient zur Erkennung redundanter Aufrufe.

@@ -31,7 +31,7 @@ namespace Test.KodiRPC {
             await OpenSong(1, null, null);
             await Task.Delay(1000);
             ItemResult result = await Kodi.ActiveInstance.Player.GetItem(0, properties ? ItemField.WithAll() : null);
-            Assert.True(!string.IsNullOrEmpty(result.Item.label));
+            Assert.True(!string.IsNullOrEmpty(result.Item.Label));
             await Stop();
         }
         [Fact]

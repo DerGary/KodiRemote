@@ -105,15 +105,14 @@ namespace KodiRemote.Code.Utils {
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
-                if (disposing) {
-                    // TODO: verwalteten Zustand (verwaltete Objekte) entsorgen.
-                }
-
-                // TODO: nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer weiter unten überschreiben.
-                // TODO: große Felder auf Null setzen.
+                // TODO: verwalteten Zustand (verwaltete Objekte) entsorgen.
                 if (messageWebSocket != null) {
                     messageWebSocket.Dispose();
                 }
+
+
+                // TODO: nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer weiter unten überschreiben.
+                // TODO: große Felder auf Null setzen.
                 disposedValue = true;
             }
         }

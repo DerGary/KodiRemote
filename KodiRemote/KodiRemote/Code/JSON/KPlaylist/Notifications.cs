@@ -14,7 +14,7 @@ namespace KodiRemote.Code.JSON.KPlaylist.Notifications {
         public int PlaylistId { get; set; }
     }
     [DataContract]
-    public abstract class PlaylistIdPositionBase {
+    public abstract class PlaylistIdPositionBase : PlaylistIdBase {
         [DataMember(Name = "position")]
         public int Position { get; set; }
     }
