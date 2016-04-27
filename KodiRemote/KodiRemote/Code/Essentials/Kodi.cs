@@ -44,9 +44,6 @@ namespace KodiRemote.Code.Essentials {
         private static Kodi instance;
         public static Kodi ActiveInstance {
             get {
-                if (instance == null) {
-                    throw new UnauthorizedAccessException("ActiveKodi has to be initialised first");
-                }
                 return instance;
             }
             private set {

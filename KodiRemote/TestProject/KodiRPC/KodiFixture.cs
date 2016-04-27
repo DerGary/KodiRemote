@@ -11,7 +11,7 @@ using Xunit;
 namespace Test.KodiRPC {
     public class KodiFixture {
         public KodiFixture() {
-            Kodi.Init(new KodiSettings("localhost", "9090", ConnectionType.Websocket)).Wait();
+            Kodi.Init(new KodiSettings("localtest", "localhost", "9090", ConnectionType.Websocket, true)).Wait();
         }
     }
 

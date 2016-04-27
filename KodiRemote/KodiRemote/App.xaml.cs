@@ -1,10 +1,14 @@
 ﻿using KodiRemote.Code;
+using KodiRemote.Code.Database;
 using KodiRemote.Code.Essentials;
 using KodiRemote.Code.JSON;
+using KodiRemote.Code.JSON.Fields;
+using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using KodiRemote.Code.Utils;
 using KodiRemote.View;
 using KodiRemote.View.Base;
 using KodiRemote.ViewModel;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,7 +51,17 @@ namespace KodiRemote {
         /// </summary>
         /// <param name="e">Details über Startanforderung und -prozess.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e) {
-            await Kodi.Init(new KodiSettings("localhost", "9090", ConnectionType.Websocket));
+            await SettingsDatabase.Init();
+            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name1", "hostname", "9090", ConnectionType.Websocket, false));
+            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name2", "hostname", "9090", ConnectionType.Websocket, false));
+            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name3", "hostname", "9090", ConnectionType.Websocket, false));
+            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name4", "hostname", "9090", ConnectionType.Websocket, false));
+            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name5", "hostname", "9090", ConnectionType.Websocket, false));
+            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name6", "hostname", "9090", ConnectionType.Websocket, false));
+            var kodi = await SettingsDatabase.Instance.GetActiveKodi();
+            if (kodi != null) {
+                await Kodi.Init(kodi);
+            }
             PrepareRootFrame();
 
             if (_rootFrame.Content == null) {

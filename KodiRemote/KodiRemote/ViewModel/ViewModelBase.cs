@@ -18,6 +18,9 @@ namespace KodiRemote.ViewModel {
         public ViewModelBase() {
             Kodi.KodiChanged += ActiveKodiChanged;
         }
+        ~ViewModelBase() {
+            Kodi.KodiChanged -= ActiveKodiChanged;
+        }
 
         private void ActiveKodiChanged(object sender, EventArgs e) {
             RaisePropertyChanged(nameof(Kodi));

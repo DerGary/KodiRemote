@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
+using KodiRemote.View.Base;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -24,7 +25,7 @@ namespace KodiRemote.View {
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class RemoteControlPage : Page {
+    public sealed partial class RemoteControlPage : PageBase {
         public RemoteControlViewModel ViewModel { get; set; } = new RemoteControlViewModel();
 
         public RemoteControlPage() {

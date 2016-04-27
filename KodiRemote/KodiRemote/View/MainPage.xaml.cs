@@ -31,7 +31,7 @@ namespace KodiRemote.View {
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class MainPage : PageBase {
+    public sealed partial class MainPage : Page {
 
 
         public MainPage() {
@@ -40,7 +40,7 @@ namespace KodiRemote.View {
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e) {
-            contentFrame.Navigate(typeof(HomePage));
+            SplitView.ContentFrame.Navigate(typeof(HomePage));
         }
     }
 }

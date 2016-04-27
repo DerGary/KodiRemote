@@ -65,7 +65,7 @@
                     </Grid.RowDefinitions>
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
                         <StackPanel>
-                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}">
+                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}" Tapped="HomeTapped">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource PaneButtonSymbolStyle}" Text="{StaticResource Home}"/>
                                     <TextBlock x:Uid="Home" Text="Home" Style="{StaticResource PaneButtonTextStyle}"/>
@@ -89,16 +89,16 @@
                                     <TextBlock x:Uid="Music" Text="Music" Style="{StaticResource PaneButtonTextStyle}"/>
                                 </StackPanel>
                             </Button>
-                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}">
+                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}" Tapped="RemoteControlTapped">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource PaneButtonSymbolStyle}" Text="{StaticResource ArrowPad}"/>
-                                    <TextBlock x:Uid="Remote" Text="Remote" Style="{StaticResource PaneButtonTextStyle}"/>
+                                    <TextBlock x:Uid="Remote" Text="Remote Control" Style="{StaticResource PaneButtonTextStyle}"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                     </ScrollViewer>
                     
-                    <Button Grid.Row="1" Style="{StaticResource PaneButtonStyle}">
+                    <Button Grid.Row="1" Style="{StaticResource PaneButtonStyle}" Tapped="SettingsTapped">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{StaticResource PaneButtonSymbolStyle}" Text="{StaticResource Settings}"/>
                             <TextBlock x:Uid="Settings" Text="Settings" Style="{StaticResource PaneButtonTextStyle}"/>
@@ -107,7 +107,7 @@
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
-                <ContentPresenter Content="{x:Bind PresenterContent, Mode=OneWay}"/>
+                <Frame x:Name="contentFrame"/>
             </SplitView.Content>
         </SplitView>
     </Grid>

@@ -2,6 +2,7 @@
 using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.KFiles.Params;
 using KodiRemote.Code.JSON.KJSONRPC.Params;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -208,7 +209,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         public string Thumbnail { get; set; }
     }
     [DataContract]
-    public class MovieSetDetailsResult  {
+    public class MovieSetDetailsResult {
         [DataMember(Name = "setdetails")]
         public MovieSetDetails MovieSet { get; set; }
     }
@@ -306,6 +307,9 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
     }
     [DataContract]
     public class TVShow {
+        [PrimaryKey]
+        [DataMember(Name = "tvshowid")]
+        public int TVShowId { get; set; }
         [DataMember(Name = "art")]
         public TvShowArt Art { get; set; }
         [DataMember(Name = "episode")]
@@ -317,7 +321,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         [DataMember(Name = "imdbnumber")]
         public string IMDBNumber { get; set; }
         [DataMember(Name = "cast")]
-        public Actor[] Cast { get; set; }
+        public List<Actor> Cast { get; set; }
         [DataMember(Name = "lastplayed")]
         public string LastPlayed { get; set; }
         [DataMember(Name = "file")]
@@ -346,8 +350,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         public List<string> Studio { get; set; }
         [DataMember(Name = "thumbnail")]
         public string Thumbnail { get; set; }
-        [DataMember(Name = "tvshowid")]
-        public int TVShowId { get; set; }
+
         [DataMember(Name = "votes")]
         public string Votes { get; set; }
         [DataMember(Name = "watchedepisodes")]
