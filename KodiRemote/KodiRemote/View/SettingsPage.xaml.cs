@@ -32,5 +32,9 @@ namespace KodiRemote.View {
             await ViewModel.Init();
             KodiInfo.ViewModel = ViewModel;
         }
+
+        private void KodiList_ItemClick(object sender, ItemClickEventArgs e) {
+            Frame.Navigate(typeof(KodiInfoPage), ViewModel);
+        }
     }
 }

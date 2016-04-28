@@ -35,10 +35,24 @@ namespace KodiRemote.View {
         public KodiInfoPage() {
             this.InitializeComponent();
         }
+
+        private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e) {
+            if (e.Size.Width >= 670) {
+                if (Frame.CanGoBack) {
+                    Frame.GoBack();
+                }
+            }
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
-            //ViewModel = e.Parameter as SettingsViewModel;
-            //RaisePropertyChanged(nameof(ViewModel));
+            ViewModel = e.Parameter as SettingsViewModel;
+            RaisePropertyChanged(nameof(ViewModel));
+            Window.Current.SizeChanged += WindowSizeChanged;
+        }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
+            base.OnNavigatingFrom(e);
+            Window.Current.SizeChanged -= WindowSizeChanged;
         }
     }
 }

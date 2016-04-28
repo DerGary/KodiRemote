@@ -35,7 +35,9 @@
 
                     <VisualState.Setters>
                         <Setter Target="KodiInfo.Visibility" Value="Collapsed"/>
+                        <Setter Target="KodiList.IsItemClickEnabled" Value="True"/>
                         <Setter Target="ColumnList.Width" Value="*"/>
+                        <Setter Target="InfoColumn.Width" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -47,10 +49,12 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="400" x:Name="ColumnList"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" x:Name="InfoColumn"/>
             </Grid.ColumnDefinitions>
             <ListView 
                 x:Name="KodiList"
+                IsItemClickEnabled="False"
+                ItemClick="KodiList_ItemClick"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 SelectionMode="Single"
