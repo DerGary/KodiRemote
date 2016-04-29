@@ -18,10 +18,10 @@ namespace Test.KodiRPC {
             await SetVolume(100);
             ApplicationProperties result = await Kodi.ActiveInstance.Application.GetProperties(ApplicationField.WithAll());
             Assert.True(result.Volume == 100);
-            Assert.True(result.Version.major == 16);
-            Assert.True(result.Version.minor == 0);
-            Assert.True(result.Version.revision == "20160220-a5f3a99");
-            Assert.True(result.Version.tag == "stable");
+            Assert.True(result.Version.Major == 16);
+            Assert.True(result.Version.Minor == 0);
+            Assert.True(result.Version.Revision == "20160220-a5f3a99");
+            Assert.True(result.Version.Tag == "stable");
             Assert.True(result.Name == "Kodi");
             Assert.True(result.Muted == false);
         }

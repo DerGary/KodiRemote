@@ -32,6 +32,7 @@ namespace KodiRemote.Code.Essentials {
         public IAudioLibraryService AudioLibrary { get; protected set; }
         public IPlaylistService Playlist { get; protected set; }
         public abstract bool Muted { get; protected set; }
+        public abstract double Volume { get; protected set; }
         public abstract bool Paused { get; protected set; }
         public abstract Item CurrentlyPlayingItem { get; protected set; }
         public abstract bool Connected { get; protected set; }

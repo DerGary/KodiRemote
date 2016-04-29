@@ -20,12 +20,12 @@ namespace KodiRemote.Code.JSON.KApplication.Results {
     [DataContract]
     public class ApplicationVersion {
         [DataMember(Name = "major")]
-        public int major { get; set; }
+        public int Major { get; set; }
         [DataMember(Name = "minor")]
-        public int minor { get; set; }
+        public int Minor { get; set; }
         [DataMember(Name = "revision")]
-        public string revision { get; set; }
+        public string Revision { get; set; }
         [DataMember(Name = "tag")]
-        public string tag { get; set; }
+        public string Tag { get; set; }
     }
 }

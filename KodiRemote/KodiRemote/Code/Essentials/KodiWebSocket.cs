@@ -54,6 +54,17 @@ namespace KodiRemote.Code.Essentials {
                 RaisePropertyChanged();
             }
         }
+        private double volume;
+        public override double Volume {
+            get {
+                return volume;
+            }
+            protected set {
+                volume = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         private bool connected = true;
         public override bool Connected {
@@ -164,6 +175,7 @@ namespace KodiRemote.Code.Essentials {
             } else {
                 Muted = false;
             }
+            Volume = item.Volume;
         }
 
 
