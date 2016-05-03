@@ -14,7 +14,7 @@ namespace KodiRemote.Code.JSON.ServiceInterfaces {
         Task<bool> NotifyAll(string sender, string message);
         Task<Permissions> Permission();
         Task<bool> Ping();
-        Task<KJSONRPC.Results.Version> Version();
+        Task<KJSONRPC.Results.JSONRPCVersion> Version();
         Task<Configuration> SetConfiguration(bool? gui = null, bool? other = null, bool? input = null, bool? videolibrary = null, bool? audiolibrary = null, bool? playlist = null, bool? system = null, bool? player = null, bool? application = null, bool? pvr = null);
     }
 }

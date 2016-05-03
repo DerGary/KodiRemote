@@ -34,7 +34,7 @@ namespace Test.KodiRPC {
         }
         [Fact]
         public async Task Version() {
-            KodiRemote.Code.JSON.KJSONRPC.Results.Version result = await Kodi.ActiveInstance.JSONRPC.Version();
+            KodiRemote.Code.JSON.KJSONRPC.Results.JSONRPCVersion result = await Kodi.ActiveInstance.JSONRPC.Version();
             Assert.True(result.VersionValue.Major == 6);
         }
         [Fact]

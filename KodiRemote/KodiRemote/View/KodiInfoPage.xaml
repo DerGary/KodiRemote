@@ -6,12 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:convert="using:KodiRemote.View.Converter"
     x:Uid="KodiInfo"
     Title="Kodi Info"
     mc:Ignorable="d">
 
     <Page.Resources>
-        
+        <convert:BooleanResourceConverter x:Key="BoolStringConverter" OnTrue="Yes" OnFalse="No"/>
         <Style x:Key="TextStackPanel" TargetType="StackPanel">
             <Setter Property="Margin" Value="15"/>
         </Style>
@@ -61,57 +62,65 @@
                     </StackPanel>
                     <StackPanel x:Name="JSONVersionText" Style="{StaticResource TextStackPanel}" >
                         <TextBlock Text="JSON RPC API Version:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="16.6.3" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.JSONVersion, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="OnlineText" Style="{StaticResource TextStackPanel}" >
                         <TextBlock Text="Online:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="Yes" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.Online, Mode=OneWay, Converter={StaticResource BoolStringConverter}}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="SkinText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Skin:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="Confluence" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.SkinName, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="KodiVersionText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Kodi Version:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="16.6.3-849846" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.KodiVersion, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="MutedText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Muted:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="Yes" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.Muted, Mode=OneWay, Converter={StaticResource BoolStringConverter}}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="KodiNameText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Kodi Name:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="Jarvis" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.KodiName, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="VolumeText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Volume:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="80%" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.Volume, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="LibraryInfo" Grid.Column="1">
                     <StackPanel x:Name="MoviesText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Movies:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="1350" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.MovieCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
+                    </StackPanel>
+                    <StackPanel x:Name="MovieSetsText" Style="{StaticResource TextStackPanel}">
+                        <TextBlock Text="Movie Sets:" Style="{StaticResource HeaderTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.MovieSetCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="EpisodesText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Episodes:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="8650" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.EpisodeCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="TVShowsText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="TVShows:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="105" Style="{StaticResource ValueTextBlock}"/>
-                    </StackPanel>
-                    <StackPanel x:Name="SongsText" Style="{StaticResource TextStackPanel}">
-                        <TextBlock Text="Songs:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="10000" Style="{StaticResource ValueTextBlock}"/>
-                    </StackPanel>
-                    <StackPanel x:Name="ArtistsText" Style="{StaticResource TextStackPanel}">
-                        <TextBlock Text="Artists:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="500" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.TVShowCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                     <StackPanel x:Name="MusicVideosText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="MusicVideos:" Style="{StaticResource HeaderTextBlock}"/>
-                        <TextBlock Text="1" Style="{StaticResource ValueTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.MusicVideoCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
+                    </StackPanel>
+                    <StackPanel x:Name="SongsText" Style="{StaticResource TextStackPanel}">
+                        <TextBlock Text="Songs:" Style="{StaticResource HeaderTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.SongCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
+                    </StackPanel>
+                    <StackPanel x:Name="ArtistsText" Style="{StaticResource TextStackPanel}">
+                        <TextBlock Text="Artists:" Style="{StaticResource HeaderTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.ArtistCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
+                    </StackPanel>
+                    <StackPanel x:Name="AlbumsText" Style="{StaticResource TextStackPanel}">
+                        <TextBlock Text="Albums:" Style="{StaticResource HeaderTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.AlbumCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

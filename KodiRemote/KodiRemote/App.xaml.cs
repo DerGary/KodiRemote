@@ -58,6 +58,7 @@ namespace KodiRemote {
             await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name4", "hostname", "9090", ConnectionType.Websocket, false));
             await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name5", "hostname", "9090", ConnectionType.Websocket, false));
             await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name6", "hostname", "9090", ConnectionType.Websocket, false));
+            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("localtest", "localhost", "9090", ConnectionType.Websocket, true));
             var kodi = await SettingsDatabase.Instance.GetActiveKodi();
             if (kodi != null) {
                 await Kodi.Init(kodi);

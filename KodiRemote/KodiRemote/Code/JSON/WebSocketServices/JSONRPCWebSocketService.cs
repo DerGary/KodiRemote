@@ -36,7 +36,7 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             } else if (methods[guid] == Method.SetConfiguration) {
                 DeserializeMessageAndTriggerTask<Configuration>(guid, message);
             } else if (methods[guid] == Method.Version) {
-                DeserializeMessageAndTriggerTask<KJSONRPC.Results.Version>(guid, message);
+                DeserializeMessageAndTriggerTask<KJSONRPC.Results.JSONRPCVersion>(guid, message);
             }
         }
 
@@ -82,8 +82,8 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
             });
         }
 
-        public Task<KJSONRPC.Results.Version> Version() {
-            return SendRequest<KJSONRPC.Results.Version>(Method.Version);
+        public Task<KJSONRPC.Results.JSONRPCVersion> Version() {
+            return SendRequest<KJSONRPC.Results.JSONRPCVersion>(Method.Version);
         }
     }
 }

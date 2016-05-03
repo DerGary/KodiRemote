@@ -39,7 +39,7 @@ namespace KodiRemote.Code.JSON.KJSONRPC.Results {
         public bool WriteFile { get; set; }
     }
     [DataContract]
-    public class Version {
+    public class JSONRPCVersion {
 
         [DataMember(Name = "version")]
         public APIVersion VersionValue { get; set; }
