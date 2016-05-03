@@ -11,6 +11,7 @@ namespace KodiRemote.Code.Database {
         private SettingsDatabase() { }
 
         private SQLiteAsyncConnection connection;
+
         private static SettingsDatabase instance;
         public static SettingsDatabase Instance {
             get {
@@ -20,19 +21,23 @@ namespace KodiRemote.Code.Database {
                 return instance;
             }
         }
+
         public static async Task Init() {
             instance = new SettingsDatabase();
             instance.connection = new SQLiteAsyncConnection("Settings");
             await instance.connection.CreateTableAsync<KodiSettings>();
         }
+
         public async Task<List<KodiSettings>> GetAllKodis() {
             var query = connection.Table<KodiSettings>();
             return await query.ToListAsync();
         }
+
         public async Task<KodiSettings> GetActiveKodi() {
             var query = connection.Table<KodiSettings>();
             return await query.Where(x => x.Active == true).FirstOrDefaultAsync();
         }
+
         public async Task InsertOrUpdateKodi(KodiSettings settings) {
             if (settings.Active) {
                 KodiSettings currentlyActive = await GetActiveKodi();

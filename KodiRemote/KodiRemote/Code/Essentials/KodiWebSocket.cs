@@ -213,7 +213,12 @@ namespace KodiRemote.Code.Essentials {
             Muted = false;
         }
 
-        public override async Task Connect() {
+        public override async Task Init() {
+            await ActiveInstance.Database.Init(settings);
+            await Connect();
+        }
+
+        public async Task Connect() {
             Connected = await Connection.Connect(new Uri("ws://" + settings.Hostname + ":" + settings.Port + "/jsonrpc"));
             if (Connected) {
                 await InitPlaylists();

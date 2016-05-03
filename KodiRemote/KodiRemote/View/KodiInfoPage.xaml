@@ -23,6 +23,11 @@
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Margin" Value="15,5,0,0"/>
         </Style>
+        <Style x:Key="GroupHeaderTextBlock" TargetType="TextBlock">
+            <Setter Property="Margin" Value="15,15,0,0"/>
+            <Setter Property="FontWeight" Value="SemiLight"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
@@ -56,6 +61,20 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel x:Name="GeneralInfo">
+                    <TextBlock Text="Connection Information:" Style="{StaticResource GroupHeaderTextBlock}"/>
+                    <StackPanel x:Name="Hostname" Style="{StaticResource TextStackPanel}">
+                        <TextBlock Text="Hostname:" Style="{StaticResource HeaderTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.Hostname, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
+                    </StackPanel>
+                    <StackPanel x:Name="Port" Style="{StaticResource TextStackPanel}">
+                        <TextBlock Text="Port:" Style="{StaticResource HeaderTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.Port, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
+                    </StackPanel>
+                    <StackPanel x:Name="ConnectionType" Style="{StaticResource TextStackPanel}">
+                        <TextBlock Text="Connection Type:" Style="{StaticResource HeaderTextBlock}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedKodi.Type, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
+                    </StackPanel>
+                    <TextBlock Text="General Information:" Style="{StaticResource GroupHeaderTextBlock}"/>
                     <StackPanel x:Name="NameText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Name:" Style="{StaticResource HeaderTextBlock}"/>
                         <TextBlock Text="{x:Bind ViewModel.SelectedKodi.Name, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>
@@ -90,6 +109,7 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="LibraryInfo" Grid.Column="1">
+                    <TextBlock Text="Library Information:" Style="{StaticResource GroupHeaderTextBlock}"/>
                     <StackPanel x:Name="MoviesText" Style="{StaticResource TextStackPanel}">
                         <TextBlock Text="Movies:" Style="{StaticResource HeaderTextBlock}"/>
                         <TextBlock Text="{x:Bind ViewModel.SelectedKodi.MovieCount, Mode=OneWay}" Style="{StaticResource ValueTextBlock}"/>

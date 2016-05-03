@@ -27,13 +27,11 @@ namespace KodiRemote.ViewModel {
             set {
                 selectedKodi = value;
                 if (value != null) {
-                    //value.GetInfo().Start();
                     Task.Run(async () => await value.GetInfo());
                 }
                 RaisePropertyChanged();
             }
         }
-
 
         public async Task Init() {
             KodiList = await SettingsDatabase.Instance.GetAllKodis();

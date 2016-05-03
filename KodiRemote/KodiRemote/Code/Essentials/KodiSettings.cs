@@ -80,6 +80,7 @@ namespace KodiRemote.Code.Essentials {
             if (Kodi != null)
                 Kodi.PropertyChanged -= Kodi_PropertyChanged;
         }
+
         private bool online;
         [Ignore]
         public bool Online {
@@ -312,7 +313,7 @@ namespace KodiRemote.Code.Essentials {
         public async Task GetInfo() {
             if (Kodi == null) {
                 Kodi = new KodiWebSocket(this);
-                await Kodi.Connect();
+                await Kodi.Init();
                 Kodi.PropertyChanged += Kodi_PropertyChanged;
             }
             Online = Kodi.Connected;

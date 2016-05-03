@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Common;
+using KodiRemote.Code.Database;
 using KodiRemote.Code.JSON;
 using KodiRemote.Code.JSON.General.Notifications;
 using KodiRemote.Code.JSON.KAudioLibrary.Results;
@@ -36,6 +37,7 @@ namespace KodiRemote.Code.Essentials {
         public abstract bool Paused { get; protected set; }
         public abstract Item CurrentlyPlayingItem { get; protected set; }
         public abstract bool Connected { get; protected set; }
+        public DatabaseConnection Database { get; protected set; }
 
 
         public abstract ObservableCollection<Song> CurrentAudioPlaylist { get; protected set; }
@@ -55,6 +57,7 @@ namespace KodiRemote.Code.Essentials {
 
         protected Kodi(KodiSettings settings) {
             this.settings = settings;
+            this.Database = new DatabaseConnection();
         }
 
         public static event KodiChangedEventHandler KodiChanged;
@@ -62,10 +65,10 @@ namespace KodiRemote.Code.Essentials {
             if (settings.Type == ConnectionType.Websocket) {
                 ActiveInstance = new KodiWebSocket(settings);
             }
-            await ActiveInstance.Connect();
+            await ActiveInstance.Init();
         }
 
-        public abstract Task Connect();
+        public abstract Task Init();
         public abstract void Dispose();
     }
 
