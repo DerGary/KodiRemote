@@ -53,8 +53,10 @@ namespace KodiRemote.Code.Essentials {
                 return type;
             }
             set {
-                type = value;
-                RaisePropertyChanged();
+                if (type != value) {
+                    type = value;
+                    RaisePropertyChanged();
+                }
             }
         }
         private bool active;
@@ -309,14 +311,20 @@ namespace KodiRemote.Code.Essentials {
 
 
         private Kodi Kodi;
-
-        public async Task GetInfo() {
+        private async Task InitConnection() {
             if (Kodi == null) {
                 Kodi = new KodiWebSocket(this);
-                await Kodi.Init();
+                await Kodi.Connect();
                 Kodi.PropertyChanged += Kodi_PropertyChanged;
             }
             Online = Kodi.Connected;
+        }
+        public async Task CheckOnlineStatus() {
+            await InitConnection();
+        }
+
+        public async Task GetInfo() {
+            await InitConnection();
             if (Online) {
                 JSONRPCVersion jsonVersion = await Kodi.JSONRPC.Version();
                 JSONMajor = jsonVersion.VersionValue.Major;

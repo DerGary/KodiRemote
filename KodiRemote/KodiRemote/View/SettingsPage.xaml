@@ -8,11 +8,16 @@
     xmlns:uc="using:KodiRemote.View.UserControls"
     xmlns:code="using:KodiRemote.Code.Essentials"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:converter="using:KodiRemote.View.Converter"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
     x:Uid="Settings"
     Title="Settings"
-    mc:Ignorable="d">
-
+    mc:Ignorable="d"
+    RequestedTheme="Dark">
+    <Page.Resources>
+        <converter:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
+        <converter:BoolVisibilityConverter x:Key="BoolNotVisibilityConverter" OnTrue="Collapsed" OnFalse="Visible"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -34,7 +39,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="KodiInfo.Visibility" Value="Collapsed"/>
+                        <Setter Target="RightContent.Visibility" Value="Collapsed"/>
                         <Setter Target="KodiList.IsItemClickEnabled" Value="True"/>
                         <Setter Target="ColumnList.Width" Value="*"/>
                         <Setter Target="InfoColumn.Width" Value="0"/>
@@ -62,11 +67,37 @@
                 SelectedItem="{Binding SelectedKodi, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="code:KodiSettings">
-                        <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                        <Grid HorizontalAlignment="Stretch" Margin="10,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="ms-appx:///Assets/KodiIcon.png" Height="40"  Visibility="{x:Bind Online, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"/>
+                            <Image Source="ms-appx:///Assets/KodiIconGrey.png" Height="40" Visibility="{x:Bind Online, Mode=OneWay, Converter={StaticResource BoolNotVisibilityConverter}}"/>
+                            <StackPanel Grid.Column="1" Margin="20,0">
+                                <TextBlock Text="{x:Bind Name, Mode=OneWay}" Grid.Column="1"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--<TextBlock Text="Hostname:" Margin="0,0,5,0" FontWeight="Light"/>-->
+                                    <TextBlock Text="{x:Bind Hostname, Mode=OneWay}" FontWeight="Light"/>
+                                    <TextBlock Text=":" FontWeight="Light" Margin="2,0"/>
+                                    <TextBlock Text="{x:Bind Port, Mode=OneWay}" FontWeight="Light"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--<TextBlock Text="Port:" Margin="0,0,5,0" FontWeight="Light"/>-->
+                                </StackPanel>
+                            </StackPanel>
+                            <SymbolIcon Symbol="Accept" Grid.Column="2" Visibility="{x:Bind Active, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
-            <local:KodiInfoPage x:Name="KodiInfo" Grid.Column="1"/>
+            <ContentPresenter x:Name="RightContent" Grid.Column="1"/>
         </Grid>
 
         <StackPanel Orientation="Horizontal">
@@ -74,7 +105,8 @@
         </StackPanel>
 
         <CommandBar Grid.Row="1">
-            <AppBarButton Icon="Add"/>
+            <AppBarButton Icon="Add" Label="Add" Tapped="AddKodiTapped"/>
+            <AppBarButton Icon="Remove" Label="Remove" Command="{x:Bind ViewModel.RemoveKodi}"/>
         </CommandBar>
     </Grid>
 </base:PageBase>

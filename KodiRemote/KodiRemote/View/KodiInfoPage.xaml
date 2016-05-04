@@ -9,7 +9,8 @@
     xmlns:convert="using:KodiRemote.View.Converter"
     x:Uid="KodiInfo"
     Title="Kodi Info"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    RequestedTheme="Dark">
 
     <Page.Resources>
         <convert:BooleanResourceConverter x:Key="BoolStringConverter" OnTrue="Yes" OnFalse="No"/>
@@ -25,8 +26,8 @@
         </Style>
         <Style x:Key="GroupHeaderTextBlock" TargetType="TextBlock">
             <Setter Property="Margin" Value="15,15,0,0"/>
-            <Setter Property="FontWeight" Value="SemiLight"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="25"/>
         </Style>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

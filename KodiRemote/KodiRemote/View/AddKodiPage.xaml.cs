@@ -21,9 +21,9 @@ namespace KodiRemote.View {
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class KodiInfoPage : PageBase {
-        private SettingsViewModel viewModel;
-        public SettingsViewModel ViewModel {
+    public sealed partial class AddKodiPage : PageBase {
+        private AddKodiViewModel viewModel;
+        public AddKodiViewModel ViewModel {
             get {
                 return viewModel;
             }
@@ -32,26 +32,17 @@ namespace KodiRemote.View {
                 RaisePropertyChanged();
             }
         }
-        public KodiInfoPage() {
+
+        public AddKodiPage() {
             this.InitializeComponent();
         }
 
-        private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e) {
-            if (e.Size.Width >= 670) {
-                if (Frame.CanGoBack) {
-                    Frame.GoBack();
-                }
-            }
+        private void DeclineTapped(object sender, TappedRoutedEventArgs e) {
+            Frame.GoBack();
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
-            ViewModel = e.Parameter as SettingsViewModel;
-            Window.Current.SizeChanged += WindowSizeChanged;
-        }
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
-            base.OnNavigatingFrom(e);
-            Window.Current.SizeChanged -= WindowSizeChanged;
+            ViewModel = new AddKodiViewModel(this.Frame);
         }
     }
 }

@@ -66,22 +66,14 @@ namespace KodiRemote.Code.Essentials {
         }
 
 
-        private bool connected = true;
+        private bool connected = false;
         public override bool Connected {
             get {
                 return connected;
             }
             protected set {
-                if (connected != value) {
-                    connected = value;
-                    if (!value) {
-                        timer = new Timer(Timer_Tick, null, 0, (int)TimeSpan.FromSeconds(15).TotalMilliseconds);
-                    } else if (timer != null) {
-                        timer.Dispose();
-                        timer = null;
-                    }
-                    RaisePropertyChanged();
-                }
+                connected = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -201,7 +193,6 @@ namespace KodiRemote.Code.Essentials {
 
         private void ConnectionClosed(string message) {
             Connected = false;
-
         }
 
         private void ResetProperties() {
@@ -216,11 +207,24 @@ namespace KodiRemote.Code.Essentials {
         public override async Task Init() {
             await ActiveInstance.Database.Init(settings);
             await Connect();
+            await InitCurrentlyPlaying();
         }
 
-        public async Task Connect() {
-            Connected = await Connection.Connect(new Uri("ws://" + settings.Hostname + ":" + settings.Port + "/jsonrpc"));
-            if (Connected) {
+        public override async Task Connect() {
+            bool result = await Connection.Connect(new Uri("ws://" + settings.Hostname + ":" + settings.Port + "/jsonrpc"));
+            if (result != Connected) {
+                Connected = result;
+                if (!Connected) {
+                    timer = new Timer(Timer_Tick, null, 0, (int)TimeSpan.FromSeconds(60).TotalMilliseconds);
+                } else if (timer != null) {
+                    timer.Dispose();
+                    timer = null;
+                }
+            }
+        }
+
+        public async Task InitCurrentlyPlaying() {
+            if (Connected && Kodi.ActiveInstance == this) {
                 await InitPlaylists();
                 List<Player> players = await Player.GetActivePlayers();
                 foreach (Player player in players) {

@@ -92,6 +92,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\KodiIcon.png" />
+    <Content Include="Assets\KodiIconGrey.png" />
     <Content Include="Res\Images\16-9-placeholder.png" />
     <Content Include="Res\Images\actor-placeholder.png" />
     <Content Include="Res\Images\checkmark.png" />
@@ -277,12 +279,18 @@
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
+    <Compile Include="ViewModel\AddKodiViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\AddKodiPage.xaml.cs">
+      <DependentUpon>AddKodiPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
     <Compile Include="View\Converter\BooleanResourceConverter.cs" />
+    <Compile Include="View\Converter\BoolVisibilityConverter.cs" />
+    <Compile Include="View\Converter\ConnectionTypeConverter.cs" />
     <Compile Include="View\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -357,6 +365,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="View\AddKodiPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HomePage.xaml">
       <SubType>Designer</SubType>

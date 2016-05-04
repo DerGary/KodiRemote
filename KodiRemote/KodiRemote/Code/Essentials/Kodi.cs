@@ -69,6 +69,7 @@ namespace KodiRemote.Code.Essentials {
         }
 
         public abstract Task Init();
+        public abstract Task Connect();
         public abstract void Dispose();
     }
 

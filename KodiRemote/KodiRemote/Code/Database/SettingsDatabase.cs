@@ -48,5 +48,15 @@ namespace KodiRemote.Code.Database {
             }
             await connection.InsertOrReplaceAsync(settings);
         }
+        public async Task Remove(KodiSettings settings) {
+            await connection.DeleteAsync(settings);
+            if (settings.Active) {
+                var nowActive = (await GetAllKodis()).FirstOrDefault();
+                if (nowActive != null) {
+                    nowActive.Active = true;
+                    await connection.UpdateAsync(nowActive);
+                }
+            }
+        }
     }
 }

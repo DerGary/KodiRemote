@@ -1,0 +1,49 @@
+﻿<base:PageBase
+    x:Class="KodiRemote.View.AddKodiPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KodiRemote.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:base="using:KodiRemote.View.Base"
+    xmlns:converter="using:KodiRemote.View.Converter"
+    mc:Ignorable="d"
+    Title="Add New Kodi Connection"
+    RequestedTheme="Dark">
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+        <converter:ConnectionTypeConverter x:Key="ConnectionTypeConverter"/>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel MaxWidth="360" Margin="20">
+            <TextBox Header="Name:" Text="{x:Bind ViewModel.KodiSettings.Name, Mode=TwoWay}"/>
+            <TextBox Header="Hostname:" Text="{x:Bind ViewModel.KodiSettings.Hostname, Mode=TwoWay}"/>
+            <TextBox Header="Port:" InputScope="AlphanumericPin" Text="{x:Bind ViewModel.KodiSettings.Port, Mode=TwoWay}"/>
+            <ComboBox Header="Connection Type:" 
+                      HorizontalAlignment="Stretch" 
+                      ItemsSource="{x:Bind ViewModel.ConnectionTypes, Mode=OneWay}" 
+                      SelectedItem="{x:Bind ViewModel.KodiSettings.Type, Mode=TwoWay, Converter={StaticResource ConnectionTypeConverter}}"/>
+
+
+        </StackPanel>
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" Background="{StaticResource TransparentGrey}">
+            <Grid VerticalAlignment="Bottom" MaxWidth="360">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Decline" Margin="10" HorizontalAlignment="Stretch" BorderBrush="#FFAAAAAA" Tapped="DeclineTapped"/>
+                <Button Content="Accept" Margin="10" HorizontalAlignment="Stretch" BorderBrush="#FFAAAAAA" Command="{x:Bind ViewModel.AddKodi}" Grid.Column="1"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</base:PageBase>

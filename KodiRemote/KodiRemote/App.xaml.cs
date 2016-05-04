@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -51,18 +52,7 @@ namespace KodiRemote {
         /// </summary>
         /// <param name="e">Details über Startanforderung und -prozess.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e) {
-            await SettingsDatabase.Init();
-            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name1", "hostname", "9090", ConnectionType.Websocket, false));
-            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name2", "hostname", "9090", ConnectionType.Websocket, false));
-            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name3", "hostname", "9090", ConnectionType.Websocket, false));
-            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name4", "hostname", "9090", ConnectionType.Websocket, false));
-            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name5", "hostname", "9090", ConnectionType.Websocket, false));
-            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("name6", "hostname", "9090", ConnectionType.Websocket, false));
-            await SettingsDatabase.Instance.InsertOrUpdateKodi(new KodiSettings("localtest", "localhost", "9090", ConnectionType.Websocket, true));
-            var kodi = await SettingsDatabase.Instance.GetActiveKodi();
-            if (kodi != null) {
-                await Kodi.Init(kodi);
-            }
+            await Init();
             PrepareRootFrame();
 
             if (_rootFrame.Content == null) {
@@ -128,6 +118,13 @@ namespace KodiRemote {
         /// <param name="e">Details über den Navigationsfehler</param>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+        }
+        private async Task Init() {
+            await SettingsDatabase.Init();
+            var kodi = await SettingsDatabase.Instance.GetActiveKodi();
+            if (kodi != null) {
+                await Kodi.Init(kodi);
+            }
         }
     }
 }
