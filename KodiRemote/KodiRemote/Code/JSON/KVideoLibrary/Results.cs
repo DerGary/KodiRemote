@@ -2,7 +2,7 @@
 using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.KFiles.Params;
 using KodiRemote.Code.JSON.KJSONRPC.Params;
-using SQLite;
+using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

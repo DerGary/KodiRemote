@@ -6,7 +6,7 @@ using KodiRemote.Code.JSON.KAudioLibrary.Results;
 using KodiRemote.Code.JSON.KGUI.Results;
 using KodiRemote.Code.JSON.KJSONRPC.Results;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
-using SQLite;
+using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -319,6 +319,11 @@ namespace KodiRemote.Code.Essentials {
             }
             Online = Kodi.Connected;
         }
+
+        public async Task UpdateDatabase() {
+            await Kodi.UpdateDatabase();
+        }
+
         public async Task CheckOnlineStatus() {
             await InitConnection();
         }

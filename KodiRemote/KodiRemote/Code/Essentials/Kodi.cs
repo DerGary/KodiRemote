@@ -1,8 +1,10 @@
 ﻿using KodiRemote.Code.Common;
 using KodiRemote.Code.Database;
 using KodiRemote.Code.JSON;
+using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General.Notifications;
 using KodiRemote.Code.JSON.KAudioLibrary.Results;
+using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using KodiRemote.Code.JSON.ServiceInterfaces;
 using KodiRemote.Code.JSON.WebSocketServices;
 using KodiRemote.Code.Utils;
@@ -71,6 +73,19 @@ namespace KodiRemote.Code.Essentials {
         public abstract Task Init();
         public abstract Task Connect();
         public abstract void Dispose();
-    }
 
+        public async Task UpdateDatabase() {
+            var tvshowfield = new TVShowField();
+            tvshowfield.Mine();
+            TVShowsResult result;
+            int i = 0;
+            do {
+                result = await VideoLibrary.GetTVShows(tvshowfield, limits: new JSON.General.Limits(i, i + 50));
+                i += 50;
+                if (result != null) {
+                    //await Database.SaveTVShows(result.TVShows);
+                }
+            } while (result != null && result.Limits.End != result.Limits.Total);
+        }
+    }
 }

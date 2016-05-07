@@ -9,10 +9,10 @@ namespace KodiRemote.Code.JSON.General {
     [DataContract]
     public class Actor {
         [DataMember(Name = "name")]
-        public string name { get; set; }
+        public string Name { get; set; }
         [DataMember(Name = "role")]
-        public string role { get; set; }
+        public string Role { get; set; }
         [DataMember(Name = "thumbnail")]
-        public string thumbnail { get; set; }
+        public string Thumbnail { get; set; }
     }
 }

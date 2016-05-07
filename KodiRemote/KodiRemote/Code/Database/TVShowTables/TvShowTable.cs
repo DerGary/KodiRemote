@@ -1,5 +1,5 @@
 ﻿using KodiRemote.Code.JSON.KVideoLibrary.Results;
-using SQLite;
+using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.Database.TVShowTables {
 
     [Table("TVShows")]
-    public class TVShowTableEntry : IComparable {
+    public class TVShowTableEntry {
         [PrimaryKey]
-        public int tvshowid { get; set; }
-        public int episode { get; set; }
-        public int watchedepisodes { get; set; }
-        public float rating { get; set; }
-        public string banner { get; set; }
-        public string poster { get; set; }
-        public string fanart { get; set; }
-        public string label { get; set; }
-        public string plot { get; set; }
-        public string imdbnumber { get; set; }
-        public string dateadded { get; set; }
+        public int TVShowId { get; set; }
+        public int Episode { get; set; }
+        public int WatchedEpisodes { get; set; }
+        public float Rating { get; set; }
+        public string Banner { get; set; }
+        public string Poster { get; set; }
+        public string Fanart { get; set; }
+        public string Label { get; set; }
+        public string Plot { get; set; }
+        public string IMDBNumber { get; set; }
+        public string DateAdded { get; set; }
         public TVShowTableEntry() {
 
         }
@@ -35,20 +35,44 @@ namespace KodiRemote.Code.Database.TVShowTables {
             update(tvshow.Episode, tvshow.TVShowId, tvshow.WatchedEpisodes, tvshow.Rating, tvshow.Art.Banner, tvshow.Art.Poster, tvshow.Art.Fanart, tvshow.Label, tvshow.Plot, tvshow.IMDBNumber, tvshow.DateAdded);
         }
         public void update(int episode, int tvshowid, int watchedepisodes, float rating, string banner, string poster, string fanart, string label, string plot, string imdbnumber, string dateadded) {
-            this.episode = episode;
-            this.tvshowid = tvshowid;
-            this.watchedepisodes = watchedepisodes;
-            this.rating = rating;
-            this.banner = banner;
-            this.poster = poster;
-            this.fanart = fanart;
-            this.label = label;
-            this.plot = plot;
-            this.imdbnumber = imdbnumber;
-            this.dateadded = dateadded;
+            this.Episode = episode;
+            this.TVShowId = tvshowid;
+            this.WatchedEpisodes = watchedepisodes;
+            this.Rating = rating;
+            this.Banner = banner;
+            this.Poster = poster;
+            this.Fanart = fanart;
+            this.Label = label;
+            this.Plot = plot;
+            this.IMDBNumber = imdbnumber;
+            this.DateAdded = dateadded;
         }
-        public int CompareTo(object obj) {
-            return this.label.CompareTo(((TVShowTableEntry)obj).label);
+
+        public override bool Equals(object obj) {
+            if (obj == null) {
+                return false;
+            }
+
+            TVShowTableEntry other = obj as TVShowTableEntry;
+            if ((System.Object)other == null) {
+                return false;
+            }
+
+            return TVShowId == other.TVShowId;
+        }
+
+        public bool Equals(TVShowSeasonTableEntry other) {
+            // If parameter is null return false:
+            if ((object)other == null) {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return TVShowId == other.TVShowId;
+        }
+
+        public override int GetHashCode() {
+            return TVShowId.GetHashCode();
         }
     }
 }

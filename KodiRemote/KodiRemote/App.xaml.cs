@@ -8,7 +8,7 @@ using KodiRemote.Code.Utils;
 using KodiRemote.View;
 using KodiRemote.View.Base;
 using KodiRemote.ViewModel;
-using SQLite;
+using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,6 +53,7 @@ namespace KodiRemote {
         /// <param name="e">Details über Startanforderung und -prozess.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e) {
             await Init();
+
             PrepareRootFrame();
 
             if (_rootFrame.Content == null) {

@@ -1,5 +1,6 @@
 ﻿using KodiRemote.Code.Essentials;
-using SQLite;
+using SQLite.Net.Attributes;
+using SQLite.Net.Async;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,9 @@ namespace KodiRemote.Code.Database {
         }
 
         public static async Task Init() {
-            instance = new SettingsDatabase();
-            instance.connection = new SQLiteAsyncConnection("Settings");
+            var lo = new SQLite.Net.SQLiteConnectionWithLock(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), new SQLite.Net.SQLiteConnectionString("Settings.s3db", false));
+            instance.connection = new SQLiteAsyncConnection(() => lo);
+            //instance.connection = new SQLiteAsyncConnection("Settings.s3db");
             await instance.connection.CreateTableAsync<KodiSettings>();
         }
 

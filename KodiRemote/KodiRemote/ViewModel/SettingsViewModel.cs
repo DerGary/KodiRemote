@@ -57,5 +57,16 @@ namespace KodiRemote.ViewModel {
                 return removeKodi;
             }
         }
+        private RelayCommand updateKodiDatabase;
+        public RelayCommand UpdateKodiDatabase {
+            get {
+                if (updateKodiDatabase == null) {
+                    updateKodiDatabase = new RelayCommand(async () => {
+                        await SelectedKodi.UpdateDatabase();
+                    });
+                }
+                return updateKodiDatabase;
+            }
+        }
     }
 }
