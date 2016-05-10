@@ -2,7 +2,6 @@
 using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.KFiles.Params;
 using KodiRemote.Code.JSON.KJSONRPC.Params;
-using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -307,7 +306,6 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
     }
     [DataContract]
     public class TVShow {
-        [PrimaryKey]
         [DataMember(Name = "tvshowid")]
         public int TVShowId { get; set; }
         [DataMember(Name = "art")]

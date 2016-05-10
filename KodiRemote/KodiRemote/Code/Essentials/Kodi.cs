@@ -75,17 +75,35 @@ namespace KodiRemote.Code.Essentials {
         public abstract void Dispose();
 
         public async Task UpdateDatabase() {
+            var tvShowIds = await UpdateTVShows();
+            await UpdateTVShowSeasons(tvShowIds);
+        }
+        public async Task UpdateTVShowSeasons(List<int> tvShowIds) {
+            SeasonField field = new SeasonField();
+            field.Mine();
+            TVShowSeasonsResult result;
+            foreach (int i in tvShowIds) {
+                result = await VideoLibrary.GetSeasons(i, field);
+                if (result != null) {
+                    await Database.SaveTVShowSeasons(result.TVShowSeasons);
+                }
+            }
+        }
+        public async Task<List<int>> UpdateTVShows() {
             var tvshowfield = new TVShowField();
             tvshowfield.Mine();
             TVShowsResult result;
+            List<int> tvShowIds = new List<int>();
             int i = 0;
             do {
                 result = await VideoLibrary.GetTVShows(tvshowfield, limits: new JSON.General.Limits(i, i + 50));
                 i += 50;
                 if (result != null) {
-                    //await Database.SaveTVShows(result.TVShows);
+                    tvShowIds.AddRange(result.TVShows.Select(x => x.TVShowId));
+                    await Database.SaveTVShows(result.TVShows);
                 }
             } while (result != null && result.Limits.End != result.Limits.Total);
+            return tvShowIds;
         }
     }
 }

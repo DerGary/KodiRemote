@@ -1,9 +1,7 @@
-﻿using KodiRemote.Code.Database.GeneralTables;
-using KodiRemote.Code.JSON.General.Results;
-using KodiRemote.Code.JSON.KVideoLibrary.Results;
-using SQLite.Net.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +10,16 @@ namespace KodiRemote.Code.Database.TVShowTables {
 
     [Table("TVShowGenres")]
     public class TVShowGenreTableEntry {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public int TVShowId { get; set; }
+        [Key]
         public int GenreId { get; set; }
+        [Required]
+        public string Genre { get; set; }
+
+        public List<TVShowGenre> TVShows { get; set; } = new List<TVShowGenre>();
 
         public TVShowGenreTableEntry() { }
-        public TVShowGenreTableEntry(TVShow tvshow, GenreTableEntry genre) : this() {
-            TVShowId = tvshow.TVShowId;
-            GenreId = genre.GenreId;
+        public TVShowGenreTableEntry(string genre) : this() {
+            Genre = genre;
         }
 
         public override bool Equals(object obj) {
@@ -33,7 +32,7 @@ namespace KodiRemote.Code.Database.TVShowTables {
                 return false;
             }
 
-            return TVShowId == other.TVShowId && GenreId == other.GenreId;
+            return Genre == other.Genre;
         }
 
         public bool Equals(TVShowGenreTableEntry other) {
@@ -43,11 +42,19 @@ namespace KodiRemote.Code.Database.TVShowTables {
             }
 
             // Return true if the fields match:
-            return TVShowId == other.TVShowId && GenreId == other.GenreId;
+            return Genre == other.Genre;
         }
 
         public override int GetHashCode() {
-            return TVShowId.GetHashCode() ^ GenreId.GetHashCode();
+            return Genre.GetHashCode();
         }
+    }
+
+    public class TVShowGenre {
+        public int TVShowId { get; set; }
+        public TVShowTableEntry TVShow { get; set; }
+
+        public int GenreId { get; set; }
+        public TVShowGenreTableEntry Genre { get; set; }
     }
 }

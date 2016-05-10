@@ -1,7 +1,9 @@
 ﻿using KodiRemote.Code.JSON.KVideoLibrary.Results;
-using SQLite.Net.Attributes;
+
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +12,7 @@ namespace KodiRemote.Code.Database.TVShowTables {
 
     [Table("TVShowSeasons")]
     public class TVShowSeasonTableEntry {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        [ForeignKey("TVShow")]
         public int TVShowId { get; set; }
         public int Season { get; set; }
         public int Episode { get; set; }
@@ -19,6 +20,8 @@ namespace KodiRemote.Code.Database.TVShowTables {
         public string Banner { get; set; }
         public string Poster { get; set; }
         public string Label { get; set; }
+
+        public TVShowTableEntry TVShow { get; set; }
 
         public TVShowSeasonTableEntry() {
 

@@ -6,9 +6,10 @@ using KodiRemote.Code.JSON.KAudioLibrary.Results;
 using KodiRemote.Code.JSON.KGUI.Results;
 using KodiRemote.Code.JSON.KJSONRPC.Results;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
-using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace KodiRemote.Code.Essentials {
     [Table("Kodis")]
     public class KodiSettings : PropertyChangedBase {
         private string name;
-        [PrimaryKey]
+        [Key]
         public string Name {
             get {
                 return name;
@@ -84,7 +85,7 @@ namespace KodiRemote.Code.Essentials {
         }
 
         private bool online;
-        [Ignore]
+        [NotMapped]
         public bool Online {
             get {
                 return online;
@@ -127,6 +128,7 @@ namespace KodiRemote.Code.Essentials {
                 RaisePropertyChanged(nameof(JSONVersion));
             }
         }
+        [NotMapped]
         public string JSONVersion {
             get {
                 return JSONMajor + "." + JSONMinor + "." + JSONPatch;
@@ -186,13 +188,14 @@ namespace KodiRemote.Code.Essentials {
                 RaisePropertyChanged(nameof(KodiVersion));
             }
         }
+        [NotMapped]
         public string KodiVersion {
             get {
                 return KodiMajor + "." + KodiMinor + "." + KodiRevision + "." + KodiTag;
             }
         }
         private bool muted;
-        [Ignore]
+        [NotMapped]
         public bool Muted {
             get {
                 return muted;
@@ -203,7 +206,7 @@ namespace KodiRemote.Code.Essentials {
             }
         }
         private double volume;
-        [Ignore]
+        [NotMapped]
         public double Volume {
             get {
                 return volume;
@@ -328,8 +331,14 @@ namespace KodiRemote.Code.Essentials {
             await InitConnection();
         }
 
-        public async Task GetInfo() {
+        private bool getInfo = false;
+
+        public async Task TriggerGetInfo() {
             await InitConnection();
+            getInfo = true;
+        }
+
+        public async Task GetInfo() {
             if (Online) {
                 JSONRPCVersion jsonVersion = await Kodi.JSONRPC.Version();
                 JSONMajor = jsonVersion.VersionValue.Major;
@@ -363,6 +372,7 @@ namespace KodiRemote.Code.Essentials {
                 ArtistCount = arresult.Limits.Total;
                 await SettingsDatabase.Instance.InsertOrUpdateKodi(this);
             }
+            getInfo = false;
         }
 
         private async void Kodi_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
@@ -371,7 +381,10 @@ namespace KodiRemote.Code.Essentials {
             } else if (e.PropertyName == "Volume") {
                 Volume = Kodi.Volume;
             } else if (e.PropertyName == "Connected") {
-                await GetInfo();
+                Online = Kodi.Connected;
+                if (getInfo) {
+                    await GetInfo();
+                }
             }
         }
     }

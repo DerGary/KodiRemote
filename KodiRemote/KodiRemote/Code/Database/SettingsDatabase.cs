@@ -1,17 +1,17 @@
 ﻿using KodiRemote.Code.Essentials;
-using SQLite.Net.Attributes;
-using SQLite.Net.Async;
+using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace KodiRemote.Code.Database {
     public class SettingsDatabase {
         private SettingsDatabase() { }
 
-        private SQLiteAsyncConnection connection;
+        private SettingsContext database;
 
         private static SettingsDatabase instance;
         public static SettingsDatabase Instance {
@@ -22,43 +22,49 @@ namespace KodiRemote.Code.Database {
                 return instance;
             }
         }
+        ~SettingsDatabase() {
+            database.Dispose();
+        }
 
         public static async Task Init() {
-            var lo = new SQLite.Net.SQLiteConnectionWithLock(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), new SQLite.Net.SQLiteConnectionString("Settings.s3db", false));
-            instance.connection = new SQLiteAsyncConnection(() => lo);
-            //instance.connection = new SQLiteAsyncConnection("Settings.s3db");
-            await instance.connection.CreateTableAsync<KodiSettings>();
+            instance = new SettingsDatabase();
+            instance.database = new SettingsContext();
+            await instance.database.Database.MigrateAsync();
         }
 
         public async Task<List<KodiSettings>> GetAllKodis() {
-            var query = connection.Table<KodiSettings>();
-            return await query.ToListAsync();
+            return await database.Kodis.ToListAsync();
         }
 
         public async Task<KodiSettings> GetActiveKodi() {
-            var query = connection.Table<KodiSettings>();
-            return await query.Where(x => x.Active == true).FirstOrDefaultAsync();
+            return await database.Kodis.FirstOrDefaultAsync(x => x.Active == true);
         }
 
         public async Task InsertOrUpdateKodi(KodiSettings settings) {
             if (settings.Active) {
                 KodiSettings currentlyActive = await GetActiveKodi();
-                if (currentlyActive != null) {
+                if (currentlyActive != null && currentlyActive != settings) {
                     currentlyActive.Active = false;
-                    await connection.UpdateAsync(currentlyActive);
+                    database.Kodis.Update(currentlyActive);
                 }
             }
-            await connection.InsertOrReplaceAsync(settings);
+            if (database.Kodis.Contains(settings)) {
+                database.Kodis.Update(settings);
+            } else {
+                database.Kodis.Add(settings);
+            }
+            await database.SaveChangesAsync();
         }
         public async Task Remove(KodiSettings settings) {
-            await connection.DeleteAsync(settings);
+            database.Kodis.Remove(settings);
             if (settings.Active) {
                 var nowActive = (await GetAllKodis()).FirstOrDefault();
                 if (nowActive != null) {
                     nowActive.Active = true;
-                    await connection.UpdateAsync(nowActive);
+                    database.Kodis.Update(nowActive);
                 }
             }
+            await database.SaveChangesAsync();
         }
     }
 }

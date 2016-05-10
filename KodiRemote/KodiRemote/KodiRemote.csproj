@@ -113,46 +113,9 @@
     </Compile>
     <Compile Include="Code\Common\PropertyChangedBase.cs" />
     <Compile Include="Code\Common\RelayCommand.cs" />
-    <Compile Include="Code\Database\AddonTables\AddonTable.cs" />
+    <Compile Include="Code\Database\DatabaseContext.cs" />
     <Compile Include="Code\Database\DatabaseConnection.cs" />
-    <Compile Include="Code\Database\EpisodeTables\EpisodeActorTable.cs" />
-    <Compile Include="Code\Database\EpisodeTables\EpisodeAudioStreamTable.cs" />
-    <Compile Include="Code\Database\EpisodeTables\EpisodeDirectorTable.cs" />
-    <Compile Include="Code\Database\EpisodeTables\EpisodeSubtitleStreamTable.cs" />
-    <Compile Include="Code\Database\EpisodeTables\EpisodeTable.cs" />
-    <Compile Include="Code\Database\EpisodeTables\EpisodeVideoStreamTable.cs" />
-    <Compile Include="Code\Database\GeneralTables\ActorsTable.cs" />
-    <Compile Include="Code\Database\GeneralTables\AudioStreamTable.cs" />
-    <Compile Include="Code\Database\GeneralTables\DirectorsTable.cs" />
-    <Compile Include="Code\Database\GeneralTables\GenreTable.cs" />
-    <Compile Include="Code\Database\GeneralTables\SubtitleStreamTable.cs" />
-    <Compile Include="Code\Database\GeneralTables\VideoStreamTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieActorTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieAudioStreamTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieDirectorTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieGenreTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieSetMovieTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieSetTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieSubtitleStreamTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieTable.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieVideoStreamTable.cs" />
-    <Compile Include="Code\Database\MusicTables\AlbumArtistTable.cs" />
-    <Compile Include="Code\Database\MusicTables\AlbumGenreTable.cs" />
-    <Compile Include="Code\Database\MusicTables\AlbumTable.cs" />
-    <Compile Include="Code\Database\MusicTables\ArtistTable.cs" />
-    <Compile Include="Code\Database\MusicTables\AudioPlaylistSongTable.cs" />
-    <Compile Include="Code\Database\MusicTables\AudioPlaylistTable.cs" />
-    <Compile Include="Code\Database\MusicTables\SongArtistTable.cs" />
-    <Compile Include="Code\Database\MusicTables\SongGenreTable.cs" />
-    <Compile Include="Code\Database\MusicTables\SongTable.cs" />
-    <Compile Include="Code\Database\MusicVideoTables\MusicVideoArtistTable.cs" />
-    <Compile Include="Code\Database\MusicVideoTables\MusicVideoAudioStreamTable.cs" />
-    <Compile Include="Code\Database\MusicVideoTables\MusicVideoDirectorTable.cs" />
-    <Compile Include="Code\Database\MusicVideoTables\MusicVideoGenreTable.cs" />
-    <Compile Include="Code\Database\MusicVideoTables\MusicVideoSubtitleStreamTable.cs" />
-    <Compile Include="Code\Database\MusicVideoTables\MusicVideoTable.cs" />
-    <Compile Include="Code\Database\MusicVideoTables\MusicVideoVideoStreamTable.cs" />
-    <Compile Include="Code\Database\MusicVideoTables\MVArtistTable.cs" />
+    <Compile Include="Code\Database\SettingsContext.cs" />
     <Compile Include="Code\Database\SettingsDatabase.cs" />
     <Compile Include="Code\Database\TVShowTables\TvShowActorsTable.cs" />
     <Compile Include="Code\Database\TVShowTables\TvShowGenreTable.cs" />
@@ -279,6 +242,16 @@
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
+    <Compile Include="Migrations\20160510075711_InitTVShowDatabase.cs" />
+    <Compile Include="Migrations\20160510075711_InitTVShowDatabase.designer.cs">
+      <DependentUpon>20160510075711_InitTVShowDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
+    <Compile Include="Migrations\Settings\20160509091955_InitSettings.cs" />
+    <Compile Include="Migrations\Settings\20160509091955_InitSettings.designer.cs">
+      <DependentUpon>20160509091955_InitSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Settings\SettingsContextModelSnapshot.cs" />
     <Compile Include="ViewModel\AddKodiViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />

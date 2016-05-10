@@ -1,9 +1,9 @@
-﻿using KodiRemote.Code.Database.GeneralTables;
-using KodiRemote.Code.JSON.General;
+﻿using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
-using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +12,23 @@ namespace KodiRemote.Code.Database.TVShowTables {
 
     [Table("TVShowActors")]
     public class TVShowActorsTableEntry {
-        [PrimaryKey, AutoIncrement]
+        [Key]
         public int Id { get; set; }
-        public int TVShowId { get; set; }
-        public int ActorId { get; set; }
+        public string Name { get; set; }
+        public string Thumbnail { get; set; }
         public string Role { get; set; }
 
+
+        [ForeignKey("TVShow")]
+        public int TVShowId { get; set; }
+        public TVShowTableEntry TVShow { get; set; }
+
         public TVShowActorsTableEntry() { }
-        public TVShowActorsTableEntry(TVShow tvshow, ActorsTableEntry actorEntry, Actor actor) : this() {
+        public TVShowActorsTableEntry(TVShow tvshow, Actor actor) : this() {
             TVShowId = tvshow.TVShowId;
             Role = actor.Role;
-            ActorId = actorEntry.ActorId;
+            Name = actor.Name;
+            Thumbnail = actor.Thumbnail;
         }
 
         public override bool Equals(object obj) {
@@ -35,7 +41,7 @@ namespace KodiRemote.Code.Database.TVShowTables {
                 return false;
             }
 
-            return TVShowId == other.TVShowId && ActorId == other.ActorId && Role == other.Role;
+            return TVShowId == other.TVShowId && Name == other.Name && Thumbnail == other.Thumbnail && Role == other.Role;
         }
 
         public bool Equals(TVShowActorsTableEntry other) {
@@ -45,11 +51,11 @@ namespace KodiRemote.Code.Database.TVShowTables {
             }
 
             // Return true if the fields match:
-            return TVShowId == other.TVShowId && ActorId == other.ActorId && Role == other.Role;
+            return TVShowId == other.TVShowId && Name == other.Name && Thumbnail == other.Thumbnail && Role == other.Role;
         }
 
         public override int GetHashCode() {
-            return TVShowId.GetHashCode() ^ ActorId.GetHashCode() ^ Role.GetHashCode();
+            return TVShowId.GetHashCode() ^ Name.GetHashCode() ^ Role.GetHashCode();
         }
     }
 }

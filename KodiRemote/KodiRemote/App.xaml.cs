@@ -8,7 +8,6 @@ using KodiRemote.Code.Utils;
 using KodiRemote.View;
 using KodiRemote.View.Base;
 using KodiRemote.ViewModel;
-using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,6 +43,7 @@ namespace KodiRemote {
             //    Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            
         }
 
         /// <summary>
@@ -122,6 +122,8 @@ namespace KodiRemote {
         }
         private async Task Init() {
             await SettingsDatabase.Init();
+            //KodiSettings test = new KodiSettings("localtest", "localhost", "9090", ConnectionType.Websocket, true);
+            //await SettingsDatabase.Instance.InsertOrUpdateKodi(test);
             var kodi = await SettingsDatabase.Instance.GetActiveKodi();
             if (kodi != null) {
                 await Kodi.Init(kodi);

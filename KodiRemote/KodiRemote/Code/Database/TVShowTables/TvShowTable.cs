@@ -1,7 +1,9 @@
-﻿using KodiRemote.Code.JSON.KVideoLibrary.Results;
-using SQLite.Net.Attributes;
+﻿using KodiRemote.Code.JSON.General;
+using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ namespace KodiRemote.Code.Database.TVShowTables {
 
     [Table("TVShows")]
     public class TVShowTableEntry {
-        [PrimaryKey]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TVShowId { get; set; }
         public int Episode { get; set; }
         public int WatchedEpisodes { get; set; }
@@ -22,6 +24,12 @@ namespace KodiRemote.Code.Database.TVShowTables {
         public string Plot { get; set; }
         public string IMDBNumber { get; set; }
         public string DateAdded { get; set; }
+
+        public List<TVShowGenre> Genres { get; set; } = new List<TVShowGenre>();
+        public List<TVShowActorsTableEntry> Actors { get; set; } = new List<TVShowActorsTableEntry>();
+        public List<TVShowSeasonTableEntry> Seasons { get; set; } = new List<TVShowSeasonTableEntry>();
+
+
         public TVShowTableEntry() {
 
         }
@@ -30,6 +38,7 @@ namespace KodiRemote.Code.Database.TVShowTables {
         }
         public TVShowTableEntry(TVShow tvshow) {
             update(tvshow);
+
         }
         public void update(TVShow tvshow) {
             update(tvshow.Episode, tvshow.TVShowId, tvshow.WatchedEpisodes, tvshow.Rating, tvshow.Art.Banner, tvshow.Art.Poster, tvshow.Art.Fanart, tvshow.Label, tvshow.Plot, tvshow.IMDBNumber, tvshow.DateAdded);
