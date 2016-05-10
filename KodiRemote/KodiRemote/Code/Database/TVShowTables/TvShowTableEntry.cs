@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON.General;
+﻿using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,9 @@ namespace KodiRemote.Code.Database.TVShowTables {
         public string IMDBNumber { get; set; }
         public string DateAdded { get; set; }
 
-        public List<TVShowGenre> Genres { get; set; } = new List<TVShowGenre>();
-        public List<TVShowActorsTableEntry> Actors { get; set; } = new List<TVShowActorsTableEntry>();
-        public List<TVShowSeasonTableEntry> Seasons { get; set; } = new List<TVShowSeasonTableEntry>();
-
+        public List<TVShowGenreMapper> Genres { get; set; }
+        public List<TVShowActorMapper> Actors { get; set; }
+        public List<TVShowSeasonTableEntry> Seasons { get; set; }
 
         public TVShowTableEntry() {
 
@@ -38,7 +38,6 @@ namespace KodiRemote.Code.Database.TVShowTables {
         }
         public TVShowTableEntry(TVShow tvshow) {
             update(tvshow);
-
         }
         public void update(TVShow tvshow) {
             update(tvshow.Episode, tvshow.TVShowId, tvshow.WatchedEpisodes, tvshow.Rating, tvshow.Art.Banner, tvshow.Art.Poster, tvshow.Art.Fanart, tvshow.Label, tvshow.Plot, tvshow.IMDBNumber, tvshow.DateAdded);

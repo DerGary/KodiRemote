@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.JSON.KVideoLibrary.Results;
+﻿using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.JSON.KVideoLibrary.Results;
 
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace KodiRemote.Code.Database.TVShowTables {
         public string Label { get; set; }
 
         public TVShowTableEntry TVShow { get; set; }
+        public List<EpisodeTableEntry> Episodes { get; set; }
 
         public TVShowSeasonTableEntry() {
 

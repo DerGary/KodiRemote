@@ -15,7 +15,7 @@ namespace KodiRemote.Code.Database.TVShowTables {
         [Required]
         public string Genre { get; set; }
 
-        public List<TVShowGenre> TVShows { get; set; } = new List<TVShowGenre>();
+        public List<TVShowGenreMapper> TVShows { get; set; } = new List<TVShowGenreMapper>();
 
         public TVShowGenreTableEntry() { }
         public TVShowGenreTableEntry(string genre) : this() {
@@ -48,13 +48,5 @@ namespace KodiRemote.Code.Database.TVShowTables {
         public override int GetHashCode() {
             return Genre.GetHashCode();
         }
-    }
-
-    public class TVShowGenre {
-        public int TVShowId { get; set; }
-        public TVShowTableEntry TVShow { get; set; }
-
-        public int GenreId { get; set; }
-        public TVShowGenreTableEntry Genre { get; set; }
     }
 }

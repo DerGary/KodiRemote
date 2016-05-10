@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.GeneralTables {
 
-    [Table("VideoStreams")]
-    public class VideoStreamTableEntry {
+    [Table("AudioStreams")]
+    public class AudioStreamTableEntry {
         [Key]
-        public int VideoStreamId { get; set; }
+        public int AudioStreamId { get; set; }
+        public int Channels { get; set; }
         public string Codec { get; set; }
-        public int Height { get; set; }
-        public int Width { get; set; }
-        public float Aspect { get; set; }
+        public string Language { get; set; }
 
-        public List<EpisodeVideoStreamMapper> Episodes { get; set; }
+        public List<EpisodeAudioStreamMapper> Episodes { get; set; }
     }
 }

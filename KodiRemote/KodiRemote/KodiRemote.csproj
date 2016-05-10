@@ -115,12 +115,25 @@
     <Compile Include="Code\Common\RelayCommand.cs" />
     <Compile Include="Code\Database\DatabaseContext.cs" />
     <Compile Include="Code\Database\DatabaseConnection.cs" />
+    <Compile Include="Code\Database\EpisodeTables\EpisodeActorMapper.cs" />
+    <Compile Include="Code\Database\EpisodeTables\EpisodeAudioStreamMapper.cs" />
+    <Compile Include="Code\Database\EpisodeTables\EpisodeDirectorMapper.cs" />
+    <Compile Include="Code\Database\EpisodeTables\EpisodeMapper.cs" />
+    <Compile Include="Code\Database\EpisodeTables\EpisodeSubtitleStreamMapper.cs" />
+    <Compile Include="Code\Database\EpisodeTables\EpisodeTableEntry.cs" />
+    <Compile Include="Code\Database\EpisodeTables\EpisodeVideoStreamMapper.cs" />
+    <Compile Include="Code\Database\GeneralTables\ActorTableEntry.cs" />
+    <Compile Include="Code\Database\GeneralTables\AudioStreamTableEntry.cs" />
+    <Compile Include="Code\Database\GeneralTables\DirectorTableEntry.cs" />
+    <Compile Include="Code\Database\GeneralTables\SubtitleStreamTableEntry.cs" />
+    <Compile Include="Code\Database\GeneralTables\VideoStreamTable.cs" />
     <Compile Include="Code\Database\SettingsContext.cs" />
     <Compile Include="Code\Database\SettingsDatabase.cs" />
-    <Compile Include="Code\Database\TVShowTables\TvShowActorsTable.cs" />
-    <Compile Include="Code\Database\TVShowTables\TvShowGenreTable.cs" />
-    <Compile Include="Code\Database\TVShowTables\TvShowSeasonTable.cs" />
-    <Compile Include="Code\Database\TVShowTables\TvShowTable.cs" />
+    <Compile Include="Code\Database\TVShowTables\TVShowActorsMapper.cs" />
+    <Compile Include="Code\Database\TVShowTables\TVShowGenreMapper.cs" />
+    <Compile Include="Code\Database\TVShowTables\TVShowGenreTableEntry.cs" />
+    <Compile Include="Code\Database\TVShowTables\TVShowSeasonTableEntry.cs" />
+    <Compile Include="Code\Database\TVShowTables\TVShowTableEntry.cs" />
     <Compile Include="Code\Essentials\ConnectionType.cs" />
     <Compile Include="Code\Essentials\Enums.cs" />
     <Compile Include="Code\Essentials\KodiSettings.cs" />
@@ -237,14 +250,15 @@
     <Compile Include="Code\JSON\WebSocketServices\SystemWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\VideoLibraryWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\WebSocketServiceBase.cs" />
+    <Compile Include="Code\Utils\DatabaseLogger.cs" />
     <Compile Include="Code\Utils\JsonSerializer.cs" />
     <Compile Include="Code\Utils\RPCWebSocketHelper.cs" />
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
-    <Compile Include="Migrations\20160510075711_InitTVShowDatabase.cs" />
-    <Compile Include="Migrations\20160510075711_InitTVShowDatabase.designer.cs">
-      <DependentUpon>20160510075711_InitTVShowDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\20160510205208_Init.cs" />
+    <Compile Include="Migrations\20160510205208_Init.designer.cs">
+      <DependentUpon>20160510205208_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Settings\20160509091955_InitSettings.cs" />

@@ -1,10 +1,11 @@
-﻿using KodiRemote.Code.Database.TVShowTables;
+﻿using KodiRemote.Code.Database.GeneralTables;
+using KodiRemote.Code.Database.TVShowTables;
 using KodiRemote.Code.Essentials;
 using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
+using KodiRemote.Code.Utils;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Internal;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace KodiRemote.Code.Database {
             database = new DatabaseContext(settings.Name);
             await database.Database.MigrateAsync();
             ILoggerFactory logger = ((IInfrastructure<IServiceProvider>)database).Instance.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
-            logger.AddProvider(new MyLoggerProvider());
+            logger.AddProvider(new DatabaseLoggerProvider());
             this.settings = settings;
         }
 
@@ -31,28 +32,30 @@ namespace KodiRemote.Code.Database {
             var tvshowentry = new TVShowTableEntry(tvshow);
             if (await database.TVShows.AnyAsync(x => x.TVShowId == tvshow.TVShowId)) {
                 database.TVShows.Update(tvshowentry);
-                database.TVShowActors.RemoveRange(database.TVShowActors.Where(x => x.TVShowId == tvshow.TVShowId));
-                database.TVShowGenre.RemoveRange(database.TVShowGenre.Where(x => x.TVShowId == tvshow.TVShowId));
-                Debug.WriteLine("notnull");
+                database.TVShowActorMapper.RemoveRange(database.TVShowActorMapper.Where(x => x.TVShowId == tvshow.TVShowId));
+                database.TVShowGenreMapper.RemoveRange(database.TVShowGenreMapper.Where(x => x.TVShowId == tvshow.TVShowId));
             } else {
-                Debug.WriteLine("null");
                 database.TVShows.Add(tvshowentry);
+                await database.SaveChangesAsync();
             }
 
-            await database.SaveChangesAsync();
             foreach (Actor actor in tvshow.Cast) {
-                database.TVShowActors.Add(new TVShowActorsTableEntry(tvshow, actor) { TVShow = tvshowentry });
-            }
-            foreach (string genre in tvshow.Genre) {
-                var genreentry = new TVShowGenreTableEntry(genre);
-                if (!await database.TVShowGenres.AnyAsync(x => x.Genre == genreentry.Genre)) {
-                    database.TVShowGenres.Add(genreentry);
+                var savedActor = await database.Actors.FirstOrDefaultAsync(x => x.Name == actor.Name && x.Thumbnail == actor.Thumbnail);
+                if (savedActor == null) {
+                    savedActor = new ActorTableEntry(actor);
+                    database.Actors.Add(savedActor);
+                    await database.SaveChangesAsync();
                 }
+                database.TVShowActorMapper.Add(new TVShowActorMapper() { ActorId = savedActor.ActorId, TVShowId = tvshow.TVShowId, Role = actor.Role });
             }
-            await database.SaveChangesAsync();
             foreach (string genre in tvshow.Genre) {
-                var genreEntry = database.TVShowGenres.FirstOrDefault(x => x.Genre == genre);
-                database.TVShowGenre.Add(new TVShowGenre() { TVShowId = tvshow.TVShowId, GenreId = genreEntry.GenreId, Genre = genreEntry, TVShow = tvshowentry });
+                var savedGenre = await database.TVShowGenres.FirstOrDefaultAsync(x => x.Genre == genre);
+                if(savedGenre == null) {
+                    savedGenre = new TVShowGenreTableEntry(genre);
+                    database.TVShowGenres.Add(savedGenre);
+                    await database.SaveChangesAsync();
+                }
+                database.TVShowGenreMapper.Add(new TVShowGenreMapper() { TVShowId = tvshow.TVShowId, GenreId = savedGenre.GenreId });
             }
         }
 
@@ -64,14 +67,18 @@ namespace KodiRemote.Code.Database {
             await database.SaveChangesAsync();
         }
 
-        public void SaveTVShowSeason(TVShowSeason season) {
+        public async Task SaveTVShowSeason(TVShowSeason season) {
             var seasonEntry = new TVShowSeasonTableEntry(season);
-            database.TVShowSeasons.Add(seasonEntry);
+            if (await database.TVShowSeasons.AnyAsync(x => x.TVShowId == season.TVShowId && x.Season == season.Season)) {
+                database.TVShowSeasons.Update(seasonEntry);
+            } else {
+                database.TVShowSeasons.Add(seasonEntry);
+            }
         }
 
         public async Task SaveTVShowSeasons(List<TVShowSeason> seasons) {
             foreach (TVShowSeason season in seasons) {
-                SaveTVShowSeason(season);
+                await SaveTVShowSeason(season);
             }
             await database.SaveChangesAsync();
         }
