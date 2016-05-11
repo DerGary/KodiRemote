@@ -1,5 +1,6 @@
 ﻿
 using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.JSON.General;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,5 +18,9 @@ namespace KodiRemote.Code.Database.GeneralTables {
         public string Language { get; set; }
 
         public List<EpisodeSubtitleStreamMapper> Episodes { get; set; }
+
+        public SubtitleStreamTableEntry(SubtitleStream stream) {
+            Language = stream.Language;
+        }
     }
 }

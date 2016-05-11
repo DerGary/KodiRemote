@@ -1,5 +1,6 @@
 ﻿
 using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.JSON.General;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,5 +20,12 @@ namespace KodiRemote.Code.Database.GeneralTables {
         public string Language { get; set; }
 
         public List<EpisodeAudioStreamMapper> Episodes { get; set; }
+
+        public AudioStreamTableEntry() {}
+        public AudioStreamTableEntry(AudioStream stream) {
+            Channels = stream.Channels;
+            Codec = stream.Codec;
+            Language = stream.Language;
+        }
     }
 }

@@ -17,5 +17,10 @@ namespace KodiRemote.Code.Database.GeneralTables {
         public string Name { get; set; }
 
         public List<EpisodeDirectorMapper> Episodes { get; set; }
+
+        public DirectorTableEntry() { }
+        public DirectorTableEntry(string director) {
+            Name = director;
+        }
     }
 }

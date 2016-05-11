@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.Database.GeneralTables;
+﻿using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.Database.GeneralTables;
 using KodiRemote.Code.Database.TVShowTables;
 using KodiRemote.Code.Essentials;
 using KodiRemote.Code.JSON.General;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -36,9 +38,9 @@ namespace KodiRemote.Code.Database {
                 database.TVShowGenreMapper.RemoveRange(database.TVShowGenreMapper.Where(x => x.TVShowId == tvshow.TVShowId));
             } else {
                 database.TVShows.Add(tvshowentry);
-                await database.SaveChangesAsync();
             }
 
+            await database.SaveChangesAsync();
             foreach (Actor actor in tvshow.Cast) {
                 var savedActor = await database.Actors.FirstOrDefaultAsync(x => x.Name == actor.Name && x.Thumbnail == actor.Thumbnail);
                 if (savedActor == null) {
@@ -81,6 +83,77 @@ namespace KodiRemote.Code.Database {
                 await SaveTVShowSeason(season);
             }
             await database.SaveChangesAsync();
+        }
+
+
+
+        public async Task SaveEpisode(Episode episode) {
+            var episodeEntry = new EpisodeTableEntry(episode);
+            if (await database.Episodes.AnyAsync(x => x.EpisodeId == episode.EpisodeId)) {
+                database.Episodes.Update(episodeEntry);
+                database.EpisodeActorMapper.RemoveRange(database.EpisodeActorMapper.Where(x => x.EpisodeId == episode.EpisodeId));
+                database.EpisodeDirectorMapper.RemoveRange(database.EpisodeDirectorMapper.Where(x => x.EpisodeId == episode.EpisodeId));
+                database.EpisodeAudioStreamMapper.RemoveRange(database.EpisodeAudioStreamMapper.Where(x => x.EpisodeId == episode.EpisodeId));
+                database.EpisodeSubtitleStreamMapper.RemoveRange(database.EpisodeSubtitleStreamMapper.Where(x => x.EpisodeId == episode.EpisodeId));
+                database.EpisodeVideoStreamMapper.RemoveRange(database.EpisodeVideoStreamMapper.Where(x => x.EpisodeId == episode.EpisodeId));
+            } else {
+                database.Episodes.Add(episodeEntry);
+            }
+
+            await database.SaveChangesAsync();
+
+            foreach (Actor actor in episode.Cast) {
+                var saved = await AddIfNotExist(
+                    set: database.Actors,
+                    filterPredicate: x => x.Name == actor.Name && x.Thumbnail == actor.Thumbnail,
+                    toSave: new ActorTableEntry(actor));
+
+                database.EpisodeActorMapper.Add(new EpisodeActorMapper() { ActorId = saved.ActorId, EpisodeId = episode.EpisodeId, Role = actor.Role });
+            }
+
+            foreach (string director in episode.Director) {
+                var saved = await AddIfNotExist(
+                    set: database.Directors, 
+                    filterPredicate: x => x.Name == director, 
+                    toSave: new DirectorTableEntry(director));
+
+                database.EpisodeDirectorMapper.Add(new EpisodeDirectorMapper() { DirectorId = saved.DirectorId, EpisodeId = episode.EpisodeId });
+            }
+
+            foreach (var stream in episode.StreamDetails.Audio) {
+                var saved = await AddIfNotExist(
+                    set: database.AudioStreams,
+                    filterPredicate: x => x.Channels == stream.Channels && x.Codec == stream.Codec && x.Language == stream.Language,
+                    toSave: new AudioStreamTableEntry(stream));
+
+                database.EpisodeAudioStreamMapper.Add(new EpisodeAudioStreamMapper() { EpisodeId = episode.EpisodeId, AudioStreamId = saved.AudioStreamId });
+            }
+
+            foreach (var stream in episode.StreamDetails.Subtitle) {
+                var saved = await AddIfNotExist(
+                    set: database.SubtitleStreams,
+                    filterPredicate: x => x.Language == stream.Language,
+                    toSave: new SubtitleStreamTableEntry(stream));
+
+                database.EpisodeSubtitleStreamMapper.Add(new EpisodeSubtitleStreamMapper() { EpisodeId = episode.EpisodeId, SubtitleStreamId = saved.SubtitleStreamId});
+            }
+            foreach (var stream in episode.StreamDetails.Video) {
+                var saved = await AddIfNotExist(
+                    set: database.VideoStreams,
+                    filterPredicate: x => x.Aspect == stream.Aspect && x.Codec == stream.Codec && x.Height == stream.Height && x.Width == stream.Width,
+                    toSave: new VideoStreamTableEntry(stream));
+
+                database.EpisodeVideoStreamMapper.Add(new EpisodeVideoStreamMapper() { EpisodeId = episode.EpisodeId, VideoStreamId= saved.VideoStreamId});
+            }
+        }
+        public async Task<T> AddIfNotExist<T>(DbSet<T> set, Expression<Func<T,bool>> filterPredicate, T toSave) where T : class {
+            var saved = await set.FirstOrDefaultAsync(filterPredicate);
+            if (saved == null) {
+                saved = toSave;
+                set.Add(saved);
+                await database.SaveChangesAsync();
+            }
+            return saved;
         }
     }
 }

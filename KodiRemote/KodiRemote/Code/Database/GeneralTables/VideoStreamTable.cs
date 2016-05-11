@@ -1,5 +1,6 @@
 ﻿
 using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.JSON.General;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,5 +21,13 @@ namespace KodiRemote.Code.Database.GeneralTables {
         public float Aspect { get; set; }
 
         public List<EpisodeVideoStreamMapper> Episodes { get; set; }
+
+        public VideoStreamTableEntry() { }
+        public VideoStreamTableEntry(VideoStream stream) {
+            Codec = stream.Codec;
+            Height = stream.Height;
+            Width = stream.Width;
+            Aspect = stream.Aspect;
+        }
     }
 }
