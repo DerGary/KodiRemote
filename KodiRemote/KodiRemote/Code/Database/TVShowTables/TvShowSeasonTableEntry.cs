@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
 
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.Database.TVShowTables {
 
     [Table("TVShowSeasons")]
-    public class TVShowSeasonTableEntry {
+    public class TVShowSeasonTableEntry : TableEntryBase {
         [ForeignKey("TVShow")]
         public int TVShowId { get; set; }
         public int Season { get; set; }
@@ -24,6 +25,13 @@ namespace KodiRemote.Code.Database.TVShowTables {
 
         public TVShowTableEntry TVShow { get; set; }
         public List<EpisodeTableEntry> Episodes { get; set; }
+
+        [NotMapped]
+        public override string Key {
+            get {
+                return TVShowId + ";" + Season;
+            }
+        }
 
         public TVShowSeasonTableEntry() {
 
@@ -42,23 +50,14 @@ namespace KodiRemote.Code.Database.TVShowTables {
             this.Episode = episode;
             this.TVShowId = tvshowid;
             this.WatchedEpisodes = watchedepisodes;
-            this.Season = season;
+            this.Season = season +1;
             this.Banner = banner;
             this.Poster = poster;
             this.Label = label;
         }
 
         public override bool Equals(object obj) {
-            if (obj == null) {
-                return false;
-            }
-
-            TVShowSeasonTableEntry other = obj as TVShowSeasonTableEntry;
-            if ((System.Object)other == null) {
-                return false;
-            }
-
-            return TVShowId == other.TVShowId && Season == other.Season;
+            return this.Equals(obj as TVShowSeasonTableEntry);
         }
 
         public bool Equals(TVShowSeasonTableEntry other) {
@@ -66,14 +65,24 @@ namespace KodiRemote.Code.Database.TVShowTables {
             if ((object)other == null) {
                 return false;
             }
-
-            // Return true if the fields match:
-            return TVShowId == other.TVShowId && Season == other.Season;
+            return IsKeyEqual(other)
+                && Episode == other.Episode
+                && WatchedEpisodes == other.WatchedEpisodes
+                && Banner == other.Banner
+                && Poster == other.Poster
+                && Label == other.Label;
         }
 
         public override int GetHashCode() {
-            return TVShowId.GetHashCode() ^ Season.GetHashCode();
+            return TVShowId ^ Season;
         }
 
+        public override bool IsKeyEqual(TableEntryBase other) {
+            var obj = other as TVShowSeasonTableEntry;
+            if(obj == null) {
+                return false;
+            }
+            return TVShowId == obj.TVShowId && Season == obj.Season;
+        }
     }
 }

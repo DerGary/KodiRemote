@@ -115,6 +115,7 @@
     <Compile Include="Code\Common\RelayCommand.cs" />
     <Compile Include="Code\Database\DatabaseContext.cs" />
     <Compile Include="Code\Database\DatabaseConnection.cs" />
+    <Compile Include="Code\Database\DatabaseContextWrapper.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeActorMapper.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeAudioStreamMapper.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeDirectorMapper.cs" />
@@ -127,6 +128,18 @@
     <Compile Include="Code\Database\GeneralTables\DirectorTableEntry.cs" />
     <Compile Include="Code\Database\GeneralTables\SubtitleStreamTableEntry.cs" />
     <Compile Include="Code\Database\GeneralTables\VideoStreamTable.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieActorMapper.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieAudioStreamMapper.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieDirectorMapper.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieGenreMapper.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieGenreTableEntry.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieMapper.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieSetMapper.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieSetTableEntry.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieSubtitleStreamMapper.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieTableEntry.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieVideoStreamMapper.cs" />
+    <Compile Include="Code\Database\Utils\ILambdaCompareable.cs" />
     <Compile Include="Code\Database\SettingsContext.cs" />
     <Compile Include="Code\Database\SettingsDatabase.cs" />
     <Compile Include="Code\Database\TVShowTables\TVShowActorsMapper.cs" />
@@ -134,6 +147,10 @@
     <Compile Include="Code\Database\TVShowTables\TVShowGenreTableEntry.cs" />
     <Compile Include="Code\Database\TVShowTables\TVShowSeasonTableEntry.cs" />
     <Compile Include="Code\Database\TVShowTables\TVShowTableEntry.cs" />
+    <Compile Include="Code\Database\Utils\Attributes.cs" />
+    <Compile Include="Code\Database\Utils\DatabaseWrapper.cs" />
+    <Compile Include="Code\Database\Utils\InsertOrUpdate.cs" />
+    <Compile Include="Code\Database\Utils\TableEntryBase.cs" />
     <Compile Include="Code\Essentials\ConnectionType.cs" />
     <Compile Include="Code\Essentials\Enums.cs" />
     <Compile Include="Code\Essentials\KodiSettings.cs" />
@@ -256,9 +273,9 @@
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
-    <Compile Include="Migrations\20160510205208_Init.cs" />
-    <Compile Include="Migrations\20160510205208_Init.designer.cs">
-      <DependentUpon>20160510205208_Init.cs</DependentUpon>
+    <Compile Include="Migrations\20160520123926_InitDB.cs" />
+    <Compile Include="Migrations\20160520123926_InitDB.designer.cs">
+      <DependentUpon>20160520123926_InitDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Settings\20160509091955_InitSettings.cs" />

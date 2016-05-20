@@ -94,8 +94,7 @@ namespace KodiRemote.Migrations
 
             modelBuilder.Entity("KodiRemote.Code.Database.GeneralTables.ActorTableEntry", b =>
                 {
-                    b.Property<int>("ActorId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("ActorId");
 
                     b.Property<string>("Name");
 
@@ -108,8 +107,7 @@ namespace KodiRemote.Migrations
 
             modelBuilder.Entity("KodiRemote.Code.Database.GeneralTables.AudioStreamTableEntry", b =>
                 {
-                    b.Property<int>("AudioStreamId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("AudioStreamId");
 
                     b.Property<int>("Channels");
 
@@ -124,8 +122,7 @@ namespace KodiRemote.Migrations
 
             modelBuilder.Entity("KodiRemote.Code.Database.GeneralTables.DirectorTableEntry", b =>
                 {
-                    b.Property<int>("DirectorId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("DirectorId");
 
                     b.Property<string>("Name");
 
@@ -136,8 +133,7 @@ namespace KodiRemote.Migrations
 
             modelBuilder.Entity("KodiRemote.Code.Database.GeneralTables.SubtitleStreamTableEntry", b =>
                 {
-                    b.Property<int>("SubtitleStreamId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("SubtitleStreamId");
 
                     b.Property<string>("Language");
 
@@ -148,8 +144,7 @@ namespace KodiRemote.Migrations
 
             modelBuilder.Entity("KodiRemote.Code.Database.GeneralTables.VideoStreamTableEntry", b =>
                 {
-                    b.Property<int>("VideoStreamId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("VideoStreamId");
 
                     b.Property<float>("Aspect");
 
@@ -162,6 +157,138 @@ namespace KodiRemote.Migrations
                     b.HasKey("VideoStreamId");
 
                     b.HasAnnotation("Relational:TableName", "VideoStreams");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieActorMapper", b =>
+                {
+                    b.Property<int>("MovieId");
+
+                    b.Property<int>("ActorId");
+
+                    b.Property<string>("Role");
+
+                    b.HasKey("MovieId", "ActorId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieAudioStreamMapper", b =>
+                {
+                    b.Property<int>("MovieId");
+
+                    b.Property<int>("AudioStreamId");
+
+                    b.HasKey("MovieId", "AudioStreamId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieDirectorMapper", b =>
+                {
+                    b.Property<int>("MovieId");
+
+                    b.Property<int>("DirectorId");
+
+                    b.HasKey("MovieId", "DirectorId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieGenreMapper", b =>
+                {
+                    b.Property<int>("MovieId");
+
+                    b.Property<int>("GenreId");
+
+                    b.HasKey("MovieId", "GenreId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieGenreTableEntry", b =>
+                {
+                    b.Property<int>("GenreId");
+
+                    b.Property<string>("Genre")
+                        .IsRequired();
+
+                    b.HasKey("GenreId");
+
+                    b.HasAlternateKey("Genre")
+                        .HasAnnotation("Relational:Name", "AK_string_Genre");
+
+                    b.HasAnnotation("Relational:TableName", "MovieGenres");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieSetMapper", b =>
+                {
+                    b.Property<int>("MovieId");
+
+                    b.Property<int>("MovieSetId");
+
+                    b.HasKey("MovieId", "MovieSetId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieSetTableEntry", b =>
+                {
+                    b.Property<int>("SetId");
+
+                    b.Property<string>("Fanart");
+
+                    b.Property<string>("Label");
+
+                    b.Property<int>("PlayCount");
+
+                    b.Property<string>("Poster");
+
+                    b.Property<string>("Thumbnail");
+
+                    b.HasKey("SetId");
+
+                    b.HasAnnotation("Relational:TableName", "MovieSets");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieSubtitleStreamMapper", b =>
+                {
+                    b.Property<int>("MovieId");
+
+                    b.Property<int>("SubtitleStreamId");
+
+                    b.HasKey("MovieId", "SubtitleStreamId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieTableEntry", b =>
+                {
+                    b.Property<int>("MovieId");
+
+                    b.Property<string>("DateAdded");
+
+                    b.Property<string>("Fanart");
+
+                    b.Property<string>("IMDBNumber");
+
+                    b.Property<string>("Label");
+
+                    b.Property<int>("PlayCount");
+
+                    b.Property<string>("Plot");
+
+                    b.Property<string>("Poster");
+
+                    b.Property<float>("Rating");
+
+                    b.Property<int>("Runtime");
+
+                    b.Property<int>("SetId");
+
+                    b.Property<string>("Trailer");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("MovieId");
+
+                    b.HasAnnotation("Relational:TableName", "Movies");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieVideoStreamMapper", b =>
+                {
+                    b.Property<int>("MovieId");
+
+                    b.Property<int>("VideoStreamId");
+
+                    b.HasKey("MovieId", "VideoStreamId");
                 });
 
             modelBuilder.Entity("KodiRemote.Code.Database.TVShowTables.TVShowActorMapper", b =>
@@ -186,8 +313,7 @@ namespace KodiRemote.Migrations
 
             modelBuilder.Entity("KodiRemote.Code.Database.TVShowTables.TVShowGenreTableEntry", b =>
                 {
-                    b.Property<int>("GenreId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("GenreId");
 
                     b.Property<string>("Genre")
                         .IsRequired();
@@ -306,6 +432,83 @@ namespace KodiRemote.Migrations
                     b.HasOne("KodiRemote.Code.Database.EpisodeTables.EpisodeTableEntry")
                         .WithMany()
                         .HasForeignKey("EpisodeId");
+
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.VideoStreamTableEntry")
+                        .WithMany()
+                        .HasForeignKey("VideoStreamId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieActorMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.ActorTableEntry")
+                        .WithMany()
+                        .HasForeignKey("ActorId");
+
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieAudioStreamMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.AudioStreamTableEntry")
+                        .WithMany()
+                        .HasForeignKey("AudioStreamId");
+
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieDirectorMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.DirectorTableEntry")
+                        .WithMany()
+                        .HasForeignKey("DirectorId");
+
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieGenreMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieGenreTableEntry")
+                        .WithMany()
+                        .HasForeignKey("GenreId");
+
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieSetMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieSetTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MovieSetId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieSubtitleStreamMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.SubtitleStreamTableEntry")
+                        .WithMany()
+                        .HasForeignKey("SubtitleStreamId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MovieTables.MovieVideoStreamMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.MovieTables.MovieTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
 
                     b.HasOne("KodiRemote.Code.Database.GeneralTables.VideoStreamTableEntry")
                         .WithMany()

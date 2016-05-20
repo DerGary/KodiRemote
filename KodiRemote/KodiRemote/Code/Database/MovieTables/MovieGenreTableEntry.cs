@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.Database.Utils;
+﻿
+using KodiRemote.Code.Database.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,16 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiRemote.Code.Database.TVShowTables {
+namespace KodiRemote.Code.Database.MovieTables {
 
-    [Table("TVShowGenres")]
-    public class TVShowGenreTableEntry : TableEntryBase {
+    [Table("MovieGenres")]
+    public class MovieGenreTableEntry : TableEntryBase {
         [Key, AutoIncrement, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int GenreId { get; set; }
         [Required]
         public string Genre { get; set; }
 
-        public List<TVShowGenreMapper> TVShows { get; set; } = new List<TVShowGenreMapper>();
+        public List<MovieGenreMapper> Movies { get; set; } = new List<MovieGenreMapper>();
 
         [NotMapped]
         public override string Key {
@@ -25,16 +26,16 @@ namespace KodiRemote.Code.Database.TVShowTables {
             }
         }
 
-        public TVShowGenreTableEntry() { }
-        public TVShowGenreTableEntry(string genre) : this() {
+        public MovieGenreTableEntry() { }
+        public MovieGenreTableEntry(string genre) : this() {
             Genre = genre;
         }
 
         public override bool Equals(object obj) {
-            return this.Equals(obj as TVShowGenreTableEntry);
+            return this.Equals(obj as MovieGenreTableEntry);
         }
 
-        public bool Equals(TVShowGenreTableEntry other) {
+        public bool Equals(MovieGenreTableEntry other) {
             // If parameter is null return false:
             if ((object)other == null) {
                 return false;

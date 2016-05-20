@@ -279,10 +279,10 @@ namespace KodiRemote.Code.Essentials {
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (disposing) {
-                    timer.Dispose();
+                    timer?.Dispose();
                     // TODO: verwalteten Zustand (verwaltete Objekte) entsorgen.
                 }
-                Connection.Dispose();
+                Connection?.Dispose();
                 // TODO: nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer weiter unten überschreiben.
                 // TODO: große Felder auf Null setzen.
 

@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Database.TVShowTables;
+using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
 
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.Database.EpisodeTables {
 
     [Table("Episodes")]
-    public class EpisodeTableEntry {
+    public class EpisodeTableEntry : TableEntryBase {
         [Key]
         public int EpisodeId { get; set; }
         public int Episode { get; set; }
@@ -35,6 +36,13 @@ namespace KodiRemote.Code.Database.EpisodeTables {
 
         public TVShowSeasonTableEntry TVShowSeason { get; set; }
 
+        [NotMapped]
+        public override string Key {
+            get {
+                return EpisodeId.ToString();
+            }
+        }
+
         public EpisodeTableEntry() {
 
         }
@@ -54,11 +62,42 @@ namespace KodiRemote.Code.Database.EpisodeTables {
             this.Plot = plot;
             this.Rating = rating;
             this.Runtime = runtime;
-            this.Season = season;
+            this.Season = season +1;
             this.Thumbnail = thumbnail;
             this.TVShowId = tvshowid;
             this.Title = title;
             this.DateAdded = dateadded;
+        }
+
+        public override bool Equals(object obj) {
+            return this.Equals(obj as EpisodeTableEntry);
+        }
+        public bool Equals(EpisodeTableEntry obj) {
+            if((object)obj == null) {
+                return false;
+            }
+
+            return IsKeyEqual(obj) 
+                && Episode == obj.Episode 
+                && PlayCount == obj.PlayCount
+                && Plot == obj.Plot
+                && Rating == obj.Rating
+                && Runtime == obj.Runtime
+                && Season == obj.Season
+                && Thumbnail == obj.Thumbnail
+                && TVShowId == obj.TVShowId
+                && Title == obj.Title
+                && DateAdded == obj.DateAdded;
+        }
+        public override int GetHashCode() {
+            return EpisodeId;
+        }
+        public override bool IsKeyEqual(TableEntryBase other) {
+            var obj = other as EpisodeTableEntry;
+            if(obj == null) {
+                return false;
+            }
+            return EpisodeId == obj.EpisodeId;
         }
     }
 }

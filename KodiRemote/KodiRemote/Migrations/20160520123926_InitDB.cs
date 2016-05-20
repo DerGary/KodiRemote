@@ -4,7 +4,7 @@ using Microsoft.Data.Entity.Migrations;
 
 namespace KodiRemote.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,7 @@ namespace KodiRemote.Migrations
                 name: "Actors",
                 columns: table => new
                 {
-                    ActorId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    ActorId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Thumbnail = table.Column<string>(nullable: true)
                 },
@@ -25,8 +24,7 @@ namespace KodiRemote.Migrations
                 name: "AudioStreams",
                 columns: table => new
                 {
-                    AudioStreamId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    AudioStreamId = table.Column<int>(nullable: false),
                     Channels = table.Column<int>(nullable: false),
                     Codec = table.Column<string>(nullable: true),
                     Language = table.Column<string>(nullable: true)
@@ -39,8 +37,7 @@ namespace KodiRemote.Migrations
                 name: "Directors",
                 columns: table => new
                 {
-                    DirectorId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    DirectorId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -51,8 +48,7 @@ namespace KodiRemote.Migrations
                 name: "SubtitleStreams",
                 columns: table => new
                 {
-                    SubtitleStreamId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    SubtitleStreamId = table.Column<int>(nullable: false),
                     Language = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -63,8 +59,7 @@ namespace KodiRemote.Migrations
                 name: "VideoStreams",
                 columns: table => new
                 {
-                    VideoStreamId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    VideoStreamId = table.Column<int>(nullable: false),
                     Aspect = table.Column<float>(nullable: false),
                     Codec = table.Column<string>(nullable: true),
                     Height = table.Column<int>(nullable: false),
@@ -75,11 +70,59 @@ namespace KodiRemote.Migrations
                     table.PrimaryKey("PK_VideoStreamTableEntry", x => x.VideoStreamId);
                 });
             migrationBuilder.CreateTable(
+                name: "MovieGenres",
+                columns: table => new
+                {
+                    GenreId = table.Column<int>(nullable: false),
+                    Genre = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieGenreTableEntry", x => x.GenreId);
+                    table.UniqueConstraint("AK_string_Genre", x => x.Genre);
+                });
+            migrationBuilder.CreateTable(
+                name: "MovieSets",
+                columns: table => new
+                {
+                    SetId = table.Column<int>(nullable: false),
+                    Fanart = table.Column<string>(nullable: true),
+                    Label = table.Column<string>(nullable: true),
+                    PlayCount = table.Column<int>(nullable: false),
+                    Poster = table.Column<string>(nullable: true),
+                    Thumbnail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieSetTableEntry", x => x.SetId);
+                });
+            migrationBuilder.CreateTable(
+                name: "Movies",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    DateAdded = table.Column<string>(nullable: true),
+                    Fanart = table.Column<string>(nullable: true),
+                    IMDBNumber = table.Column<string>(nullable: true),
+                    Label = table.Column<string>(nullable: true),
+                    PlayCount = table.Column<int>(nullable: false),
+                    Plot = table.Column<string>(nullable: true),
+                    Poster = table.Column<string>(nullable: true),
+                    Rating = table.Column<float>(nullable: false),
+                    Runtime = table.Column<int>(nullable: false),
+                    SetId = table.Column<int>(nullable: false),
+                    Trailer = table.Column<string>(nullable: true),
+                    Year = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieTableEntry", x => x.MovieId);
+                });
+            migrationBuilder.CreateTable(
                 name: "TVShowGenres",
                 columns: table => new
                 {
-                    GenreId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    GenreId = table.Column<int>(nullable: false),
                     Genre = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -106,6 +149,168 @@ namespace KodiRemote.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TVShowTableEntry", x => x.TVShowId);
+                });
+            migrationBuilder.CreateTable(
+                name: "MovieActorMapper",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    ActorId = table.Column<int>(nullable: false),
+                    Role = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieActorMapper", x => new { x.MovieId, x.ActorId });
+                    table.ForeignKey(
+                        name: "FK_MovieActorMapper_ActorTableEntry_ActorId",
+                        column: x => x.ActorId,
+                        principalTable: "Actors",
+                        principalColumn: "ActorId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieActorMapper_MovieTableEntry_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "MovieAudioStreamMapper",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    AudioStreamId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieAudioStreamMapper", x => new { x.MovieId, x.AudioStreamId });
+                    table.ForeignKey(
+                        name: "FK_MovieAudioStreamMapper_AudioStreamTableEntry_AudioStreamId",
+                        column: x => x.AudioStreamId,
+                        principalTable: "AudioStreams",
+                        principalColumn: "AudioStreamId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieAudioStreamMapper_MovieTableEntry_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "MovieDirectorMapper",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    DirectorId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieDirectorMapper", x => new { x.MovieId, x.DirectorId });
+                    table.ForeignKey(
+                        name: "FK_MovieDirectorMapper_DirectorTableEntry_DirectorId",
+                        column: x => x.DirectorId,
+                        principalTable: "Directors",
+                        principalColumn: "DirectorId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieDirectorMapper_MovieTableEntry_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "MovieGenreMapper",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    GenreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieGenreMapper", x => new { x.MovieId, x.GenreId });
+                    table.ForeignKey(
+                        name: "FK_MovieGenreMapper_MovieGenreTableEntry_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "MovieGenres",
+                        principalColumn: "GenreId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieGenreMapper_MovieTableEntry_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "MovieSetMapper",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    MovieSetId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieSetMapper", x => new { x.MovieId, x.MovieSetId });
+                    table.ForeignKey(
+                        name: "FK_MovieSetMapper_MovieTableEntry_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieSetMapper_MovieSetTableEntry_MovieSetId",
+                        column: x => x.MovieSetId,
+                        principalTable: "MovieSets",
+                        principalColumn: "SetId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "MovieSubtitleStreamMapper",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    SubtitleStreamId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieSubtitleStreamMapper", x => new { x.MovieId, x.SubtitleStreamId });
+                    table.ForeignKey(
+                        name: "FK_MovieSubtitleStreamMapper_MovieTableEntry_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieSubtitleStreamMapper_SubtitleStreamTableEntry_SubtitleStreamId",
+                        column: x => x.SubtitleStreamId,
+                        principalTable: "SubtitleStreams",
+                        principalColumn: "SubtitleStreamId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "MovieVideoStreamMapper",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    VideoStreamId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieVideoStreamMapper", x => new { x.MovieId, x.VideoStreamId });
+                    table.ForeignKey(
+                        name: "FK_MovieVideoStreamMapper_MovieTableEntry_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieVideoStreamMapper_VideoStreamTableEntry_VideoStreamId",
+                        column: x => x.VideoStreamId,
+                        principalTable: "VideoStreams",
+                        principalColumn: "VideoStreamId",
+                        onDelete: ReferentialAction.Cascade);
                 });
             migrationBuilder.CreateTable(
                 name: "TVShowActorMapper",
@@ -328,12 +533,22 @@ namespace KodiRemote.Migrations
             migrationBuilder.DropTable("EpisodeDirectorMapper");
             migrationBuilder.DropTable("EpisodeSubtitleStreamMapper");
             migrationBuilder.DropTable("EpisodeVideoStreamMapper");
+            migrationBuilder.DropTable("MovieActorMapper");
+            migrationBuilder.DropTable("MovieAudioStreamMapper");
+            migrationBuilder.DropTable("MovieDirectorMapper");
+            migrationBuilder.DropTable("MovieGenreMapper");
+            migrationBuilder.DropTable("MovieSetMapper");
+            migrationBuilder.DropTable("MovieSubtitleStreamMapper");
+            migrationBuilder.DropTable("MovieVideoStreamMapper");
             migrationBuilder.DropTable("TVShowActorMapper");
             migrationBuilder.DropTable("TVShowGenreMapper");
+            migrationBuilder.DropTable("Episodes");
             migrationBuilder.DropTable("AudioStreams");
             migrationBuilder.DropTable("Directors");
+            migrationBuilder.DropTable("MovieGenres");
+            migrationBuilder.DropTable("MovieSets");
             migrationBuilder.DropTable("SubtitleStreams");
-            migrationBuilder.DropTable("Episodes");
+            migrationBuilder.DropTable("Movies");
             migrationBuilder.DropTable("VideoStreams");
             migrationBuilder.DropTable("Actors");
             migrationBuilder.DropTable("TVShowGenres");

@@ -1,5 +1,6 @@
 ﻿using KodiRemote.Code.Database.EpisodeTables;
 using KodiRemote.Code.Database.GeneralTables;
+using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.Code.Database.TVShowTables;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
@@ -35,6 +36,18 @@ namespace KodiRemote.Code.Database {
         public DbSet<EpisodeSubtitleStreamMapper> EpisodeSubtitleStreamMapper { get; set; }
         public DbSet<EpisodeVideoStreamMapper> EpisodeVideoStreamMapper { get; set; }
 
+        public DbSet<MovieActorMapper> MovieActorMapper { get; set; }
+        public DbSet<MovieAudioStreamMapper> MovieAudioStreamMapper { get; set; }
+        public DbSet<MovieDirectorMapper> MovieDirectorMapper { get; set; }
+        public DbSet<MovieGenreMapper> MovieGenreMapper { get; set; }
+        public DbSet<MovieGenreTableEntry> MovieGenres { get; set; }
+        public DbSet<MovieSetTableEntry> MovieSets { get; set; }
+        public DbSet<MovieSetMapper> MovieSetMapper { get; set; }
+        public DbSet<MovieSubtitleStreamMapper> MovieSubtitleStreamMapper { get; set; }
+        public DbSet<MovieTableEntry> Movies { get; set; }
+        public DbSet<MovieVideoStreamMapper> MovieVideoStreamMapper { get; set; }
+
+
         private string name;
         public DatabaseContext(string name) : base() {
             this.name = name;
@@ -55,6 +68,7 @@ namespace KodiRemote.Code.Database {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             CreateTVShowModel(modelBuilder);
             CreateEpisodeModel(modelBuilder);
+            CreateMovieModel(modelBuilder);
         }
 
         public void CreateTVShowModel(ModelBuilder modelBuilder) {
@@ -72,6 +86,11 @@ namespace KodiRemote.Code.Database {
                 .WithMany(t => t.TVShows)
                 .HasForeignKey(pt => pt.GenreId);
 
+            //TVShowGenre
+            modelBuilder.Entity<TVShowGenreTableEntry>()
+                .HasAlternateKey(x => x.Genre)
+                .HasName("AK_string_Genre");
+
             //TVShowActorMapper
             modelBuilder.Entity<TVShowActorMapper>()
                 .HasKey(t => new { t.TVShowId, t.ActorId });
@@ -87,6 +106,7 @@ namespace KodiRemote.Code.Database {
                 .HasForeignKey(pt => pt.ActorId);
 
 
+            //TVShowSeason
             modelBuilder.Entity<TVShowSeasonTableEntry>()
                 .HasKey(p => new { p.TVShowId, p.Season });
 
@@ -94,9 +114,7 @@ namespace KodiRemote.Code.Database {
                 .Property(x => x.TVShowId)
                 .ValueGeneratedNever();
 
-            modelBuilder.Entity<TVShowGenreTableEntry>()
-                .HasAlternateKey(x => x.Genre)
-                .HasName("AK_string_Genre");
+
         }
 
         public void CreateEpisodeModel(ModelBuilder modelBuilder) {
@@ -180,6 +198,116 @@ namespace KodiRemote.Code.Database {
                .HasOne(e => e.TVShowSeason)
                .WithMany(c => c.Episodes)
                .HasForeignKey(e => new { e.TVShowId, e.Season });
+        }
+
+        public void CreateMovieModel(ModelBuilder modelBuilder) {
+            //MovieGenreMapper
+            modelBuilder.Entity<MovieGenreMapper>()
+                .HasKey(t => new { t.MovieId, t.GenreId });
+
+            modelBuilder.Entity<MovieGenreMapper>()
+                .HasOne(pt => pt.Movie)
+                .WithMany(p => p.Genres)
+                .HasForeignKey(pt => pt.MovieId);
+
+            modelBuilder.Entity<MovieGenreMapper>()
+                .HasOne(pt => pt.Genre)
+                .WithMany(t => t.Movies)
+                .HasForeignKey(pt => pt.GenreId);
+
+            //MovieGenre
+            modelBuilder.Entity<MovieGenreTableEntry>()
+                .HasAlternateKey(x => x.Genre)
+                .HasName("AK_string_Genre");
+
+            //MovieActorMapper
+            modelBuilder.Entity<MovieActorMapper>()
+                .HasKey(t => new { t.MovieId, t.ActorId });
+
+            modelBuilder.Entity<MovieActorMapper>()
+                .HasOne(pt => pt.Movie)
+                .WithMany(p => p.Actors)
+                .HasForeignKey(pt => pt.MovieId);
+
+            modelBuilder.Entity<MovieActorMapper>()
+                .HasOne(pt => pt.Actor)
+                .WithMany(t => t.Movies)
+                .HasForeignKey(pt => pt.ActorId);
+
+
+            //MovieAudioStreamMapper
+            modelBuilder.Entity<MovieAudioStreamMapper>()
+                .HasKey(t => new { t.MovieId, t.AudioStreamId });
+
+            modelBuilder.Entity<MovieAudioStreamMapper>()
+                .HasOne(pt => pt.Movie)
+                .WithMany(p => p.AudioStreams)
+                .HasForeignKey(pt => pt.MovieId);
+
+            modelBuilder.Entity<MovieAudioStreamMapper>()
+                .HasOne(pt => pt.AudioStream)
+                .WithMany(t => t.Movies)
+                .HasForeignKey(pt => pt.AudioStreamId);
+
+
+            //MovieDirectorMapper
+            modelBuilder.Entity<MovieDirectorMapper>()
+                .HasKey(t => new { t.MovieId, t.DirectorId });
+
+            modelBuilder.Entity<MovieDirectorMapper>()
+                .HasOne(pt => pt.Movie)
+                .WithMany(p => p.Directors)
+                .HasForeignKey(pt => pt.MovieId);
+
+            modelBuilder.Entity<MovieDirectorMapper>()
+                .HasOne(pt => pt.Director)
+                .WithMany(t => t.Movies)
+                .HasForeignKey(pt => pt.DirectorId);
+
+
+            //MovieSubtitleStreamMapper
+            modelBuilder.Entity<MovieSubtitleStreamMapper>()
+                .HasKey(t => new { t.MovieId, t.SubtitleStreamId });
+
+            modelBuilder.Entity<MovieSubtitleStreamMapper>()
+                .HasOne(pt => pt.Movie)
+                .WithMany(p => p.SubtitleStreams)
+                .HasForeignKey(pt => pt.MovieId);
+
+            modelBuilder.Entity<MovieSubtitleStreamMapper>()
+                .HasOne(pt => pt.SubtitleStream)
+                .WithMany(t => t.Movies)
+                .HasForeignKey(pt => pt.SubtitleStreamId);
+
+
+            //MovieSubtitleStreamMapper
+            modelBuilder.Entity<MovieVideoStreamMapper>()
+                .HasKey(t => new { t.MovieId, t.VideoStreamId });
+
+            modelBuilder.Entity<MovieVideoStreamMapper>()
+                .HasOne(pt => pt.Movie)
+                .WithMany(p => p.VideoStreams)
+                .HasForeignKey(pt => pt.MovieId);
+
+            modelBuilder.Entity<MovieVideoStreamMapper>()
+                .HasOne(pt => pt.VideoStream)
+                .WithMany(t => t.Movies)
+                .HasForeignKey(pt => pt.VideoStreamId);
+
+            //MovieSetMapper
+            modelBuilder.Entity<MovieSetMapper>()
+                .HasKey(t => new { t.MovieId, t.MovieSetId });
+
+            modelBuilder.Entity<MovieSetMapper>()
+                .HasOne(pt => pt.Movie)
+                .WithMany(p => p.MovieSets)
+                .HasForeignKey(pt => pt.MovieId);
+
+            modelBuilder.Entity<MovieSetMapper>()
+                .HasOne(pt => pt.MovieSet)
+                .WithMany(t => t.Movies)
+                .HasForeignKey(pt => pt.MovieSetId);
+
         }
     }
 

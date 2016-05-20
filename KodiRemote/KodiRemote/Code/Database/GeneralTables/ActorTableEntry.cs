@@ -1,5 +1,7 @@
 ﻿using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.Code.Database.TVShowTables;
+using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.JSON.General;
 
 using System;
@@ -13,14 +15,22 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.Database.GeneralTables {
 
     [Table("Actors")]
-    public class ActorTableEntry {
-        [Key]
+    public class ActorTableEntry : TableEntryBase {
+        [Key, AutoIncrement, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ActorId { get; set; }
         public string Name { get; set; }
         public string Thumbnail { get; set; }
 
         public List<TVShowActorMapper> TVShows { get; set; }
         public List<EpisodeActorMapper> Episodes { get; set; }
+        public List<MovieActorMapper> Movies { get; set; }
+
+        [NotMapped]
+        public override string Key {
+            get {
+                return Name + ";" + Thumbnail;
+            }
+        }
 
         public ActorTableEntry() { }
         public ActorTableEntry(Actor actor) : this() {
@@ -29,16 +39,7 @@ namespace KodiRemote.Code.Database.GeneralTables {
         }
 
         public override bool Equals(object obj) {
-            if (obj == null) {
-                return false;
-            }
-
-            ActorTableEntry other = obj as ActorTableEntry;
-            if ((System.Object)other == null) {
-                return false;
-            }
-
-            return Name == other.Name && Thumbnail == other.Thumbnail;
+            return this.Equals(obj as ActorTableEntry);
         }
 
         public bool Equals(ActorTableEntry other) {
@@ -55,4 +56,5 @@ namespace KodiRemote.Code.Database.GeneralTables {
             return Name.GetHashCode() ^ Thumbnail.GetHashCode();
         }
     }
+    
 }

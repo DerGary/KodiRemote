@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.Database.TVShowTables {
 
     [Table("TVShows")]
-    public class TVShowTableEntry {
+    public class TVShowTableEntry : TableEntryBase {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TVShowId { get; set; }
         public int Episode { get; set; }
@@ -29,6 +30,13 @@ namespace KodiRemote.Code.Database.TVShowTables {
         public List<TVShowGenreMapper> Genres { get; set; }
         public List<TVShowActorMapper> Actors { get; set; }
         public List<TVShowSeasonTableEntry> Seasons { get; set; }
+
+        [NotMapped]
+        public override string Key {
+            get {
+                return TVShowId.ToString();
+            }
+        }
 
         public TVShowTableEntry() {
 
@@ -57,30 +65,39 @@ namespace KodiRemote.Code.Database.TVShowTables {
         }
 
         public override bool Equals(object obj) {
-            if (obj == null) {
-                return false;
-            }
-
-            TVShowTableEntry other = obj as TVShowTableEntry;
-            if ((System.Object)other == null) {
-                return false;
-            }
-
-            return TVShowId == other.TVShowId;
+            return this.Equals(obj as TVShowTableEntry);
         }
 
-        public bool Equals(TVShowSeasonTableEntry other) {
+        public bool Equals(TVShowTableEntry other) {
             // If parameter is null return false:
             if ((object)other == null) {
                 return false;
             }
 
             // Return true if the fields match:
-            return TVShowId == other.TVShowId;
+            return IsKeyEqual(other)
+                && Episode == other.Episode
+                && WatchedEpisodes == other.WatchedEpisodes
+                && Rating == other.Rating
+                && Banner == other.Banner
+                && Poster == other.Poster
+                && Fanart == other.Fanart
+                && Label == other.Label
+                && Plot == other.Plot
+                && IMDBNumber == other.IMDBNumber
+                && DateAdded == other.DateAdded;
         }
 
         public override int GetHashCode() {
             return TVShowId.GetHashCode();
+        }
+
+        public override bool IsKeyEqual(TableEntryBase other) {
+            var obj = other as TVShowTableEntry;
+            if(obj == null) {
+                return false;
+            }
+            return TVShowId == obj.TVShowId;
         }
     }
 }

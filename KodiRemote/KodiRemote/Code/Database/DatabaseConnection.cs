@@ -16,144 +16,170 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using KodiRemote.Code.Database.Utils;
+using KodiRemote.Code.Database.MovieTables;
 
 namespace KodiRemote.Code.Database {
     public class DatabaseConnection {
-        private DatabaseContext database;
+        private DatabaseContextWrapper database;
         private KodiSettings settings;
 
         public async Task Init(KodiSettings settings) {
-            database = new DatabaseContext(settings.Name);
-            await database.Database.MigrateAsync();
-            ILoggerFactory logger = ((IInfrastructure<IServiceProvider>)database).Instance.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
-            logger.AddProvider(new DatabaseLoggerProvider());
+            database = new DatabaseContextWrapper();
+            await database.Init(settings.Name);
             this.settings = settings;
         }
 
-        public async Task SaveTVShow(TVShow tvshow) {
-            var tvshowentry = new TVShowTableEntry(tvshow);
-            if (await database.TVShows.AnyAsync(x => x.TVShowId == tvshow.TVShowId)) {
-                database.TVShows.Update(tvshowentry);
-                database.TVShowActorMapper.RemoveRange(database.TVShowActorMapper.Where(x => x.TVShowId == tvshow.TVShowId));
-                database.TVShowGenreMapper.RemoveRange(database.TVShowGenreMapper.Where(x => x.TVShowId == tvshow.TVShowId));
-            } else {
-                database.TVShows.Add(tvshowentry);
-            }
-
-            await database.SaveChangesAsync();
-            foreach (Actor actor in tvshow.Cast) {
-                var savedActor = await database.Actors.FirstOrDefaultAsync(x => x.Name == actor.Name && x.Thumbnail == actor.Thumbnail);
-                if (savedActor == null) {
-                    savedActor = new ActorTableEntry(actor);
-                    database.Actors.Add(savedActor);
-                    await database.SaveChangesAsync();
-                }
-                database.TVShowActorMapper.Add(new TVShowActorMapper() { ActorId = savedActor.ActorId, TVShowId = tvshow.TVShowId, Role = actor.Role });
-            }
-            foreach (string genre in tvshow.Genre) {
-                var savedGenre = await database.TVShowGenres.FirstOrDefaultAsync(x => x.Genre == genre);
-                if(savedGenre == null) {
-                    savedGenre = new TVShowGenreTableEntry(genre);
-                    database.TVShowGenres.Add(savedGenre);
-                    await database.SaveChangesAsync();
-                }
-                database.TVShowGenreMapper.Add(new TVShowGenreMapper() { TVShowId = tvshow.TVShowId, GenreId = savedGenre.GenreId });
-            }
-        }
-
-
         public async Task SaveTVShows(List<TVShow> tvshows) {
             foreach (TVShow tvshow in tvshows) {
-                await SaveTVShow(tvshow);
+                Debug.WriteLine("Save TVShow with id: " + tvshow.TVShowId);
+                var tvshowentry = new TVShowTableEntry(tvshow);
+                var result = await database.TVShows.InsertOrUpdateAsync(tvshowentry);
+                if(result == InsertOrUpdate.Update) {
+                    await database.TVShowActorMapper.RemoveAllAsync(x => x.TVShowId == tvshow.TVShowId);
+                    await database.TVShowGenreMapper.RemoveAllAsync(x => x.TVShowId == tvshow.TVShowId);
+                }
+                foreach (Actor actor in tvshow.Cast) {
+                    var entry = new ActorTableEntry(actor);
+                    await database.Actors.InsertOrUpdateAsync(entry);
+                    await database.TVShowActorMapper.InsertOrUpdateAsync(new TVShowActorMapper() { ActorId = entry.ActorId, TVShowId = tvshow.TVShowId, Role = actor.Role });
+                }
+                foreach (string genre in tvshow.Genre) {
+                    var entry = new TVShowGenreTableEntry(genre);
+                    await database.TVShowGenres.InsertOrUpdateAsync(entry);
+                    await database.TVShowGenreMapper.InsertOrUpdateAsync(new TVShowGenreMapper() { TVShowId = tvshow.TVShowId, GenreId = entry.GenreId });
+                }
             }
             await database.SaveChangesAsync();
-        }
-
-        public async Task SaveTVShowSeason(TVShowSeason season) {
-            var seasonEntry = new TVShowSeasonTableEntry(season);
-            if (await database.TVShowSeasons.AnyAsync(x => x.TVShowId == season.TVShowId && x.Season == season.Season)) {
-                database.TVShowSeasons.Update(seasonEntry);
-            } else {
-                database.TVShowSeasons.Add(seasonEntry);
-            }
         }
 
         public async Task SaveTVShowSeasons(List<TVShowSeason> seasons) {
             foreach (TVShowSeason season in seasons) {
-                await SaveTVShowSeason(season);
+                Debug.WriteLine("Save Season with tvshowid: " + season.TVShowId + " and season: " + season.Season);
+                var seasonEntry = new TVShowSeasonTableEntry(season);
+                await database.TVShowSeasons.InsertOrUpdateAsync(seasonEntry);
             }
             await database.SaveChangesAsync();
         }
 
+        public async Task SaveEpisodes(List<Episode> episodes) {
+            foreach (Episode episode in episodes) {
+                Debug.WriteLine("Save Episode with id: " + episode.EpisodeId + " Label: " + episode.Label);
+                var episodeEntry = new EpisodeTableEntry(episode);
+                var result = await database.Episodes.InsertOrUpdateAsync(episodeEntry);
+                if (result == InsertOrUpdate.Update) {
+                    await database.EpisodeActorMapper.RemoveAllAsync(x => x.EpisodeId == episode.EpisodeId);
+                    await database.EpisodeDirectorMapper.RemoveAllAsync(x => x.EpisodeId == episode.EpisodeId);
+                    await database.EpisodeAudioStreamMapper.RemoveAllAsync(x => x.EpisodeId == episode.EpisodeId);
+                    await database.EpisodeSubtitleStreamMapper.RemoveAllAsync(x => x.EpisodeId == episode.EpisodeId);
+                    await database.EpisodeVideoStreamMapper.RemoveAllAsync(x => x.EpisodeId == episode.EpisodeId);
+                }
+                
+                foreach (Actor actor in episode.Cast) {
+                    var entry = new ActorTableEntry(actor);
+                    await database.Actors.InsertOrUpdateAsync(entry);
 
+                    await database.EpisodeActorMapper.InsertOrUpdateAsync(new EpisodeActorMapper() { ActorId = entry.ActorId, EpisodeId = episode.EpisodeId, Role = actor.Role });
+                }
 
-        public async Task SaveEpisode(Episode episode) {
-            var episodeEntry = new EpisodeTableEntry(episode);
-            if (await database.Episodes.AnyAsync(x => x.EpisodeId == episode.EpisodeId)) {
-                database.Episodes.Update(episodeEntry);
-                database.EpisodeActorMapper.RemoveRange(database.EpisodeActorMapper.Where(x => x.EpisodeId == episode.EpisodeId));
-                database.EpisodeDirectorMapper.RemoveRange(database.EpisodeDirectorMapper.Where(x => x.EpisodeId == episode.EpisodeId));
-                database.EpisodeAudioStreamMapper.RemoveRange(database.EpisodeAudioStreamMapper.Where(x => x.EpisodeId == episode.EpisodeId));
-                database.EpisodeSubtitleStreamMapper.RemoveRange(database.EpisodeSubtitleStreamMapper.Where(x => x.EpisodeId == episode.EpisodeId));
-                database.EpisodeVideoStreamMapper.RemoveRange(database.EpisodeVideoStreamMapper.Where(x => x.EpisodeId == episode.EpisodeId));
-            } else {
-                database.Episodes.Add(episodeEntry);
+                foreach (string director in episode.Director) {
+                    var entry = new DirectorTableEntry(director);
+                    await database.Directors.InsertOrUpdateAsync(entry);
+
+                    await database.EpisodeDirectorMapper.InsertOrUpdateAsync(new EpisodeDirectorMapper() { DirectorId = entry.DirectorId, EpisodeId = episode.EpisodeId });
+                }
+
+                foreach (var stream in episode.StreamDetails.Audio) {
+                    var entry = new AudioStreamTableEntry(stream);
+                    await database.AudioStreams.InsertOrUpdateAsync(entry);
+
+                    await database.EpisodeAudioStreamMapper.InsertOrUpdateAsync(new EpisodeAudioStreamMapper() { EpisodeId = episode.EpisodeId, AudioStreamId = entry.AudioStreamId });
+                }
+
+                foreach (var stream in episode.StreamDetails.Subtitle) {
+                    var entry = new SubtitleStreamTableEntry(stream);
+                    await database.SubtitleStreams.InsertOrUpdateAsync(entry);
+
+                    await database.EpisodeSubtitleStreamMapper.InsertOrUpdateAsync(new EpisodeSubtitleStreamMapper() { EpisodeId = episode.EpisodeId, SubtitleStreamId = entry.SubtitleStreamId });
+                }
+                foreach (var stream in episode.StreamDetails.Video) {
+                    var entry = new VideoStreamTableEntry(stream);
+                    await database.VideoStreams.InsertOrUpdateAsync(entry);
+
+                    await database.EpisodeVideoStreamMapper.InsertOrUpdateAsync(new EpisodeVideoStreamMapper() { EpisodeId = episode.EpisodeId, VideoStreamId = entry.VideoStreamId });
+                }
             }
-
             await database.SaveChangesAsync();
-
-            foreach (Actor actor in episode.Cast) {
-                var saved = await AddIfNotExist(
-                    set: database.Actors,
-                    filterPredicate: x => x.Name == actor.Name && x.Thumbnail == actor.Thumbnail,
-                    toSave: new ActorTableEntry(actor));
-
-                database.EpisodeActorMapper.Add(new EpisodeActorMapper() { ActorId = saved.ActorId, EpisodeId = episode.EpisodeId, Role = actor.Role });
-            }
-
-            foreach (string director in episode.Director) {
-                var saved = await AddIfNotExist(
-                    set: database.Directors, 
-                    filterPredicate: x => x.Name == director, 
-                    toSave: new DirectorTableEntry(director));
-
-                database.EpisodeDirectorMapper.Add(new EpisodeDirectorMapper() { DirectorId = saved.DirectorId, EpisodeId = episode.EpisodeId });
-            }
-
-            foreach (var stream in episode.StreamDetails.Audio) {
-                var saved = await AddIfNotExist(
-                    set: database.AudioStreams,
-                    filterPredicate: x => x.Channels == stream.Channels && x.Codec == stream.Codec && x.Language == stream.Language,
-                    toSave: new AudioStreamTableEntry(stream));
-
-                database.EpisodeAudioStreamMapper.Add(new EpisodeAudioStreamMapper() { EpisodeId = episode.EpisodeId, AudioStreamId = saved.AudioStreamId });
-            }
-
-            foreach (var stream in episode.StreamDetails.Subtitle) {
-                var saved = await AddIfNotExist(
-                    set: database.SubtitleStreams,
-                    filterPredicate: x => x.Language == stream.Language,
-                    toSave: new SubtitleStreamTableEntry(stream));
-
-                database.EpisodeSubtitleStreamMapper.Add(new EpisodeSubtitleStreamMapper() { EpisodeId = episode.EpisodeId, SubtitleStreamId = saved.SubtitleStreamId});
-            }
-            foreach (var stream in episode.StreamDetails.Video) {
-                var saved = await AddIfNotExist(
-                    set: database.VideoStreams,
-                    filterPredicate: x => x.Aspect == stream.Aspect && x.Codec == stream.Codec && x.Height == stream.Height && x.Width == stream.Width,
-                    toSave: new VideoStreamTableEntry(stream));
-
-                database.EpisodeVideoStreamMapper.Add(new EpisodeVideoStreamMapper() { EpisodeId = episode.EpisodeId, VideoStreamId= saved.VideoStreamId});
-            }
         }
-        public async Task<T> AddIfNotExist<T>(DbSet<T> set, Expression<Func<T,bool>> filterPredicate, T toSave) where T : class {
-            var saved = await set.FirstOrDefaultAsync(filterPredicate);
-            if (saved == null) {
-                saved = toSave;
-                set.Add(saved);
-                await database.SaveChangesAsync();
+
+        public async Task SaveMovieSets(List<MovieSet> moviesets) {
+            foreach (MovieSet movieset in moviesets) {
+                Debug.WriteLine("Save MovieSet with id: " + movieset.SetId);
+                var entry = new MovieSetTableEntry(movieset);
+                var result = await database.MovieSets.InsertOrUpdateAsync(entry);
             }
-            return saved;
+            await database.SaveChangesAsync();
+        }
+
+        public async Task SaveMovies(List<Movie> movies) {
+            foreach (Movie movie in movies) {
+                Debug.WriteLine("Save Movie with id: " + movie.MovieId);
+                var movieEntry = new MovieTableEntry(movie);
+                var result = await database.Movies.InsertOrUpdateAsync(movieEntry);
+                if(result == InsertOrUpdate.Update) {
+                    await database.MovieActorMapper.RemoveAllAsync(x => x.MovieId == movie.MovieId);
+                    await database.MovieAudioStreamMapper.RemoveAllAsync(x => x.MovieId == movie.MovieId);
+                    await database.MovieDirectorMapper.RemoveAllAsync(x => x.MovieId == movie.MovieId);
+                    await database.MovieGenreMapper.RemoveAllAsync(x => x.MovieId == movie.MovieId);
+                    await database.MovieSubtitleStreamMapper.RemoveAllAsync(x => x.MovieId == movie.MovieId);
+                    await database.MovieVideoStreamMapper.RemoveAllAsync(x => x.MovieId == movie.MovieId);
+                    await database.MovieSetMapper.RemoveAllAsync(x => x.MovieId == movie.MovieId);
+                }
+                if (movie.SetId != 0) {
+                    await database.MovieSetMapper.InsertOrUpdateAsync(new MovieSetMapper() { MovieId = movie.MovieId, MovieSetId = movie.SetId });
+                }
+                
+                foreach (string genre in movie.Genre) {
+                    var entry = new MovieGenreTableEntry(genre);
+                    await database.MovieGenres.InsertOrUpdateAsync(entry);
+                    await database.MovieGenreMapper.InsertOrUpdateAsync(new MovieGenreMapper() { MovieId = movie.MovieId, GenreId = entry.GenreId });
+                }
+
+                foreach (Actor actor in movie.Cast) {
+                    var entry = new ActorTableEntry(actor);
+                    await database.Actors.InsertOrUpdateAsync(entry);
+
+                    await database.MovieActorMapper.InsertOrUpdateAsync(new MovieActorMapper() { ActorId = entry.ActorId, MovieId = movie.MovieId, Role = actor.Role });
+                }
+
+                foreach (string director in movie.Director) {
+                    var entry = new DirectorTableEntry(director);
+                    await database.Directors.InsertOrUpdateAsync(entry);
+
+                    await database.MovieDirectorMapper.InsertOrUpdateAsync(new MovieDirectorMapper() { DirectorId = entry.DirectorId, MovieId = movie.MovieId });
+                }
+
+                foreach (var stream in movie.StreamDetails.Audio) {
+                    var entry = new AudioStreamTableEntry(stream);
+                    await database.AudioStreams.InsertOrUpdateAsync(entry);
+
+                    await database.MovieAudioStreamMapper.InsertOrUpdateAsync(new MovieAudioStreamMapper() { MovieId = movie.MovieId, AudioStreamId = entry.AudioStreamId });
+                }
+
+                foreach (var stream in movie.StreamDetails.Subtitle) {
+                    var entry = new SubtitleStreamTableEntry(stream);
+                    await database.SubtitleStreams.InsertOrUpdateAsync(entry);
+
+                    await database.MovieSubtitleStreamMapper.InsertOrUpdateAsync(new MovieSubtitleStreamMapper() { MovieId = movie.MovieId, SubtitleStreamId = entry.SubtitleStreamId });
+                }
+                foreach (var stream in movie.StreamDetails.Video) {
+                    var entry = new VideoStreamTableEntry(stream);
+                    await database.VideoStreams.InsertOrUpdateAsync(entry);
+
+                    await database.MovieVideoStreamMapper.InsertOrUpdateAsync(new MovieVideoStreamMapper() { MovieId = movie.MovieId, VideoStreamId = entry.VideoStreamId });
+                }
+            }
+            await database.SaveChangesAsync();
         }
     }
 }

@@ -116,7 +116,7 @@ namespace KodiRemote.Code.JSON.KVideoLibrary.Results {
         public AudioStream[] Audio { get; set; }
         [DataMember(Name = "subtitle")]
         public SubtitleStream[] Subtitle { get; set; }
-        [DataMember(Name = "Video")]
+        [DataMember(Name = "video")]
         public VideoStream[] Video { get; set; }
     }
 
