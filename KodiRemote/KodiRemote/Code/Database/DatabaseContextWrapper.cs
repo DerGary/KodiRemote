@@ -1,6 +1,7 @@
 ﻿using KodiRemote.Code.Database.EpisodeTables;
 using KodiRemote.Code.Database.GeneralTables;
 using KodiRemote.Code.Database.MovieTables;
+using KodiRemote.Code.Database.MusicVideoTables;
 using KodiRemote.Code.Database.TVShowTables;
 using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.Utils;
@@ -46,11 +47,19 @@ namespace KodiRemote.Code.Database {
         public DatabaseWrapper<MovieVideoStreamMapper> MovieVideoStreamMapper { get; set; }
         public DatabaseWrapper<MovieGenreMapper> MovieGenreMapper { get; set; }
         public DatabaseWrapper<MovieGenreTableEntry> MovieGenres { get; set; }
+        
+        public DatabaseWrapper<MusicVideoTableEntry> MusicVideos { get; set; }
+        public DatabaseWrapper<MusicVideoArtistMapper> MusicVideoArtistMapper { get; set; }
+        public DatabaseWrapper<MusicVideoArtistTableEntry> MusicVideoArtists { get; set; }
+        public DatabaseWrapper<MusicVideoAudioStreamMapper> MusicVideoAudioStreamMapper { get; set; }
+        public DatabaseWrapper<MusicVideoDirectorMapper> MusicVideoDirectorMapper { get; set; }
+        public DatabaseWrapper<MusicVideoSubtitleStreamMapper> MusicVideoSubtitleStreamMapper { get; set; }
+        public DatabaseWrapper<MusicVideoVideoStreamMapper> MusicVideoVideoStreamMapper { get; set; }
+        public DatabaseWrapper<MusicVideoGenreMapper> MusicVideoGenreMapper { get; set; }
+        public DatabaseWrapper<MusicVideoGenreTableEntry> MusicVideoGenres { get; set; }
 
         public DatabaseContext CreateContext() {
-            var context = new DatabaseContext(name);
-
-            return context;
+            return new DatabaseContext(name);
         }
 
         public async Task Init(string name) {
@@ -90,6 +99,16 @@ namespace KodiRemote.Code.Database {
             MovieVideoStreamMapper = new DatabaseWrapper<MovieVideoStreamMapper>(this);
             MovieGenreMapper = new DatabaseWrapper<MovieGenreMapper>(this);
             MovieGenres = new DatabaseWrapper<MovieGenreTableEntry>(this);
+
+            MusicVideoArtistMapper = new DatabaseWrapper<MusicVideoArtistMapper>(this);
+            MusicVideoArtists = new DatabaseWrapper<MusicVideoArtistTableEntry>(this);
+            MusicVideoAudioStreamMapper = new DatabaseWrapper<MusicVideoAudioStreamMapper>(this);
+            MusicVideoDirectorMapper = new DatabaseWrapper<MusicVideoDirectorMapper>(this);
+            MusicVideoGenreMapper = new DatabaseWrapper<MusicVideoGenreMapper>(this);
+            MusicVideoGenres = new DatabaseWrapper<MusicVideoGenreTableEntry>(this);
+            MusicVideos = new DatabaseWrapper<MusicVideoTableEntry>(this);
+            MusicVideoSubtitleStreamMapper = new DatabaseWrapper<MusicVideoSubtitleStreamMapper>(this);
+            MusicVideoVideoStreamMapper = new DatabaseWrapper<MusicVideoVideoStreamMapper>(this);
         }
 
         public async Task SaveChangesAsync() {
@@ -122,6 +141,16 @@ namespace KodiRemote.Code.Database {
             await MovieDirectorMapper.SaveChangesAsync();
             await MovieSubtitleStreamMapper.SaveChangesAsync();
             await MovieVideoStreamMapper.SaveChangesAsync();
+
+            await MusicVideos.SaveChangesAsync();
+            await MusicVideoArtists.SaveChangesAsync();
+            await MusicVideoGenres.SaveChangesAsync();
+            await MusicVideoArtistMapper.SaveChangesAsync();
+            await MusicVideoAudioStreamMapper.SaveChangesAsync();
+            await MusicVideoDirectorMapper.SaveChangesAsync();
+            await MusicVideoGenreMapper.SaveChangesAsync();
+            await MusicVideoSubtitleStreamMapper.SaveChangesAsync();
+            await MusicVideoVideoStreamMapper.SaveChangesAsync();
         }
     }
 }

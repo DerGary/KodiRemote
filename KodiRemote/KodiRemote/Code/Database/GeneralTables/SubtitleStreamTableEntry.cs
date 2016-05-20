@@ -1,6 +1,7 @@
 ﻿
 using KodiRemote.Code.Database.EpisodeTables;
 using KodiRemote.Code.Database.MovieTables;
+using KodiRemote.Code.Database.MusicVideoTables;
 using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.JSON.General;
 using System;
@@ -21,6 +22,7 @@ namespace KodiRemote.Code.Database.GeneralTables {
 
         public List<EpisodeSubtitleStreamMapper> Episodes { get; set; }
         public List<MovieSubtitleStreamMapper> Movies { get; set; }
+        public List<MusicVideoSubtitleStreamMapper> MusicVideos { get; set; }
 
         [NotMapped]
         public override string Key {

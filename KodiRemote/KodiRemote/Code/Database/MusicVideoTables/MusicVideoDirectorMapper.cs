@@ -8,29 +8,31 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.MusicVideoTables {
-    public class MusicVideoVideoStreamMapper : MusicVideoMapper {
-        public int VideoStreamId { get; set; }
-        public VideoStreamTableEntry VideoStream { get; set; }
+    public class MusicVideoDirectorMapper : MusicVideoMapper {
+        public int DirectorId { get; set; }
+        public DirectorTableEntry Director { get; set; }
 
         [NotMapped]
         public override string Key {
             get {
-                return MusicVideoId + ";" + VideoStreamId;
+                return MusicVideoId + ";" + DirectorId;
             }
         }
 
         public override bool Equals(object obj) {
-            return this.Equals(obj as MusicVideoVideoStreamMapper);
+            return this.Equals(obj as MusicVideoDirectorMapper);
         }
-        public bool Equals(MusicVideoVideoStreamMapper other) {
+
+        public bool Equals(MusicVideoDirectorMapper other) {
             if ((object)other == null) {
                 return false;
             }
-            return VideoStreamId == other.VideoStreamId
-                && MusicVideoId == other.MusicVideoId;
+            return MusicVideoId == other.MusicVideoId
+                && DirectorId == other.DirectorId;
         }
+
         public override int GetHashCode() {
-            return MusicVideoId ^ VideoStreamId;
+            return MusicVideoId ^ DirectorId;
         }
     }
 }

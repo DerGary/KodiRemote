@@ -8,7 +8,7 @@ using KodiRemote.Code.Database;
 namespace KodiRemote.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20160520123926_InitDB")]
+    [Migration("20160520132934_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -292,6 +292,120 @@ namespace KodiRemote.Migrations
                     b.HasKey("MovieId", "VideoStreamId");
                 });
 
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoArtistMapper", b =>
+                {
+                    b.Property<int>("MusicVideoId");
+
+                    b.Property<int>("MusicVideoArtistId");
+
+                    b.HasKey("MusicVideoId", "MusicVideoArtistId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoArtistTableEntry", b =>
+                {
+                    b.Property<int>("MusicVideoArtistId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("MusicVideoArtistId");
+
+                    b.HasAlternateKey("Name")
+                        .HasAnnotation("Relational:Name", "AK_string_Name");
+
+                    b.HasAnnotation("Relational:TableName", "MusicVideoArtists");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoAudioStreamMapper", b =>
+                {
+                    b.Property<int>("MusicVideoId");
+
+                    b.Property<int>("AudioStreamId");
+
+                    b.HasKey("MusicVideoId", "AudioStreamId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoDirectorMapper", b =>
+                {
+                    b.Property<int>("MusicVideoId");
+
+                    b.Property<int>("DirectorId");
+
+                    b.HasKey("MusicVideoId", "DirectorId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoGenreMapper", b =>
+                {
+                    b.Property<int>("MusicVideoId");
+
+                    b.Property<int>("GenreId");
+
+                    b.HasKey("MusicVideoId", "GenreId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoGenreTableEntry", b =>
+                {
+                    b.Property<int>("GenreId");
+
+                    b.Property<string>("Genre")
+                        .IsRequired();
+
+                    b.HasKey("GenreId");
+
+                    b.HasAlternateKey("Genre")
+                        .HasAnnotation("Relational:Name", "AK_string_Genre");
+
+                    b.HasAnnotation("Relational:TableName", "MusicVideoGenres");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoSubtitleStreamMapper", b =>
+                {
+                    b.Property<int>("MusicVideoId");
+
+                    b.Property<int>("SubtitleStreamId");
+
+                    b.HasKey("MusicVideoId", "SubtitleStreamId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoTableEntry", b =>
+                {
+                    b.Property<int>("MusicVideoId");
+
+                    b.Property<string>("Album");
+
+                    b.Property<string>("DateAdded");
+
+                    b.Property<string>("Fanart");
+
+                    b.Property<string>("Label");
+
+                    b.Property<int>("PlayCount");
+
+                    b.Property<string>("Plot");
+
+                    b.Property<string>("Poster");
+
+                    b.Property<int>("Runtime");
+
+                    b.Property<string>("Thumbnail");
+
+                    b.Property<int>("Track");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("MusicVideoId");
+
+                    b.HasAnnotation("Relational:TableName", "MusicVideos");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoVideoStreamMapper", b =>
+                {
+                    b.Property<int>("MusicVideoId");
+
+                    b.Property<int>("VideoStreamId");
+
+                    b.HasKey("MusicVideoId", "VideoStreamId");
+                });
+
             modelBuilder.Entity("KodiRemote.Code.Database.TVShowTables.TVShowActorMapper", b =>
                 {
                     b.Property<int>("TVShowId");
@@ -510,6 +624,72 @@ namespace KodiRemote.Migrations
                     b.HasOne("KodiRemote.Code.Database.MovieTables.MovieTableEntry")
                         .WithMany()
                         .HasForeignKey("MovieId");
+
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.VideoStreamTableEntry")
+                        .WithMany()
+                        .HasForeignKey("VideoStreamId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoArtistMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.MusicVideoTables.MusicVideoArtistTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MusicVideoArtistId");
+
+                    b.HasOne("KodiRemote.Code.Database.MusicVideoTables.MusicVideoTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MusicVideoId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoAudioStreamMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.AudioStreamTableEntry")
+                        .WithMany()
+                        .HasForeignKey("AudioStreamId");
+
+                    b.HasOne("KodiRemote.Code.Database.MusicVideoTables.MusicVideoTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MusicVideoId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoDirectorMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.DirectorTableEntry")
+                        .WithMany()
+                        .HasForeignKey("DirectorId");
+
+                    b.HasOne("KodiRemote.Code.Database.MusicVideoTables.MusicVideoTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MusicVideoId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoGenreMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.MusicVideoTables.MusicVideoGenreTableEntry")
+                        .WithMany()
+                        .HasForeignKey("GenreId");
+
+                    b.HasOne("KodiRemote.Code.Database.MusicVideoTables.MusicVideoTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MusicVideoId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoSubtitleStreamMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.MusicVideoTables.MusicVideoTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MusicVideoId");
+
+                    b.HasOne("KodiRemote.Code.Database.GeneralTables.SubtitleStreamTableEntry")
+                        .WithMany()
+                        .HasForeignKey("SubtitleStreamId");
+                });
+
+            modelBuilder.Entity("KodiRemote.Code.Database.MusicVideoTables.MusicVideoVideoStreamMapper", b =>
+                {
+                    b.HasOne("KodiRemote.Code.Database.MusicVideoTables.MusicVideoTableEntry")
+                        .WithMany()
+                        .HasForeignKey("MusicVideoId");
 
                     b.HasOne("KodiRemote.Code.Database.GeneralTables.VideoStreamTableEntry")
                         .WithMany()

@@ -1,6 +1,7 @@
 ﻿using KodiRemote.Code.Database.EpisodeTables;
 using KodiRemote.Code.Database.GeneralTables;
 using KodiRemote.Code.Database.MovieTables;
+using KodiRemote.Code.Database.MusicVideoTables;
 using KodiRemote.Code.Database.TVShowTables;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
@@ -46,6 +47,16 @@ namespace KodiRemote.Code.Database {
         public DbSet<MovieSubtitleStreamMapper> MovieSubtitleStreamMapper { get; set; }
         public DbSet<MovieTableEntry> Movies { get; set; }
         public DbSet<MovieVideoStreamMapper> MovieVideoStreamMapper { get; set; }
+        
+        public DbSet<MusicVideoAudioStreamMapper> MusicVideoAudioStreamMapper { get; set; }
+        public DbSet<MusicVideoDirectorMapper> MusicVideoDirectorMapper { get; set; }
+        public DbSet<MusicVideoGenreMapper> MusicVideoGenreMapper { get; set; }
+        public DbSet<MusicVideoGenreTableEntry> MusicVideoGenres { get; set; }
+        public DbSet<MusicVideoSubtitleStreamMapper> MusicVideoSubtitleStreamMapper { get; set; }
+        public DbSet<MusicVideoTableEntry> MusicVideos { get; set; }
+        public DbSet<MusicVideoVideoStreamMapper> MusicVideoVideoStreamMapper { get; set; }
+        public DbSet<MusicVideoArtistMapper> MusicVideoArtistMapper { get; set; }
+        public DbSet<MusicVideoArtistTableEntry> MusicVideoArtists { get; set; }
 
 
         private string name;
@@ -69,6 +80,7 @@ namespace KodiRemote.Code.Database {
             CreateTVShowModel(modelBuilder);
             CreateEpisodeModel(modelBuilder);
             CreateMovieModel(modelBuilder);
+            CreateMusicVideoModel(modelBuilder);
         }
 
         public void CreateTVShowModel(ModelBuilder modelBuilder) {
@@ -308,6 +320,106 @@ namespace KodiRemote.Code.Database {
                 .WithMany(t => t.Movies)
                 .HasForeignKey(pt => pt.MovieSetId);
 
+        }
+
+        public void CreateMusicVideoModel(ModelBuilder modelBuilder) {
+            //MusicVideoGenreMapper
+            modelBuilder.Entity<MusicVideoGenreMapper>()
+                .HasKey(t => new { t.MusicVideoId, t.GenreId });
+
+            modelBuilder.Entity<MusicVideoGenreMapper>()
+                .HasOne(pt => pt.MusicVideo)
+                .WithMany(p => p.Genres)
+                .HasForeignKey(pt => pt.MusicVideoId);
+
+            modelBuilder.Entity<MusicVideoGenreMapper>()
+                .HasOne(pt => pt.Genre)
+                .WithMany(t => t.MusicVideos)
+                .HasForeignKey(pt => pt.GenreId);
+
+            //MusicVideoGenre
+            modelBuilder.Entity<MusicVideoGenreTableEntry>()
+                .HasAlternateKey(x => x.Genre)
+                .HasName("AK_string_Genre");
+
+            //MusicVideoArtistMapper
+            modelBuilder.Entity<MusicVideoArtistMapper>()
+                .HasKey(t => new { t.MusicVideoId, t.MusicVideoArtistId });
+
+            modelBuilder.Entity<MusicVideoArtistMapper>()
+                .HasOne(pt => pt.MusicVideo)
+                .WithMany(p => p.Artists)
+                .HasForeignKey(pt => pt.MusicVideoId);
+
+            modelBuilder.Entity<MusicVideoArtistMapper>()
+                .HasOne(pt => pt.MusicVideoArtist)
+                .WithMany(t => t.MusicVideos)
+                .HasForeignKey(pt => pt.MusicVideoArtistId);
+
+            //MusicVideoArtist
+            modelBuilder.Entity<MusicVideoArtistTableEntry>()
+                .HasAlternateKey(x => x.Name)
+                .HasName("AK_string_Name");
+
+
+            //MusicVideoAudioStreamMapper
+            modelBuilder.Entity<MusicVideoAudioStreamMapper>()
+                .HasKey(t => new { t.MusicVideoId, t.AudioStreamId });
+
+            modelBuilder.Entity<MusicVideoAudioStreamMapper>()
+                .HasOne(pt => pt.MusicVideo)
+                .WithMany(p => p.AudioStreams)
+                .HasForeignKey(pt => pt.MusicVideoId);
+
+            modelBuilder.Entity<MusicVideoAudioStreamMapper>()
+                .HasOne(pt => pt.AudioStream)
+                .WithMany(t => t.MusicVideos)
+                .HasForeignKey(pt => pt.AudioStreamId);
+
+
+            //MusicVideoDirectorMapper
+            modelBuilder.Entity<MusicVideoDirectorMapper>()
+                .HasKey(t => new { t.MusicVideoId, t.DirectorId });
+
+            modelBuilder.Entity<MusicVideoDirectorMapper>()
+                .HasOne(pt => pt.MusicVideo)
+                .WithMany(p => p.Directors)
+                .HasForeignKey(pt => pt.MusicVideoId);
+
+            modelBuilder.Entity<MusicVideoDirectorMapper>()
+                .HasOne(pt => pt.Director)
+                .WithMany(t => t.MusicVideos)
+                .HasForeignKey(pt => pt.DirectorId);
+
+
+            //MusicVideoSubtitleStreamMapper
+            modelBuilder.Entity<MusicVideoSubtitleStreamMapper>()
+                .HasKey(t => new { t.MusicVideoId, t.SubtitleStreamId });
+
+            modelBuilder.Entity<MusicVideoSubtitleStreamMapper>()
+                .HasOne(pt => pt.MusicVideo)
+                .WithMany(p => p.SubtitleStreams)
+                .HasForeignKey(pt => pt.MusicVideoId);
+
+            modelBuilder.Entity<MusicVideoSubtitleStreamMapper>()
+                .HasOne(pt => pt.SubtitleStream)
+                .WithMany(t => t.MusicVideos)
+                .HasForeignKey(pt => pt.SubtitleStreamId);
+
+
+            //MusicVideoVideoStreamMapper
+            modelBuilder.Entity<MusicVideoVideoStreamMapper>()
+                .HasKey(t => new { t.MusicVideoId, t.VideoStreamId });
+
+            modelBuilder.Entity<MusicVideoVideoStreamMapper>()
+                .HasOne(pt => pt.MusicVideo)
+                .WithMany(p => p.VideoStreams)
+                .HasForeignKey(pt => pt.MusicVideoId);
+
+            modelBuilder.Entity<MusicVideoVideoStreamMapper>()
+                .HasOne(pt => pt.VideoStream)
+                .WithMany(t => t.MusicVideos)
+                .HasForeignKey(pt => pt.VideoStreamId);
         }
     }
 

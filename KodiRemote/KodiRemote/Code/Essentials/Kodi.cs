@@ -82,9 +82,25 @@ namespace KodiRemote.Code.Essentials {
             //var tvShowIds = await UpdateTVShows();
             //var tvShowAndSeasonIds = await UpdateTVShowSeasons(tvShowIds);
             //await UpdateEpisodes(tvShowAndSeasonIds);
-            await UpdateMovieSets();
-            await UpdateMovies();
+            //await UpdateMovieSets();
+            //await UpdateMovies();
+            await UpdateMusicVideos();
             Debug.WriteLine("time taken: " + DateTime.Now.Subtract(first).TotalSeconds);
+        }
+        public async Task UpdateMusicVideos() {
+            MusicVideoField field = new MusicVideoField();
+            field.Mine();
+            MusicVideosResult result;
+            List<MusicVideo> musicvideos = new List<MusicVideo>();
+            int i = 0;
+            do {
+                result = await VideoLibrary.GetMusicVideos(field, limits: new JSON.General.Limits(i, i + LIMIT));
+                i += LIMIT;
+                if (result != null) {
+                    musicvideos.AddRange(result.MusicVideos);
+                }
+            } while (result != null && result.Limits.End != result.Limits.Total);
+            await Database.SaveMusicVideos(musicvideos);
         }
 
         public async Task UpdateMovieSets() {

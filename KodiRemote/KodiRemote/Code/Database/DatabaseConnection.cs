@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.Database.MovieTables;
+using KodiRemote.Code.Database.MusicVideoTables;
 
 namespace KodiRemote.Code.Database {
     public class DatabaseConnection {
@@ -107,6 +108,63 @@ namespace KodiRemote.Code.Database {
                     await database.VideoStreams.InsertOrUpdateAsync(entry);
 
                     await database.EpisodeVideoStreamMapper.InsertOrUpdateAsync(new EpisodeVideoStreamMapper() { EpisodeId = episode.EpisodeId, VideoStreamId = entry.VideoStreamId });
+                }
+            }
+            await database.SaveChangesAsync();
+        }
+
+        public async Task SaveMusicVideos(List<MusicVideo> musicvideos) {
+            foreach (MusicVideo musicvideo in musicvideos) {
+                Debug.WriteLine("Save MusicVideo with id: " + musicvideo.MusicVideoId);
+                var musicVideoEntry = new MusicVideoTableEntry(musicvideo);
+                var result = await database.MusicVideos.InsertOrUpdateAsync(musicVideoEntry);
+                if (result == InsertOrUpdate.Update) {
+                    await database.MusicVideoArtistMapper.RemoveAllAsync(x => x.MusicVideoId == musicvideo.MusicVideoId);
+                    await database.MusicVideoAudioStreamMapper.RemoveAllAsync(x => x.MusicVideoId == musicvideo.MusicVideoId);
+                    await database.MusicVideoDirectorMapper.RemoveAllAsync(x => x.MusicVideoId == musicvideo.MusicVideoId);
+                    await database.MusicVideoGenreMapper.RemoveAllAsync(x => x.MusicVideoId == musicvideo.MusicVideoId);
+                    await database.MusicVideoSubtitleStreamMapper.RemoveAllAsync(x => x.MusicVideoId == musicvideo.MusicVideoId);
+                    await database.MusicVideoVideoStreamMapper.RemoveAllAsync(x => x.MusicVideoId == musicvideo.MusicVideoId);
+                }
+
+                foreach (string artist in musicvideo.Artist) {
+                    var entry = new MusicVideoArtistTableEntry(artist);
+                    await database.MusicVideoArtists.InsertOrUpdateAsync(entry);
+
+                    await database.MusicVideoArtistMapper.InsertOrUpdateAsync(new MusicVideoArtistMapper() { MusicVideoArtistId = entry.MusicVideoArtistId, MusicVideoId = musicvideo.MusicVideoId });
+                }
+
+                foreach (string genre in musicvideo.Genre) {
+                    var entry = new MusicVideoGenreTableEntry(genre);
+                    await database.MusicVideoGenres.InsertOrUpdateAsync(entry);
+                    await database.MusicVideoGenreMapper.InsertOrUpdateAsync(new MusicVideoGenreMapper() { MusicVideoId = musicvideo.MusicVideoId, GenreId = entry.GenreId });
+                }
+
+                foreach (string director in musicvideo.Director) {
+                    var entry = new DirectorTableEntry(director);
+                    await database.Directors.InsertOrUpdateAsync(entry);
+
+                    await database.MusicVideoDirectorMapper.InsertOrUpdateAsync(new MusicVideoDirectorMapper() { DirectorId = entry.DirectorId, MusicVideoId = musicvideo.MusicVideoId });
+                }
+
+                foreach (var stream in musicvideo.StreamDetails.Audio) {
+                    var entry = new AudioStreamTableEntry(stream);
+                    await database.AudioStreams.InsertOrUpdateAsync(entry);
+
+                    await database.MusicVideoAudioStreamMapper.InsertOrUpdateAsync(new MusicVideoAudioStreamMapper() { MusicVideoId = musicvideo.MusicVideoId, AudioStreamId = entry.AudioStreamId });
+                }
+
+                foreach (var stream in musicvideo.StreamDetails.Subtitle) {
+                    var entry = new SubtitleStreamTableEntry(stream);
+                    await database.SubtitleStreams.InsertOrUpdateAsync(entry);
+
+                    await database.MusicVideoSubtitleStreamMapper.InsertOrUpdateAsync(new MusicVideoSubtitleStreamMapper() { MusicVideoId = musicvideo.MusicVideoId, SubtitleStreamId = entry.SubtitleStreamId });
+                }
+                foreach (var stream in musicvideo.StreamDetails.Video) {
+                    var entry = new VideoStreamTableEntry(stream);
+                    await database.VideoStreams.InsertOrUpdateAsync(entry);
+
+                    await database.MusicVideoVideoStreamMapper.InsertOrUpdateAsync(new MusicVideoVideoStreamMapper() { MusicVideoId = musicvideo.MusicVideoId, VideoStreamId = entry.VideoStreamId });
                 }
             }
             await database.SaveChangesAsync();

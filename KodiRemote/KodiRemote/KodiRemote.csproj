@@ -139,6 +139,16 @@
     <Compile Include="Code\Database\MovieTables\MovieSubtitleStreamMapper.cs" />
     <Compile Include="Code\Database\MovieTables\MovieTableEntry.cs" />
     <Compile Include="Code\Database\MovieTables\MovieVideoStreamMapper.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoArtistMapper.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoAudioStreamMapper.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoDirectorMapper.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoGenreMapper.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoGenreTableEntry.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoMapper.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoSubtitleStreamMapper.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoTableEntry.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoVideoStreamTable.cs" />
+    <Compile Include="Code\Database\MusicVideoTables\MusicVideoArtistTableEntry.cs" />
     <Compile Include="Code\Database\Utils\ILambdaCompareable.cs" />
     <Compile Include="Code\Database\SettingsContext.cs" />
     <Compile Include="Code\Database\SettingsDatabase.cs" />
@@ -273,9 +283,9 @@
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
-    <Compile Include="Migrations\20160520123926_InitDB.cs" />
-    <Compile Include="Migrations\20160520123926_InitDB.designer.cs">
-      <DependentUpon>20160520123926_InitDB.cs</DependentUpon>
+    <Compile Include="Migrations\20160520132934_InitDB.cs" />
+    <Compile Include="Migrations\20160520132934_InitDB.designer.cs">
+      <DependentUpon>20160520132934_InitDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Settings\20160509091955_InitSettings.cs" />
