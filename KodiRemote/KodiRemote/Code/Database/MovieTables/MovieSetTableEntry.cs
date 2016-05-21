@@ -28,7 +28,7 @@ namespace KodiRemote.Code.Database.MovieTables {
             }
         }
 
-        public List<MovieSetMapper> Movies { get; set; }
+        public List<MovieMovieSetMapper> Movies { get; set; }
 
         public MovieSetTableEntry() {
         }

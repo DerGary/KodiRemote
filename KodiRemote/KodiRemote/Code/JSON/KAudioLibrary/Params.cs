@@ -38,7 +38,6 @@ namespace KodiRemote.Code.JSON.KAudioLibrary.Params {
     public class GetArtists : FilterLimitSortPropertyBase<ArtistFilter> {
         [DataMember(Name = "albumartistsonly", EmitDefaultValue = false)]
         public bool? AlbumArtistsOnly { get; set; }
-
     }
     [DataContract]
     public class GetGenres : LimitSortPropertyBase { }

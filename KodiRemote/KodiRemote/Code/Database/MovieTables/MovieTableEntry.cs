@@ -35,7 +35,7 @@ namespace KodiRemote.Code.Database.MovieTables {
             }
         }
 
-        public List<MovieSetMapper> MovieSets { get; set; }
+        public List<MovieMovieSetMapper> MovieSets { get; set; }
         public List<MovieActorMapper> Actors { get; set; }
         public List<MovieAudioStreamMapper> AudioStreams { get; set; }
         public List<MovieDirectorMapper> Directors{ get; set; }

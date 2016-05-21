@@ -1,6 +1,8 @@
-﻿using KodiRemote.Code.Database.EpisodeTables;
+﻿using KodiRemote.Code.Database.AddonTables;
+using KodiRemote.Code.Database.EpisodeTables;
 using KodiRemote.Code.Database.GeneralTables;
 using KodiRemote.Code.Database.MovieTables;
+using KodiRemote.Code.Database.MusicTables;
 using KodiRemote.Code.Database.MusicVideoTables;
 using KodiRemote.Code.Database.TVShowTables;
 using Microsoft.Data.Entity;
@@ -43,7 +45,7 @@ namespace KodiRemote.Code.Database {
         public DbSet<MovieGenreMapper> MovieGenreMapper { get; set; }
         public DbSet<MovieGenreTableEntry> MovieGenres { get; set; }
         public DbSet<MovieSetTableEntry> MovieSets { get; set; }
-        public DbSet<MovieSetMapper> MovieSetMapper { get; set; }
+        public DbSet<MovieMovieSetMapper> MovieSetMapper { get; set; }
         public DbSet<MovieSubtitleStreamMapper> MovieSubtitleStreamMapper { get; set; }
         public DbSet<MovieTableEntry> Movies { get; set; }
         public DbSet<MovieVideoStreamMapper> MovieVideoStreamMapper { get; set; }
@@ -57,6 +59,21 @@ namespace KodiRemote.Code.Database {
         public DbSet<MusicVideoVideoStreamMapper> MusicVideoVideoStreamMapper { get; set; }
         public DbSet<MusicVideoArtistMapper> MusicVideoArtistMapper { get; set; }
         public DbSet<MusicVideoArtistTableEntry> MusicVideoArtists { get; set; }
+
+
+        public DbSet<AlbumArtistMapper> AlbumArtistMapper { get; set; }
+        public DbSet<AlbumGenreMapper> AlbumGenreMapper { get; set; }
+        public DbSet<AlbumTableEntry> Albums { get; set; }
+        public DbSet<ArtistTableEntry> Artists { get; set; }
+        public DbSet<MusicGenreTableEntry> MusicGenres { get; set; }
+        public DbSet<MusicPlaylistSongMapper> MusicPlaylistSongMapper { get; set; }
+        public DbSet<MusicPlaylistTableEntry> MusicPlaylistTableEntry { get; set; }
+        public DbSet<SongAlbumMapper> SongAlbumMapper { get; set; }
+        public DbSet<SongArtistMapper> SongArtistMapper { get; set; }
+        public DbSet<SongGenreMapper> SongGenreMapper { get; set; }
+        public DbSet<SongTableEntry> Songs { get; set; }
+
+        public DbSet<AddonTableEntry> Addons { get; set; }
 
 
         private string name;
@@ -81,6 +98,7 @@ namespace KodiRemote.Code.Database {
             CreateEpisodeModel(modelBuilder);
             CreateMovieModel(modelBuilder);
             CreateMusicVideoModel(modelBuilder);
+            CreateMusicModel(modelBuilder);
         }
 
         public void CreateTVShowModel(ModelBuilder modelBuilder) {
@@ -307,15 +325,15 @@ namespace KodiRemote.Code.Database {
                 .HasForeignKey(pt => pt.VideoStreamId);
 
             //MovieSetMapper
-            modelBuilder.Entity<MovieSetMapper>()
+            modelBuilder.Entity<MovieMovieSetMapper>()
                 .HasKey(t => new { t.MovieId, t.MovieSetId });
 
-            modelBuilder.Entity<MovieSetMapper>()
+            modelBuilder.Entity<MovieMovieSetMapper>()
                 .HasOne(pt => pt.Movie)
                 .WithMany(p => p.MovieSets)
                 .HasForeignKey(pt => pt.MovieId);
 
-            modelBuilder.Entity<MovieSetMapper>()
+            modelBuilder.Entity<MovieMovieSetMapper>()
                 .HasOne(pt => pt.MovieSet)
                 .WithMany(t => t.Movies)
                 .HasForeignKey(pt => pt.MovieSetId);
@@ -420,6 +438,98 @@ namespace KodiRemote.Code.Database {
                 .HasOne(pt => pt.VideoStream)
                 .WithMany(t => t.MusicVideos)
                 .HasForeignKey(pt => pt.VideoStreamId);
+        }
+
+        public void CreateMusicModel(ModelBuilder modelBuilder) {
+            //SongGenreMapper
+            modelBuilder.Entity<SongGenreMapper>()
+                .HasKey(t => new { t.SongId, t.GenreId });
+
+            modelBuilder.Entity<SongGenreMapper>()
+                .HasOne(pt => pt.Song)
+                .WithMany(p => p.Genres)
+                .HasForeignKey(pt => pt.SongId);
+
+            modelBuilder.Entity<SongGenreMapper>()
+                .HasOne(pt => pt.Genre)
+                .WithMany(t => t.Songs)
+                .HasForeignKey(pt => pt.GenreId);
+
+            //AlbumGenreMapper
+            modelBuilder.Entity<AlbumGenreMapper>()
+                .HasKey(t => new { t.AlbumId, t.GenreId });
+
+            modelBuilder.Entity<AlbumGenreMapper>()
+                .HasOne(pt => pt.Album)
+                .WithMany(p => p.Genres)
+                .HasForeignKey(pt => pt.AlbumId);
+
+            modelBuilder.Entity<AlbumGenreMapper>()
+                .HasOne(pt => pt.Genre)
+                .WithMany(t => t.Albums)
+                .HasForeignKey(pt => pt.GenreId);
+
+            //MusicGenre
+            modelBuilder.Entity<MusicGenreTableEntry>()
+                .HasAlternateKey(x => x.Genre)
+                .HasName("AK_string_Genre");
+
+            //SongArtistMapper
+            modelBuilder.Entity<SongArtistMapper>()
+                .HasKey(t => new { t.SongId, t.ArtistId });
+
+            modelBuilder.Entity<SongArtistMapper>()
+                .HasOne(pt => pt.Song)
+                .WithMany(p => p.Artists)
+                .HasForeignKey(pt => pt.SongId);
+
+            modelBuilder.Entity<SongArtistMapper>()
+                .HasOne(pt => pt.Artist)
+                .WithMany(t => t.Songs)
+                .HasForeignKey(pt => pt.ArtistId);
+
+            //AlbumArtistMapper
+            modelBuilder.Entity<AlbumArtistMapper>()
+                .HasKey(t => new { t.AlbumId, t.ArtistId });
+
+            modelBuilder.Entity<AlbumArtistMapper>()
+                .HasOne(pt => pt.Album)
+                .WithMany(p => p.Artists)
+                .HasForeignKey(pt => pt.AlbumId);
+
+            modelBuilder.Entity<AlbumArtistMapper>()
+                .HasOne(pt => pt.Artist)
+                .WithMany(t => t.Albums)
+                .HasForeignKey(pt => pt.ArtistId);
+
+            //SongAlbumMapper
+            modelBuilder.Entity<SongAlbumMapper>()
+                .HasKey(t => new { t.SongId, t.AlbumId});
+
+            modelBuilder.Entity<SongAlbumMapper>()
+                .HasOne(pt => pt.Album)
+                .WithMany(p => p.Songs)
+                .HasForeignKey(pt => pt.SongId);
+
+            modelBuilder.Entity<SongAlbumMapper>()
+                .HasOne(pt => pt.Song)
+                .WithMany(t => t.Albums)
+                .HasForeignKey(pt => pt.AlbumId);
+
+            //MusicPlaylistSongMapper
+            modelBuilder.Entity<MusicPlaylistSongMapper>()
+                .HasKey(t => new { t.SongId, t.PlaylistId });
+
+            modelBuilder.Entity<MusicPlaylistSongMapper>()
+                .HasOne(pt => pt.Playlist)
+                .WithMany(p => p.Songs)
+                .HasForeignKey(pt => pt.SongId);
+
+            modelBuilder.Entity<MusicPlaylistSongMapper>()
+                .HasOne(pt => pt.Song)
+                .WithMany(t => t.Playlists)
+                .HasForeignKey(pt => pt.PlaylistId);
+
         }
     }
 

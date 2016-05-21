@@ -1,8 +1,10 @@
 ﻿using KodiRemote.Code.Common;
 using KodiRemote.Code.Database;
 using KodiRemote.Code.JSON;
+using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General.Notifications;
+using KodiRemote.Code.JSON.KAddons.Results;
 using KodiRemote.Code.JSON.KAudioLibrary.Results;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using KodiRemote.Code.JSON.ServiceInterfaces;
@@ -84,9 +86,84 @@ namespace KodiRemote.Code.Essentials {
             //await UpdateEpisodes(tvShowAndSeasonIds);
             //await UpdateMovieSets();
             //await UpdateMovies();
-            await UpdateMusicVideos();
+            //await UpdateMusicVideos();
+            //await UpdateArtists();
+            //await UpdateSongs();
+            //await UpdateAlbums();
+            await UpdateAddons();
             Debug.WriteLine("time taken: " + DateTime.Now.Subtract(first).TotalSeconds);
         }
+        public async Task UpdateAddons() {
+            AddonsResult result;
+            List<Addon> addons = new List<Addon>();
+            int i = 0;
+            do {
+                result = await Addons.GetAddons(ContentEnum.Null, EnabledEnum.All ,AddonField.WithAll(), limits: new JSON.General.Limits(i, i + LIMIT));
+                i += LIMIT;
+                if (result != null) {
+                    addons.AddRange(result.Addons);
+                }
+            } while (result != null && result.Limits.End != result.Limits.Total);
+            await Database.SaveAddons(addons);
+        }
+
+        public async Task UpdateSongs() {
+            SongField field = new SongField();
+            field.Mine();
+            SongsResult result;
+            List<Song> songs = new List<Song>();
+            int i = 0;
+            do {
+                result = await AudioLibrary.GetSongs(field, limits: new JSON.General.Limits(i, i + LIMIT));
+                i += LIMIT;
+                if (result != null) {
+                    songs.AddRange(result.Songs);
+                }
+            } while (result != null && result.Limits.End != result.Limits.Total);
+            await Database.SaveSongs(songs);
+        }
+
+        public async Task UpdateArtists() {
+            ArtistField field = new ArtistField();
+            field.Mine();
+            ArtistsResult result;
+            List<Artist> artists = new List<Artist>();
+            int i = 0;
+            do {
+                result = await AudioLibrary.GetArtists(field, limits: new JSON.General.Limits(i, i + LIMIT));
+                i += LIMIT;
+                if (result != null) {
+                    artists.AddRange(result.Artists);
+                }
+            } while (result != null && result.Limits.End != result.Limits.Total);
+            i = 0;
+            do {
+                //if I only use the above code there are some artists missing that are only albumartists. With this loop I have a lot of Artists doubled but I also get the missing ones.
+                result = await AudioLibrary.GetArtists(field, albumartistsonly: true, limits: new JSON.General.Limits(i, i + LIMIT));
+                i += LIMIT;
+                if (result != null) {
+                    artists.AddRange(result.Artists);
+                }
+            } while (result != null && result.Limits.End != result.Limits.Total);
+            await Database.SaveArtists(artists);
+        }
+
+        public async Task UpdateAlbums() {
+            AlbumField field = new AlbumField();
+            field.Mine();
+            AlbumsResult result;
+            List<Album> albums = new List<Album>();
+            int i = 0;
+            do {
+                result = await AudioLibrary.GetAlbums(field, limits: new JSON.General.Limits(i, i + LIMIT));
+                i += LIMIT;
+                if (result != null) {
+                    albums.AddRange(result.Albums);
+                }
+            } while (result != null && result.Limits.End != result.Limits.Total);
+            await Database.SaveAlbums(albums);
+        }
+        
         public async Task UpdateMusicVideos() {
             MusicVideoField field = new MusicVideoField();
             field.Mine();

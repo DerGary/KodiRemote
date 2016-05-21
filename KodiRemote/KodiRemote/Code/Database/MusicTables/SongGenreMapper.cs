@@ -1,38 +1,39 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiRemote.Code.Database.MovieTables {
-    public class MovieSetMapper : MovieMapper {
-        public int MovieSetId { get; set; }
-        public MovieSetTableEntry MovieSet { get; set; }
+namespace KodiRemote.Code.Database.MusicTables {
+    public class SongGenreMapper : SongMapper {
+        public int GenreId { get; set; }
+        public MusicGenreTableEntry Genre { get; set; }
 
         [NotMapped]
         public override string Key {
             get {
-                return MovieId + ";" + MovieSetId;
+                return SongId + ";" + GenreId;
             }
         }
 
         public override bool Equals(object obj) {
-            return this.Equals(obj as MovieSetMapper);
+            return this.Equals(obj as SongGenreMapper);
         }
 
-        public bool Equals(MovieSetMapper other) {
+        public bool Equals(SongGenreMapper other) {
             // If parameter is null return false:
             if ((object)other == null) {
                 return false;
             }
 
             // Return true if the fields match:
-            return MovieId == other.MovieId && MovieSetId == other.MovieSetId;
+            return SongId == other.SongId && GenreId == other.GenreId;
         }
 
         public override int GetHashCode() {
-            return MovieId ^ MovieSetId;
+            return SongId ^ GenreId;
         }
     }
 }

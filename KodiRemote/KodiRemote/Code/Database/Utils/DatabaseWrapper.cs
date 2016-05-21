@@ -128,27 +128,6 @@ namespace KodiRemote.Code.Database.Utils {
             await DoDatabaseOperation(toRemove, (DatabaseContext context, T x) => context.Set<T>().Remove(x));
             await DoDatabaseOperation(toAdd, (DatabaseContext context, T x) => context.Set<T>().Add(x));
             await DoDatabaseOperation(toUpdate, (DatabaseContext context, T x) => context.Set<T>().Update(x));
-            //if (toRemove.Any()) {
-            //    using (var context = wrapper.CreateContext()) {
-            //        context.Set<T>().RemoveRange(toRemove.Values);
-            //        await context.SaveChangesAsync();
-            //        toUpdate.Clear();
-            //    }
-            //}
-            //if (toAdd.Any()) {
-            //    using (var context = wrapper.CreateContext()) {
-            //        context.Set<T>().AddRange(toAdd.Values);
-            //        await context.SaveChangesAsync();
-            //        toUpdate.Clear();
-            //    }
-            //}
-            //if (toUpdate.Any()) {
-            //    using (var context = wrapper.CreateContext()) {
-            //        context.Set<T>().UpdateRange(toUpdate.Values);
-            //        await context.SaveChangesAsync();
-            //        toUpdate.Clear();
-            //    }
-            //}
         }
 
         public async Task DoDatabaseOperation(Dictionary<string, T> values, Action<DatabaseContext, T> action) {

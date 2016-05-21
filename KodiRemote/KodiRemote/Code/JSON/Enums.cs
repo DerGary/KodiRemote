@@ -437,6 +437,7 @@ namespace KodiRemote.Code.JSON.Enums {
         }
     }
     public class ContentEnum : StringEnum {
+        protected static Dictionary<int, ContentEnum> values = new Dictionary<int, ContentEnum>();
 
         public static readonly ContentEnum Null = new ContentEnum(1, null);
         public static readonly ContentEnum Unknown = new ContentEnum(2, "unknown");
@@ -449,7 +450,6 @@ namespace KodiRemote.Code.JSON.Enums {
             values[value] = this;
         }
 
-        protected static Dictionary<int, ContentEnum> values = new Dictionary<int, ContentEnum>();
 
         public static ContentEnum FromInt(int value) {
             if (values.ContainsKey(value)) {

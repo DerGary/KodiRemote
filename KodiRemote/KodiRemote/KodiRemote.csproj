@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="Code\Common\PropertyChangedBase.cs" />
     <Compile Include="Code\Common\RelayCommand.cs" />
+    <Compile Include="Code\Database\AddonTables\AddonTable.cs" />
     <Compile Include="Code\Database\DatabaseContext.cs" />
     <Compile Include="Code\Database\DatabaseConnection.cs" />
     <Compile Include="Code\Database\DatabaseContextWrapper.cs" />
@@ -134,11 +135,24 @@
     <Compile Include="Code\Database\MovieTables\MovieGenreMapper.cs" />
     <Compile Include="Code\Database\MovieTables\MovieGenreTableEntry.cs" />
     <Compile Include="Code\Database\MovieTables\MovieMapper.cs" />
-    <Compile Include="Code\Database\MovieTables\MovieSetMapper.cs" />
+    <Compile Include="Code\Database\MovieTables\MovieMovieSetMapper.cs" />
     <Compile Include="Code\Database\MovieTables\MovieSetTableEntry.cs" />
     <Compile Include="Code\Database\MovieTables\MovieSubtitleStreamMapper.cs" />
     <Compile Include="Code\Database\MovieTables\MovieTableEntry.cs" />
     <Compile Include="Code\Database\MovieTables\MovieVideoStreamMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\AlbumArtistMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\AlbumGenreMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\AlbumMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\AlbumTableEntry.cs" />
+    <Compile Include="Code\Database\MusicTables\ArtistTableEntry.cs" />
+    <Compile Include="Code\Database\MusicTables\MusicPlaylistSongMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\MusicPlaylistTableEntry.cs" />
+    <Compile Include="Code\Database\MusicTables\MusicGenreTableEntry.cs" />
+    <Compile Include="Code\Database\MusicTables\SongAlbumMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\SongArtistMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\SongGenreMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\SongMapper.cs" />
+    <Compile Include="Code\Database\MusicTables\SongTableEntry.cs" />
     <Compile Include="Code\Database\MusicVideoTables\MusicVideoArtistMapper.cs" />
     <Compile Include="Code\Database\MusicVideoTables\MusicVideoAudioStreamMapper.cs" />
     <Compile Include="Code\Database\MusicVideoTables\MusicVideoDirectorMapper.cs" />
@@ -283,9 +297,9 @@
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
-    <Compile Include="Migrations\20160520132934_InitDB.cs" />
-    <Compile Include="Migrations\20160520132934_InitDB.designer.cs">
-      <DependentUpon>20160520132934_InitDB.cs</DependentUpon>
+    <Compile Include="Migrations\20160521135939_InitDB.cs" />
+    <Compile Include="Migrations\20160521135939_InitDB.designer.cs">
+      <DependentUpon>20160521135939_InitDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Settings\20160509091955_InitSettings.cs" />

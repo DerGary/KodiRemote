@@ -19,6 +19,10 @@ using Windows.Storage;
 using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.Code.Database.MusicVideoTables;
+using KodiRemote.Code.JSON.KAudioLibrary.Results;
+using KodiRemote.Code.Database.MusicTables;
+using KodiRemote.Code.JSON.KAddons.Results;
+using KodiRemote.Code.Database.AddonTables;
 
 namespace KodiRemote.Code.Database {
     public class DatabaseConnection {
@@ -113,6 +117,61 @@ namespace KodiRemote.Code.Database {
             await database.SaveChangesAsync();
         }
 
+        public async Task SaveAlbums(List<Album> albums) {
+            foreach (Album album in albums) {
+                Debug.WriteLine("Save Album with id: " + album.AlbumId);
+                var albumEntry = new AlbumTableEntry(album);
+                var result = await database.Albums.InsertOrUpdateAsync(albumEntry);
+                if (result == InsertOrUpdate.Update) {
+                    await database.AlbumArtistMapper.RemoveAllAsync(x => x.AlbumId == album.AlbumId);
+                    await database.AlbumGenreMapper.RemoveAllAsync(x => x.AlbumId == album.AlbumId);
+                }
+
+                foreach (int artist in album.ArtistId) {
+                    await database.AlbumArtistMapper.InsertOrUpdateAsync(new AlbumArtistMapper() { ArtistId = artist, AlbumId = album.AlbumId });
+                }
+
+                foreach (string genre in album.Genre) {
+                    var entry = new MusicGenreTableEntry(genre);
+                    await database.MusicGenres.InsertOrUpdateAsync(entry);
+                    await database.AlbumGenreMapper.InsertOrUpdateAsync(new AlbumGenreMapper() { AlbumId = album.AlbumId, GenreId = entry.GenreId });
+                }
+            }
+            await database.SaveChangesAsync();
+        }
+
+        public async Task SaveArtists(List<Artist> artists) {
+            foreach (Artist artist in artists) {
+                Debug.WriteLine("Save Artist with id: " + artist.ArtistId);
+                var artistEntry = new ArtistTableEntry(artist);
+                var result = await database.Artists.InsertOrUpdateAsync(artistEntry);
+            }
+            await database.SaveChangesAsync();
+        }
+
+        public async Task SaveSongs(List<Song> songs) {
+            foreach (Song song in songs) {
+                Debug.WriteLine("Save Song with id: " + song.SongId);
+                var songEntry = new SongTableEntry(song);
+                var result = await database.Songs.InsertOrUpdateAsync(songEntry);
+                if (result == InsertOrUpdate.Update) {
+                    await database.SongArtistMapper.RemoveAllAsync(x => x.SongId == song.SongId);
+                    await database.SongGenreMapper.RemoveAllAsync(x => x.SongId == song.SongId);
+                }
+
+                foreach (int artist in song.ArtistId) {
+                    await database.SongArtistMapper.InsertOrUpdateAsync(new SongArtistMapper() { ArtistId = artist , SongId = song.SongId });
+                }
+
+                foreach (string genre in song.Genre) {
+                    var entry = new MusicGenreTableEntry(genre);
+                    await database.MusicGenres.InsertOrUpdateAsync(entry);
+                    await database.SongGenreMapper.InsertOrUpdateAsync(new SongGenreMapper() { SongId = song.SongId, GenreId = entry.GenreId });
+                }
+            }
+            await database.SaveChangesAsync();
+        }
+
         public async Task SaveMusicVideos(List<MusicVideo> musicvideos) {
             foreach (MusicVideo musicvideo in musicvideos) {
                 Debug.WriteLine("Save MusicVideo with id: " + musicvideo.MusicVideoId);
@@ -179,6 +238,16 @@ namespace KodiRemote.Code.Database {
             await database.SaveChangesAsync();
         }
 
+
+        public async Task SaveAddons(List<Addon> addons) {
+            foreach (Addon addon in addons) {
+                Debug.WriteLine("Save Addon with id: " + addon.AddonId);
+                var entry = new AddonTableEntry(addon);
+                var result = await database.Addons.InsertOrUpdateAsync(entry);
+            }
+            await database.SaveChangesAsync();
+        }
+
         public async Task SaveMovies(List<Movie> movies) {
             foreach (Movie movie in movies) {
                 Debug.WriteLine("Save Movie with id: " + movie.MovieId);
@@ -194,7 +263,7 @@ namespace KodiRemote.Code.Database {
                     await database.MovieSetMapper.RemoveAllAsync(x => x.MovieId == movie.MovieId);
                 }
                 if (movie.SetId != 0) {
-                    await database.MovieSetMapper.InsertOrUpdateAsync(new MovieSetMapper() { MovieId = movie.MovieId, MovieSetId = movie.SetId });
+                    await database.MovieSetMapper.InsertOrUpdateAsync(new MovieMovieSetMapper() { MovieId = movie.MovieId, MovieSetId = movie.SetId });
                 }
                 
                 foreach (string genre in movie.Genre) {

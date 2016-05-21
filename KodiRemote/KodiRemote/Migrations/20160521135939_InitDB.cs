@@ -9,6 +9,28 @@ namespace KodiRemote.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Addons",
+                columns: table => new
+                {
+                    AddonId = table.Column<string>(nullable: false),
+                    Author = table.Column<string>(nullable: true),
+                    Broken = table.Column<bool>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Disclaimer = table.Column<string>(nullable: true),
+                    Enabled = table.Column<bool>(nullable: false),
+                    Fanart = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Rating = table.Column<float>(nullable: false),
+                    Summary = table.Column<string>(nullable: true),
+                    Thumbnail = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    Version = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddonTableEntry", x => x.AddonId);
+                });
+            migrationBuilder.CreateTable(
                 name: "Actors",
                 columns: table => new
                 {
@@ -117,6 +139,91 @@ namespace KodiRemote.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MovieTableEntry", x => x.MovieId);
+                });
+            migrationBuilder.CreateTable(
+                name: "Albums",
+                columns: table => new
+                {
+                    AlbumId = table.Column<int>(nullable: false),
+                    AlbumLabel = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    DisplayArtist = table.Column<string>(nullable: true),
+                    Fanart = table.Column<string>(nullable: true),
+                    Label = table.Column<string>(nullable: true),
+                    PlayCount = table.Column<int>(nullable: false),
+                    Rating = table.Column<float>(nullable: false),
+                    Thumbnail = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    Year = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlbumTableEntry", x => x.AlbumId);
+                });
+            migrationBuilder.CreateTable(
+                name: "Artists",
+                columns: table => new
+                {
+                    ArtistId = table.Column<int>(nullable: false),
+                    Artist = table.Column<string>(nullable: true),
+                    Born = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Died = table.Column<string>(nullable: true),
+                    Fanart = table.Column<string>(nullable: true),
+                    Formed = table.Column<string>(nullable: true),
+                    Label = table.Column<string>(nullable: true),
+                    Thumbnail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArtistTableEntry", x => x.ArtistId);
+                });
+            migrationBuilder.CreateTable(
+                name: "MusicGenres",
+                columns: table => new
+                {
+                    GenreId = table.Column<int>(nullable: false),
+                    Genre = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MusicGenreTableEntry", x => x.GenreId);
+                    table.UniqueConstraint("AK_string_Genre", x => x.Genre);
+                });
+            migrationBuilder.CreateTable(
+                name: "MusicPlaylists",
+                columns: table => new
+                {
+                    PlaylistId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MusicPlaylistTableEntry", x => x.PlaylistId);
+                });
+            migrationBuilder.CreateTable(
+                name: "Songs",
+                columns: table => new
+                {
+                    SongId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Album = table.Column<string>(nullable: true),
+                    AlbumId = table.Column<int>(nullable: false),
+                    Comment = table.Column<string>(nullable: true),
+                    DisplayArtist = table.Column<string>(nullable: true),
+                    Duration = table.Column<int>(nullable: false),
+                    Fanart = table.Column<string>(nullable: true),
+                    Label = table.Column<string>(nullable: true),
+                    PlayCount = table.Column<int>(nullable: false),
+                    Rating = table.Column<float>(nullable: false),
+                    Thumbnail = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Track = table.Column<int>(nullable: false),
+                    Year = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SongTableEntry", x => x.SongId);
                 });
             migrationBuilder.CreateTable(
                 name: "MusicVideoArtists",
@@ -289,7 +396,7 @@ namespace KodiRemote.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
             migrationBuilder.CreateTable(
-                name: "MovieSetMapper",
+                name: "MovieMovieSetMapper",
                 columns: table => new
                 {
                     MovieId = table.Column<int>(nullable: false),
@@ -297,15 +404,15 @@ namespace KodiRemote.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieSetMapper", x => new { x.MovieId, x.MovieSetId });
+                    table.PrimaryKey("PK_MovieMovieSetMapper", x => new { x.MovieId, x.MovieSetId });
                     table.ForeignKey(
-                        name: "FK_MovieSetMapper_MovieTableEntry_MovieId",
+                        name: "FK_MovieMovieSetMapper_MovieTableEntry_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "MovieId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieSetMapper_MovieSetTableEntry_MovieSetId",
+                        name: "FK_MovieMovieSetMapper_MovieSetTableEntry_MovieSetId",
                         column: x => x.MovieSetId,
                         principalTable: "MovieSets",
                         principalColumn: "SetId",
@@ -355,6 +462,144 @@ namespace KodiRemote.Migrations
                         column: x => x.VideoStreamId,
                         principalTable: "VideoStreams",
                         principalColumn: "VideoStreamId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "AlbumArtistMapper",
+                columns: table => new
+                {
+                    AlbumId = table.Column<int>(nullable: false),
+                    ArtistId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlbumArtistMapper", x => new { x.AlbumId, x.ArtistId });
+                    table.ForeignKey(
+                        name: "FK_AlbumArtistMapper_AlbumTableEntry_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Albums",
+                        principalColumn: "AlbumId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AlbumArtistMapper_ArtistTableEntry_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artists",
+                        principalColumn: "ArtistId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "AlbumGenreMapper",
+                columns: table => new
+                {
+                    AlbumId = table.Column<int>(nullable: false),
+                    GenreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlbumGenreMapper", x => new { x.AlbumId, x.GenreId });
+                    table.ForeignKey(
+                        name: "FK_AlbumGenreMapper_AlbumTableEntry_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Albums",
+                        principalColumn: "AlbumId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AlbumGenreMapper_MusicGenreTableEntry_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "MusicGenres",
+                        principalColumn: "GenreId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "MusicPlaylistSongMapper",
+                columns: table => new
+                {
+                    SongId = table.Column<int>(nullable: false),
+                    PlaylistId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MusicPlaylistSongMapper", x => new { x.SongId, x.PlaylistId });
+                    table.ForeignKey(
+                        name: "FK_MusicPlaylistSongMapper_SongTableEntry_PlaylistId",
+                        column: x => x.PlaylistId,
+                        principalTable: "Songs",
+                        principalColumn: "SongId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MusicPlaylistSongMapper_MusicPlaylistTableEntry_SongId",
+                        column: x => x.SongId,
+                        principalTable: "MusicPlaylists",
+                        principalColumn: "PlaylistId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "SongAlbumMapper",
+                columns: table => new
+                {
+                    SongId = table.Column<int>(nullable: false),
+                    AlbumId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SongAlbumMapper", x => new { x.SongId, x.AlbumId });
+                    table.ForeignKey(
+                        name: "FK_SongAlbumMapper_SongTableEntry_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Songs",
+                        principalColumn: "SongId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SongAlbumMapper_AlbumTableEntry_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Albums",
+                        principalColumn: "AlbumId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "SongArtistMapper",
+                columns: table => new
+                {
+                    SongId = table.Column<int>(nullable: false),
+                    ArtistId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SongArtistMapper", x => new { x.SongId, x.ArtistId });
+                    table.ForeignKey(
+                        name: "FK_SongArtistMapper_ArtistTableEntry_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artists",
+                        principalColumn: "ArtistId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SongArtistMapper_SongTableEntry_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Songs",
+                        principalColumn: "SongId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "SongGenreMapper",
+                columns: table => new
+                {
+                    SongId = table.Column<int>(nullable: false),
+                    GenreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SongGenreMapper", x => new { x.SongId, x.GenreId });
+                    table.ForeignKey(
+                        name: "FK_SongGenreMapper_MusicGenreTableEntry_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "MusicGenres",
+                        principalColumn: "GenreId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SongGenreMapper_SongTableEntry_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Songs",
+                        principalColumn: "SongId",
                         onDelete: ReferentialAction.Cascade);
                 });
             migrationBuilder.CreateTable(
@@ -711,6 +956,7 @@ namespace KodiRemote.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable("Addons");
             migrationBuilder.DropTable("EpisodeActorMapper");
             migrationBuilder.DropTable("EpisodeAudioStreamMapper");
             migrationBuilder.DropTable("EpisodeDirectorMapper");
@@ -720,9 +966,15 @@ namespace KodiRemote.Migrations
             migrationBuilder.DropTable("MovieAudioStreamMapper");
             migrationBuilder.DropTable("MovieDirectorMapper");
             migrationBuilder.DropTable("MovieGenreMapper");
-            migrationBuilder.DropTable("MovieSetMapper");
+            migrationBuilder.DropTable("MovieMovieSetMapper");
             migrationBuilder.DropTable("MovieSubtitleStreamMapper");
             migrationBuilder.DropTable("MovieVideoStreamMapper");
+            migrationBuilder.DropTable("AlbumArtistMapper");
+            migrationBuilder.DropTable("AlbumGenreMapper");
+            migrationBuilder.DropTable("MusicPlaylistSongMapper");
+            migrationBuilder.DropTable("SongAlbumMapper");
+            migrationBuilder.DropTable("SongArtistMapper");
+            migrationBuilder.DropTable("SongGenreMapper");
             migrationBuilder.DropTable("MusicVideoArtistMapper");
             migrationBuilder.DropTable("MusicVideoAudioStreamMapper");
             migrationBuilder.DropTable("MusicVideoDirectorMapper");
@@ -735,6 +987,11 @@ namespace KodiRemote.Migrations
             migrationBuilder.DropTable("MovieGenres");
             migrationBuilder.DropTable("MovieSets");
             migrationBuilder.DropTable("Movies");
+            migrationBuilder.DropTable("MusicPlaylists");
+            migrationBuilder.DropTable("Albums");
+            migrationBuilder.DropTable("Artists");
+            migrationBuilder.DropTable("MusicGenres");
+            migrationBuilder.DropTable("Songs");
             migrationBuilder.DropTable("MusicVideoArtists");
             migrationBuilder.DropTable("AudioStreams");
             migrationBuilder.DropTable("Directors");
