@@ -65,7 +65,7 @@ namespace KodiRemote.Code.JSON.Fields {
             return list;
         }
 
-        internal void Mine() {
+        public override void Mine() {
             Born = true;
             Formed = true;
             Description = true;

@@ -10,17 +10,16 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.Utils {
     public class DatabaseWrapper<T>  where T : TableEntryBase, new() {
-        //private List<T> list = null;
         private Dictionary<string, T> dic = null;
         private Dictionary<string, T> toAdd = new Dictionary<string, T>();
         private Dictionary<string, T> toRemove = new Dictionary<string, T>();
         private Dictionary<string, T> toUpdate = new Dictionary<string, T>();
         private int nextId = -1;
         private PropertyInfo keyProperty = null;
-        private DatabaseContextWrapper wrapper;
+        private Func<DbContext> createContext;
 
-        public DatabaseWrapper(DatabaseContextWrapper wrapper){
-            this.wrapper = wrapper;
+        public DatabaseWrapper(Func<DbContext> createContext){
+            this.createContext = createContext;
 
             foreach (var prop in typeof(T).GetProperties()) {
                 if(prop.PropertyType == typeof(int)) {
@@ -32,9 +31,9 @@ namespace KodiRemote.Code.Database.Utils {
             }
         }
 
-        public async Task EnsureData() {
+        private async Task EnsureData() {
             if (dic == null) {
-                using (var context = wrapper.CreateContext()) {
+                using (var context = createContext()) {
                     dic = new Dictionary<string, T>();
                     var list = await context.Set<T>().AsNoTracking().ToListAsync();
                     foreach(var item in list) {
@@ -53,10 +52,31 @@ namespace KodiRemote.Code.Database.Utils {
             }
         }
 
+        public async Task<Dictionary<string,T>> GetDataAsync() {
+            await EnsureData();
+            Dictionary<string,T> result = new Dictionary<string, T>(dic);
+            return result;
+        }
+
+        public async Task<Dictionary<string, T>> GetDataWhereAsync(Func<T, bool> expression) {
+            await EnsureData();
+            Dictionary<string,T> result = new Dictionary<string, T>();
+            foreach (var item in await this.WhereAsync(expression)) {
+                result.Add(item.Key, item);
+            }
+            return result;
+        }
+
+        public async Task<bool> ContainsKey(string key) {
+            await EnsureData();
+            return dic.ContainsKey(key);
+        }
+
         public async Task<bool> AnyAsync(Func<T,bool> expression) {
             await EnsureData();
             return dic.Values.Any(expression);
         }
+
         public async Task<InsertOrUpdate> InsertOrUpdateAsync(T item) {
             await EnsureData();
             T first;
@@ -125,22 +145,22 @@ namespace KodiRemote.Code.Database.Utils {
         }
         
         public async Task SaveChangesAsync() {
-            await DoDatabaseOperation(toRemove, (DatabaseContext context, T x) => context.Set<T>().Remove(x));
-            await DoDatabaseOperation(toAdd, (DatabaseContext context, T x) => context.Set<T>().Add(x));
-            await DoDatabaseOperation(toUpdate, (DatabaseContext context, T x) => context.Set<T>().Update(x));
+            await DoDatabaseOperation(toRemove, (DbContext context, T x) => context.Set<T>().Remove(x));
+            await DoDatabaseOperation(toAdd, (DbContext context, T x) => context.Set<T>().Add(x));
+            await DoDatabaseOperation(toUpdate, (DbContext context, T x) => context.Set<T>().Update(x));
         }
 
-        public async Task DoDatabaseOperation(Dictionary<string, T> values, Action<DatabaseContext, T> action) {
+        private async Task DoDatabaseOperation(Dictionary<string, T> values, Action<DbContext, T> action) {
             if (values.Any()) {
                 int i = 0;
-                var context = wrapper.CreateContext();
+                var context = createContext();
                 foreach (var item in values.Values) {
                     i++;
                     action.Invoke(context, item);
                     if (i % 1000 == 0) {
                         await context.SaveChangesAsync();
                         context.Dispose();
-                        context = wrapper.CreateContext();
+                        context = createContext();
                     }
                 }
                 await context.SaveChangesAsync();

@@ -68,5 +68,9 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("enabled");
             return list;
         }
+
+        public override void Mine() {
+            All();
+        }
     }
 }

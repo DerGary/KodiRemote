@@ -284,5 +284,9 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("mimetype");
             return list;
         }
+
+        public override void Mine() {
+            All();
+        }
     }
 }

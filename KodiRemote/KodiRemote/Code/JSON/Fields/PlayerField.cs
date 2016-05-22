@@ -104,5 +104,8 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("live");
             return list;
         }
+        public override void Mine() {
+            All();
+        }
     }
 }

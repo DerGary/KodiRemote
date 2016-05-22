@@ -26,7 +26,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Watchedepisodes = true;
             Art = true;
         }
-        public void Mine() {
+        public override void Mine() {
             Season = true;
             Episode = true;
             Tvshowid = true;

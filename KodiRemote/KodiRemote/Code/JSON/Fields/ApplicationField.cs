@@ -28,5 +28,9 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("version");
             return list;
         }
+
+        public override void Mine() {
+            All();
+        }
     }
 }

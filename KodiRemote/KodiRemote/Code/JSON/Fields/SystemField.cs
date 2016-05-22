@@ -28,5 +28,8 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("canreboot");
             return list;
         }
+        public override void Mine() {
+            All();
+        }
     }
 }

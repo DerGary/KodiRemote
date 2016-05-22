@@ -24,5 +24,8 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("scanning");
             return list;
         }
+        public override void Mine() {
+            All();
+        }
     }
 }

@@ -32,5 +32,8 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("art");
             return list;
         }
+        public override void Mine() {
+            All();
+        }
     }
 }

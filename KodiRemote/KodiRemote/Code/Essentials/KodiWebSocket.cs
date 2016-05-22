@@ -244,25 +244,17 @@ namespace KodiRemote.Code.Essentials {
                 if (items.Items != null) {
                     foreach (JSON.General.Results.Item item in items.Items) {
                         if (list.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
-                            SongField properties = new SongField();
-                            properties.Mine();
-                            SongResult song = await AudioLibrary.GetSongDetails(item.Id, properties);
+                            SongResult song = await AudioLibrary.GetSongDetails(item.Id, SongField.WithMine());
                             CurrentAudioPlaylist.Add(song.Song);
                         } else if (list.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
                             if (item.Type == ItemTypeEnum.Episode.ToString()) {
-                                var properties = new EpisodeField();
-                                properties.Mine();
-                                EpisodeResult episode = await VideoLibrary.GetEpisodeDetails(item.Id, properties);
+                                EpisodeResult episode = await VideoLibrary.GetEpisodeDetails(item.Id, EpisodeField.WithMine());
                                 CurrentVideoPlaylist.Add(episode.Episode);
                             } else if (item.Type == ItemTypeEnum.Movie.ToString()) {
-                                var properties = new MovieField();
-                                properties.Mine();
-                                MovieResult movie = await VideoLibrary.GetMovieDetails(item.Id, properties);
+                                MovieResult movie = await VideoLibrary.GetMovieDetails(item.Id, MovieField.WithMine());
                                 CurrentVideoPlaylist.Add(movie.Movie);
                             } else if (item.Type == ItemTypeEnum.Musicvideo.ToString()) {
-                                var properties = new MusicVideoField();
-                                properties.Mine();
-                                MusicVideoResult musicvideo = await VideoLibrary.GetMusicVideoDetails(item.Id, properties);
+                                MusicVideoResult musicvideo = await VideoLibrary.GetMusicVideoDetails(item.Id, MusicVideoField.WithMine());
                                 CurrentVideoPlaylist.Add(musicvideo.MusicVideo);
                             }
                         } else if (list.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {

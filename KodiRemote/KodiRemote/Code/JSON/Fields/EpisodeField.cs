@@ -58,7 +58,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Uniqueid = true;
             Art = true;
         }
-        public void Mine() {
+        public override void Mine() {
             Episode = true;
             Tvshowid = true;
             Season = true;

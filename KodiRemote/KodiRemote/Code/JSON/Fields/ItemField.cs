@@ -300,5 +300,8 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("endtime");
             return list;
         }
+        public override void Mine() {
+            All();
+        }
     }
 }

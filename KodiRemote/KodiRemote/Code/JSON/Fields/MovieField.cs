@@ -74,7 +74,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Tag = true;
             Art = true;
         }
-        public void Mine() {
+        public override void Mine() {
             Year = true;
             Trailer = true;
             Imdbnumber = true;

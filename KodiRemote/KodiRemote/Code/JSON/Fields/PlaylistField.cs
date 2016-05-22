@@ -20,5 +20,8 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("size");
             return list;
         }
+        public override void Mine() {
+            All();
+        }
     }
 }

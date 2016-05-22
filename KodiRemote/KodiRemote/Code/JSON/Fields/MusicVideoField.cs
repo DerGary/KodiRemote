@@ -48,7 +48,7 @@ namespace KodiRemote.Code.JSON.Fields {
             Tag = true;
             Art = true;
         }
-        public void Mine() {
+        public override void Mine() {
             Title = true;
             Playcount = true;
             Runtime = true;

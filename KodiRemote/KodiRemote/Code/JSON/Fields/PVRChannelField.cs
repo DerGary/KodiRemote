@@ -36,5 +36,8 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("lastplayed");
             return list;
         }
+        public override void Mine() {
+            All();
+        }
     }
 }

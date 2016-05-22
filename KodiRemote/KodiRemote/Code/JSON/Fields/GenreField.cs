@@ -20,5 +20,9 @@ namespace KodiRemote.Code.JSON.Fields {
                 list.Add("thumbnail");
             return list;
         }
+
+        public override void Mine() {
+            All();
+        }
     }
 }

@@ -89,7 +89,7 @@ namespace KodiRemote.Code.JSON.Fields {
             return list;
         }
 
-        internal void Mine() {
+        public override void Mine() {
             Title = true;
             Description = true;
             Artist = true;
