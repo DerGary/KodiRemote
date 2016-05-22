@@ -1,0 +1,182 @@
+﻿<base:PageBase
+    x:Class="KodiRemote.View.MoviesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KodiRemote.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:base="using:KodiRemote.View.Base"
+    Title="Movies"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <CollectionViewSource x:Name="groupedItemsViewSource"
+                              Source="{Binding Groups}"
+                              IsSourceGrouped="true"
+                              ItemsPath="Items"/>
+        <Style x:Key="GridViewItemStyle1" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
+                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
+                                               ContentMargin="4" 
+                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
+                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                               Padding="0,0,0,0"
+                                               Margin="0,0,0,36"
+                                               PointerOverBackgroundMargin="1" 
+                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                                               PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
+                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
+                                               SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
+                                               SelectionCheckMarkVisualEnabled="True" 
+                                               SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
+                                               SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
+                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
+                                               SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
+        <!--<SemanticZoom Grid.Row="2" x:Name="Zoom" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+            <SemanticZoom.ZoomedInView>
+                <GridView
+                    Padding="40,0,0,40"
+                    x:Name="itemGridView"
+                    IsItemClickEnabled="True"
+                    IsZoomedInView="True"
+                    SelectionMode="None"
+                    Margin="0"
+                    ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
+                    ItemClick="moviegridview_ItemClick" 
+                    ItemContainerStyle="{StaticResource GridViewItemStyle1}">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,0" x:Name="Grid" Background="AliceBlue">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Polygon Grid.Row="0" Grid.RowSpan="3" Points="0,0 0,1.47 1,1.47 1,0" Stretch="UniformToFill" Fill="Black"/>
+                                <ProgressRing Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50" IsActive="{Binding PosterProgressRingActive}" Visibility="Visible"/>
+                                <Image Grid.Row="0"
+                                       Grid.RowSpan="3"
+                                       Source="{Binding Poster}" 
+                                       Tag="Poster" 
+                                       Margin="1" 
+                                       ImageOpened="Image_ImageOpened"
+                                       ImageFailed="Image_ImageFailed"
+                                       DataContextChanged="Image_DataContextChanged"      
+                                       Style="{StaticResource ImageInVisibileStretched}"/>
+
+                                <Image Style="{StaticResource CheckMarkImageStyle}" 
+                                       ImageOpened="CheckMark_ImageOpened" 
+                                       Source="{Binding WatchedMarkImage}" 
+                                       VerticalAlignment="Top" 
+                                       HorizontalAlignment="Left" 
+                                       Stretch="Uniform" 
+                                       DataContextChanged="Image_DataContextChanged"/>
+
+                                <StackPanel VerticalAlignment="Bottom" Background="#A6000000" Grid.Row="2" Margin="0,0,0,0">
+                                    <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid GroupPadding="0,0,40,0" Margin="0"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" Margin="0,-11,10,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </GridView.GroupStyle>
+                </GridView>
+            </SemanticZoom.ZoomedInView>
+
+            <SemanticZoom.ZoomedOutView>
+                <GridView
+                        Grid.Row="2"
+                        Padding="50,75,50,75"
+                        Margin="0,75,0,0"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Center"
+                        x:Name="groupGridView"
+                        ItemsSource="{Binding ElementName=groupedItemsViewSource, Path=View.CollectionGroups}"
+                        ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                        IsItemClickEnabled="True">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="200" Height="300" Background="Black">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"/>
+                                    <RowDefinition Height="150"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Column="0" Grid.Row="0">
+                                    <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[0].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
+                                    <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[0]}"  
+                                               Stretch="UniformToFill" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" Opacity="0" Visibility="Collapsed"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1" Grid.Row="0">
+                                    <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[1].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
+                                    <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[1]}"  
+                                               Stretch="UniformToFill" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" Opacity="0" Visibility="Collapsed"/>
+                                </Grid>
+
+                                <Grid Grid.Column="0" Grid.Row="1">
+                                    <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[2].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
+                                    <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[2]}"  
+                                               Stretch="UniformToFill" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" Opacity="0" Visibility="Collapsed"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1" Grid.Row="1">
+                                    <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[3].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
+                                    <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[3]}" 
+                                               Stretch="UniformToFill" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" Opacity="0" Visibility="Collapsed"/>
+                                </Grid>
+
+                                <Grid Background="#88000000" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <TextBlock Text="{Binding Group.Name}" FontSize="50" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </SemanticZoom.ZoomedOutView>
+        </SemanticZoom>-->
+    </Grid>
+</base:PageBase>

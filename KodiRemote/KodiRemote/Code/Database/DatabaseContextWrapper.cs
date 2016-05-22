@@ -79,14 +79,8 @@ namespace KodiRemote.Code.Database {
             return new DatabaseContext(name);
         }
 
-        public async Task Init(string name) {
+        public DatabaseContextWrapper(string name) {
             this.name = name;
-            using (var context = CreateContext()) {
-                //ILoggerFactory logger = ((IInfrastructure<IServiceProvider>)context).Instance.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
-                //logger.AddProvider(new DatabaseLoggerProvider());
-                await context.Database.MigrateAsync();
-            }
-
             Actors = new DatabaseWrapper<ActorTableEntry>(CreateContext);
             AudioStreams = new DatabaseWrapper<AudioStreamTableEntry>(CreateContext);
             Directors = new DatabaseWrapper<DirectorTableEntry>(CreateContext);
@@ -140,6 +134,14 @@ namespace KodiRemote.Code.Database {
             Songs = new DatabaseWrapper<SongTableEntry>(CreateContext);
 
             Addons = new DatabaseWrapper<AddonTableEntry>(CreateContext);
+        }
+
+        public async Task Init() {
+            using (var context = CreateContext()) {
+                //ILoggerFactory logger = ((IInfrastructure<IServiceProvider>)context).Instance.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
+                //logger.AddProvider(new DatabaseLoggerProvider());
+                await context.Database.MigrateAsync();
+            }
         }
 
         public async Task SaveChangesAsync() {

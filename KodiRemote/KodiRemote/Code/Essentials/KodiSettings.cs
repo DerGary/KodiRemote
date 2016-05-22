@@ -324,7 +324,14 @@ namespace KodiRemote.Code.Essentials {
         }
 
         public async Task UpdateDatabase() {
-            await Kodi.UpdateDatabase();
+            if(Kodi != null) {
+                Kodi.PropertyChanged -= Kodi_PropertyChanged;
+                Kodi.Dispose();
+            }
+            Kodi = new KodiWebSocket(this);
+            await Kodi.Init();
+            Kodi.PropertyChanged += Kodi_PropertyChanged;
+            Kodi.StartDatabaseUpdate();
         }
 
         public async Task CheckOnlineStatus() {

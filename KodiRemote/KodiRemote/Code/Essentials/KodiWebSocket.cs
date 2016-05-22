@@ -205,12 +205,12 @@ namespace KodiRemote.Code.Essentials {
         }
 
         public override async Task Init() {
+            await Database.Init();
             await Connect();
             await InitCurrentlyPlaying();
         }
 
         public override async Task Connect() {
-            await Database.Init(settings);
             bool result = await Connection.Connect(new Uri("ws://" + settings.Hostname + ":" + settings.Port + "/jsonrpc"));
             if (result != Connected) {
                 Connected = result;

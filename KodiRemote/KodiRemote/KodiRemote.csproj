@@ -115,7 +115,7 @@
     <Compile Include="Code\Common\RelayCommand.cs" />
     <Compile Include="Code\Database\AddonTables\AddonTable.cs" />
     <Compile Include="Code\Database\DatabaseContext.cs" />
-    <Compile Include="Code\Database\DatabaseConnection.cs" />
+    <Compile Include="Code\Database\KodiDatabaseOperations.cs" />
     <Compile Include="Code\Database\DatabaseContextWrapper.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeActorMapper.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeAudioStreamMapper.cs" />
@@ -297,9 +297,9 @@
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
-    <Compile Include="Migrations\20160521135939_InitDB.cs" />
-    <Compile Include="Migrations\20160521135939_InitDB.designer.cs">
-      <DependentUpon>20160521135939_InitDB.cs</DependentUpon>
+    <Compile Include="Migrations\20160522203137_InitDB.cs" />
+    <Compile Include="Migrations\20160522203137_InitDB.designer.cs">
+      <DependentUpon>20160522203137_InitDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Settings\20160509091955_InitSettings.cs" />
@@ -308,6 +308,7 @@
     </Compile>
     <Compile Include="Migrations\Settings\SettingsContextModelSnapshot.cs" />
     <Compile Include="ViewModel\AddKodiViewModel.cs" />
+    <Compile Include="ViewModel\MoviesViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -329,6 +330,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\MoviesPage.xaml.cs">
+      <DependentUpon>MoviesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RemoteControlPage.xaml.cs">
       <DependentUpon>RemoteControlPage.xaml</DependentUpon>
     </Compile>
@@ -409,6 +413,10 @@
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MoviesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RemoteControlPage.xaml">
       <SubType>Designer</SubType>

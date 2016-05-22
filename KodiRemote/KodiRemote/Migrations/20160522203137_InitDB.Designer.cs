@@ -8,7 +8,7 @@ using KodiRemote.Code.Database;
 namespace KodiRemote.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20160521135939_InitDB")]
+    [Migration("20160522203137_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

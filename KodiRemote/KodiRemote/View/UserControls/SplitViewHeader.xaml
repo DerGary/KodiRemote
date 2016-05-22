@@ -71,7 +71,7 @@
                                     <TextBlock x:Uid="Home" Text="Home" Style="{StaticResource PaneButtonTextStyle}"/>
                                 </StackPanel>
                             </Button>
-                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}">
+                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}" Tapped="MoviesTapped">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource PaneButtonSymbolStyle}" Text="{StaticResource MovieStrip}"/>
                                     <TextBlock x:Uid="Movies" Text="Movies" Style="{StaticResource PaneButtonTextStyle}"/>

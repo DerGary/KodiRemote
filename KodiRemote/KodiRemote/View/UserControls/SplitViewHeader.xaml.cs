@@ -72,5 +72,9 @@ namespace KodiRemote.View.UserControls {
                 ContentFrame.BackStack.RemoveAt(1);
             }
         }
+
+        private void MoviesTapped(object sender, TappedRoutedEventArgs e) {
+            Navigate<MoviesPage>();
+        }
     }
 }
