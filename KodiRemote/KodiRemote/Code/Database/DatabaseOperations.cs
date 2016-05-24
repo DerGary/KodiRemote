@@ -455,10 +455,81 @@ namespace KodiRemote.Code.Database {
         }
         #endregion SaveLogic
 
-        public IReadOnlyList<MovieTableEntry> Movies { get; private set; }
-        public IReadOnlyList<TVShowTableEntry> TVShows { get; private set; }
-        public IReadOnlyList<MovieGenreTableEntry> MovieGenres { get; private set; }
-        
+        private IReadOnlyList<MovieTableEntry> Movies { get; set; }
+        private IReadOnlyList<MovieGenreTableEntry> MovieGenres { get; set; } 
+        private IReadOnlyList<TVShowTableEntry> TVShows { get; set; }
+        private IReadOnlyList<TVShowGenreTableEntry> TVShowGenres { get; set; }
+
+        private IReadOnlyList<MusicVideoTableEntry> MusicVideos { get; set; }
+        private IReadOnlyList<MusicVideoGenreTableEntry> MusicVideoGenres { get; set; }
+        private IReadOnlyList<SongTableEntry> Songs { get; set; }
+        private IReadOnlyList<AlbumTableEntry> Albums { get; set; }
+        private IReadOnlyList<ArtistTableEntry> Artists{ get; set; }
+        private IReadOnlyList<MusicGenreTableEntry> MusicGenres { get; set; }
+        private IReadOnlyList<AddonTableEntry> Addons { get; set; }
+        private IReadOnlyList<MovieSetTableEntry> MovieSets { get; set; }
+
+
+        private IQueryable<TVShowTableEntry> TVShowsWithRelations(DbContext context) {
+            return context.Set<TVShowTableEntry>()
+                .Include(x => x.Actors).ThenInclude(x => x.Actor)
+                .Include(x => x.Genres).ThenInclude(x => x.Genre)
+                .Include(x => x.Seasons).ThenInclude(x => x.Episodes);
+        }
+
+        private IQueryable<MovieTableEntry> MoviesWithRelations(DbContext context) {
+            return context.Set<MovieTableEntry>()
+                .Include(x => x.Actors).ThenInclude(x => x.Actor)
+                .Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
+                .Include(x => x.Directors).ThenInclude(x => x.Director)
+                .Include(x => x.Genres).ThenInclude(x => x.Genre)
+                .Include(x => x.MovieSets).ThenInclude(x => x.MovieSet)
+                .Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
+                .Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
+        }
+
+        private IQueryable<MusicVideoTableEntry> MusicVideosWithRelations(DbContext context) {
+            return context.Set<MusicVideoTableEntry>()
+                .Include(x => x.Artists).ThenInclude(x => x.MusicVideoArtist)
+                .Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
+                .Include(x => x.Directors).ThenInclude(x => x.Director)
+                .Include(x => x.Genres).ThenInclude(x => x.Genre)
+                .Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
+                .Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
+        }
+
+        private IQueryable<ActorTableEntry> ActorsWithRelations(DbContext context) {
+            return context.Set<ActorTableEntry>()
+                .Include(x => x.Episodes).ThenInclude(x => x.Episode)
+                .Include(x => x.Movies).ThenInclude(x => x.Movie)
+                .Include(x => x.TVShows).ThenInclude(x => x.TVShow);
+        }
+
+        private IQueryable<SongTableEntry> SongsWithRelations(DbContext context) {
+            return context.Set<SongTableEntry>()
+                .Include(x => x.Albums).ThenInclude(x => x.Album)
+                .Include(x => x.Artists).ThenInclude(x => x.Artist)
+                .Include(x => x.Genres).ThenInclude(x => x.Genre)
+                .Include(x => x.Playlists).ThenInclude(x => x.Playlist);
+        }
+
+        private IQueryable<AlbumTableEntry> AlbumsWithRelations(DbContext context) {
+            return context.Set<AlbumTableEntry>()
+                .Include(x => x.Songs).ThenInclude(x => x.Song)
+                .Include(x => x.Artists).ThenInclude(x => x.Artist)
+                .Include(x => x.Genres).ThenInclude(x => x.Genre);
+        }
+
+        private IQueryable<ArtistTableEntry> ArtistsWithRelations(DbContext context) {
+            return context.Set<ArtistTableEntry>()
+                .Include(x => x.Songs).ThenInclude(x => x.Song)
+                .Include(x => x.Albums).ThenInclude(x => x.Album);
+        }
+
+        private IQueryable<MovieSetTableEntry> MovieSetsWithRelations(DbContext context) {
+            return context.Set<MovieSetTableEntry>()
+                .Include(x => x.Movies).ThenInclude(x => x.Movie);
+        }
 
         private async Task LoadMovies() {
             if(Movies == null) {
@@ -467,10 +538,89 @@ namespace KodiRemote.Code.Database {
                 }
             }
         }
+
         private async Task LoadTVShows() {
             if (TVShows == null) {
                 using (var context = database.CreateContext()) {
                     TVShows = await TVShowsWithRelations(context).ToListAsync();
+                }
+            }
+        }
+
+        private async Task LoadTVShowGenres() {
+            if (TVShowGenres == null) {
+                using (var context = database.CreateContext()) {
+                    TVShowGenres = await context.Set<TVShowGenreTableEntry>().ToListAsync();
+                }
+            }
+        }
+
+        private async Task LoadMovieGenres() {
+            if (MovieGenres == null) {
+                using (var context = database.CreateContext()) {
+                    MovieGenres = await context.Set<MovieGenreTableEntry>().ToListAsync();
+                }
+            }
+        }
+
+        private async Task LoadMusicVideos() {
+            if (MusicVideos == null) {
+                using (var context = database.CreateContext()) {
+                    MusicVideos = await MusicVideosWithRelations(context).ToListAsync();
+                }
+            }
+        }
+
+        private async Task LoadMusicVideoGenres() {
+            if (MusicVideoGenres == null) {
+                using (var context = database.CreateContext()) {
+                    MusicVideoGenres = await context.Set<MusicVideoGenreTableEntry>().ToListAsync();
+                }
+            }
+        }
+
+        private async Task LoadSongs() {
+            if (Songs == null) {
+                using (var context = database.CreateContext()) {
+                    Songs = await SongsWithRelations(context).ToListAsync();
+                }
+            }
+        }
+        private async Task LoadAlbums() {
+            if (Albums == null) {
+                using (var context = database.CreateContext()) {
+                    Albums = await AlbumsWithRelations(context).ToListAsync();
+                }
+            }
+        }
+
+        private async Task LoadArtists() {
+            if (Artists == null) {
+                using (var context = database.CreateContext()) {
+                    Artists = await ArtistsWithRelations(context).ToListAsync();
+                }
+            }
+        }
+
+        private async Task LoadMusicGenres() {
+            if (MusicGenres == null) {
+                using (var context = database.CreateContext()) {
+                    MusicGenres = await context.Set<MusicGenreTableEntry>().ToListAsync();
+                }
+            }
+        }
+        private async Task LoadAddons() {
+            if (Addons == null) {
+                using (var context = database.CreateContext()) {
+                    Addons = await context.Set<AddonTableEntry>().ToListAsync();
+                }
+            }
+        }
+
+        private async Task LoadMovieSets() {
+            if (MovieSets == null) {
+                using (var context = database.CreateContext()) {
+                    MovieSets = await context.Set<MovieSetTableEntry>().ToListAsync();
                 }
             }
         }
@@ -485,6 +635,11 @@ namespace KodiRemote.Code.Database {
             return Movies.FirstOrDefault(x => x.MovieId == movie.MovieId);
         }
 
+        public async Task<IReadOnlyList<MovieGenreTableEntry>> GetMovieGenres() {
+            await LoadMovieGenres();
+            return MovieGenres;
+        }
+
         public async Task<IEnumerable<TVShowTableEntry>> GetTVShows() {
             await LoadTVShows();
             return TVShows;
@@ -495,31 +650,76 @@ namespace KodiRemote.Code.Database {
             return TVShows.FirstOrDefault(x => x.TVShowId == tvshow.TVShowId);
         }
 
-        private IQueryable<TVShowTableEntry> TVShowsWithRelations(DbContext context) {
-            return context.Set<TVShowTableEntry>()
-                .Include(x => x.Actors).ThenInclude(x => x.Actor)
-                .Include(x => x.Genres).ThenInclude(x => x.Genre)
-                .Include(x => x.Seasons).ThenInclude(x => x.Episodes);
+        public async Task<IReadOnlyList<TVShowGenreTableEntry>> GetTVShowGenres() {
+            await LoadTVShowGenres();
+            return TVShowGenres;
         }
-        private IQueryable<MovieTableEntry> MoviesWithRelations(DbContext context) {
-            return context.Set<MovieTableEntry>()
-                .Include(x => x.Actors).ThenInclude(x => x.Actor)
-                .Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
-                .Include(x => x.Directors).ThenInclude(x => x.Director)
-                .Include(x => x.Genres).ThenInclude(x => x.Genre)
-                .Include(x => x.MovieSets).ThenInclude(x => x.MovieSet)
-                .Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
-                .Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
+
+        public async Task<ActorTableEntry> GetActor(ActorTableEntry actor) {
+            using (var context = database.CreateContext()) {
+                return await ActorsWithRelations(context).SingleAsync(x => x.ActorId == actor.ActorId);
+            }
         }
-        private IQueryable<MovieGenreTableEntry> MovieGenresWithRelations(DbContext context) {
-            return context.Set<MovieGenreTableEntry>();
-                //.Include(x => x.Movies).ThenInclude(x => x.Movie);//.ThenInclude(x => x.Actors).ThenInclude(x => x.Actor)
-                //.Include(x => x.Movies).ThenInclude(x => x.Movie).ThenInclude(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
-                //.Include(x => x.Movies).ThenInclude(x => x.Movie).ThenInclude(x => x.Directors).ThenInclude(x => x.Director)
-                //.Include(x => x.Movies).ThenInclude(x => x.Movie).ThenInclude(x => x.Genres).ThenInclude(x => x.Genre)
-                //.Include(x => x.Movies).ThenInclude(x => x.Movie).ThenInclude(x => x.MovieSets).ThenInclude(x => x.MovieSet)
-                //.Include(x => x.Movies).ThenInclude(x => x.Movie).ThenInclude(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
-                //.Include(x => x.Movies).ThenInclude(x => x.Movie).ThenInclude(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
+
+        public async Task<IEnumerable<MusicVideoTableEntry>> GetMusicVideo() {
+            await LoadMusicVideos();
+            return MusicVideos;
+        }
+
+        public async Task<MusicVideoTableEntry> GetMusicVideo(MusicVideoTableEntry musicVideo) {
+            await LoadMusicVideos();
+            return MusicVideos.FirstOrDefault(x => x.MusicVideoId == musicVideo.MusicVideoId);
+        }
+
+
+        public async Task<IEnumerable<SongTableEntry>> GetSongs() {
+            await LoadSongs();
+            return Songs;
+        }
+
+        public async Task<SongTableEntry> GetSong(SongTableEntry song) {
+            await LoadSongs();
+            return Songs.FirstOrDefault(x => x.SongId == song.SongId);
+        }
+
+        public async Task<IEnumerable<AlbumTableEntry>> GetAlbums() {
+            await LoadAlbums();
+            return Albums;
+        }
+
+        public async Task<AlbumTableEntry> GetAlbum(AlbumTableEntry album) {
+            await LoadAlbums();
+            return Albums.FirstOrDefault(x => x.AlbumId == album.AlbumId);
+        }
+
+        public async Task<IEnumerable<ArtistTableEntry>> GetArtists() {
+            await LoadArtists();
+            return Artists;
+        }
+
+        public async Task<ArtistTableEntry> GetArtist(ArtistTableEntry artist) {
+            await LoadArtists();
+            return Artists.FirstOrDefault(x => x.ArtistId == artist.ArtistId);
+        }
+
+        public async Task<IEnumerable<AddonTableEntry>> GetAddons() {
+            await LoadAddons();
+            return Addons;
+        }
+
+        public async Task<AddonTableEntry> GetAddon(AddonTableEntry addon) {
+            await LoadAddons();
+            return Addons.FirstOrDefault(x => x.AddonId == addon.AddonId);
+        }
+
+        public async Task<IEnumerable<MovieSetTableEntry>> GetMovieSets() {
+            await LoadMovieSets();
+            return MovieSets;
+        }
+
+        public async Task<MovieSetTableEntry> GetMovieSet(MovieSetTableEntry movieSet) {
+            await LoadMovieSets();
+            return MovieSets.FirstOrDefault(x => x.SetId == movieSet.SetId);
         }
     }
 }
