@@ -41,8 +41,7 @@ namespace KodiRemote.ViewModel {
             KodiList = new ObservableCollection<KodiSettings>(await SettingsDatabase.Instance.GetAllKodis());
             SelectedKodi = KodiList?.Where(x => x.Active).FirstOrDefault();
             foreach (KodiSettings kodi in KodiList) {
-                if (kodi != SelectedKodi)
-                    Task.Run(async () => await kodi.CheckOnlineStatus());
+                Task.Run(async () => await kodi.CheckOnlineStatus());
             }
         }
 

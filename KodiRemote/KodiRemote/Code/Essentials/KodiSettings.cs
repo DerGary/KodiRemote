@@ -318,20 +318,14 @@ namespace KodiRemote.Code.Essentials {
             if (Kodi == null) {
                 Kodi = new KodiWebSocket(this);
                 await Kodi.Connect();
+                await Kodi.DatabaseInit();
                 Kodi.PropertyChanged += Kodi_PropertyChanged;
             }
             Online = Kodi.Connected;
         }
 
         public async Task UpdateDatabase() {
-            if(Kodi != null) {
-                Kodi.PropertyChanged -= Kodi_PropertyChanged;
-                Kodi.Dispose();
-            }
-            Kodi = new KodiWebSocket(this);
-            await Kodi.Init();
-            Kodi.PropertyChanged += Kodi_PropertyChanged;
-            Kodi.StartDatabaseUpdate();
+            await Kodi.StartDatabaseUpdate();
         }
 
         public async Task CheckOnlineStatus() {
@@ -343,6 +337,7 @@ namespace KodiRemote.Code.Essentials {
         public async Task TriggerGetInfo() {
             await InitConnection();
             getInfo = true;
+            await GetInfo();
         }
 
         public async Task GetInfo() {

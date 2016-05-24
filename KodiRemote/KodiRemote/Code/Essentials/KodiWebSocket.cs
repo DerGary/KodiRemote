@@ -22,61 +22,6 @@ namespace KodiRemote.Code.Essentials {
         protected RPCWebSocketHelper Connection { get; set; }
         private Timer timer;
 
-        private JSON.General.Notifications.Item currentlyPlayingItem;
-        public override JSON.General.Notifications.Item CurrentlyPlayingItem {
-            get {
-                return currentlyPlayingItem;
-            }
-            protected set {
-                currentlyPlayingItem = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool paused;
-        public override bool Paused {
-            get {
-                return paused;
-            }
-            protected set {
-                paused = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool muted;
-        public override bool Muted {
-            get {
-                return muted;
-            }
-            protected set {
-                muted = value;
-                RaisePropertyChanged();
-            }
-        }
-        private double volume;
-        public override double Volume {
-            get {
-                return volume;
-            }
-            protected set {
-                volume = value;
-                RaisePropertyChanged();
-            }
-        }
-
-
-        private bool connected = false;
-        public override bool Connected {
-            get {
-                return connected;
-            }
-            protected set {
-                connected = value;
-                RaisePropertyChanged();
-            }
-        }
-
         public KodiWebSocket(KodiSettings settings) : base(settings) {
             Connection = new RPCWebSocketHelper();
             Connection.ConnectionClosed += ConnectionClosed;
@@ -102,10 +47,6 @@ namespace KodiRemote.Code.Essentials {
             Player.OnSpeedChangedReceived += Player_OnSpeedChangedReceived;
             Player.OnStopReceived += Player_OnStopReceived;
         }
-
-        public override ObservableCollection<Song> CurrentAudioPlaylist { get; protected set; } = new ObservableCollection<Song>();
-        public override ObservableCollection<object> CurrentVideoPlaylist { get; protected set; } = new ObservableCollection<object>();
-        public override ObservableCollection<object> CurrentPicturePlaylist { get; protected set; } = new ObservableCollection<object>();
 
         private void Playlist_OnRemove(JSON.KPlaylist.Notifications.OnRemove item) {
             if (item.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
@@ -170,7 +111,6 @@ namespace KodiRemote.Code.Essentials {
             Volume = item.Volume;
         }
 
-
         private void Player_OnStopReceived(JSON.KPlayer.Notifications.Stop item) {
             CurrentlyPlayingItem = null;
             Paused = false;
@@ -202,16 +142,15 @@ namespace KodiRemote.Code.Essentials {
             CurrentlyPlayingItem = null;
             Paused = false;
             Muted = false;
+            Volume = 0;
         }
 
-        public override async Task Init() {
-            await Database.Init();
-            await Connect();
-            await InitCurrentlyPlaying();
+        public override async Task InitProperties() {
+            await GetProperties();
         }
 
         public override async Task Connect() {
-            bool result = await Connection.Connect(new Uri("ws://" + settings.Hostname + ":" + settings.Port + "/jsonrpc"));
+            bool result = await Connection.Connect(new Uri("ws://" + Settings.Hostname + ":" + Settings.Port + "/jsonrpc"));
             if (result != Connected) {
                 Connected = result;
                 if (!Connected) {
@@ -223,17 +162,24 @@ namespace KodiRemote.Code.Essentials {
             }
         }
 
-        public async Task InitCurrentlyPlaying() {
-            if (Connected && Kodi.ActiveInstance == this) {
+        public async Task GetProperties() {
+            if (Connected) {
                 await InitPlaylists();
                 List<Player> players = await Player.GetActivePlayers();
                 foreach (Player player in players) {
                     if (player.PlayerId == PlayerTypeEnum.Picture.ToInt()) {
                         continue;
                     }
+                    if((await Player.GetProperties(player.PlayerId, PlayerField.WithAll())).Speed == 0) {
+                        Paused = true;
+                    }
                     ItemResult item = await Player.GetItem(player.PlayerId, ItemField.WithAll());
                     //CurrentlyPlayingItem = item.Item;
+                    //Todo:currentlyPlaying Item 
                 }
+                var appProperties = (await Application.GetProperties(ApplicationField.WithAll()));
+                Muted = appProperties.Muted;
+                Volume = appProperties.Volume;
             }
         }
 

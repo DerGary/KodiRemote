@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 namespace KodiRemote.ViewModel {
     public class MoviesViewModel : ViewModelBase {
         public async Task Init() {
-            var result = await Kodi.Database.Movies.GetDataAsync();
-            foreach(var item in result.Values) {
-                Debug.WriteLine(item.Actors);
-            }
+            var result = Kodi.Database.Movies;
+
             Debug.WriteLine(result);
         }
     }

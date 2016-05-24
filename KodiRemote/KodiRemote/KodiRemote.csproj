@@ -115,8 +115,8 @@
     <Compile Include="Code\Common\RelayCommand.cs" />
     <Compile Include="Code\Database\AddonTables\AddonTable.cs" />
     <Compile Include="Code\Database\DatabaseContext.cs" />
-    <Compile Include="Code\Database\KodiDatabaseOperations.cs" />
     <Compile Include="Code\Database\DatabaseContextWrapper.cs" />
+    <Compile Include="Code\Database\DatabaseOperations.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeActorMapper.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeAudioStreamMapper.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeDirectorMapper.cs" />
@@ -163,7 +163,6 @@
     <Compile Include="Code\Database\MusicVideoTables\MusicVideoTableEntry.cs" />
     <Compile Include="Code\Database\MusicVideoTables\MusicVideoVideoStreamTable.cs" />
     <Compile Include="Code\Database\MusicVideoTables\MusicVideoArtistTableEntry.cs" />
-    <Compile Include="Code\Database\Utils\ILambdaCompareable.cs" />
     <Compile Include="Code\Database\SettingsContext.cs" />
     <Compile Include="Code\Database\SettingsDatabase.cs" />
     <Compile Include="Code\Database\TVShowTables\TVShowActorsMapper.cs" />
@@ -172,7 +171,8 @@
     <Compile Include="Code\Database\TVShowTables\TVShowSeasonTableEntry.cs" />
     <Compile Include="Code\Database\TVShowTables\TVShowTableEntry.cs" />
     <Compile Include="Code\Database\Utils\Attributes.cs" />
-    <Compile Include="Code\Database\Utils\DatabaseWrapper.cs" />
+    <Compile Include="Code\Database\Utils\DbSetWrapper.cs" />
+    <Compile Include="Code\Database\Utils\IKeyComparable.cs" />
     <Compile Include="Code\Database\Utils\InsertOrUpdate.cs" />
     <Compile Include="Code\Database\Utils\TableEntryBase.cs" />
     <Compile Include="Code\Essentials\ConnectionType.cs" />

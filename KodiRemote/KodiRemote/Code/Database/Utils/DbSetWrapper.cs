@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.Utils {
-    public class DatabaseWrapper<T>  where T : TableEntryBase, new() {
+    public class DbSetWrapper<T>  where T : TableEntryBase, new() {
         private Dictionary<string, T> dic = null;
         private Dictionary<string, T> toAdd = new Dictionary<string, T>();
         private Dictionary<string, T> toRemove = new Dictionary<string, T>();
@@ -18,7 +18,7 @@ namespace KodiRemote.Code.Database.Utils {
         private PropertyInfo keyProperty = null;
         private Func<DbContext> createContext;
 
-        public DatabaseWrapper(Func<DbContext> createContext){
+        public DbSetWrapper(Func<DbContext> createContext){
             this.createContext = createContext;
 
             foreach (var prop in typeof(T).GetProperties()) {

@@ -20,60 +20,60 @@ namespace KodiRemote.Code.Database {
     public class DatabaseContextWrapper {
         private string name;
 
-        public DatabaseWrapper<ActorTableEntry> Actors { get; set; }
-        public DatabaseWrapper<AudioStreamTableEntry> AudioStreams { get; set; }
-        public DatabaseWrapper<DirectorTableEntry> Directors { get; set; }
-        public DatabaseWrapper<SubtitleStreamTableEntry> SubtitleStreams { get; set; }
-        public DatabaseWrapper<VideoStreamTableEntry> VideoStreams { get; set; }
+        public DbSetWrapper<ActorTableEntry> Actors { get; set; }
+        public DbSetWrapper<AudioStreamTableEntry> AudioStreams { get; set; }
+        public DbSetWrapper<DirectorTableEntry> Directors { get; set; }
+        public DbSetWrapper<SubtitleStreamTableEntry> SubtitleStreams { get; set; }
+        public DbSetWrapper<VideoStreamTableEntry> VideoStreams { get; set; }
                
-        public DatabaseWrapper<TVShowTableEntry> TVShows { get; set; }
-        public DatabaseWrapper<TVShowGenreTableEntry> TVShowGenres { get; set; }
-        public DatabaseWrapper<TVShowSeasonTableEntry> TVShowSeasons { get; set; }
-        public DatabaseWrapper<TVShowGenreMapper> TVShowGenreMapper { get; set; }
-        public DatabaseWrapper<TVShowActorMapper> TVShowActorMapper { get; set; }
+        public DbSetWrapper<TVShowTableEntry> TVShows { get; set; }
+        public DbSetWrapper<TVShowGenreTableEntry> TVShowGenres { get; set; }
+        public DbSetWrapper<TVShowSeasonTableEntry> TVShowSeasons { get; set; }
+        public DbSetWrapper<TVShowGenreMapper> TVShowGenreMapper { get; set; }
+        public DbSetWrapper<TVShowActorMapper> TVShowActorMapper { get; set; }
                
-        public DatabaseWrapper<EpisodeTableEntry> Episodes { get; set; }
-        public DatabaseWrapper<EpisodeActorMapper> EpisodeActorMapper { get; set; }
-        public DatabaseWrapper<EpisodeAudioStreamMapper> EpisodeAudioStreamMapper { get; set; }
-        public DatabaseWrapper<EpisodeDirectorMapper> EpisodeDirectorMapper { get; set; }
-        public DatabaseWrapper<EpisodeSubtitleStreamMapper> EpisodeSubtitleStreamMapper { get; set; }
-        public DatabaseWrapper<EpisodeVideoStreamMapper> EpisodeVideoStreamMapper { get; set; }
+        public DbSetWrapper<EpisodeTableEntry> Episodes { get; set; }
+        public DbSetWrapper<EpisodeActorMapper> EpisodeActorMapper { get; set; }
+        public DbSetWrapper<EpisodeAudioStreamMapper> EpisodeAudioStreamMapper { get; set; }
+        public DbSetWrapper<EpisodeDirectorMapper> EpisodeDirectorMapper { get; set; }
+        public DbSetWrapper<EpisodeSubtitleStreamMapper> EpisodeSubtitleStreamMapper { get; set; }
+        public DbSetWrapper<EpisodeVideoStreamMapper> EpisodeVideoStreamMapper { get; set; }
 
-        public DatabaseWrapper<MovieSetTableEntry> MovieSets { get; set; }
-        public DatabaseWrapper<MovieMovieSetMapper> MovieMovieSetMapper { get; set; }
-        public DatabaseWrapper<MovieTableEntry> Movies { get; set; }
-        public DatabaseWrapper<MovieActorMapper> MovieActorMapper { get; set; }
-        public DatabaseWrapper<MovieAudioStreamMapper> MovieAudioStreamMapper { get; set; }
-        public DatabaseWrapper<MovieDirectorMapper> MovieDirectorMapper { get; set; }
-        public DatabaseWrapper<MovieSubtitleStreamMapper> MovieSubtitleStreamMapper { get; set; }
-        public DatabaseWrapper<MovieVideoStreamMapper> MovieVideoStreamMapper { get; set; }
-        public DatabaseWrapper<MovieGenreMapper> MovieGenreMapper { get; set; }
-        public DatabaseWrapper<MovieGenreTableEntry> MovieGenres { get; set; }
+        public DbSetWrapper<MovieSetTableEntry> MovieSets { get; set; }
+        public DbSetWrapper<MovieMovieSetMapper> MovieMovieSetMapper { get; set; }
+        public DbSetWrapper<MovieTableEntry> Movies { get; set; }
+        public DbSetWrapper<MovieActorMapper> MovieActorMapper { get; set; }
+        public DbSetWrapper<MovieAudioStreamMapper> MovieAudioStreamMapper { get; set; }
+        public DbSetWrapper<MovieDirectorMapper> MovieDirectorMapper { get; set; }
+        public DbSetWrapper<MovieSubtitleStreamMapper> MovieSubtitleStreamMapper { get; set; }
+        public DbSetWrapper<MovieVideoStreamMapper> MovieVideoStreamMapper { get; set; }
+        public DbSetWrapper<MovieGenreMapper> MovieGenreMapper { get; set; }
+        public DbSetWrapper<MovieGenreTableEntry> MovieGenres { get; set; }
         
-        public DatabaseWrapper<MusicVideoTableEntry> MusicVideos { get; set; }
-        public DatabaseWrapper<MusicVideoArtistMapper> MusicVideoArtistMapper { get; set; }
-        public DatabaseWrapper<MusicVideoArtistTableEntry> MusicVideoArtists { get; set; }
-        public DatabaseWrapper<MusicVideoAudioStreamMapper> MusicVideoAudioStreamMapper { get; set; }
-        public DatabaseWrapper<MusicVideoDirectorMapper> MusicVideoDirectorMapper { get; set; }
-        public DatabaseWrapper<MusicVideoSubtitleStreamMapper> MusicVideoSubtitleStreamMapper { get; set; }
-        public DatabaseWrapper<MusicVideoVideoStreamMapper> MusicVideoVideoStreamMapper { get; set; }
-        public DatabaseWrapper<MusicVideoGenreMapper> MusicVideoGenreMapper { get; set; }
-        public DatabaseWrapper<MusicVideoGenreTableEntry> MusicVideoGenres { get; set; }
+        public DbSetWrapper<MusicVideoTableEntry> MusicVideos { get; set; }
+        public DbSetWrapper<MusicVideoArtistMapper> MusicVideoArtistMapper { get; set; }
+        public DbSetWrapper<MusicVideoArtistTableEntry> MusicVideoArtists { get; set; }
+        public DbSetWrapper<MusicVideoAudioStreamMapper> MusicVideoAudioStreamMapper { get; set; }
+        public DbSetWrapper<MusicVideoDirectorMapper> MusicVideoDirectorMapper { get; set; }
+        public DbSetWrapper<MusicVideoSubtitleStreamMapper> MusicVideoSubtitleStreamMapper { get; set; }
+        public DbSetWrapper<MusicVideoVideoStreamMapper> MusicVideoVideoStreamMapper { get; set; }
+        public DbSetWrapper<MusicVideoGenreMapper> MusicVideoGenreMapper { get; set; }
+        public DbSetWrapper<MusicVideoGenreTableEntry> MusicVideoGenres { get; set; }
 
 
-        public DatabaseWrapper<AlbumArtistMapper> AlbumArtistMapper { get; set; }
-        public DatabaseWrapper<AlbumGenreMapper> AlbumGenreMapper { get; set; }
-        public DatabaseWrapper<AlbumTableEntry> Albums { get; set; }
-        public DatabaseWrapper<ArtistTableEntry> Artists { get; set; }
-        public DatabaseWrapper<MusicGenreTableEntry> MusicGenres { get; set; }
-        public DatabaseWrapper<MusicPlaylistSongMapper> MusicPlaylistSongMapper { get; set; }
-        public DatabaseWrapper<MusicPlaylistTableEntry> MusicPlaylists { get; set; }
-        public DatabaseWrapper<SongAlbumMapper> SongAlbumMapper { get; set; }
-        public DatabaseWrapper<SongArtistMapper> SongArtistMapper { get; set; }
-        public DatabaseWrapper<SongGenreMapper> SongGenreMapper { get; set; }
-        public DatabaseWrapper<SongTableEntry> Songs { get; set; }
+        public DbSetWrapper<AlbumArtistMapper> AlbumArtistMapper { get; set; }
+        public DbSetWrapper<AlbumGenreMapper> AlbumGenreMapper { get; set; }
+        public DbSetWrapper<AlbumTableEntry> Albums { get; set; }
+        public DbSetWrapper<ArtistTableEntry> Artists { get; set; }
+        public DbSetWrapper<MusicGenreTableEntry> MusicGenres { get; set; }
+        public DbSetWrapper<MusicPlaylistSongMapper> MusicPlaylistSongMapper { get; set; }
+        public DbSetWrapper<MusicPlaylistTableEntry> MusicPlaylists { get; set; }
+        public DbSetWrapper<SongAlbumMapper> SongAlbumMapper { get; set; }
+        public DbSetWrapper<SongArtistMapper> SongArtistMapper { get; set; }
+        public DbSetWrapper<SongGenreMapper> SongGenreMapper { get; set; }
+        public DbSetWrapper<SongTableEntry> Songs { get; set; }
 
-        public DatabaseWrapper<AddonTableEntry> Addons { get; set; }
+        public DbSetWrapper<AddonTableEntry> Addons { get; set; }
 
         public DbContext CreateContext() {
             return new DatabaseContext(name);
@@ -81,65 +81,65 @@ namespace KodiRemote.Code.Database {
 
         public DatabaseContextWrapper(string name) {
             this.name = name;
-            Actors = new DatabaseWrapper<ActorTableEntry>(CreateContext);
-            AudioStreams = new DatabaseWrapper<AudioStreamTableEntry>(CreateContext);
-            Directors = new DatabaseWrapper<DirectorTableEntry>(CreateContext);
-            SubtitleStreams = new DatabaseWrapper<SubtitleStreamTableEntry>(CreateContext);
-            VideoStreams = new DatabaseWrapper<VideoStreamTableEntry>(CreateContext);
+            Actors = new DbSetWrapper<ActorTableEntry>(CreateContext);
+            AudioStreams = new DbSetWrapper<AudioStreamTableEntry>(CreateContext);
+            Directors = new DbSetWrapper<DirectorTableEntry>(CreateContext);
+            SubtitleStreams = new DbSetWrapper<SubtitleStreamTableEntry>(CreateContext);
+            VideoStreams = new DbSetWrapper<VideoStreamTableEntry>(CreateContext);
 
-            TVShows = new DatabaseWrapper<TVShowTableEntry>(CreateContext);
-            TVShowGenres = new DatabaseWrapper<TVShowGenreTableEntry>(CreateContext);
-            TVShowSeasons = new DatabaseWrapper<TVShowSeasonTableEntry>(CreateContext);
-            TVShowGenreMapper = new DatabaseWrapper<TVShowGenreMapper>(CreateContext);
-            TVShowActorMapper = new DatabaseWrapper<TVShowActorMapper>(CreateContext);
+            TVShows = new DbSetWrapper<TVShowTableEntry>(CreateContext);
+            TVShowGenres = new DbSetWrapper<TVShowGenreTableEntry>(CreateContext);
+            TVShowSeasons = new DbSetWrapper<TVShowSeasonTableEntry>(CreateContext);
+            TVShowGenreMapper = new DbSetWrapper<TVShowGenreMapper>(CreateContext);
+            TVShowActorMapper = new DbSetWrapper<TVShowActorMapper>(CreateContext);
 
-            Episodes = new DatabaseWrapper<EpisodeTableEntry>(CreateContext);
-            EpisodeActorMapper = new DatabaseWrapper<EpisodeActorMapper>(CreateContext);
-            EpisodeAudioStreamMapper = new DatabaseWrapper<EpisodeAudioStreamMapper>(CreateContext);
-            EpisodeDirectorMapper = new DatabaseWrapper<EpisodeDirectorMapper>(CreateContext);
-            EpisodeSubtitleStreamMapper = new DatabaseWrapper<EpisodeSubtitleStreamMapper>(CreateContext);
-            EpisodeVideoStreamMapper = new DatabaseWrapper<EpisodeVideoStreamMapper>(CreateContext);
+            Episodes = new DbSetWrapper<EpisodeTableEntry>(CreateContext);
+            EpisodeActorMapper = new DbSetWrapper<EpisodeActorMapper>(CreateContext);
+            EpisodeAudioStreamMapper = new DbSetWrapper<EpisodeAudioStreamMapper>(CreateContext);
+            EpisodeDirectorMapper = new DbSetWrapper<EpisodeDirectorMapper>(CreateContext);
+            EpisodeSubtitleStreamMapper = new DbSetWrapper<EpisodeSubtitleStreamMapper>(CreateContext);
+            EpisodeVideoStreamMapper = new DbSetWrapper<EpisodeVideoStreamMapper>(CreateContext);
 
-            Movies = new DatabaseWrapper<MovieTableEntry>(CreateContext);
-            MovieSets = new DatabaseWrapper<MovieSetTableEntry>(CreateContext);
-            MovieMovieSetMapper = new DatabaseWrapper<MovieMovieSetMapper>(CreateContext);
-            MovieActorMapper = new DatabaseWrapper<MovieActorMapper>(CreateContext);
-            MovieAudioStreamMapper = new DatabaseWrapper<MovieAudioStreamMapper>(CreateContext);
-            MovieDirectorMapper = new DatabaseWrapper<MovieDirectorMapper>(CreateContext);
-            MovieSubtitleStreamMapper = new DatabaseWrapper<MovieSubtitleStreamMapper>(CreateContext);
-            MovieVideoStreamMapper = new DatabaseWrapper<MovieVideoStreamMapper>(CreateContext);
-            MovieGenreMapper = new DatabaseWrapper<MovieGenreMapper>(CreateContext);
-            MovieGenres = new DatabaseWrapper<MovieGenreTableEntry>(CreateContext);
+            Movies = new DbSetWrapper<MovieTableEntry>(CreateContext);
+            MovieSets = new DbSetWrapper<MovieSetTableEntry>(CreateContext);
+            MovieMovieSetMapper = new DbSetWrapper<MovieMovieSetMapper>(CreateContext);
+            MovieActorMapper = new DbSetWrapper<MovieActorMapper>(CreateContext);
+            MovieAudioStreamMapper = new DbSetWrapper<MovieAudioStreamMapper>(CreateContext);
+            MovieDirectorMapper = new DbSetWrapper<MovieDirectorMapper>(CreateContext);
+            MovieSubtitleStreamMapper = new DbSetWrapper<MovieSubtitleStreamMapper>(CreateContext);
+            MovieVideoStreamMapper = new DbSetWrapper<MovieVideoStreamMapper>(CreateContext);
+            MovieGenreMapper = new DbSetWrapper<MovieGenreMapper>(CreateContext);
+            MovieGenres = new DbSetWrapper<MovieGenreTableEntry>(CreateContext);
 
-            MusicVideoArtistMapper = new DatabaseWrapper<MusicVideoArtistMapper>(CreateContext);
-            MusicVideoArtists = new DatabaseWrapper<MusicVideoArtistTableEntry>(CreateContext);
-            MusicVideoAudioStreamMapper = new DatabaseWrapper<MusicVideoAudioStreamMapper>(CreateContext);
-            MusicVideoDirectorMapper = new DatabaseWrapper<MusicVideoDirectorMapper>(CreateContext);
-            MusicVideoGenreMapper = new DatabaseWrapper<MusicVideoGenreMapper>(CreateContext);
-            MusicVideoGenres = new DatabaseWrapper<MusicVideoGenreTableEntry>(CreateContext);
-            MusicVideos = new DatabaseWrapper<MusicVideoTableEntry>(CreateContext);
-            MusicVideoSubtitleStreamMapper = new DatabaseWrapper<MusicVideoSubtitleStreamMapper>(CreateContext);
-            MusicVideoVideoStreamMapper = new DatabaseWrapper<MusicVideoVideoStreamMapper>(CreateContext);
+            MusicVideoArtistMapper = new DbSetWrapper<MusicVideoArtistMapper>(CreateContext);
+            MusicVideoArtists = new DbSetWrapper<MusicVideoArtistTableEntry>(CreateContext);
+            MusicVideoAudioStreamMapper = new DbSetWrapper<MusicVideoAudioStreamMapper>(CreateContext);
+            MusicVideoDirectorMapper = new DbSetWrapper<MusicVideoDirectorMapper>(CreateContext);
+            MusicVideoGenreMapper = new DbSetWrapper<MusicVideoGenreMapper>(CreateContext);
+            MusicVideoGenres = new DbSetWrapper<MusicVideoGenreTableEntry>(CreateContext);
+            MusicVideos = new DbSetWrapper<MusicVideoTableEntry>(CreateContext);
+            MusicVideoSubtitleStreamMapper = new DbSetWrapper<MusicVideoSubtitleStreamMapper>(CreateContext);
+            MusicVideoVideoStreamMapper = new DbSetWrapper<MusicVideoVideoStreamMapper>(CreateContext);
 
-            AlbumArtistMapper = new DatabaseWrapper<AlbumArtistMapper>(CreateContext);
-            AlbumGenreMapper = new DatabaseWrapper<AlbumGenreMapper>(CreateContext);
-            Albums = new DatabaseWrapper<AlbumTableEntry>(CreateContext);
-            Artists = new DatabaseWrapper<ArtistTableEntry>(CreateContext);
-            MusicGenres = new DatabaseWrapper<MusicGenreTableEntry>(CreateContext);
-            MusicPlaylistSongMapper = new DatabaseWrapper<MusicPlaylistSongMapper>(CreateContext);
-            MusicPlaylists = new DatabaseWrapper<MusicPlaylistTableEntry>(CreateContext);
-            SongAlbumMapper = new DatabaseWrapper<SongAlbumMapper>(CreateContext);
-            SongArtistMapper = new DatabaseWrapper<SongArtistMapper>(CreateContext);
-            SongGenreMapper = new DatabaseWrapper<SongGenreMapper>(CreateContext);
-            Songs = new DatabaseWrapper<SongTableEntry>(CreateContext);
+            AlbumArtistMapper = new DbSetWrapper<AlbumArtistMapper>(CreateContext);
+            AlbumGenreMapper = new DbSetWrapper<AlbumGenreMapper>(CreateContext);
+            Albums = new DbSetWrapper<AlbumTableEntry>(CreateContext);
+            Artists = new DbSetWrapper<ArtistTableEntry>(CreateContext);
+            MusicGenres = new DbSetWrapper<MusicGenreTableEntry>(CreateContext);
+            MusicPlaylistSongMapper = new DbSetWrapper<MusicPlaylistSongMapper>(CreateContext);
+            MusicPlaylists = new DbSetWrapper<MusicPlaylistTableEntry>(CreateContext);
+            SongAlbumMapper = new DbSetWrapper<SongAlbumMapper>(CreateContext);
+            SongArtistMapper = new DbSetWrapper<SongArtistMapper>(CreateContext);
+            SongGenreMapper = new DbSetWrapper<SongGenreMapper>(CreateContext);
+            Songs = new DbSetWrapper<SongTableEntry>(CreateContext);
 
-            Addons = new DatabaseWrapper<AddonTableEntry>(CreateContext);
+            Addons = new DbSetWrapper<AddonTableEntry>(CreateContext);
         }
 
         public async Task Init() {
             using (var context = CreateContext()) {
-                //ILoggerFactory logger = ((IInfrastructure<IServiceProvider>)context).Instance.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
-                //logger.AddProvider(new DatabaseLoggerProvider());
+                ILoggerFactory logger = ((IInfrastructure<IServiceProvider>)context).Instance.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
+                logger.AddProvider(new DatabaseLoggerProvider());
                 await context.Database.MigrateAsync();
             }
         }
