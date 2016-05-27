@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using System;
+using Windows.ApplicationModel;
 
 //not created during this bachelor thesis
 namespace KodiRemote.Code.Common {
@@ -28,9 +29,13 @@ namespace KodiRemote.Code.Common {
         /// </summary>
         /// <param name="propName">In a Property this is automatically set to the Property Name. Otherwise you have to set it yourself</param>
         protected async void RaisePropertyChanged([CallerMemberName] string propName = null) {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+            if (DesignMode.DesignModeEnabled) {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-            });
+            }else {
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+                });
+            }
         }
     }
 }

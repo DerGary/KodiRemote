@@ -478,14 +478,14 @@ namespace KodiRemote.Code.Database {
         }
 
         private IQueryable<MovieTableEntry> MoviesWithRelations(DbContext context) {
-            return context.Set<MovieTableEntry>()
-                .Include(x => x.Actors).ThenInclude(x => x.Actor)
-                .Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
-                .Include(x => x.Directors).ThenInclude(x => x.Director)
-                .Include(x => x.Genres).ThenInclude(x => x.Genre)
-                .Include(x => x.MovieSets).ThenInclude(x => x.MovieSet)
-                .Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
-                .Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
+            return context.Set<MovieTableEntry>();
+                //.Include(x => x.Actors).ThenInclude(x => x.Actor)
+                //.Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
+                //.Include(x => x.Directors).ThenInclude(x => x.Director)
+                //.Include(x => x.Genres).ThenInclude(x => x.Genre)
+                //.Include(x => x.MovieSets).ThenInclude(x => x.MovieSet)
+                //.Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
+                //.Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
         }
 
         private IQueryable<MusicVideoTableEntry> MusicVideosWithRelations(DbContext context) {

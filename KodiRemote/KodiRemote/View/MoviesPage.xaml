@@ -6,7 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:viewmodel="using:KodiRemote.ViewModel"
+    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MoviesViewModel, CreateList=True}"
     Title="Movies"
+    RequestedTheme="Dark"
     mc:Ignorable="d">
     <Page.Resources>
         <CollectionViewSource x:Name="groupedItemsViewSource"
@@ -35,7 +39,7 @@
                                                FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                                Padding="0,0,0,0"
-                                               Margin="0,0,0,36"
+                                               Margin="0,0,0,67"
                                                PointerOverBackgroundMargin="1" 
                                                PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
                                                PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
@@ -54,7 +58,7 @@
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         
-        <!--<SemanticZoom Grid.Row="2" x:Name="Zoom" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+        <SemanticZoom Grid.Row="2" x:Name="Zoom" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.ZoomMode="Enabled">
             <SemanticZoom.ZoomedInView>
                 <GridView
                     Padding="40,0,0,40"
@@ -62,48 +66,42 @@
                     IsItemClickEnabled="True"
                     IsZoomedInView="True"
                     SelectionMode="None"
+                    ScrollViewer.HorizontalScrollMode="Auto"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollMode="Disabled"
                     Margin="0"
                     ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
-                    ItemClick="moviegridview_ItemClick" 
                     ItemContainerStyle="{StaticResource GridViewItemStyle1}">
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,0" x:Name="Grid" Background="AliceBlue">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="3*"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                </Grid.RowDefinitions>
-
-                                <Polygon Grid.Row="0" Grid.RowSpan="3" Points="0,0 0,1.47 1,1.47 1,0" Stretch="UniformToFill" Fill="Black"/>
-                                <ProgressRing Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50" IsActive="{Binding PosterProgressRingActive}" Visibility="Visible"/>
-                                <Image Grid.Row="0"
-                                       Grid.RowSpan="3"
-                                       Source="{Binding Poster}" 
-                                       Tag="Poster" 
-                                       Margin="1" 
-                                       ImageOpened="Image_ImageOpened"
+                                <Polygon x:Name="Poly" Points="0,0 0,1.47 1,1.47 1,0" Stretch="Uniform" Fill="Green"/>
+                                <ProgressRing Width="50" Height="50" IsActive="{Binding PosterProgressRingActive}"/>
+                                <Image MaxWidth="{Binding ElementName=Poly, Path=ActualWidth}"
+                                       Margin="1"
+                                       Source="{Binding Poster}"
+                                       Tag="Poster"
                                        ImageFailed="Image_ImageFailed"
-                                       DataContextChanged="Image_DataContextChanged"      
-                                       Style="{StaticResource ImageInVisibileStretched}"/>
+                                       ImageOpened="Image_ImageOpened"
+                                       Style="{StaticResource ImageInVisibileStretched}" />
+
+                                <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
+                                    <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20" TextWrapping="Wrap"/>
+                                </StackPanel>
 
                                 <Image Style="{StaticResource CheckMarkImageStyle}" 
-                                       ImageOpened="CheckMark_ImageOpened" 
                                        Source="{Binding WatchedMarkImage}" 
                                        VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" 
-                                       Stretch="Uniform" 
-                                       DataContextChanged="Image_DataContextChanged"/>
+                                       Stretch="Uniform" />
 
-                                <StackPanel VerticalAlignment="Bottom" Background="#A6000000" Grid.Row="2" Margin="0,0,0,0">
-                                    <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20"/>
-                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ItemsWrapGrid GroupPadding="0,0,40,0" Margin="0"/>
+                            <ItemsWrapGrid GroupPadding="0,0,0,0" Margin="0" Orientation="Vertical"/>
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                     <GridView.GroupStyle>
@@ -112,7 +110,7 @@
                                 <DataTemplate>
                                     <Grid Margin="0,0,0,0">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" Margin="0,-11,10,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+                                            <TextBlock Text="{Binding Name}" Margin="0,0,0,0" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -132,6 +130,10 @@
                         x:Name="groupGridView"
                         ItemsSource="{Binding ElementName=groupedItemsViewSource, Path=View.CollectionGroups}"
                         ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollMode="Disabled"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.HorizontalScrollMode="Auto"
                         IsItemClickEnabled="True">
                     <GridView.ItemTemplate>
                         <DataTemplate>
@@ -148,25 +150,25 @@
                                 <Grid Grid.Column="0" Grid.Row="0">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[0].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
                                     <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[0]}"  
-                                               Stretch="UniformToFill" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" Opacity="0" Visibility="Collapsed"/>
+                                               Stretch="UniformToFill"  Opacity="0" Visibility="Collapsed"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="0">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[1].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
                                     <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[1]}"  
-                                               Stretch="UniformToFill" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" Opacity="0" Visibility="Collapsed"/>
+                                               Stretch="UniformToFill"  Opacity="0" Visibility="Collapsed"/>
                                 </Grid>
 
                                 <Grid Grid.Column="0" Grid.Row="1">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[2].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
                                     <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[2]}"  
-                                               Stretch="UniformToFill" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" Opacity="0" Visibility="Collapsed"/>
+                                               Stretch="UniformToFill"  Opacity="0" Visibility="Collapsed"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="1">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[3].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
                                     <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[3]}" 
-                                               Stretch="UniformToFill" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" Opacity="0" Visibility="Collapsed"/>
+                                               Stretch="UniformToFill"  Opacity="0" Visibility="Collapsed"/>
                                 </Grid>
 
                                 <Grid Background="#88000000" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -175,8 +177,13 @@
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
                 </GridView>
             </SemanticZoom.ZoomedOutView>
-        </SemanticZoom>-->
+        </SemanticZoom>
     </Grid>
 </base:PageBase>

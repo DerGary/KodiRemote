@@ -38,6 +38,26 @@ namespace KodiRemote.Code.Essentials {
                 RaisePropertyChanged();
             }
         }
+        private string username;
+        public string Username {
+            get {
+                return username;
+            }
+            set {
+                username = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string password;
+        public string Password {
+            get {
+                return password;
+            }
+            set {
+                password = value;
+                RaisePropertyChanged();
+            }
+        }
         private string port;
         public string Port {
             get {
@@ -45,6 +65,23 @@ namespace KodiRemote.Code.Essentials {
             }
             set {
                 port = value;
+                RaisePropertyChanged();
+            }
+        }
+        [NotMapped]
+        public string HttpUrl {
+            get {
+                return "http://" + Hostname + ":" + Port + "/jsonrpc";
+            }
+        }
+
+        private string websocketPort;
+        public string WebsocketPort {
+            get {
+                return websocketPort;
+            }
+            set {
+                websocketPort = value;
                 RaisePropertyChanged();
             }
         }

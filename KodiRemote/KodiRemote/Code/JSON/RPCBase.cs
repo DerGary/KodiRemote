@@ -47,12 +47,7 @@ namespace KodiRemote.Code.JSON {
     }
 
 
-
-
-
-
-
-
+    
 
     [DataContract]
     public class RPC : RPCBase {

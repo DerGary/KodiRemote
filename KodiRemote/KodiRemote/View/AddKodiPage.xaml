@@ -27,7 +27,10 @@
         <StackPanel MaxWidth="360" Margin="20">
             <TextBox Header="Name:" Text="{x:Bind ViewModel.KodiSettings.Name, Mode=TwoWay}"/>
             <TextBox Header="Hostname:" Text="{x:Bind ViewModel.KodiSettings.Hostname, Mode=TwoWay}"/>
+            <TextBox Header="Username:" Text="{x:Bind ViewModel.KodiSettings.Username, Mode=TwoWay}"/>
+            <TextBox Header="Password:" Text="{x:Bind ViewModel.KodiSettings.Password, Mode=TwoWay}"/>
             <TextBox Header="Port:" InputScope="AlphanumericPin" Text="{x:Bind ViewModel.KodiSettings.Port, Mode=TwoWay}"/>
+            <TextBox Header="Websocket Port:" InputScope="AlphanumericPin" Text="{x:Bind ViewModel.KodiSettings.WebsocketPort, Mode=TwoWay}"/>
             <ComboBox Header="Connection Type:" 
                       HorizontalAlignment="Stretch" 
                       ItemsSource="{x:Bind ViewModel.ConnectionTypes, Mode=OneWay}" 

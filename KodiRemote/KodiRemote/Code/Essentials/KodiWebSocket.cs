@@ -150,7 +150,7 @@ namespace KodiRemote.Code.Essentials {
         }
 
         public override async Task Connect() {
-            bool result = await Connection.Connect(new Uri("ws://" + Settings.Hostname + ":" + Settings.Port + "/jsonrpc"));
+            bool result = await Connection.Connect(new Uri("ws://" + Settings.Hostname + ":" + Settings.WebsocketPort + "/jsonrpc"));
             if (result != Connected) {
                 Connected = result;
                 if (!Connected) {

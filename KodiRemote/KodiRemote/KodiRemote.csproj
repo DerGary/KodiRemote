@@ -179,6 +179,7 @@
     <Compile Include="Code\Essentials\Enums.cs" />
     <Compile Include="Code\Essentials\KodiSettings.cs" />
     <Compile Include="Code\Essentials\KodiWebSocket.cs" />
+    <Compile Include="Code\Globals.cs" />
     <Compile Include="Code\JSON\Delegates.cs" />
     <Compile Include="Code\JSON\Enums.cs" />
     <Compile Include="Code\JSON\Fields\AddonField.cs" />
@@ -292,10 +293,13 @@
     <Compile Include="Code\JSON\WebSocketServices\VideoLibraryWebSocketService.cs" />
     <Compile Include="Code\JSON\WebSocketServices\WebSocketServiceBase.cs" />
     <Compile Include="Code\Utils\DatabaseLogger.cs" />
+    <Compile Include="Code\Utils\HttpClientWrapper.cs" />
+    <Compile Include="Code\Utils\ImageDownloader.cs" />
     <Compile Include="Code\Utils\JsonSerializer.cs" />
     <Compile Include="Code\Utils\RPCWebSocketHelper.cs" />
     <Compile Include="Code\Utils\SettingsAccess.cs" />
     <Compile Include="Code\Utils\StringEnum.cs" />
+    <Compile Include="Code\Utils\StringMethods.cs" />
     <Compile Include="Code\Utils\WebSocketHelper.cs" />
     <Compile Include="Migrations\20160522203137_InitDB.cs" />
     <Compile Include="Migrations\20160522203137_InitDB.designer.cs">
@@ -305,6 +309,10 @@
     <Compile Include="Migrations\Settings\20160509091955_InitSettings.cs" />
     <Compile Include="Migrations\Settings\20160509091955_InitSettings.designer.cs">
       <DependentUpon>20160509091955_InitSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Settings\20160526213257_AddedUsernameAndPort.cs" />
+    <Compile Include="Migrations\Settings\20160526213257_AddedUsernameAndPort.designer.cs">
+      <DependentUpon>20160526213257_AddedUsernameAndPort.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Settings\SettingsContextModelSnapshot.cs" />
     <Compile Include="ViewModel\AddKodiViewModel.cs" />

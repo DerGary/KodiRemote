@@ -30,5 +30,13 @@ namespace KodiRemote.View {
             await ViewModel.Init();
             base.OnNavigatedTo(e);
         }
+
+        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e) {
+            //(sender as Image)
+        }
+
+        private void Image_ImageOpened(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

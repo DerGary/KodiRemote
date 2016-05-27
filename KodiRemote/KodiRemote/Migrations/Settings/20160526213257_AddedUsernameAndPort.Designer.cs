@@ -8,9 +8,10 @@ using KodiRemote.Code.Database;
 namespace KodiRemote.Migrations.Settings
 {
     [DbContext(typeof(SettingsContext))]
-    partial class SettingsContextModelSnapshot : ModelSnapshot
+    [Migration("20160526213257_AddedUsernameAndPort")]
+    partial class AddedUsernameAndPort
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348");
