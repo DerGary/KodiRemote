@@ -36,8 +36,8 @@ namespace KodiRemote.ViewModel {
     
 
     public class MoviesViewModel : ViewModelBase {
-        private ObservableCollection<Group<MovieTableEntry>> groups;
-        public ObservableCollection<Group<MovieTableEntry>> Groups {
+        private ObservableCollection<Group<ItemViewModel>> groups;
+        public ObservableCollection<Group<ItemViewModel>> Groups {
             get {
                 return groups;
             }
@@ -49,29 +49,26 @@ namespace KodiRemote.ViewModel {
 
         public MoviesViewModel() {
             if (DesignMode.DesignModeEnabled) {
-                Groups = new ObservableCollection<Group<MovieTableEntry>>();
-                Groups.Add(new Group<MovieTableEntry>() { Name = "A", Items = new ObservableCollection<MovieTableEntry>() { new MovieTableEntry() { Label = "test" } } });
+                Groups = new ObservableCollection<Group<ItemViewModel>>();
+                Groups.Add(new Group<ItemViewModel>() { Name = "A", Items = new ObservableCollection<ItemViewModel>() { new ItemViewModel(new MovieTableEntry() { Label = "test" } )} });
             }
         }
 
         public async Task Init() {
             var result = await Kodi.Database.GetMovies();
-            var Groups = new ObservableCollection<Group<MovieTableEntry>>();
-            Group<MovieTableEntry> currentGroup = null;
+            var Groups = new ObservableCollection<Group<ItemViewModel>>();
+            Group<ItemViewModel> currentGroup = null;
             char currentLetter = '0';
             foreach(var movie in result.OrderBy(x => x.Label)) {
                 if (currentLetter != movie.Label.FirstOrDefault()) {
                     currentLetter = movie.Label.FirstOrDefault();
-                    currentGroup = new Group<MovieTableEntry>() { Name = currentLetter.ToString(), Items = new ObservableCollection<MovieTableEntry>() };
+                    currentGroup = new Group<ItemViewModel>() { Name = currentLetter.ToString(), Items = new ObservableCollection<ItemViewModel>() };
                     Groups.Add(currentGroup);
                 }
-                currentGroup.Items.Add(movie);
+                currentGroup.Items.Add(new ItemViewModel(movie));
             }
             this.Groups = Groups;
             Debug.WriteLine(result);
-
-            var result2 = await Kodi.Files.PrepareDownload("image://http%3a%2f%2fthetvdb.com%2fbanners%2factors%2f15879.jpg/");
-            Debug.WriteLine(result2);
         }
     }
 }

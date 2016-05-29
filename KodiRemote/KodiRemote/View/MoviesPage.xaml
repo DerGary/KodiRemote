@@ -74,16 +74,15 @@
                     ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
                     ItemContainerStyle="{StaticResource GridViewItemStyle1}">
                     <GridView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="viewmodel:ItemViewModel">
                             <Grid Margin="0,0,0,0" x:Name="Grid" Background="AliceBlue">
                                 <Polygon x:Name="Poly" Points="0,0 0,1.47 1,1.47 1,0" Stretch="Uniform" Fill="Green"/>
                                 <ProgressRing Width="50" Height="50" IsActive="{Binding PosterProgressRingActive}"/>
                                 <Image MaxWidth="{Binding ElementName=Poly, Path=ActualWidth}"
                                        Margin="1"
                                        Source="{Binding Poster}"
+                                       ImageFailed="{x:Bind ImageFailed}"
                                        Tag="Poster"
-                                       ImageFailed="Image_ImageFailed"
-                                       ImageOpened="Image_ImageOpened"
                                        Style="{StaticResource ImageInVisibileStretched}" />
 
                                 <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
@@ -130,10 +129,10 @@
                         x:Name="groupGridView"
                         ItemsSource="{Binding ElementName=groupedItemsViewSource, Path=View.CollectionGroups}"
                         ScrollViewer.IsHorizontalScrollChainingEnabled="False"
-                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollMode="Disabled"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.HorizontalScrollMode="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollMode="Disabled"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollMode="Auto"
                         IsItemClickEnabled="True">
                     <GridView.ItemTemplate>
                         <DataTemplate>
@@ -149,26 +148,42 @@
 
                                 <Grid Grid.Column="0" Grid.Row="0">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[0].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
-                                    <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[0]}"  
-                                               Stretch="UniformToFill"  Opacity="0" Visibility="Collapsed"/>
+                                    <Image Source="{Binding PosterThumbnail}" 
+                                           Tag="PosterThumbnail" 
+                                           DataContext="{Binding Group.Items[0]}"  
+                                           Stretch="UniformToFill"  
+                                           Opacity="0" 
+                                           Visibility="Collapsed"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="0">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[1].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
-                                    <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[1]}"  
-                                               Stretch="UniformToFill"  Opacity="0" Visibility="Collapsed"/>
+                                    <Image Source="{Binding PosterThumbnail}" 
+                                           Tag="PosterThumbnail" 
+                                           DataContext="{Binding Group.Items[1]}"  
+                                           Stretch="UniformToFill"  
+                                           Opacity="0" 
+                                           Visibility="Collapsed"/>
                                 </Grid>
 
                                 <Grid Grid.Column="0" Grid.Row="1">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[2].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
-                                    <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[2]}"  
-                                               Stretch="UniformToFill"  Opacity="0" Visibility="Collapsed"/>
+                                    <Image Source="{Binding PosterThumbnail}" 
+                                           Tag="PosterThumbnail" 
+                                           DataContext="{Binding Group.Items[2]}"  
+                                           Stretch="UniformToFill"  
+                                           Opacity="0" 
+                                           Visibility="Collapsed"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="1">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[3].PosterThumbnailProgressRingActive}" Visibility="Visible"/>
-                                    <Image Source="{Binding PosterThumbnail}" Tag="PosterThumbnail" DataContext="{Binding Group.Items[3]}" 
-                                               Stretch="UniformToFill"  Opacity="0" Visibility="Collapsed"/>
+                                    <Image Source="{Binding PosterThumbnail}" 
+                                           Tag="PosterThumbnail" 
+                                           DataContext="{Binding Group.Items[3]}"  
+                                           Stretch="UniformToFill"  
+                                           Opacity="0" 
+                                           Visibility="Collapsed"/>
                                 </Grid>
 
                                 <Grid Background="#88000000" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

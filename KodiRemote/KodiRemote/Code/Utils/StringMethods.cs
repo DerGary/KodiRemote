@@ -28,14 +28,14 @@ namespace KodiRemote.Code.Utils {
             }
             return url;
         }
-        public static string parseImageUrlToAppData(string url) {
+        public static string ParseImageUrlToAppData(string url) {
             if (!string.IsNullOrEmpty(url)) {
                 url = ParseImageUrlToLocal(url);
                 url = $"ms-appdata:///local/{Globals.ImageFolder}/{url}";
             }
             return url;
         }
-        public static string parseThumbnailUrlToAppData(string url) {
+        public static string ParseThumbnailUrlToAppData(string url) {
             if (!string.IsNullOrEmpty(url)) {
                 url = ParseImageUrlToLocal(url);
                 url = $"ms-appdata:///local/{Globals.ThumbnailFolder}/{url}";

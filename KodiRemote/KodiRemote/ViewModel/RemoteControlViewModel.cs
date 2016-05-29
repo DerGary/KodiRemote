@@ -147,7 +147,7 @@ namespace KodiRemote.ViewModel {
         public RelayCommand KeyboardCommand {
             get {
                 if (keyboardCommand == null) {
-                    keyboardCommand = new RelayCommand(async () => {
+                    keyboardCommand = new RelayCommand(() => {
                         //Keyboard anzeigen
                     });
                 }

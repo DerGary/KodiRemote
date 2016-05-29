@@ -11,10 +11,13 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace KodiRemote.Code.Utils {
-    public class ImageDownloader {
+    public static class ImageDownloader {
         private static StorageFolder ThumbFolder;
         private static StorageFolder ImageFolder;
         private static StorageFolder CacheFolder;
+
+        private static Dictionary<string,Tuple<Kodi, List<Action>>> QueuedUrls = new Dictionary<string,Tuple<Kodi, List<Action>>>();
+        private static bool IsRunning = false;
 
         private static async Task CreateFolders() {
             if (ThumbFolder == null) {
@@ -28,13 +31,45 @@ namespace KodiRemote.Code.Utils {
             }
         }
 
-        public static async Task DownloadImageAsync(string image, Kodi kodi) {
+        public static void QueueDownloadImage(string image, Kodi kodi, Action completedAction) {
+            if(image == null) {
+                return;
+            }
+            if (QueuedUrls.ContainsKey(image)) {
+                QueuedUrls[image].Item2.Add(completedAction);
+            } else {
+                QueuedUrls.Add(image, new Tuple<Kodi, List<Action>>(kodi, new List<Action>() { completedAction }));
+            }
+
+            if (!IsRunning) {
+                IsRunning = true;
+                Task t = new Task(async () => {
+                    while(QueuedUrls.Any()) {
+                        KeyValuePair<string,Tuple<Kodi, List<Action>>> kv = QueuedUrls.First();
+
+                        string url = kv.Key;
+                        Kodi k = kv.Value.Item1;
+                        List<Action> completed = kv.Value.Item2;
+
+                        await DownloadImageAsync(url, kodi);
+
+                        QueuedUrls.Remove(url);
+                        foreach(var action in completed) {
+                            action.Invoke();
+                        }
+                    }
+                });
+                t.Start();
+            }
+        }
+
+        private static async Task DownloadImageAsync(string image, Kodi kodi) {
             await CreateFolders();
 
             string imageFileName = StringMethods.ParseImageUrlToLocal(image);
 
             IStorageItem existingImage = await ImageFolder.TryGetItemAsync(imageFileName);
-            if (existingImage == null) {
+            if (existingImage == null && kodi != null) {
                 //load Image from Kodi
                 try {
                     using (HttpClientWrapper client = new HttpClientWrapper(kodi.Settings.Username, kodi.Settings.Password)) {

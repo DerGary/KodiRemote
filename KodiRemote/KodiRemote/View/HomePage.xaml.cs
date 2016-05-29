@@ -28,12 +28,8 @@ namespace KodiRemote.View
         public HomePage()
         {
             this.InitializeComponent();
-            Loaded += HomePage_Loaded;
         }
-
-        private async void HomePage_Loaded(object sender, RoutedEventArgs e) {
-            await ImageDownloader.DownloadImageAsync("image://http%3a%2f%2fthetvdb.com%2fbanners%2factors%2f15879.jpg/", Kodi.ActiveInstance);
-        }
+        
 
         private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
