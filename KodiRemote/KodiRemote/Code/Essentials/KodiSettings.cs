@@ -426,5 +426,13 @@ namespace KodiRemote.Code.Essentials {
                 }
             }
         }
+
+        public override bool Equals(object obj) {
+            var other = obj as KodiSettings;
+            if (other == null) {
+                return false;
+            }
+            return other.Name == Name;
+        }
     }
 }

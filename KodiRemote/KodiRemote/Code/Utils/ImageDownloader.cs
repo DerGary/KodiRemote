@@ -58,6 +58,7 @@ namespace KodiRemote.Code.Utils {
                             action.Invoke();
                         }
                     }
+                    IsRunning = false;
                 });
                 t.Start();
             }

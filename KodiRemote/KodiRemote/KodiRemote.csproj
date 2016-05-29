@@ -316,6 +316,7 @@
     </Compile>
     <Compile Include="Migrations\Settings\SettingsContextModelSnapshot.cs" />
     <Compile Include="ViewModel\AddKodiViewModel.cs" />
+    <Compile Include="ViewModel\Group.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
     <Compile Include="ViewModel\MoviesViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
@@ -326,6 +327,9 @@
     </Compile>
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
+    <Compile Include="View\CollectionPage.xaml.cs">
+      <DependentUpon>CollectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Converter\BooleanResourceConverter.cs" />
     <Compile Include="View\Converter\BoolVisibilityConverter.cs" />
     <Compile Include="View\Converter\ConnectionTypeConverter.cs" />
@@ -339,9 +343,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\MoviesPage.xaml.cs">
-      <DependentUpon>MoviesPage.xaml</DependentUpon>
+    <Compile Include="View\HorizontalGridViewPage.xaml.cs">
+      <DependentUpon>HorizontalGridViewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PageType.cs" />
     <Compile Include="View\RemoteControlPage.xaml.cs">
       <DependentUpon>RemoteControlPage.xaml</DependentUpon>
     </Compile>
@@ -411,6 +416,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CollectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -423,7 +432,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\MoviesPage.xaml">
+    <Page Include="View\HorizontalGridViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

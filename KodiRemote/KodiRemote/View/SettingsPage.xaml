@@ -105,6 +105,7 @@
         </StackPanel>
 
         <CommandBar Grid.Row="1">
+            <AppBarButton Icon="Accept" Label="Set as Default" Command="{x:Bind ViewModel.ActivateKodi}"/>
             <AppBarButton Icon="Refresh" Label="Update Database" Command="{x:Bind ViewModel.UpdateKodiDatabase}"/>
             <AppBarButton Icon="Add" Label="Add" Tapped="AddKodiTapped"/>
             <AppBarButton Icon="Remove" Label="Remove" Command="{x:Bind ViewModel.RemoveKodi}"/>

@@ -146,7 +146,7 @@ namespace KodiRemote.Code.Essentials {
             if (DatabaseWorking) {
                 await new MessageDialog("There is currently an update of the Database in Progress. You can't start another one until it finished.", "Update Database in Progress").ShowAsync();
             } else {
-                UpdateDatabase().Start();
+                new Task(async () => await UpdateDatabase()).Start();
                 //Task.Run(async () => await UpdateDatabase()).Start();
             }
         }

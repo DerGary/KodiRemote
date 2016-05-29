@@ -41,7 +41,7 @@ namespace KodiRemote.ViewModel {
             KodiList = new ObservableCollection<KodiSettings>(await SettingsDatabase.Instance.GetAllKodis());
             SelectedKodi = KodiList?.Where(x => x.Active).FirstOrDefault();
             foreach (KodiSettings kodi in KodiList) {
-                Task.Run(async () => await kodi.CheckOnlineStatus()).Start();
+                new Task(async () => await kodi.CheckOnlineStatus()).Start();
             }
         }
 
@@ -67,6 +67,22 @@ namespace KodiRemote.ViewModel {
                     });
                 }
                 return updateKodiDatabase;
+            }
+        }
+
+        private RelayCommand activateKodi;
+        public RelayCommand ActivateKodi {
+            get {
+                if (activateKodi == null) {
+                    activateKodi = new RelayCommand(async () => {
+                        foreach(var kodi in kodiList) {
+                            kodi.Active = false;
+                        }
+                        SelectedKodi.Active = true;
+                        await SettingsDatabase.Instance.InsertOrUpdateKodi(SelectedKodi);
+                    });
+                }
+                return activateKodi;
             }
         }
     }

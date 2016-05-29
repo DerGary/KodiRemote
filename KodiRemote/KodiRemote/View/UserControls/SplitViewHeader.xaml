@@ -53,7 +53,7 @@
         
         <StackPanel Orientation="Horizontal" Background="{StaticResource TransparentGrey}">
             <Button Style="{StaticResource SplitViewTogglePaneButtonStyle}" Click="BurgerMenuClicked"/>
-            <TextBlock Text="{x:Bind Title, Mode=OneWay}" FontSize="24" FontWeight="Light" Margin="8,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Bind Page.Title, Mode=OneWay}" FontSize="24" FontWeight="Light" Margin="8,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
 
         <SplitView x:Name="rootSplitView" Grid.Row="1" OpenPaneLength="200" PaneBackground="{StaticResource TransparentGrey}" DisplayMode="Inline">
@@ -77,7 +77,13 @@
                                     <TextBlock x:Uid="Movies" Text="Movies" Style="{StaticResource PaneButtonTextStyle}"/>
                                 </StackPanel>
                             </Button>
-                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}">
+                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}" Tapped="MovieSetsTapped">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource PaneButtonSymbolStyle}" Text="{StaticResource MovieClapper}"/>
+                                    <TextBlock x:Uid="MovieSets" Text="MovieSets" Style="{StaticResource PaneButtonTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Row="0" Style="{StaticResource PaneButtonStyle}" Tapped="TVShowsTapped">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource PaneButtonSymbolStyle}" Text="{StaticResource TV}"/>
                                     <TextBlock x:Uid="TVShows" Text="TVShows" Style="{StaticResource PaneButtonTextStyle}"/>

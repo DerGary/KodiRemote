@@ -478,14 +478,14 @@ namespace KodiRemote.Code.Database {
         }
 
         private IQueryable<MovieTableEntry> MoviesWithRelations(DbContext context) {
-            return context.Set<MovieTableEntry>();
-                //.Include(x => x.Actors).ThenInclude(x => x.Actor)
-                //.Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
-                //.Include(x => x.Directors).ThenInclude(x => x.Director)
-                //.Include(x => x.Genres).ThenInclude(x => x.Genre)
-                //.Include(x => x.MovieSets).ThenInclude(x => x.MovieSet)
-                //.Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
-                //.Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
+            return context.Set<MovieTableEntry>()
+                .Include(x => x.Actors).ThenInclude(x => x.Actor)
+                .Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
+                .Include(x => x.Directors).ThenInclude(x => x.Director)
+                .Include(x => x.Genres).ThenInclude(x => x.Genre)
+                .Include(x => x.MovieSets).ThenInclude(x => x.MovieSet)
+                .Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
+                .Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
         }
 
         private IQueryable<MusicVideoTableEntry> MusicVideosWithRelations(DbContext context) {
@@ -534,7 +534,7 @@ namespace KodiRemote.Code.Database {
         private async Task LoadMovies() {
             if(Movies == null) {
                 using (var context = database.CreateContext()) {
-                    Movies = await MoviesWithRelations(context).ToListAsync();
+                    Movies = await context.Set<MovieTableEntry>().ToListAsync();
                 }
             }
         }
@@ -542,7 +542,7 @@ namespace KodiRemote.Code.Database {
         private async Task LoadTVShows() {
             if (TVShows == null) {
                 using (var context = database.CreateContext()) {
-                    TVShows = await TVShowsWithRelations(context).ToListAsync();
+                    TVShows = await context.Set<TVShowTableEntry>().ToListAsync();
                 }
             }
         }
@@ -566,7 +566,7 @@ namespace KodiRemote.Code.Database {
         private async Task LoadMusicVideos() {
             if (MusicVideos == null) {
                 using (var context = database.CreateContext()) {
-                    MusicVideos = await MusicVideosWithRelations(context).ToListAsync();
+                    MusicVideos = await context.Set<MusicVideoTableEntry>().ToListAsync();
                 }
             }
         }
@@ -631,8 +631,9 @@ namespace KodiRemote.Code.Database {
         }
 
         public async Task<MovieTableEntry> GetMovie(MovieTableEntry movie) {
-            await LoadMovies();
-            return Movies.FirstOrDefault(x => x.MovieId == movie.MovieId);
+            using (var context = database.CreateContext()) {
+                return await MoviesWithRelations(context).FirstOrDefaultAsync(x => x.MovieId == movie.MovieId);
+            }
         }
 
         public async Task<IReadOnlyList<MovieGenreTableEntry>> GetMovieGenres() {
@@ -646,8 +647,9 @@ namespace KodiRemote.Code.Database {
         }
 
         public async Task<TVShowTableEntry> GetTVShow(TVShowTableEntry tvshow) {
-            await LoadTVShows();
-            return TVShows.FirstOrDefault(x => x.TVShowId == tvshow.TVShowId);
+            using (var context = database.CreateContext()) {
+                return await TVShowsWithRelations(context).FirstOrDefaultAsync(x => x.TVShowId == tvshow.TVShowId);
+            }
         }
 
         public async Task<IReadOnlyList<TVShowGenreTableEntry>> GetTVShowGenres() {
@@ -667,8 +669,9 @@ namespace KodiRemote.Code.Database {
         }
 
         public async Task<MusicVideoTableEntry> GetMusicVideo(MusicVideoTableEntry musicVideo) {
-            await LoadMusicVideos();
-            return MusicVideos.FirstOrDefault(x => x.MusicVideoId == musicVideo.MusicVideoId);
+            using (var context = database.CreateContext()) {
+                return await MusicVideosWithRelations(context).FirstOrDefaultAsync(x => x.MusicVideoId == musicVideo.MusicVideoId);
+            }
         }
 
 
@@ -678,8 +681,9 @@ namespace KodiRemote.Code.Database {
         }
 
         public async Task<SongTableEntry> GetSong(SongTableEntry song) {
-            await LoadSongs();
-            return Songs.FirstOrDefault(x => x.SongId == song.SongId);
+            using (var context = database.CreateContext()) {
+                return await SongsWithRelations(context).FirstOrDefaultAsync(x => x.SongId == song.SongId);
+            }
         }
 
         public async Task<IEnumerable<AlbumTableEntry>> GetAlbums() {
@@ -688,8 +692,9 @@ namespace KodiRemote.Code.Database {
         }
 
         public async Task<AlbumTableEntry> GetAlbum(AlbumTableEntry album) {
-            await LoadAlbums();
-            return Albums.FirstOrDefault(x => x.AlbumId == album.AlbumId);
+            using (var context = database.CreateContext()) {
+                return await AlbumsWithRelations(context).FirstOrDefaultAsync(x => x.AlbumId == album.AlbumId);
+            }
         }
 
         public async Task<IEnumerable<ArtistTableEntry>> GetArtists() {
@@ -698,8 +703,9 @@ namespace KodiRemote.Code.Database {
         }
 
         public async Task<ArtistTableEntry> GetArtist(ArtistTableEntry artist) {
-            await LoadArtists();
-            return Artists.FirstOrDefault(x => x.ArtistId == artist.ArtistId);
+            using (var context = database.CreateContext()) {
+                return await ArtistsWithRelations(context).FirstOrDefaultAsync(x => x.ArtistId == artist.ArtistId);
+            }
         }
 
         public async Task<IEnumerable<AddonTableEntry>> GetAddons() {
@@ -718,8 +724,9 @@ namespace KodiRemote.Code.Database {
         }
 
         public async Task<MovieSetTableEntry> GetMovieSet(MovieSetTableEntry movieSet) {
-            await LoadMovieSets();
-            return MovieSets.FirstOrDefault(x => x.SetId == movieSet.SetId);
+            using (var context = database.CreateContext()) {
+                return await MovieSetsWithRelations(context).FirstOrDefaultAsync(x => x.SetId == movieSet.SetId);
+            }
         }
     }
 }

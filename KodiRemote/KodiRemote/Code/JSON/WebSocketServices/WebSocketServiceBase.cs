@@ -48,10 +48,12 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
 
         protected void DeserializeMessageAndTriggerTask<T>(string guid, string message) {
             var item = JsonSerializer.FromJson<RPCResponse<T>>(message);
-            returnValues[guid] = item.Result;
-            tasks[guid].Start();
-            tasks.Remove(guid);
-            methods.Remove(guid);
+            if (tasks.ContainsKey(guid)) {
+                returnValues[guid] = item.Result;
+                tasks[guid].Start();
+                tasks.Remove(guid);
+                methods.Remove(guid);
+            }
         }
         /// <summary>
         /// Deserializes the message string to a RPCResponse and interprets the result string
@@ -60,14 +62,16 @@ namespace KodiRemote.Code.JSON.WebSocketServices {
         /// </summary>
         protected void DeserializeMessageAndTriggerTask(string guid, string message) {
             var item = JsonSerializer.FromJson<RPCResponse<string>>(message);
-            if (item.Result == "OK") {
-                returnValues[guid] = true;
-            } else {
-                returnValues[guid] = false;
+            if (tasks.ContainsKey(guid)) {
+                if (item.Result == "OK") {
+                    returnValues[guid] = true;
+                } else {
+                    returnValues[guid] = false;
+                }
+                tasks[guid].Start();
+                tasks.Remove(guid);
+                methods.Remove(guid);
             }
-            tasks[guid].Start();
-            tasks.Remove(guid);
-            methods.Remove(guid);
         }
 
         protected void SendRequest<T>(StringEnum method, string guid, T param) {

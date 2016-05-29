@@ -1,5 +1,6 @@
 ﻿using KodiRemote.Code.Common;
 using KodiRemote.Code.Database.MovieTables;
+using KodiRemote.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,32 +11,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
 namespace KodiRemote.ViewModel {
-    public class Group<T> :PropertyChangedBase {
-        private string name;
-        public string Name {
-            get {
-                return name;
-            }
-            set {
-                name = value;
-                RaisePropertyChanged();
-            }
-        }
-        private ObservableCollection<T> items;
-        public ObservableCollection<T> Items {
-            get {
-                return items;
-            }
-            set {
-                items = value;
-                RaisePropertyChanged();
-            }
-        }
-    }
-
-    
-
-    public class MoviesViewModel : ViewModelBase {
+    public class CollectionViewModel : ViewModelBase {
         private ObservableCollection<Group<ItemViewModel>> groups;
         public ObservableCollection<Group<ItemViewModel>> Groups {
             get {
@@ -47,28 +23,45 @@ namespace KodiRemote.ViewModel {
             }
         }
 
-        public MoviesViewModel() {
+        public CollectionViewModel() {
             if (DesignMode.DesignModeEnabled) {
                 Groups = new ObservableCollection<Group<ItemViewModel>>();
                 Groups.Add(new Group<ItemViewModel>() { Name = "A", Items = new ObservableCollection<ItemViewModel>() { new ItemViewModel(new MovieTableEntry() { Label = "test" } )} });
             }
         }
 
-        public async Task Init() {
-            var result = await Kodi.Database.GetMovies();
+        public async Task Init(PageType type) {
+            IEnumerable<dynamic> result = null;
+            if(type == PageType.Movies) {
+                result = await Kodi.Database.GetMovies();
+            } else if(type == PageType.TVShows) {
+                result = await Kodi.Database.GetTVShows();
+            } else if(type == PageType.MovieSets) {
+                result = await Kodi.Database.GetMovieSets();
+            }
+            CreateGroups(result);
+        }
+
+        private void CreateGroups(IEnumerable<dynamic> items) {
+            if(items == null) {
+                return;
+            }
             var Groups = new ObservableCollection<Group<ItemViewModel>>();
+
             Group<ItemViewModel> currentGroup = null;
             char currentLetter = '0';
-            foreach(var movie in result.OrderBy(x => x.Label)) {
-                if (currentLetter != movie.Label.FirstOrDefault()) {
-                    currentLetter = movie.Label.FirstOrDefault();
+            foreach (var item in items.OrderBy(x => x.Label)) {
+                string label = item.Label;
+                if (currentLetter != label.FirstOrDefault()) {
+                    currentLetter = label.FirstOrDefault();
                     currentGroup = new Group<ItemViewModel>() { Name = currentLetter.ToString(), Items = new ObservableCollection<ItemViewModel>() };
                     Groups.Add(currentGroup);
                 }
-                currentGroup.Items.Add(new ItemViewModel(movie));
+                currentGroup.Items.Add(new ItemViewModel(item));
             }
+
             this.Groups = Groups;
-            Debug.WriteLine(result);
         }
     }
+
 }

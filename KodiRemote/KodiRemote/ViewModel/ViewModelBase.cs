@@ -29,11 +29,5 @@ namespace KodiRemote.ViewModel {
         private void ActiveKodiChanged(object sender, EventArgs e) {
             RaisePropertyChanged(nameof(Kodi));
         }
-
-        public void ImageFailed(object sender, ExceptionRoutedEventArgs e) {
-            var image = (sender as Image);
-            var viewModel = image.DataContext as ItemViewModel;
-            viewModel.DownloadImage((string)image.Tag, Kodi);
-        }
     }
 }

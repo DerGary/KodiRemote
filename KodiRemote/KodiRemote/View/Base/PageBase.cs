@@ -7,6 +7,8 @@ using Windows.UI.Xaml.Navigation;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
+using KodiRemote.ViewModel;
+using KodiRemote.Code.Essentials;
 
 namespace KodiRemote.View.Base {
     public class PageBase : Page, INotifyPropertyChanged {
@@ -61,6 +63,8 @@ namespace KodiRemote.View.Base {
         }
         protected void ImageOpened(object sender, RoutedEventArgs e) {
             var image = sender as Image;
+            image.Opacity = 0;
+            image.Visibility = Visibility.Visible;
             Storyboard AniFadeIn = new Storyboard();
 
             DoubleAnimation FadeIn = new DoubleAnimation();
@@ -73,6 +77,11 @@ namespace KodiRemote.View.Base {
             Storyboard.SetTargetProperty(FadeIn, "Opacity");
 
             AniFadeIn.Begin();
+        }
+        protected void ImageFailed(object sender, ExceptionRoutedEventArgs e) {
+            var image = (sender as Image);
+            var viewModel = image.DataContext as ItemViewModel;
+            viewModel.DownloadImage((string)image.Tag, Kodi.ActiveInstance);
         }
     }
 }

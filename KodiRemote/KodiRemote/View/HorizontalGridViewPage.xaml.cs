@@ -21,18 +21,16 @@ namespace KodiRemote.View {
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class MoviesPage : PageBase {
-        public MoviesViewModel ViewModel { get; set; } = new MoviesViewModel();
-        public MoviesPage() {
+    public sealed partial class HorizontalGridViewPage : PageBase {
+        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(CollectionViewModel), typeof(HorizontalGridViewPage), null);
+
+        public CollectionViewModel ViewModel {
+            get { return (CollectionViewModel)GetValue(ViewModelProperty); }
+            set { SetValue(ViewModelProperty, value); }
+        }
+
+        public HorizontalGridViewPage() {
             this.InitializeComponent();
-        }
-        protected override async void OnNavigatedTo(NavigationEventArgs e) {
-            await ViewModel.Init();
-            base.OnNavigatedTo(e);
-        }
-
-        private void Image_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args) {
-
-        }
+        }        
     }
 }

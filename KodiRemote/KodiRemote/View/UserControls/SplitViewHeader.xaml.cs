@@ -24,12 +24,18 @@ namespace KodiRemote.View.UserControls {
                 return contentFrame;
             }
         }
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(SplitViewHeader), null);
 
-        public string Title {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
+        private PageBase page;
+        public PageBase Page {
+            get {
+                return page;
+            }
+            set {
+                page = value;
+                RaisePropertyChanged();
+            }
         }
+
 
 
         public SplitViewHeader() {
@@ -39,7 +45,7 @@ namespace KodiRemote.View.UserControls {
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e) {
             var page = ContentFrame.Content as PageBase;
-            Title = page.Title;
+            Page = page;
         }
 
         private void BurgerMenuClicked(object sender, RoutedEventArgs e) {
@@ -53,11 +59,12 @@ namespace KodiRemote.View.UserControls {
         private void RemoteControlTapped(object sender, TappedRoutedEventArgs e) {
             Navigate<RemoteControlPage>();
         }
-
-        private void Navigate<T>() {
-            if (!(ContentFrame.Content is T)) {
-                ContentFrame.Navigate(typeof(T));
+        private object lastParam;
+        private void Navigate<T>(object param = null) {
+            if (!(ContentFrame.Content is T) || lastParam != param) {
+                ContentFrame.Navigate(typeof(T), param);
                 DeleteBackStackWithoutHome();
+                lastParam = param;
             }
         }
 
@@ -74,7 +81,13 @@ namespace KodiRemote.View.UserControls {
         }
 
         private void MoviesTapped(object sender, TappedRoutedEventArgs e) {
-            Navigate<MoviesPage>();
+            Navigate<CollectionPage>(PageType.Movies);
+        }
+        private void MovieSetsTapped(object sender, TappedRoutedEventArgs e) {
+            Navigate<CollectionPage>(PageType.MovieSets);
+        }
+        private void TVShowsTapped(object sender, TappedRoutedEventArgs e) {
+            Navigate<CollectionPage>(PageType.TVShows);
         }
     }
 }
