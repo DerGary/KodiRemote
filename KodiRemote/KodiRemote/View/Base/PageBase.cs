@@ -79,9 +79,9 @@ namespace KodiRemote.View.Base {
             AniFadeIn.Begin();
         }
         protected void ImageFailed(object sender, ExceptionRoutedEventArgs e) {
-            var image = (sender as Image);
-            var viewModel = image.DataContext as ItemViewModel;
-            viewModel.DownloadImage((string)image.Tag, Kodi.ActiveInstance);
+            //var image = (sender as Image);
+            //var viewModel = image.DataContext as ItemViewModel;
+            //viewModel.DownloadImage((string)image.Tag, Kodi.ActiveInstance);
         }
     }
 }

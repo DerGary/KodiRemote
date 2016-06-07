@@ -5,38 +5,40 @@ using KodiRemote.Code.Essentials;
 using KodiRemote.Code.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.ViewModel {
     public class ItemViewModel : ViewModelBase {
-        public string Poster => StringMethods.ParseImageUrlToAppData(item.Poster);
-        public string Fanart => StringMethods.ParseImageUrlToAppData(item.Fanart);
-        public string PosterThumbnail => StringMethods.ParseThumbnailUrlToAppData(item.Poster);
-        public string Thumbnail => StringMethods.ParseImageUrlToAppData(item.Thumbnail);
+        public string Poster => StringMethods.ParseImageUrlToAppData(Item.Poster);
+        public string Fanart => StringMethods.ParseImageUrlToAppData(Item.Fanart);
+        public string PosterThumbnail => StringMethods.ParseThumbnailUrlToAppData(Item.Poster);
+        public string Thumbnail => StringMethods.ParseImageUrlToAppData(Item.Thumbnail);
+
         public string ExtraImage {
             get {
-                if (item.GetType() == typeof(MovieTableEntry)) {
-                    return StringMethods.ParseImageUrlToAppData(item.Poster);
-                } else if (item.GetType() == typeof(TVShowTableEntry)) {
-                    return StringMethods.ParseImageUrlToAppData(item.Banner);
+                if (Item.GetType() == typeof(MovieTableEntry)) {
+                    return StringMethods.ParseImageUrlToAppData(Item.Poster);
+                } else if (Item.GetType() == typeof(TVShowTableEntry)) {
+                    return StringMethods.ParseImageUrlToAppData(Item.Banner);
                 }
                 return null;
             }
         }
         public bool Watched {
             get {
-                if (item.GetType() == typeof(MovieTableEntry)) {
-                    return item.PlayCount > 0;
-                } else if (item.GetType() == typeof(TVShowTableEntry)) {
-                    return item.Episode == item.WatchedEpisodes;
+                if (Item.GetType() == typeof(MovieTableEntry)) {
+                    return Item.PlayCount > 0;
+                } else if (Item.GetType() == typeof(TVShowTableEntry)) {
+                    return Item.Episode == Item.WatchedEpisodes;
 
                 }
                 return false;
             }
         }
-        public string Label => item.Label;
+        public string Label => Item.Label;
 
         private bool posterProgressRingActive;
         public bool PosterProgressRingActive {
@@ -81,7 +83,7 @@ namespace KodiRemote.ViewModel {
 
 
         public ItemViewModel(object item) {
-            this.item = item;
+            this.Item = item;
         }
 
         public void SetProgressRing(string tag, bool active) {
@@ -102,9 +104,20 @@ namespace KodiRemote.ViewModel {
             }
         }
 
+        private RelayCommand<object> imageFailedCommand;
+        public RelayCommand<object> ImageFailedCommand {
+            get {
+                if (imageFailedCommand == null) {
+                    imageFailedCommand = new RelayCommand<object>((object imageTag) => {
+                        DownloadImage((string)imageTag);
+                    });
+                }
+                return imageFailedCommand;
+            }
+        }
 
-        private dynamic item;
-        public void DownloadImage(string tag, Kodi kodi) {
+        public dynamic Item { get; private set; }
+        public void DownloadImage(string tag) {
             if (tag == null) {
                 throw new ArgumentException("tag");
             }
@@ -114,26 +127,26 @@ namespace KodiRemote.ViewModel {
             switch (tag) {
                 case "Poster":
                 case "PosterThumbnail":
-                    url = item.Poster;
+                    url = Item.Poster;
                     break;
                 case "Thumbnail":
-                    url = item.Thumbnail;
+                    url = Item.Thumbnail;
                     break;
                 case "Fanart":
-                    url = item.Fanart;
+                    url = Item.Fanart;
                     break;
                 case "ExtraImage":
-                    if (item.GetType() == typeof(MovieTableEntry)) {
-                        url = item.Poster;
-                    } else if (item.GetType() == typeof(TVShowTableEntry)) {
-                        url = item.Banner;
+                    if (Item.GetType() == typeof(MovieTableEntry)) {
+                        url = Item.Poster;
+                    } else if (Item.GetType() == typeof(TVShowTableEntry)) {
+                        url = Item.Banner;
                     }
                     break;
             }
             SetProgressRing(tag, true);
             ImageDownloader.QueueDownloadImage(
                 url,
-                kodi,
+                Kodi,
                 () => {
                     RaisePropertyChanged(tag);
                     SetProgressRing(tag, false);

@@ -319,6 +319,7 @@
     <Compile Include="ViewModel\Group.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\MovieDetailsViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="View\Converter\BooleanResourceConverter.cs" />
     <Compile Include="View\Converter\BoolVisibilityConverter.cs" />
     <Compile Include="View\Converter\ConnectionTypeConverter.cs" />
+    <Compile Include="View\Converter\NullVisibilityConverter.cs" />
     <Compile Include="View\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -346,6 +348,9 @@
     <Compile Include="View\HorizontalGridViewPage.xaml.cs">
       <DependentUpon>HorizontalGridViewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MovieDetailsPage.xaml.cs">
+      <DependentUpon>MovieDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PageType.cs" />
     <Compile Include="View\RemoteControlPage.xaml.cs">
       <DependentUpon>RemoteControlPage.xaml</DependentUpon>
@@ -358,6 +363,9 @@
     </Compile>
     <Compile Include="View\UserControls\CurrentlyPlaying.xaml.cs">
       <DependentUpon>CurrentlyPlaying.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\ImageControl.xaml.cs">
+      <DependentUpon>ImageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\SplitViewHeader.xaml.cs">
       <DependentUpon>SplitViewHeader.xaml</DependentUpon>
@@ -436,6 +444,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MovieDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\RemoteControlPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -452,6 +464,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\ImageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\SplitViewHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -460,6 +476,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

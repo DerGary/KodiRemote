@@ -42,5 +42,11 @@ namespace KodiRemote.View {
             }
             base.OnNavigatedTo(e);
         }
+
+        private void HorizontalGridViewPage_Navigate(ItemViewModel item) {
+            if (ViewModel.PageType == PageType.Movies) {
+                Frame.Navigate(typeof(MovieDetailsPage), item.Item);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using KodiRemote.View.Base;
+﻿using KodiRemote.Code.Database.MovieTables;
+using KodiRemote.View.Base;
 using KodiRemote.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -21,25 +22,26 @@ namespace KodiRemote.View {
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class HorizontalGridViewPage : PageBase {
-        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(CollectionViewModel), typeof(HorizontalGridViewPage), null);
-
-        public CollectionViewModel ViewModel {
-            get { return (CollectionViewModel)GetValue(ViewModelProperty); }
-            set { SetValue(ViewModelProperty, value); }
+    public sealed partial class MovieDetailsPage : PageBase {
+        //public MovieDetailsViewModel ViewModel { get; set; }
+        private MovieDetailsViewModel viewModel;
+        public MovieDetailsViewModel ViewModel {
+            get {
+                return viewModel;
+            }
+            set {
+                viewModel = value;
+                RaisePropertyChanged();
+            }
         }
 
-        public delegate void NavigateEventHandler(ItemViewModel item);
-        public event NavigateEventHandler Navigate;
-
-
-        public HorizontalGridViewPage() {
+        public MovieDetailsPage() {
             this.InitializeComponent();
         }
 
-        private void ItemClick(object sender, ItemClickEventArgs e) {
-            var viewModel = e.ClickedItem as ItemViewModel;
-            Navigate?.Invoke(viewModel);
+        protected async override void OnNavigatedTo(NavigationEventArgs e) {
+            ViewModel = await MovieDetailsViewModel.Init(e.Parameter as MovieTableEntry);
+            base.OnNavigatedTo(e);
         }
     }
 }

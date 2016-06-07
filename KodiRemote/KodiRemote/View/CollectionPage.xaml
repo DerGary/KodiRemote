@@ -8,5 +8,5 @@
     xmlns:base="using:KodiRemote.View.Base"
     mc:Ignorable="d">
 
-    <local:HorizontalGridViewPage x:Name="HorizontalGridViewPage" ViewModel="{x:Bind ViewModel, Mode=TwoWay}"/>
+    <local:HorizontalGridViewPage x:Name="HorizontalGridViewPage" ViewModel="{x:Bind ViewModel, Mode=TwoWay}" Navigate="HorizontalGridViewPage_Navigate"/>
 </base:PageBase>

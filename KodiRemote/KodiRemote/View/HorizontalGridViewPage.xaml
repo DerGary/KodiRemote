@@ -7,6 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:base="using:KodiRemote.View.Base"
     xmlns:viewmodel="using:KodiRemote.ViewModel"
+    xmlns:i="using:Microsoft.Xaml.Interactivity" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:uc="using:KodiRemote.View.UserControls"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:CollectionViewModel, CreateList=True}"
     RequestedTheme="Dark"
@@ -69,22 +72,21 @@
                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollMode="Disabled"
                     Margin="0"
+                    ItemClick="ItemClick"
                     ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
                     ItemContainerStyle="{StaticResource GridViewItemStyle1}">
                     <GridView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="viewmodel:ItemViewModel">
                             <Grid Margin="0,0,0,0" x:Name="Grid" Background="AliceBlue">
                                 <Polygon x:Name="Poly" Points="0,0 0,1.47 1,1.47 1,0" Stretch="Uniform" Fill="Black"/>
                                 <ProgressRing Width="50" Height="50" IsActive="{Binding PosterProgressRingActive}"/>
-                                <Image MaxWidth="{Binding ElementName=Poly, Path=ActualWidth}"
-                                       Margin="1"
-                                       Source="{Binding Poster}"
-                                       ImageFailed="ImageFailed"
-                                       DataContextChanged="ImageDataContextChanged"
-                                       ImageOpened="ImageOpened"
-                                       Tag="Poster"
-                                       Style="{StaticResource ImageInVisibileStretched}" />
-
+                                
+                                <uc:ImageControl MaxWidth="{Binding ElementName=Poly, Path=ActualWidth}" 
+                                                 Margin="1" 
+                                                 ImageSource="{Binding Poster}" 
+                                                 ImageFailedCommand="{Binding ImageFailedCommand}" 
+                                                 PropName="Poster"/>
+                               
                                 <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
                                     <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20" TextWrapping="Wrap"/>
                                 </StackPanel>
@@ -148,54 +150,34 @@
 
                                 <Grid Grid.Column="0" Grid.Row="0">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[0].PosterProgressRingActive}" Visibility="Visible"/>
-                                    <Image Source="{Binding PosterThumbnail}" 
-                                           Tag="PosterThumbnail" 
-                                           DataContext="{Binding Group.Items[0]}"  
-                                           ImageFailed="ImageFailed"
-                                           DataContextChanged="ImageDataContextChanged"
-                                           ImageOpened="ImageOpened"
-                                           Stretch="UniformToFill"  
-                                           Opacity="0" 
-                                           Visibility="Collapsed"/>
+                                    <uc:ImageControl DataContext="{Binding Group.Items[0]}"  
+                                                     ImageSource="{Binding PosterThumbnail}" 
+                                                     ImageFailedCommand="{Binding ImageFailedCommand}" 
+                                                     PropName="PosterThumbnail"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="0">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[1].PosterProgressRingActive}" Visibility="Visible"/>
-                                    <Image Source="{Binding PosterThumbnail}" 
-                                           Tag="PosterThumbnail" 
-                                           DataContext="{Binding Group.Items[1]}"  
-                                           Stretch="UniformToFill"  
-                                           ImageFailed="ImageFailed"
-                                           DataContextChanged="ImageDataContextChanged"
-                                           ImageOpened="ImageOpened"
-                                           Opacity="0" 
-                                           Visibility="Collapsed"/>
+                                    <uc:ImageControl DataContext="{Binding Group.Items[1]}"  
+                                                     ImageSource="{Binding PosterThumbnail}" 
+                                                     ImageFailedCommand="{Binding ImageFailedCommand}" 
+                                                     PropName="PosterThumbnail"/>
                                 </Grid>
 
                                 <Grid Grid.Column="0" Grid.Row="1">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[2].PosterProgressRingActive}" Visibility="Visible"/>
-                                    <Image Source="{Binding PosterThumbnail}" 
-                                           Tag="PosterThumbnail" 
-                                           DataContext="{Binding Group.Items[2]}"  
-                                           Stretch="UniformToFill"  
-                                           ImageFailed="ImageFailed"
-                                           DataContextChanged="ImageDataContextChanged"
-                                           ImageOpened="ImageOpened"
-                                           Opacity="0" 
-                                           Visibility="Collapsed"/>
+                                    <uc:ImageControl DataContext="{Binding Group.Items[2]}"  
+                                                     ImageSource="{Binding PosterThumbnail}" 
+                                                     ImageFailedCommand="{Binding ImageFailedCommand}" 
+                                                     PropName="PosterThumbnail"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="1">
                                     <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[3].PosterProgressRingActive}" Visibility="Visible"/>
-                                    <Image Source="{Binding PosterThumbnail}" 
-                                           Tag="PosterThumbnail" 
-                                           DataContext="{Binding Group.Items[3]}"  
-                                           Stretch="UniformToFill"  
-                                           ImageFailed="ImageFailed"
-                                           DataContextChanged="ImageDataContextChanged"
-                                           ImageOpened="ImageOpened"
-                                           Opacity="0" 
-                                           Visibility="Collapsed"/>
+                                    <uc:ImageControl DataContext="{Binding Group.Items[3]}"  
+                                                     ImageSource="{Binding PosterThumbnail}" 
+                                                     ImageFailedCommand="{Binding ImageFailedCommand}" 
+                                                     PropName="PosterThumbnail"/>
                                 </Grid>
 
                                 <Grid Background="#88000000" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

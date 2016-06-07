@@ -29,8 +29,10 @@ namespace KodiRemote.ViewModel {
                 Groups.Add(new Group<ItemViewModel>() { Name = "A", Items = new ObservableCollection<ItemViewModel>() { new ItemViewModel(new MovieTableEntry() { Label = "test" } )} });
             }
         }
+        public PageType PageType { get; private set; }
 
         public async Task Init(PageType type) {
+            PageType = type;
             IEnumerable<dynamic> result = null;
             if(type == PageType.Movies) {
                 result = await Kodi.Database.GetMovies();
