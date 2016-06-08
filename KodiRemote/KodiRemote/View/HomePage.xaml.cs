@@ -1,6 +1,7 @@
 ﻿using KodiRemote.Code.Essentials;
 using KodiRemote.Code.Utils;
 using KodiRemote.View.Base;
+using KodiRemote.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,32 +19,28 @@ using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace KodiRemote.View
-{
-    /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
-    public sealed partial class HomePage : PageBase
-    {
-        public HomePage()
-        {
+namespace KodiRemote.View {
+    public sealed partial class HomePage : PageBase {
+        private HomeViewModel viewModel = new HomeViewModel();
+        public HomeViewModel ViewModel {
+            get {
+                return viewModel;
+            }
+            set {
+                viewModel = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
+        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
+
+        public HomePage() {
             this.InitializeComponent();
         }
-        
 
-        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
+        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e) {
             this.Frame.Navigate(typeof(RemoteControlPage));
-        }
-
-        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
-
-        private void Image_ImageOpened(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

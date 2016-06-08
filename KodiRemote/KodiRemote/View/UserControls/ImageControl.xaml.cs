@@ -14,16 +14,17 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace KodiRemote.View.UserControls {
     public sealed partial class ImageControl : UserControl {
-        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(ImageControl), null);
+        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(nameof(ImageSource), typeof(BitmapImage), typeof(ImageControl), null);
 
-        public ImageSource ImageSource {
-            get { return (ImageSource)GetValue(ImageSourceProperty); }
+        public BitmapImage ImageSource {
+            get { return (BitmapImage)GetValue(ImageSourceProperty); }
             set { SetValue(ImageSourceProperty, value); }
         }
 

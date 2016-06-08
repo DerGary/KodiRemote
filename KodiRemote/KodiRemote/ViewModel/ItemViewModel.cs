@@ -84,6 +84,7 @@ namespace KodiRemote.ViewModel {
 
         public ItemViewModel(object item) {
             this.Item = item;
+            BackgroundItem = this;
         }
 
         public void SetProgressRing(string tag, bool active) {

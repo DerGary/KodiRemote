@@ -6,6 +6,7 @@
     xmlns:base="using:KodiRemote.View.Base"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:KodiRemote.View.UserControls"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="500">
@@ -45,15 +46,20 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <uc:ImageControl Grid.RowSpan="2" 
+                         ImageSource="{x:Bind Page.ViewModelBase.BackgroundItem.Fanart, Mode=OneWay}" 
+                         ImageFailedCommand="{x:Bind Page.ViewModelBase.BackgroundItem.ImageFailedCommand,Mode=OneWay}" 
+                         PropName="Fanart"/>
+        <Border Background="#77000000" Grid.RowSpan="2"/>
         
         <StackPanel Orientation="Horizontal" Background="{StaticResource TransparentGrey}">
             <Button Style="{StaticResource SplitViewTogglePaneButtonStyle}" Click="BurgerMenuClicked"/>
-            <TextBlock Text="{x:Bind Page.Title, Mode=OneWay}" FontSize="24" FontWeight="Light" Margin="8,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Bind Page.ViewModelBase.Title, Mode=OneWay}" FontSize="24" FontWeight="Light" Margin="8,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
 
         <SplitView x:Name="rootSplitView" Grid.Row="1" OpenPaneLength="200" PaneBackground="{StaticResource TransparentGrey}" DisplayMode="Inline">

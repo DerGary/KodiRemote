@@ -8,7 +8,6 @@
     xmlns:base="using:KodiRemote.View.Base"
     xmlns:converter="using:KodiRemote.View.Converter"
     mc:Ignorable="d"
-    Title="Add New Kodi Connection"
     RequestedTheme="Dark">
     <Page.Resources>
         <Style TargetType="TextBox">
@@ -19,7 +18,7 @@
         </Style>
         <converter:ConnectionTypeConverter x:Key="ConnectionTypeConverter"/>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>

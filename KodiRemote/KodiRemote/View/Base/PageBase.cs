@@ -11,15 +11,11 @@ using KodiRemote.ViewModel;
 using KodiRemote.Code.Essentials;
 
 namespace KodiRemote.View.Base {
-    public class PageBase : Page, INotifyPropertyChanged {
+    public abstract class PageBase : Page, INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(PageBase), null);
+        public abstract ViewModelBase ViewModelBase { get; }
 
-        public string Title {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
-        }
 
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {

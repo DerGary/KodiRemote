@@ -92,6 +92,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\actor-placeholder.png" />
     <Content Include="Assets\KodiIcon.png" />
     <Content Include="Assets\KodiIconGrey.png" />
     <Content Include="Res\Images\16-9-placeholder.png" />
@@ -317,6 +318,7 @@
     <Compile Include="Migrations\Settings\SettingsContextModelSnapshot.cs" />
     <Compile Include="ViewModel\AddKodiViewModel.cs" />
     <Compile Include="ViewModel\Group.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
     <Compile Include="ViewModel\MovieDetailsViewModel.cs" />
@@ -334,7 +336,11 @@
     <Compile Include="View\Converter\BooleanResourceConverter.cs" />
     <Compile Include="View\Converter\BoolVisibilityConverter.cs" />
     <Compile Include="View\Converter\ConnectionTypeConverter.cs" />
+    <Compile Include="View\Converter\DivisionConverter.cs" />
+    <Compile Include="View\Converter\ImageSourceConverter.cs" />
+    <Compile Include="View\Converter\MovieMapperConverter.cs" />
     <Compile Include="View\Converter\NullVisibilityConverter.cs" />
+    <Compile Include="View\Converter\RuntimeLengthConverter.cs" />
     <Compile Include="View\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>

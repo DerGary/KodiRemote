@@ -7,9 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:KodiRemote.View.Converter"
     xmlns:base="using:KodiRemote.View.Base"
-    
-    x:Uid="RemoteControl"
-    Title="Remote Control"
     DataContext="{x:Bind ViewModel}"
     mc:Ignorable="d">
     <Page.Resources>

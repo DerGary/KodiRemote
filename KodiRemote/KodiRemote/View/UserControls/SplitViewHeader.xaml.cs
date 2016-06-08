@@ -36,8 +36,6 @@ namespace KodiRemote.View.UserControls {
             }
         }
 
-
-
         public SplitViewHeader() {
             this.InitializeComponent();
             ContentFrame.Navigated += ContentFrame_Navigated;

@@ -37,14 +37,6 @@ namespace KodiRemote.ViewModel {
             }
         }
 
-        public async Task Init() {
-            KodiList = new ObservableCollection<KodiSettings>(await SettingsDatabase.Instance.GetAllKodis());
-            SelectedKodi = KodiList?.Where(x => x.Active).FirstOrDefault();
-            foreach (KodiSettings kodi in KodiList) {
-                new Task(async () => await kodi.CheckOnlineStatus()).Start();
-            }
-        }
-
         private RelayCommand removeKodi;
         public RelayCommand RemoveKodi {
             get {
@@ -75,7 +67,7 @@ namespace KodiRemote.ViewModel {
             get {
                 if (activateKodi == null) {
                     activateKodi = new RelayCommand(async () => {
-                        foreach(var kodi in kodiList) {
+                        foreach (var kodi in kodiList) {
                             kodi.Active = false;
                         }
                         SelectedKodi.Active = true;
@@ -83,6 +75,18 @@ namespace KodiRemote.ViewModel {
                     });
                 }
                 return activateKodi;
+            }
+        }
+
+        public SettingsViewModel() {
+            Title = "Settings";
+        }
+
+        public async Task Init() {
+            KodiList = new ObservableCollection<KodiSettings>(await SettingsDatabase.Instance.GetAllKodis());
+            SelectedKodi = KodiList?.Where(x => x.Active).FirstOrDefault();
+            foreach (KodiSettings kodi in KodiList) {
+                new Task(async () => await kodi.CheckOnlineStatus()).Start();
             }
         }
     }

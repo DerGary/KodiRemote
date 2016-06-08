@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.ViewModel {
     public class RemoteControlViewModel : ViewModelBase {
+        public RemoteControlViewModel() {
+            Title = "Remote Control";
+        }
+
         private RelayCommand volumeUpCommand;
         public RelayCommand VolumeUpCommand {
             get {

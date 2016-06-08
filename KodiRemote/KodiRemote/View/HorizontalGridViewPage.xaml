@@ -10,6 +10,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:uc="using:KodiRemote.View.UserControls"
+    xmlns:converter="using:KodiRemote.View.Converter"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:CollectionViewModel, CreateList=True}"
     RequestedTheme="Dark"
@@ -57,8 +58,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <converter:ImageSourceConverter x:Key="ImageSourceConverter"/>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <SemanticZoom Grid.Row="2" x:Name="Zoom" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.ZoomMode="Enabled">
             <SemanticZoom.ZoomedInView>
                 <GridView
@@ -78,12 +80,12 @@
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodel:ItemViewModel">
                             <Grid Margin="0,0,0,0" x:Name="Grid" Background="AliceBlue">
-                                <Polygon x:Name="Poly" Points="0,0 0,1.47 1,1.47 1,0" Stretch="Uniform" Fill="Black"/>
+                                <Polygon x:Name="Poly" Points="0,0 0,1.47 1,1.47 1,0" Stretch="UniformToFill" Fill="Black"/>
                                 <ProgressRing Width="50" Height="50" IsActive="{Binding PosterProgressRingActive}"/>
                                 
                                 <uc:ImageControl MaxWidth="{Binding ElementName=Poly, Path=ActualWidth}" 
                                                  Margin="1" 
-                                                 ImageSource="{Binding Poster}" 
+                                                 ImageSource="{Binding Poster, Converter={StaticResource ImageSourceConverter}}" 
                                                  ImageFailedCommand="{Binding ImageFailedCommand}" 
                                                  PropName="Poster"/>
                                

@@ -85,6 +85,7 @@ namespace KodiRemote.ViewModel {
         private Frame frame;
         public AddKodiViewModel(Frame frame) {
             this.frame = frame;
+            Title = "Add Kodi";
             KodiSettings = new KodiSettings() { Type = connectionTypes.First() };
         }
     }

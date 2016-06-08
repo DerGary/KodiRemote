@@ -10,15 +10,13 @@
     xmlns:base="using:KodiRemote.View.Base"
     xmlns:converter="using:KodiRemote.View.Converter"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
-    x:Uid="Settings"
-    Title="Settings"
     mc:Ignorable="d"
     RequestedTheme="Dark">
     <Page.Resources>
         <converter:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
         <converter:BoolVisibilityConverter x:Key="BoolNotVisibilityConverter" OnTrue="Collapsed" OnFalse="Visible"/>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>

@@ -32,9 +32,11 @@ namespace KodiRemote.View {
             set {
                 viewModel = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(ViewModelBase));
             }
         }
 
+        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
         public MovieDetailsPage() {
             this.InitializeComponent();
         }

@@ -8,8 +8,6 @@
     xmlns:uc="using:KodiRemote.View.UserControls"
     xmlns:base="using:KodiRemote.View.Base"
     RequestedTheme="Dark"
-    x:Uid="Home"
-    Title="Home"
     mc:Ignorable="d">
 
     <Page.Resources>

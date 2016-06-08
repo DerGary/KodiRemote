@@ -23,23 +23,16 @@ namespace KodiRemote.View {
     /// </summary>
     public sealed partial class CollectionPage : PageBase {
         public CollectionViewModel ViewModel { get; set; } =  new CollectionViewModel();
+        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
+
         public CollectionPage() {
             this.InitializeComponent();
         }
+
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
             var pagetype = (PageType)e.Parameter;
             await ViewModel.Init(pagetype);
-            switch (pagetype) {
-                case PageType.Movies:
-                    Title = "Movies";
-                    break;
-                case PageType.MovieSets:
-                    Title = "Movie Sets";
-                    break;
-                case PageType.TVShows:
-                    Title = "TV Shows";
-                    break;
-            }
+
             base.OnNavigatedTo(e);
         }
 

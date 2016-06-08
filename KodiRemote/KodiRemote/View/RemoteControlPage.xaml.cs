@@ -28,6 +28,7 @@ namespace KodiRemote.View {
     public sealed partial class RemoteControlPage : PageBase {
         public RemoteControlViewModel ViewModel { get; set; } = new RemoteControlViewModel();
 
+        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
         public RemoteControlPage() {
             this.InitializeComponent();
             Loaded += RemoteControlPage_Loaded;

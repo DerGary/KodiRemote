@@ -26,8 +26,12 @@ namespace KodiRemote.View {
 
         public CollectionViewModel ViewModel {
             get { return (CollectionViewModel)GetValue(ViewModelProperty); }
-            set { SetValue(ViewModelProperty, value); }
+            set {
+                SetValue(ViewModelProperty, value);
+                RaisePropertyChanged(nameof(ViewModelBase));
+            }
         }
+        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
 
         public delegate void NavigateEventHandler(ItemViewModel item);
         public event NavigateEventHandler Navigate;

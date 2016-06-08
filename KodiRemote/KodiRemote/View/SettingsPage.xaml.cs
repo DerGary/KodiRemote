@@ -19,6 +19,8 @@ namespace KodiRemote.View {
     public sealed partial class SettingsPage : PageBase {
         public SettingsViewModel ViewModel { get; set; } = new SettingsViewModel();
 
+        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
+
         public SettingsPage() {
             this.InitializeComponent();
         }

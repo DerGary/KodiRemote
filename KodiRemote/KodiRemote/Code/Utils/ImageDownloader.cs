@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -30,41 +31,55 @@ namespace KodiRemote.Code.Utils {
                 CacheFolder = ApplicationData.Current.LocalCacheFolder;
             }
         }
-
-        public static void QueueDownloadImage(string image, Kodi kodi, Action completedAction) {
+        public static SemaphoreSlim semaphore = new SemaphoreSlim(1);
+        public static async void QueueDownloadImage(string image, Kodi kodi, Action completedAction) {
             if(image == null) {
                 return;
             }
+            await semaphore.WaitAsync();
             if (QueuedUrls.ContainsKey(image)) {
                 QueuedUrls[image].Item2.Add(completedAction);
             } else {
                 QueuedUrls.Add(image, new Tuple<Kodi, List<Action>>(kodi, new List<Action>() { completedAction }));
             }
+            semaphore.Release();
 
-            if (!IsRunning) {
-                IsRunning = true;
-                Task t = new Task(async () => {
-                    while(QueuedUrls.Any()) {
-                        KeyValuePair<string,Tuple<Kodi, List<Action>>> kv = QueuedUrls.First();
+            if (RunningTasks < 1) {
+                for(int i = RunningTasks; i < 1; i++) {
+                    Task t = Task.Run(async () => {
+                        RunningTasks++;
+                        await DownloadImage(kodi);
+                        RunningTasks--;
+                    });
+                }
+            }
+        }
+        private static int RunningTasks = 0;
 
-                        string url = kv.Key;
-                        Kodi k = kv.Value.Item1;
-                        List<Action> completed = kv.Value.Item2;
+        public static async Task DownloadImage(Kodi kodi) {
+            await semaphore.WaitAsync();
+            KeyValuePair<string,Tuple<Kodi, List<Action>>> kv = QueuedUrls.FirstOrDefault();
+            semaphore.Release();
+            while (kv.Value != null) {
+                string url = kv.Key;
+                Kodi k = kv.Value.Item1;
+                List<Action> completed = kv.Value.Item2;
 
-                        await DownloadImageAsync(url, kodi);
+                bool result = await DownloadImageAsync(url, kodi);
 
-                        QueuedUrls.Remove(url);
-                        foreach(var action in completed) {
-                            action.Invoke();
-                        }
+                await semaphore.WaitAsync();
+                QueuedUrls.Remove(url);
+                kv = QueuedUrls.FirstOrDefault();
+                semaphore.Release();
+                if (result) {
+                    foreach (var action in completed) {
+                        action.Invoke();
                     }
-                    IsRunning = false;
-                });
-                t.Start();
+                }
             }
         }
 
-        private static async Task DownloadImageAsync(string image, Kodi kodi) {
+        private static async Task<bool> DownloadImageAsync(string image, Kodi kodi) {
             await CreateFolders();
 
             string imageFileName = StringMethods.ParseImageUrlToLocal(image);
@@ -95,19 +110,21 @@ namespace KodiRemote.Code.Utils {
             IStorageItem existingImageThumbnail = await ThumbFolder.TryGetItemAsync(imageFileName);
             if (existingImageThumbnail == null && existingImage != null) {
                 using (Stream inputStream = await (existingImage as StorageFile).OpenStreamForReadAsync()) {
-                    await CompressAndSaveAsync(imageFileName, inputStream, true);
+                    await CompressAndSaveAsync(imageFileName, inputStream.AsRandomAccessStream(), true);
                 }
             }
+
+            return existingImage != null;
         }
 
         private static async Task<StorageFile> GetImageCompressAndSaveAsync(HttpClientWrapper client, string url, string imageFileName) {
-            using (Stream responseStream = await client.GetAsync(url)) {
+            using (InMemoryRandomAccessStream responseStream = await client.GetAsync(url)) {
                 return await CompressAndSaveAsync(imageFileName, responseStream);
             }
         }
 
-        private static async Task<StorageFile> CompressAndSaveAsync(string imageFileName, Stream inputStream, bool toThumbnail = false) {
-            using (Stream compressedImage = await CompressImageAsync(inputStream.AsRandomAccessStream(), toThumbnail)) {
+        private static async Task<StorageFile> CompressAndSaveAsync(string imageFileName, IRandomAccessStream inputStream, bool toThumbnail = false) {
+            using (Stream compressedImage = await CompressImageAsync(inputStream, toThumbnail)) {
                 StorageFolder folder = toThumbnail ? ThumbFolder : ImageFolder;
                 StorageFile file = await folder.CreateFileAsync(imageFileName, CreationCollisionOption.ReplaceExisting);
                 using (Stream outputStream = await file.OpenStreamForWriteAsync()) {

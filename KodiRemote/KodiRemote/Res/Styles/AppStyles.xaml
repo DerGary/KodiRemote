@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="TransparentBlackColor">#55000000</Color>
-    <Color x:Key="TransparentGreyColor">#55555555</Color>
+    <Color x:Key="TransparentGreyColor">#AA222222</Color>
     <Color x:Key="TransparentWhiteColor40">#40FFFFFF</Color>
     <Color x:Key="TransparentWhiteColor80">#80FFFFFF</Color>
     <SolidColorBrush Color="{StaticResource TransparentBlackColor}" x:Name="TransparentBlack"/>

@@ -7,8 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:base="using:KodiRemote.View.Base"
     xmlns:convert="using:KodiRemote.View.Converter"
-    x:Uid="KodiInfo"
-    Title="Kodi Info"
     mc:Ignorable="d"
     RequestedTheme="Dark">
 
@@ -30,7 +28,7 @@
             <Setter Property="FontSize" Value="25"/>
         </Style>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>

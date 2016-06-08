@@ -34,13 +34,18 @@ namespace KodiRemote.ViewModel {
         public async Task Init(PageType type) {
             PageType = type;
             IEnumerable<dynamic> result = null;
-            if(type == PageType.Movies) {
+
+            if (type == PageType.Movies) {
                 result = await Kodi.Database.GetMovies();
+                Title = "Movies";
             } else if(type == PageType.TVShows) {
                 result = await Kodi.Database.GetTVShows();
+                Title = "TV Shows";
             } else if(type == PageType.MovieSets) {
                 result = await Kodi.Database.GetMovieSets();
+                Title = "Movie Sets";
             }
+
             CreateGroups(result);
         }
 

@@ -21,36 +21,39 @@ namespace KodiRemote.ViewModel {
                 return Kodi.ActiveInstance;
             }
         }
+        private ItemViewModel backgroundItem;
+        public ItemViewModel BackgroundItem {
+            get {
+                return backgroundItem;
+            }
+            set {
+                backgroundItem = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string title;
+        public string Title {
+            get {
+                return title;
+            }
+            set {
+                title = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
+
         public ViewModelBase() {
             Kodi.KodiChanged += ActiveKodiChanged;
         }
+
         ~ViewModelBase() {
             Kodi.KodiChanged -= ActiveKodiChanged;
         }
 
         private void ActiveKodiChanged(object sender, EventArgs e) {
             RaisePropertyChanged(nameof(Kodi));
-        }
-
-        public void ImageFailed(object sender, ExceptionRoutedEventArgs e) {
-            Debug.WriteLine(sender);
-        }
-        public void ImageOpened(object sender, RoutedEventArgs e) {
-            var image = sender as Image;
-            image.Opacity = 0;
-            image.Visibility = Visibility.Visible;
-            Storyboard AniFadeIn = new Storyboard();
-
-            DoubleAnimation FadeIn = new DoubleAnimation();
-            FadeIn.From = 0.0;
-            FadeIn.To = 1.0;
-            FadeIn.Duration = new Duration(TimeSpan.FromSeconds(.5));
-
-            AniFadeIn.Children.Add(FadeIn);
-            Storyboard.SetTarget(FadeIn, image);
-            Storyboard.SetTargetProperty(FadeIn, "Opacity");
-
-            AniFadeIn.Begin();
         }
     }
 }

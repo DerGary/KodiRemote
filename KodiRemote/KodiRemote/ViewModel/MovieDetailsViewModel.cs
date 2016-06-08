@@ -24,20 +24,13 @@ namespace KodiRemote.ViewModel {
             this.Role = item.Role;
         }
     }
-    public class MovieDetailsViewModel : ItemViewModel {
 
+    public class MovieDetailsViewModel : ItemViewModel {
         public MovieDetailsViewModel(object item) : base(item) {
             Movie = item as MovieTableEntry;
-            MovieSet = Movie.MovieSets?.FirstOrDefault()?.MovieSet;
-            MovieSetMovies = MovieSet?.Movies?.Select(x => new ItemViewModel(x.Movie));
-            Actors = Movie.Actors.Select(x => new ActorViewModel(x));
-            var genres = Movie.Genres.Select(x => x.Genre.Genre);
-            string genre = genres.FirstOrDefault();
-            for (int i = 1; i < genres.Count(); i++) {
-                genre += ", " + genres.ElementAt(i);
-            }
-            Genre = genre;
+            Title = Movie.Label;
         }
+
         private MovieTableEntry movie;
         public MovieTableEntry Movie {
             get {
@@ -48,50 +41,6 @@ namespace KodiRemote.ViewModel {
                 RaisePropertyChanged();
             }
         }
-
-        private string genre;
-        public string Genre {
-            get {
-                return genre;
-            }
-            set {
-                genre = value;
-                RaisePropertyChanged();
-            }
-        }
-
-
-        private MovieSetTableEntry movieSet;
-        public MovieSetTableEntry MovieSet {
-            get {
-                return movieSet;
-            }
-            set {
-                movieSet = value;
-                RaisePropertyChanged();
-            }
-        }
-        private IEnumerable<ItemViewModel> movieSetMovies;
-        public IEnumerable<ItemViewModel> MovieSetMovies {
-            get {
-                return movieSetMovies;
-            }
-            set {
-                movieSetMovies = value;
-                RaisePropertyChanged();
-            }
-        }
-        private IEnumerable<ActorViewModel> actors;
-        public IEnumerable<ActorViewModel> Actors {
-            get {
-                return actors;
-            }
-            set {
-                actors = value;
-                RaisePropertyChanged();
-            }
-        }
-
 
 
         public static async Task<MovieDetailsViewModel> Init(MovieTableEntry movieTableEntry) {

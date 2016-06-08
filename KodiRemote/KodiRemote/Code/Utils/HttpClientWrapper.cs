@@ -69,14 +69,16 @@ namespace KodiRemote.Code.Utils {
                 return JsonSerializer.FromJson<RPCResponse<T>>(await response.Content.ReadAsStringAsync());
             }
         }
-        public async Task<Stream> GetAsync(string url) {
+        public async Task<InMemoryRandomAccessStream> GetAsync(string url) {
             InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream();
             using (var response = await client.GetAsync(url)) {
                 if (!response.IsSuccessStatusCode) {
                     throw new Exception(response.StatusCode.ToString());
                 }
                 await (await response.Content.ReadAsStreamAsync()).CopyToAsync(stream.AsStreamForWrite());
-                return stream.AsStream();
+                //await stream.FlushAsync();
+                //stream.Seek(0);
+                return stream;
             }
         }
 
