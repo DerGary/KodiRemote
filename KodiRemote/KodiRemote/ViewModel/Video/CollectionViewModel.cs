@@ -1,5 +1,6 @@
 ﻿using KodiRemote.Code.Common;
 using KodiRemote.Code.Database.MovieTables;
+using KodiRemote.Code.Database.Utils;
 using KodiRemote.View;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
-namespace KodiRemote.ViewModel {
+namespace KodiRemote.ViewModel.Video {
     public class CollectionViewModel : ViewModelBase {
         private ObservableCollection<Group<ItemViewModel>> groups;
         public ObservableCollection<Group<ItemViewModel>> Groups {
@@ -33,23 +34,26 @@ namespace KodiRemote.ViewModel {
 
         public async Task Init(PageType type) {
             PageType = type;
-            IEnumerable<dynamic> result = null;
+            IEnumerable<TableEntryWithLabelBase> result = null;
+            ProgressBarActive = true;
 
             if (type == PageType.Movies) {
-                result = await Kodi.Database.GetMovies();
                 Title = "Movies";
-            } else if(type == PageType.TVShows) {
-                result = await Kodi.Database.GetTVShows();
+                result = await Kodi.Database.GetMovies();
+            } else if (type == PageType.TVShows) {
                 Title = "TV Shows";
-            } else if(type == PageType.MovieSets) {
-                result = await Kodi.Database.GetMovieSets();
+                result = await Kodi.Database.GetTVShows();
+            } else if (type == PageType.MovieSets) {
                 Title = "Movie Sets";
+                result = await Kodi.Database.GetMovieSets();
             }
 
             CreateGroups(result);
+            ProgressBarActive = false;
+
         }
 
-        private void CreateGroups(IEnumerable<dynamic> items) {
+        private void CreateGroups(IEnumerable<TableEntryWithLabelBase> items) {
             if(items == null) {
                 return;
             }
@@ -57,10 +61,11 @@ namespace KodiRemote.ViewModel {
 
             Group<ItemViewModel> currentGroup = null;
             char currentLetter = '0';
-            foreach (var item in items.OrderBy(x => x.Label)) {
-                string label = item.Label;
-                if (currentLetter != label.FirstOrDefault()) {
-                    currentLetter = label.FirstOrDefault();
+            var list = items.OrderBy(x => x.Label).ToList();
+            foreach (var item in list) {
+                char firstLetter = (item.Label as string).FirstOrDefault();
+                if (currentLetter != firstLetter) {
+                    currentLetter = firstLetter;
                     currentGroup = new Group<ItemViewModel>() { Name = currentLetter.ToString(), Items = new ObservableCollection<ItemViewModel>() };
                     Groups.Add(currentGroup);
                 }

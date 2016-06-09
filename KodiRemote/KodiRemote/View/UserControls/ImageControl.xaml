@@ -7,19 +7,26 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="using:Microsoft.Xaml.Interactivity" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    VerticalAlignment="Stretch"
+    HorizontalAlignment="Stretch"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
-    <Image 
+    <!--<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
+        <Image 
         Source="{x:Bind ImageSource, Mode=OneWay}"
         DataContextChanged="ImageDataContextChanged"
         ImageOpened="ImageOpened"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+        Stretch="{x:Bind Stretch, Mode=OneWay}"
         Style="{StaticResource ImageInVisibileStretched}" >
-        <i:Interaction.Behaviors>
-            <ic:EventTriggerBehavior EventName="ImageFailed">
-                <ic:InvokeCommandAction Command="{x:Bind ImageFailedCommand, Mode=OneWay}" CommandParameter="{x:Bind PropName, Mode=OneWay}"/>
-            </ic:EventTriggerBehavior>
-        </i:Interaction.Behaviors>
-    </Image>
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="ImageFailed">
+                    <ic:InvokeCommandAction Command="{x:Bind ImageFailedCommand, Mode=OneWay}" CommandParameter="{x:Bind PropName, Mode=OneWay}"/>
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+    <!--</Grid>-->
+    
 </UserControl>

@@ -12,10 +12,9 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.Database.MovieTables {
 
     [Table("Movies")]
-    public class MovieTableEntry : TableEntryBase {
+    public class MovieTableEntry : TableEntryWithLabelBase {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MovieId { get; set; }
-        public string Label { get; set; }
         public int SetId { get; set; }
         public string Fanart { get; set; }
         public string Poster { get; set; }

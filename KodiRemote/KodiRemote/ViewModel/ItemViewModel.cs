@@ -1,6 +1,8 @@
 ﻿using KodiRemote.Code.Common;
+using KodiRemote.Code.Database.GeneralTables;
 using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.Code.Database.TVShowTables;
+using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.Essentials;
 using KodiRemote.Code.Utils;
 using System;
@@ -12,33 +14,19 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.ViewModel {
     public class ItemViewModel : ViewModelBase {
-        public string Poster => StringMethods.ParseImageUrlToAppData(Item.Poster);
-        public string Fanart => StringMethods.ParseImageUrlToAppData(Item.Fanart);
-        public string PosterThumbnail => StringMethods.ParseThumbnailUrlToAppData(Item.Poster);
-        public string Thumbnail => StringMethods.ParseImageUrlToAppData(Item.Thumbnail);
-
-        public string ExtraImage {
-            get {
-                if (Item.GetType() == typeof(MovieTableEntry)) {
-                    return StringMethods.ParseImageUrlToAppData(Item.Poster);
-                } else if (Item.GetType() == typeof(TVShowTableEntry)) {
-                    return StringMethods.ParseImageUrlToAppData(Item.Banner);
-                }
-                return null;
-            }
-        }
-        public bool Watched {
-            get {
-                if (Item.GetType() == typeof(MovieTableEntry)) {
-                    return Item.PlayCount > 0;
-                } else if (Item.GetType() == typeof(TVShowTableEntry)) {
-                    return Item.Episode == Item.WatchedEpisodes;
-
-                }
-                return false;
-            }
-        }
-        public string Label => Item.Label;
+        private string poster;
+        private string fanart;
+        private string thumbnail;
+        private string extraImage;
+        private string label;
+        private bool watched;
+        public string Poster => StringMethods.ParseImageUrlToAppData(poster);
+        public string Fanart => StringMethods.ParseImageUrlToAppData(fanart);
+        public string PosterThumbnail => StringMethods.ParseThumbnailUrlToAppData(poster);
+        public string Thumbnail => StringMethods.ParseImageUrlToAppData(thumbnail);
+        public string ExtraImage => StringMethods.ParseImageUrlToAppData(extraImage);
+        public string Label => label;
+        public bool Watched => watched; 
 
         private bool posterProgressRingActive;
         public bool PosterProgressRingActive {
@@ -82,7 +70,38 @@ namespace KodiRemote.ViewModel {
         }
 
 
-        public ItemViewModel(object item) {
+        public ItemViewModel(TableEntryBase item) {
+            var movie = item as MovieTableEntry;
+            if(movie != null) {
+                poster = movie.Poster;
+                extraImage = movie.Poster;
+                thumbnail = movie.Poster;
+                fanart = movie.Fanart;
+                label = movie.Label;
+            }
+            var tvshow = item as TVShowTableEntry;
+            if(tvshow != null) {
+                poster = tvshow.Poster;
+                extraImage = tvshow.Banner;
+                thumbnail = tvshow.Poster;
+                fanart = tvshow.Fanart;
+                label = tvshow.Label;
+            }
+            var movieset = item as MovieSetTableEntry;
+            if (movieset != null) {
+                poster = movieset.Poster;
+                fanart = movieset.Fanart;
+                thumbnail = movieset.Thumbnail;
+                extraImage = movieset.Poster;
+                label = movieset.Label;
+            }
+            var actor = item as ActorTableEntry;
+            if(actor != null) {
+                poster = actor.Thumbnail;
+                thumbnail = actor.Thumbnail;
+                extraImage = actor.Thumbnail;
+                label = actor.Name;
+            }
             this.Item = item;
             BackgroundItem = this;
         }
@@ -117,7 +136,7 @@ namespace KodiRemote.ViewModel {
             }
         }
 
-        public dynamic Item { get; private set; }
+        public TableEntryBase Item { get; private set; }
         public void DownloadImage(string tag) {
             if (tag == null) {
                 throw new ArgumentException("tag");
@@ -128,20 +147,16 @@ namespace KodiRemote.ViewModel {
             switch (tag) {
                 case "Poster":
                 case "PosterThumbnail":
-                    url = Item.Poster;
+                    url = poster;
                     break;
                 case "Thumbnail":
-                    url = Item.Thumbnail;
+                    url = thumbnail;
                     break;
                 case "Fanart":
-                    url = Item.Fanart;
+                    url = fanart;
                     break;
                 case "ExtraImage":
-                    if (Item.GetType() == typeof(MovieTableEntry)) {
-                        url = Item.Poster;
-                    } else if (Item.GetType() == typeof(TVShowTableEntry)) {
-                        url = Item.Banner;
-                    }
+                    url = extraImage;
                     break;
             }
             SetProgressRing(tag, true);

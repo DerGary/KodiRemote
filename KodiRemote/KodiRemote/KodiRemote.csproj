@@ -39,7 +39,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -316,21 +316,25 @@
       <DependentUpon>20160526213257_AddedUsernameAndPort.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Settings\SettingsContextModelSnapshot.cs" />
-    <Compile Include="ViewModel\AddKodiViewModel.cs" />
+    <Compile Include="ViewModel\Settings\AddKodiViewModel.cs" />
     <Compile Include="ViewModel\Group.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
-    <Compile Include="ViewModel\CollectionViewModel.cs" />
-    <Compile Include="ViewModel\MovieDetailsViewModel.cs" />
+    <Compile Include="ViewModel\Video\ActorViewModel.cs" />
+    <Compile Include="ViewModel\Video\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\Video\MovieDetailsViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
-    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\AddKodiPage.xaml.cs">
+    <Compile Include="View\Settings\AddKodiPage.xaml.cs">
       <DependentUpon>AddKodiPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
-    <Compile Include="View\CollectionPage.xaml.cs">
+    <Compile Include="View\Video\ActorDetailsPage.xaml.cs">
+      <DependentUpon>ActorDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Video\CollectionPage.xaml.cs">
       <DependentUpon>CollectionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converter\BooleanResourceConverter.cs" />
@@ -344,24 +348,24 @@
     <Compile Include="View\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\KodiInfoPage.xaml.cs">
+    <Compile Include="View\Settings\KodiInfoPage.xaml.cs">
       <DependentUpon>KodiInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\HorizontalGridViewPage.xaml.cs">
+    <Compile Include="View\Video\HorizontalGridViewPage.xaml.cs">
       <DependentUpon>HorizontalGridViewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MovieDetailsPage.xaml.cs">
+    <Compile Include="View\Video\MovieDetailsPage.xaml.cs">
       <DependentUpon>MovieDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PageType.cs" />
     <Compile Include="View\RemoteControlPage.xaml.cs">
       <DependentUpon>RemoteControlPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SettingsPage.xaml.cs">
+    <Compile Include="View\Settings\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ConnectionState.xaml.cs">
@@ -426,11 +430,15 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="View\AddKodiPage.xaml">
+    <Page Include="View\Settings\AddKodiPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CollectionPage.xaml">
+    <Page Include="View\Video\ActorDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Video\CollectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -438,7 +446,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\KodiInfoPage.xaml">
+    <Page Include="View\Settings\KodiInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -446,11 +454,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\HorizontalGridViewPage.xaml">
+    <Page Include="View\Video\HorizontalGridViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MovieDetailsPage.xaml">
+    <Page Include="View\Video\MovieDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -458,7 +466,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SettingsPage.xaml">
+    <Page Include="View\Settings\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

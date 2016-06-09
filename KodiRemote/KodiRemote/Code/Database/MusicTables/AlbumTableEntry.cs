@@ -11,14 +11,13 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.MusicTables {
     [Table("Albums")]
-    public class AlbumTableEntry : TableEntryBase{
+    public class AlbumTableEntry : TableEntryWithLabelBase {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AlbumId { get; set; }
         public string AlbumLabel { get; set; }
         public string Description { get; set; }
         public string DisplayArtist { get; set; }
         public string Fanart { get; set; }
-        public string Label { get; set; }
         public int PlayCount { get; set; }
         public float Rating { get; set; }
         public string Thumbnail { get; set; }

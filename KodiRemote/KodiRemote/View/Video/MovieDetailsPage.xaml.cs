@@ -1,6 +1,7 @@
 ﻿using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.View.Base;
 using KodiRemote.ViewModel;
+using KodiRemote.ViewModel.Video;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,14 +17,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
-
-namespace KodiRemote.View {
-    /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
+namespace KodiRemote.View.Video {
     public sealed partial class MovieDetailsPage : PageBase {
-        //public MovieDetailsViewModel ViewModel { get; set; }
         private MovieDetailsViewModel viewModel;
         public MovieDetailsViewModel ViewModel {
             get {
@@ -44,6 +39,16 @@ namespace KodiRemote.View {
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
             ViewModel = await MovieDetailsViewModel.Init(e.Parameter as MovieTableEntry);
             base.OnNavigatedTo(e);
+        }
+
+        private void MovieSetMovieClicked(object sender, ItemClickEventArgs e) {
+            var viewModel = e.ClickedItem as ItemViewModel;
+            Frame.Navigate(typeof(MovieDetailsPage), viewModel.Item);
+        }
+
+        private void ActorClicked(object sender, ItemClickEventArgs e) {
+            var viewModel = e.ClickedItem as ActorViewModel;
+            Frame.Navigate(typeof(ActorDetailsPage), viewModel.Item);
         }
     }
 }

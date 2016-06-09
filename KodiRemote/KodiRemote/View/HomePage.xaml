@@ -93,6 +93,10 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
+                        <Setter Target="Settings.Style" Value="{StaticResource CategoryButtonSmall}"/>
+                        <Setter Target="SettingsSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
+                        <Setter Target="MovieSets.Style" Value="{StaticResource CategoryButtonSmall}"/>
+                        <Setter Target="MovieSetsSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
                         <Setter Target="Movies.Style" Value="{StaticResource CategoryButtonSmall}"/>
                         <Setter Target="MoviesSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
                         <Setter Target="TVShows.Style" Value="{StaticResource CategoryButtonSmall}"/>
@@ -123,8 +127,8 @@
                     SelectionMode="None"
                     IsItemClickEnabled="True"
                     ItemClick="itemGridView_ItemClick">
-                    <GridViewItem x:Name="Movies" Style="{StaticResource CategoryButton}">
-                        <Grid>
+                    <GridViewItem Style="{StaticResource CategoryButton}">
+                        <Grid x:Name="Movies">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -138,8 +142,23 @@
                             </StackPanel>
                         </Grid>
                     </GridViewItem>
-                    <GridViewItem x:Name="TVShows" Style="{StaticResource CategoryButton}">
-                        <Grid>
+                    <GridViewItem Style="{StaticResource CategoryButton}">
+                        <Grid x:Name="MovieSets">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Fill="{StaticResource TransparentGrey}"/>
+
+                            <TextBlock x:Name="MovieSetsSymbol" Grid.RowSpan="2" Style="{StaticResource MaterialIconTextStyle}" Text="{StaticResource MovieClapper}"/>
+
+                            <StackPanel Background="{StaticResource TransparentGrey}" Grid.Row="1">
+                                <TextBlock x:Uid="MovieSets" Text="MovieSets" Style="{StaticResource CategoryButtonText}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem Style="{StaticResource CategoryButton}">
+                        <Grid x:Name="TVShows">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -153,8 +172,9 @@
                             </StackPanel>
                         </Grid>
                     </GridViewItem>
-                    <GridViewItem x:Name="Music" Style="{StaticResource CategoryButton}">
-                        <Grid>
+
+                    <GridViewItem Style="{StaticResource CategoryButton}">
+                        <Grid x:Name="Music">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -168,8 +188,8 @@
                             </StackPanel>
                         </Grid>
                     </GridViewItem>
-                    <GridViewItem x:Name="RemoteControl" Style="{StaticResource CategoryButton}" >
-                        <Grid>
+                    <GridViewItem Style="{StaticResource CategoryButton}" >
+                        <Grid x:Name="RemoteControl">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -180,6 +200,21 @@
 
                             <StackPanel Background="{StaticResource TransparentGrey}" Grid.Row="1">
                                 <TextBlock x:Uid="RemoteControl" Text="RemoteControl" Style="{StaticResource CategoryButtonText}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem Style="{StaticResource CategoryButton}" >
+                        <Grid x:Name="Settings">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Fill="{StaticResource TransparentGrey}"/>
+
+                            <TextBlock x:Name="SettingsSymbol" Grid.RowSpan="2" Style="{StaticResource MaterialIconTextStyle}" Text="{StaticResource Settings}"/>
+
+                            <StackPanel Background="{StaticResource TransparentGrey}" Grid.Row="1">
+                                <TextBlock x:Uid="Settings" Text="Settings" Style="{StaticResource CategoryButtonText}"/>
                             </StackPanel>
                         </Grid>
                     </GridViewItem>

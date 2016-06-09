@@ -41,6 +41,17 @@ namespace KodiRemote.ViewModel {
                 RaisePropertyChanged();
             }
         }
+        private bool progressBarActive;
+        public bool ProgressBarActive {
+            get {
+                return progressBarActive;
+            }
+            set {
+                progressBarActive = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
 
 

@@ -13,4 +13,7 @@ namespace KodiRemote.Code.Database.Utils {
         }
         public abstract string Key { get; }
     }
+    public abstract class TableEntryWithLabelBase: TableEntryBase {
+        public string Label { get; set; }
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.ViewModel;
+using KodiRemote.ViewModel.Video;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,6 @@ namespace KodiRemote.View.Converter {
             }
             var movieActorMapper = value as IEnumerable<MovieActorMapper>;
             if (movieActorMapper != null) {
-                var test = movieActorMapper.Select(x => new ActorViewModel(x));
-                return test;
                 return movieActorMapper.Select(x => new ActorViewModel(x));
             }
             var movieDirectorMapper = value as IEnumerable<MovieDirectorMapper>;

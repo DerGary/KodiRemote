@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.MusicTables {
     [Table("Songs")]
-    public class SongTableEntry : TableEntryBase {
+    public class SongTableEntry : TableEntryWithLabelBase {
         [Key]
         public int SongId { get; set; }
         public int AlbumId { get; set; }
@@ -20,7 +20,6 @@ namespace KodiRemote.Code.Database.MusicTables {
         public string DisplayArtist { get; set; }
         public int Duration { get; set; }
         public string Fanart { get; set; }
-        public string Label { get; set; }
         public int PlayCount { get; set; }
         public float Rating { get; set; }
         public string Thumbnail { get; set; }

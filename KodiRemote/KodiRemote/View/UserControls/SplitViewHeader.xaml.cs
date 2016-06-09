@@ -1,4 +1,6 @@
 ﻿using KodiRemote.View.Base;
+using KodiRemote.View.Settings;
+using KodiRemote.View.Video;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -11,12 +11,11 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.MusicVideoTables {
     [Table("MusicVideos")]
-    public class MusicVideoTableEntry : TableEntryBase {
+    public class MusicVideoTableEntry : TableEntryWithLabelBase {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MusicVideoId { get; set; }
         public string Album { get; set; }
         public string Poster { get; set; }
-        public string Label { get; set; }
         public int PlayCount { get; set; }
         public string Plot { get; set; }
         public int Runtime { get; set; }

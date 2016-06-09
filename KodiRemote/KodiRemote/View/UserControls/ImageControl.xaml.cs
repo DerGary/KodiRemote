@@ -41,6 +41,12 @@ namespace KodiRemote.View.UserControls {
             get { return (string)GetValue(PropNameProperty); }
             set { SetValue(PropNameProperty, value); }
         }
+        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch), typeof(Stretch), typeof(ImageControl), new PropertyMetadata(Stretch.Uniform));
+
+        public Stretch Stretch {
+            get { return (Stretch)GetValue(StretchProperty); }
+            set { SetValue(StretchProperty, value); }
+        }
 
         public ImageControl() {
             this.InitializeComponent();

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiRemote.ViewModel {
+namespace KodiRemote.ViewModel.Settings {
     public class SettingsViewModel : ViewModelBase {
         private ObservableCollection<KodiSettings> kodiList;
         public ObservableCollection<KodiSettings> KodiList {

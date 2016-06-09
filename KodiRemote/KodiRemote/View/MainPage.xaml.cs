@@ -25,12 +25,7 @@ using System.Threading.Tasks;
 using KodiRemote.Code.JSON.WebSocketServices;
 using KodiRemote.Code.JSON.KPlayer.Results;
 
-// Die Vorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 dokumentiert.
-
 namespace KodiRemote.View {
-    /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
     public sealed partial class MainPage : Page {
         public MainPage() {
             this.InitializeComponent();

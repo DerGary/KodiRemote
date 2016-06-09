@@ -1,6 +1,4 @@
-﻿using KodiRemote.ViewModel;
-using KodiRemote.ViewModel.Settings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,12 +13,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace KodiRemote.View.UserControls {
-    public sealed partial class KodiList : UserControl {
-        public SettingsViewModel ViewModel { get; set; }
-        public KodiList() {
+namespace KodiRemote.View.Video {
+    /// <summary>
+    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// </summary>
+    public sealed partial class ActorDetailsPage : Page {
+        public ActorDetailsPage() {
             this.InitializeComponent();
         }
     }

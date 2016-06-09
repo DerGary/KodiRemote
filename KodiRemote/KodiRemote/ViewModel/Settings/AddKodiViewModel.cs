@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
-namespace KodiRemote.ViewModel {
+namespace KodiRemote.ViewModel.Settings {
     public class AddKodiViewModel : ViewModelBase {
         private KodiSettings kodiSettings;
         public KodiSettings KodiSettings {

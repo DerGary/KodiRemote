@@ -7,9 +7,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:KodiRemote.View.UserControls"
+    xmlns:converter="using:KodiRemote.View.Converter"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="500">
+    <UserControl.Resources>
+        <converter:BoolVisibilityConverter OnTrue="Visible" OnFalse="Collapsed" x:Name="BoolVisibilityConverter"/>
+    </UserControl.Resources>
 
     <Grid>
         <VisualStateManager.VisualStateGroups>
@@ -18,28 +22,28 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1450"/>
                     </VisualState.StateTriggers>
-                    
+
                     <VisualState.Setters>
                         <Setter Target="rootSplitView.DisplayMode" Value="CompactInline"/>
                         <Setter Target="rootSplitView.IsPaneOpen" Value="True"/>
                     </VisualState.Setters>
                 </VisualState>
-                
+
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="670" />
                     </VisualState.StateTriggers>
-                    
+
                     <VisualState.Setters>
                         <Setter Target="rootSplitView.DisplayMode" Value="CompactOverlay" />
                     </VisualState.Setters>
                 </VisualState>
-                
+
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
-                    
+
                     <VisualState.Setters>
                         <Setter Target="rootSplitView.DisplayMode" Value="Overlay"/>
                     </VisualState.Setters>
@@ -52,11 +56,12 @@
         </Grid.RowDefinitions>
 
         <uc:ImageControl Grid.RowSpan="2" 
+                         Stretch="UniformToFill"
                          ImageSource="{x:Bind Page.ViewModelBase.BackgroundItem.Fanart, Mode=OneWay}" 
                          ImageFailedCommand="{x:Bind Page.ViewModelBase.BackgroundItem.ImageFailedCommand,Mode=OneWay}" 
                          PropName="Fanart"/>
         <Border Background="#77000000" Grid.RowSpan="2"/>
-        
+
         <StackPanel Orientation="Horizontal" Background="{StaticResource TransparentGrey}">
             <Button Style="{StaticResource SplitViewTogglePaneButtonStyle}" Click="BurgerMenuClicked"/>
             <TextBlock Text="{x:Bind Page.ViewModelBase.Title, Mode=OneWay}" FontSize="24" FontWeight="Light" Margin="8,0,0,0" VerticalAlignment="Center"/>
@@ -109,7 +114,7 @@
                             </Button>
                         </StackPanel>
                     </ScrollViewer>
-                    
+
                     <Button Grid.Row="1" Style="{StaticResource PaneButtonStyle}" Tapped="SettingsTapped">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{StaticResource PaneButtonSymbolStyle}" Text="{StaticResource Settings}"/>
@@ -122,5 +127,12 @@
                 <Frame x:Name="contentFrame"/>
             </SplitView.Content>
         </SplitView>
+
+        <ProgressBar IsIndeterminate="True" 
+                     VerticalAlignment="Top" 
+                     Height="5" 
+                     Grid.Row="1" 
+                     Visibility="{x:Bind Page.ViewModelBase.ProgressBarActive, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}" 
+                     IsEnabled="{x:Bind Page.ViewModelBase.ProgressBarActive, Mode=OneWay}" />
     </Grid>
 </base:UserControlBase>

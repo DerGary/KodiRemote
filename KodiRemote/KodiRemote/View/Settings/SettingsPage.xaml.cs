@@ -1,5 +1,6 @@
 ﻿using KodiRemote.View.Base;
 using KodiRemote.ViewModel;
+using KodiRemote.ViewModel.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace KodiRemote.View {
+namespace KodiRemote.View.Settings {
     public sealed partial class SettingsPage : PageBase {
         public SettingsViewModel ViewModel { get; set; } = new SettingsViewModel();
 

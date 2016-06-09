@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace KodiRemote.Code.Database.TVShowTables {
 
     [Table("TVShows")]
-    public class TVShowTableEntry : TableEntryBase {
+    public class TVShowTableEntry : TableEntryWithLabelBase {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TVShowId { get; set; }
         public int Episode { get; set; }
@@ -22,7 +22,6 @@ namespace KodiRemote.Code.Database.TVShowTables {
         public string Banner { get; set; }
         public string Poster { get; set; }
         public string Fanart { get; set; }
-        public string Label { get; set; }
         public string Plot { get; set; }
         public string IMDBNumber { get; set; }
         public string DateAdded { get; set; }
