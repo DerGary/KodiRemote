@@ -331,6 +331,9 @@
     </Compile>
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
+    <Compile Include="View\UserControls\SmallImage.xaml.cs">
+      <DependentUpon>SmallImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Video\ActorDetailsPage.xaml.cs">
       <DependentUpon>ActorDetailsPage.xaml</DependentUpon>
     </Compile>
@@ -341,7 +344,7 @@
     <Compile Include="View\Converter\BoolVisibilityConverter.cs" />
     <Compile Include="View\Converter\ConnectionTypeConverter.cs" />
     <Compile Include="View\Converter\DivisionConverter.cs" />
-    <Compile Include="View\Converter\ImageSourceConverter.cs" />
+    <Compile Include="View\Converter\ActorImageConverter.cs" />
     <Compile Include="View\Converter\MovieMapperConverter.cs" />
     <Compile Include="View\Converter\NullVisibilityConverter.cs" />
     <Compile Include="View\Converter\RuntimeLengthConverter.cs" />
@@ -434,6 +437,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="View\Settings\AddKodiPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\SmallImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

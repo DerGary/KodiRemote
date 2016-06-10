@@ -46,7 +46,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid Background="{StaticResource TransparentBlack}">
+    <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ArrangementOfCurrentlyPlayingAndCategorieButtons">
                 <VisualState>

@@ -481,7 +481,7 @@ namespace KodiRemote.Code.Database {
                 .Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
                 .Include(x => x.Directors).ThenInclude(x => x.Director)
                 .Include(x => x.Genres).ThenInclude(x => x.Genre)
-                .Include(x => x.MovieSets).ThenInclude(x => x.MovieSet)
+                .Include(x => x.MovieSets).ThenInclude(x => x.MovieSet).ThenInclude(x => x.Movies).ThenInclude(x => x.Movie)
                 .Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
                 .Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream);
         }
@@ -626,6 +626,7 @@ namespace KodiRemote.Code.Database {
         public async Task<IReadOnlyList<MovieTableEntry>> GetMovies() {
             await LoadMovies();
             return Movies;
+            //return new System.Collections.Generic.List<MovieTableEntry>() { Movies.FirstOrDefault() };
         }
 
         public async Task<MovieTableEntry> GetMovie(MovieTableEntry movie) {

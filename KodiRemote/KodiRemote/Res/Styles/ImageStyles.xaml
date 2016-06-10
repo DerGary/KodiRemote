@@ -7,7 +7,7 @@
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Opacity" Value="0"/>
-        <Setter Property="Visibility" Value="Collapsed"/>
+        <Setter Property="Visibility" Value="Visible"/>
     </Style>
 
     <Style x:Key="ImageInVisibileStretchedCentered" TargetType="Image">
@@ -15,7 +15,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Opacity" Value="0"/>
-        <Setter Property="Visibility" Value="Collapsed"/>
+        <Setter Property="Visibility" Value="Visible"/>
     </Style>
 
     <Style x:Key="ImageStyle" TargetType="Image">
@@ -27,7 +27,7 @@
     <Style x:Key="CheckMarkImageStyle" TargetType="Image">
         <Setter Property="Source" Value="{Binding WatchedMarkImage}"/>
         <Setter Property="Name" Value="CheckMark"/>
-        <Setter Property="Visibility"  Value="Collapsed"/>
+        <Setter Property="Visibility"  Value="Visible"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="Stretch" Value="UniformToFill"/>
         <Setter Property="Margin" Value="0"/>

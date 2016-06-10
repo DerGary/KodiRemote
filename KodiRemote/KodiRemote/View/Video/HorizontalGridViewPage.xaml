@@ -11,6 +11,7 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:uc="using:KodiRemote.View.UserControls"
     xmlns:converter="using:KodiRemote.View.Converter"
+    xmlns:ui="using:Windows.UI.Xaml.Data"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
     RequestedTheme="Dark"
     mc:Ignorable="d">
@@ -57,7 +58,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <converter:ImageSourceConverter x:Key="ImageSourceConverter"/>
+        <converter:ActorImageConverter x:Key="ImageSourceConverter"/>
     </Page.Resources>
     <Grid>
         <SemanticZoom Grid.Row="2" x:Name="Zoom" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.ZoomMode="Enabled">
@@ -88,7 +89,7 @@
                                                  VerticalContentAlignment="Stretch"
                                                  HorizontalContentAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
-                                                 ImageSource="{Binding Poster}" 
+                                                 ImageSource="{x:Bind Poster, Mode=OneWay}" 
                                                  ImageFailedCommand="{Binding ImageFailedCommand}" 
                                                  PropName="Poster">
                                 </uc:ImageControl>
@@ -138,8 +139,8 @@
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         ScrollViewer.HorizontalScrollMode="Auto"
                         IsItemClickEnabled="True">
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
+                    <GridView.ItemTemplate >
+                        <DataTemplate x:DataType="ui:ICollectionViewGroup">
                             <Grid Width="200" Height="300" Background="Black">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
@@ -151,35 +152,19 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Column="0" Grid.Row="0">
-                                    <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[0].PosterProgressRingActive}" Visibility="Visible"/>
-                                    <uc:ImageControl DataContext="{Binding Group.Items[0]}"  
-                                                     ImageSource="{Binding PosterThumbnail}" 
-                                                     ImageFailedCommand="{Binding ImageFailedCommand}" 
-                                                     PropName="PosterThumbnail"/>
+                                    <uc:SmallImage ViewModel="{Binding Group.Items[0]}"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="0">
-                                    <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[1].PosterProgressRingActive}" Visibility="Visible"/>
-                                    <uc:ImageControl DataContext="{Binding Group.Items[1]}"  
-                                                     ImageSource="{Binding PosterThumbnail}" 
-                                                     ImageFailedCommand="{Binding ImageFailedCommand}" 
-                                                     PropName="PosterThumbnail"/>
+                                    <uc:SmallImage ViewModel="{Binding Group.Items[1]}"/>
                                 </Grid>
 
                                 <Grid Grid.Column="0" Grid.Row="1">
-                                    <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[2].PosterProgressRingActive}" Visibility="Visible"/>
-                                    <uc:ImageControl DataContext="{Binding Group.Items[2]}"  
-                                                     ImageSource="{Binding PosterThumbnail}" 
-                                                     ImageFailedCommand="{Binding ImageFailedCommand}" 
-                                                     PropName="PosterThumbnail"/>
+                                    <uc:SmallImage ViewModel="{Binding Group.Items[2]}"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="1">
-                                    <ProgressRing Height="20" Width="20" IsActive="{Binding Group.Items[3].PosterProgressRingActive}" Visibility="Visible"/>
-                                    <uc:ImageControl DataContext="{Binding Group.Items[3]}"  
-                                                     ImageSource="{Binding PosterThumbnail}" 
-                                                     ImageFailedCommand="{Binding ImageFailedCommand}" 
-                                                     PropName="PosterThumbnail"/>
+                                    <uc:SmallImage ViewModel="{Binding Group.Items[3]}"/>
                                 </Grid>
 
                                 <Grid Background="#88000000" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

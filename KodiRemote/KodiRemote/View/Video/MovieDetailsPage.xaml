@@ -65,7 +65,7 @@
         <converter:MovieMapperConverter x:Name="MovieMapperConverter"/>
         <converter:MovieMovieSetMapperConverter x:Name="MovieMovieSetMapperConverter"/>
         <converter:RuntimeLengthConverter x:Name="RuntimeLengthConverter"/>
-        <converter:ImageSourceConverter x:Name="ImageSourceConverter"/>
+        <converter:ActorImageConverter x:Name="ActorImageConverter"/>
         <converter:DivisionConverter x:Name="DivisionConverter"/>
     </Page.Resources>
     <ScrollViewer 
@@ -160,7 +160,7 @@
                     <ScrollViewer 
                                 Grid.Row="6" 
                                 Grid.ColumnSpan="2"
-                                Margin="0,10,0,0"
+                                Margin="0,0,0,0"
                                 VerticalScrollMode="Auto"
                                 VerticalScrollBarVisibility="Auto"
                                 HorizontalScrollMode="Disabled"
@@ -212,11 +212,11 @@
                                     </Grid.RowDefinitions>
 
                                     <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind PosterProgressRingActive, Mode=OneWay}" />
-                                    <uc:ImageControl ImageSource="{x:Bind Poster, Mode=OneWay}"
+                                    <uc:ImageControl ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"
                                                      Grid.RowSpan="2"
                                                      ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
                                                      Margin="1"
-                                                     PropName="Poster"/>
+                                                     PropName="PosterThumbnail"/>
 
                                     <Image Style="{StaticResource CheckMarkImageStyle}" 
                                            ImageOpened="ImageOpened"
@@ -229,6 +229,11 @@
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Margin="0" Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
                 </GridView>
             </Grid>
 
@@ -261,10 +266,11 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ProgressRing Width="30" Height="30" IsActive="{Binding ThumbnailProgressRingActive}"/>
+                                <ProgressRing Width="30" Height="30" IsActive="{Binding PosterProgressRingActive}"/>
                                 <uc:ImageControl ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
                                                  PropName="PosterThumbnail"
-                                                 ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"/>
+                                                 Stretch="UniformToFill"
+                                                 ImageSource="{x:Bind PosterThumbnail, Mode=OneWay, Converter={StaticResource ActorImageConverter}}"/>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>

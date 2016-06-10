@@ -8,12 +8,12 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace KodiRemote.View.Converter {
-    public class ImageSourceConverter : IValueConverter {
+    public class ActorImageConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, string language) {
             if(string.IsNullOrEmpty(value as string)) {
-                return new BitmapImage(new Uri("ms-appx:///Assets/actor-placeholder.png"));
+                return "ms-appx:///Assets/actor-placeholder.png";
             }
-            return new BitmapImage(new Uri(value as string));
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language) {
