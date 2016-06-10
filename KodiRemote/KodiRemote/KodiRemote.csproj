@@ -386,7 +386,6 @@
     <Compile Include="View\Video\MovieSetDetailsPage.xaml.cs">
       <DependentUpon>MovieSetDetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Video\MovieTablEntry.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
