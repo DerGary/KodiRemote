@@ -116,7 +116,12 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        <ScrollViewer x:Name="scrollView" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled">
+        <ScrollViewer 
+            x:Name="scrollView"
+            HorizontalScrollBarVisibility="Disabled" 
+            HorizontalScrollMode="Disabled" 
+            VerticalScrollBarVisibility="Disabled" 
+            VerticalScrollMode="Disabled">
             <RelativePanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <GridView
                     x:Name="buttonGridView"

@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<base:UserControlBase
     x:Class="KodiRemote.View.UserControls.ImageControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="using:Microsoft.Xaml.Interactivity" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:base="using:KodiRemote.View.Base"
     VerticalAlignment="Stretch"
     HorizontalAlignment="Stretch"
     mc:Ignorable="d"
@@ -14,13 +15,13 @@
     d:DesignWidth="400">
     <!--<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
         <Image 
-        Source="{x:Bind ImageSource, Mode=OneWay}"
-        DataContextChanged="ImageDataContextChanged"
-        ImageOpened="ImageOpened"
+            x:Name="Image"
+            Source="{x:Bind Source, Mode=OneWay}"
+            ImageOpened="ImageOpened"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
-        Stretch="{x:Bind Stretch, Mode=OneWay}"
-        Style="{StaticResource ImageInVisibileStretched}" >
+            Stretch="{x:Bind Stretch, Mode=OneWay}"
+            Style="{StaticResource ImageInVisibileStretched}" >
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="ImageFailed">
                     <ic:InvokeCommandAction Command="{x:Bind ImageFailedCommand, Mode=OneWay}" CommandParameter="{x:Bind PropName, Mode=OneWay}"/>
@@ -29,4 +30,4 @@
         </Image>
     <!--</Grid>-->
     
-</UserControl>
+</base:UserControlBase>

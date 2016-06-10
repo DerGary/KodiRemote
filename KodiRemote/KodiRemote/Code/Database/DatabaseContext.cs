@@ -5,9 +5,7 @@ using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.Code.Database.MusicTables;
 using KodiRemote.Code.Database.MusicVideoTables;
 using KodiRemote.Code.Database.TVShowTables;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Internal;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -45,7 +43,7 @@ namespace KodiRemote.Code.Database {
         public DbSet<MovieGenreMapper> MovieGenreMapper { get; set; }
         public DbSet<MovieGenreTableEntry> MovieGenres { get; set; }
         public DbSet<MovieSetTableEntry> MovieSets { get; set; }
-        public DbSet<MovieMovieSetMapper> MovieSetMapper { get; set; }
+        public DbSet<MovieMovieSetMapper> MovieMovieSetMapper { get; set; }
         public DbSet<MovieSubtitleStreamMapper> MovieSubtitleStreamMapper { get; set; }
         public DbSet<MovieTableEntry> Movies { get; set; }
         public DbSet<MovieVideoStreamMapper> MovieVideoStreamMapper { get; set; }

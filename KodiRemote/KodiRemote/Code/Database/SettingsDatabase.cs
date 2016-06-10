@@ -1,5 +1,5 @@
 ﻿using KodiRemote.Code.Essentials;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

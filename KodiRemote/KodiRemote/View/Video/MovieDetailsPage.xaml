@@ -16,12 +16,12 @@
     <Page.Resources>
         <converter:NullVisibilityConverter x:Key="NullVisibilityConverter" OnNull="Collapsed"/>
         <Style x:Key="TextHeaderStyle" BasedOn="{StaticResource HeaderTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Margin" Value="0,0,10,13"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
         <Style x:Key="TextDetailStyle" BasedOn="{StaticResource HeaderTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="Margin" Value="10,0,0,13"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Light"/>
         </Style>
@@ -84,7 +84,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="50,50,25,50" DataContext="{Binding }">
+            <Grid Grid.Column="0" Margin="20,20,20,20" DataContext="{Binding }">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="3*"/>
@@ -119,25 +119,24 @@
 
             <Grid Grid.Column="1" DataContext="{x:Bind ViewModel.Movie, Mode=OneWay}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="56"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" 
                            VerticalAlignment="Top" 
-                           Margin="25,0,25,0" 
+                           Margin="20,10,20,0" 
                            Style="{StaticResource SubheaderTextBlockStyle}" 
                            TextWrapping="NoWrap"
                            Text="Info"/>
-                <Grid Grid.Row="1" Margin="25,10,25,10" Width="700">
+                <Grid Grid.Row="1" Margin="20,8,20,20" Width="700">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -161,7 +160,7 @@
                     <ScrollViewer 
                                 Grid.Row="6" 
                                 Grid.ColumnSpan="2"
-                                Margin="0,20,0,0"
+                                Margin="0,10,0,0"
                                 VerticalScrollMode="Auto"
                                 VerticalScrollBarVisibility="Auto"
                                 HorizontalScrollMode="Disabled"
@@ -174,16 +173,15 @@
 
             <Grid Grid.Column="2" 
                   DataContext="{x:Bind ViewModel.Movie.MovieSets, Mode=OneWay, Converter={StaticResource MovieMovieSetMapperConverter}}"
-                  Visibility="{Binding Converter={StaticResource NullVisibilityConverter}}" >
+                  Visibility="{x:Bind ViewModel.Movie.MovieSets, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}" >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="56"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" 
                            VerticalAlignment="Top" 
-                           Margin="25,0,25,0" 
+                           Margin="20,10,20,0" 
                            Style="{StaticResource SubheaderTextBlockStyle}" 
                            TextWrapping="NoWrap" 
                            Text="{Binding Label}" />
@@ -191,7 +189,7 @@
                     ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
                     Grid.Row="1"
                     VerticalAlignment="Stretch" 
-                    Margin="25,10,25,10"
+                    Margin="20,8,20,20"
                     SelectionMode="None" 
                     ScrollViewer.VerticalScrollMode="Disabled"
                     ScrollViewer.HorizontalScrollMode="Disabled"
@@ -200,9 +198,10 @@
                     IsItemClickEnabled="True">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodel:ItemViewModel">
-                            <Grid Width="378" Height="220">
+                            <Grid Height="260"
+                                  Width="428">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="173"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
@@ -235,18 +234,17 @@
 
             <Grid Grid.Column="3">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="56"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" VerticalAlignment="Top" Margin="25,0,25,0" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" Text="Schauspieler"/>
+                <TextBlock Grid.Row="0" VerticalAlignment="Top" Margin="20,10,20,0" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" Text="Schauspieler"/>
                 <GridView 
                     x:Name="ActorGridView"
                     ItemsSource="{x:Bind ViewModel.Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
                     Grid.Row="1"
                     VerticalAlignment="Stretch" 
-                    Margin="25,10,25,10"
+                    Margin="20,8,20,20"
                     SelectionMode="None" 
                     ScrollViewer.VerticalScrollMode="Disabled"
                     ScrollViewer.HorizontalScrollMode="Disabled"
@@ -259,14 +257,14 @@
                                   Height="260"
                                   Width="428">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="185"/>
+                                    <ColumnDefinition Width="173"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <ProgressRing Width="30" Height="30" IsActive="{Binding ThumbnailProgressRingActive}"/>
                                 <uc:ImageControl ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
-                                                 PropName="Thumbnail"
-                                                 ImageSource="{x:Bind Thumbnail, Mode=OneWay, Converter={StaticResource ImageSourceConverter}}"/>
+                                                 PropName="PosterThumbnail"
+                                                 ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"/>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>

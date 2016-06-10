@@ -44,17 +44,16 @@ namespace KodiRemote.Code.Utils {
             }
             semaphore.Release();
 
-            if (RunningTasks < 1) {
-                for(int i = RunningTasks; i < 1; i++) {
-                    Task t = Task.Run(async () => {
-                        RunningTasks++;
-                        await DownloadImage(kodi);
-                        RunningTasks--;
-                    });
-                }
+            await semaphore.WaitAsync();
+            if (!IsRunning) {
+                IsRunning = true; 
+                Task t = Task.Run(async () => {
+                    await DownloadImage(kodi);
+                    IsRunning = false;
+                });
             }
+            semaphore.Release();
         }
-        private static int RunningTasks = 0;
 
         public static async Task DownloadImage(Kodi kodi) {
             await semaphore.WaitAsync();
@@ -141,8 +140,8 @@ namespace KodiRemote.Code.Utils {
 
             if (toThumbnail) {
                 double ratio = (double)(decoder.PixelWidth) / (double)(decoder.PixelHeight);
-                encoder.BitmapTransform.ScaledHeight = 220;
-                encoder.BitmapTransform.ScaledWidth = (uint)(220 * ratio);
+                encoder.BitmapTransform.ScaledHeight = 260;
+                encoder.BitmapTransform.ScaledWidth = (uint)(260 * ratio);
             } else {
                 if (decoder.PixelHeight > 1080) {
                     double ratio = (double)(decoder.PixelWidth) / (double)(decoder.PixelHeight);

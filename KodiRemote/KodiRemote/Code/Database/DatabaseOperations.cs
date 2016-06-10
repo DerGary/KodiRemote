@@ -5,8 +5,6 @@ using KodiRemote.Code.Essentials;
 using KodiRemote.Code.JSON.General;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using KodiRemote.Code.Utils;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -27,7 +25,7 @@ using KodiRemote.Code.JSON.General.Results;
 using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.Common;
-using Microsoft.Data.Entity.Query;
+using Microsoft.EntityFrameworkCore;
 
 namespace KodiRemote.Code.Database {
     public class DatabaseOperations {
@@ -503,7 +501,7 @@ namespace KodiRemote.Code.Database {
                 .Include(x => x.Episodes).ThenInclude(x => x.Episode)
                 .Include(x => x.Movies).ThenInclude(x => x.Movie)
                 .Include(x => x.TVShows).ThenInclude(x => x.TVShow);
-        }
+        }   
 
         private IQueryable<SongTableEntry> SongsWithRelations(DbContext context) {
             return context.Set<SongTableEntry>()
@@ -659,7 +657,7 @@ namespace KodiRemote.Code.Database {
 
         public async Task<ActorTableEntry> GetActor(ActorTableEntry actor) {
             using (var context = database.CreateContext()) {
-                return await ActorsWithRelations(context).SingleAsync(x => x.ActorId == actor.ActorId);
+                return await ActorsWithRelations(context).FirstOrDefaultAsync(x => x.ActorId == actor.ActorId);
             }
         }
 

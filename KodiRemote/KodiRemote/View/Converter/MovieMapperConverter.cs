@@ -17,7 +17,7 @@ namespace KodiRemote.View.Converter {
             }
             var movieMovieSetMapper = value as IEnumerable<MovieMovieSetMapper>;
             if(movieMovieSetMapper != null) {
-                return movieMovieSetMapper.Select(x => new ItemViewModel(x.Movie));
+                return movieMovieSetMapper.Select(x => x.Movie).OrderBy(x => x.Year).Select(x => new ItemViewModel(x));
             }
             var movieActorMapper = value as IEnumerable<MovieActorMapper>;
             if (movieActorMapper != null) {

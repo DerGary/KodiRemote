@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Common;
+using KodiRemote.Code.Database.EpisodeTables;
 using KodiRemote.Code.Database.GeneralTables;
 using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.Code.Database.TVShowTables;
@@ -102,8 +103,12 @@ namespace KodiRemote.ViewModel {
                 extraImage = actor.Thumbnail;
                 label = actor.Name;
             }
+            var episode = item as EpisodeTableEntry;
+            if(episode != null) {
+                thumbnail = episode.Thumbnail;
+                label = episode.Title;
+            }
             this.Item = item;
-            BackgroundItem = this;
         }
 
         public void SetProgressRing(string tag, bool active) {

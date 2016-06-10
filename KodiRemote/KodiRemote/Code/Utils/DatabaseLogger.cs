@@ -19,6 +19,10 @@ namespace KodiRemote.Code.Utils {
         }
     }
     public class DatabaseLogger : ILogger {
+        public IDisposable BeginScope<TState>(TState state) {
+            return null;
+        }
+
         public IDisposable BeginScopeImpl(object state) {
             return null;
         }
@@ -28,6 +32,10 @@ namespace KodiRemote.Code.Utils {
         }
 
         public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter) {
+            Debug.WriteLine(formatter(state, exception), "DB");
+        }
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) {
             Debug.WriteLine(formatter(state, exception), "DB");
         }
     }

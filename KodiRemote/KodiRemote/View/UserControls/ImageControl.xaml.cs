@@ -1,4 +1,5 @@
 ﻿using KodiRemote.Code.Common;
+using KodiRemote.View.Base;
 using KodiRemote.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,50 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace KodiRemote.View.UserControls {
-    public sealed partial class ImageControl : UserControl {
-        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(nameof(ImageSource), typeof(BitmapImage), typeof(ImageControl), null);
+    public sealed partial class ImageControl : UserControlBase {
+        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(nameof(ImageSource), typeof(string), typeof(ImageControl), new PropertyMetadata(null, new PropertyChangedCallback(dosth)));
 
-        public BitmapImage ImageSource {
-            get { return (BitmapImage)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
+        private static void dosth(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var image = (ImageControl)d;
+            if(string.IsNullOrEmpty(e.NewValue as string)) {
+                image.source = null;
+            }else {
+                image.source = new BitmapImage(new Uri(e.NewValue as string));
+            }
+            image.FadeOutImage();
         }
+
+        public string ImageSource {
+            get { return (string)GetValue(ImageSourceProperty); }
+            set {
+                SetValue(ImageSourceProperty, value);
+            }
+        }
+        //private string imageSource;
+        //public string ImageSource {
+        //    get {
+        //        return imageSource;
+        //    }
+        //    set {
+        //        imageSource = value;
+        //        source = new BitmapImage(new Uri(value));
+        //        FadeOutImage();
+        //    }
+        //}
+
+
+        private BitmapImage source;
+        public BitmapImage Source {
+            get {
+                return source;
+            }
+            set {
+                source = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         public static readonly DependencyProperty ImageFailedCommandProperty = DependencyProperty.Register(nameof(ImageFailedCommand), typeof(RelayCommand<object>), typeof(ImageControl), null);
 
@@ -56,6 +91,36 @@ namespace KodiRemote.View.UserControls {
             var image = (sender as Image);
             image.Opacity = 0;
             image.Visibility = Visibility.Collapsed;
+        }
+
+        private void FadeOutImage() {
+            if(Image.Opacity == 0) {
+                Image.Visibility = Visibility.Collapsed;
+                RaisePropertyChanged(nameof(Source));
+            } else if(Image.Visibility == Visibility.Collapsed) {
+                Image.Opacity = 0;
+                RaisePropertyChanged(nameof(Source));
+            } else {
+                Storyboard AniFadeOut = new Storyboard();
+
+                DoubleAnimation FadeOut = new DoubleAnimation();
+                FadeOut.From = 1.0;
+                FadeOut.To = 0.0;
+                FadeOut.Duration = new Duration(TimeSpan.FromSeconds(.5));
+
+                AniFadeOut.Children.Add(FadeOut);
+                Storyboard.SetTarget(FadeOut, Image);
+                Storyboard.SetTargetProperty(FadeOut, "Opacity");
+
+                AniFadeOut.Completed += AniFadeOut_Completed;
+
+                AniFadeOut.Begin();
+            }
+        }
+
+        private void AniFadeOut_Completed(object sender, object e) {
+            Image.Visibility = Visibility.Collapsed;
+            RaisePropertyChanged(nameof(Source));
         }
 
         private void ImageOpened(object sender, RoutedEventArgs e) {

@@ -383,6 +383,10 @@
     <Compile Include="View\UserControls\KodiList.xaml.cs">
       <DependentUpon>KodiList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Video\MovieSetDetailsPage.xaml.cs">
+      <DependentUpon>MovieSetDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Video\MovieTablEntry.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -487,6 +491,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\KodiList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Video\MovieSetDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,7 +12,6 @@
     xmlns:uc="using:KodiRemote.View.UserControls"
     xmlns:converter="using:KodiRemote.View.Converter"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
-    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:CollectionViewModel, CreateList=True}"
     RequestedTheme="Dark"
     mc:Ignorable="d">
     <Page.Resources>
@@ -64,7 +63,7 @@
         <SemanticZoom Grid.Row="2" x:Name="Zoom" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.ZoomMode="Enabled">
             <SemanticZoom.ZoomedInView>
                 <GridView
-                    Padding="40,0,0,40"
+                    Padding="20,0,0,20"
                     x:Name="itemGridView"
                     IsItemClickEnabled="True"
                     IsZoomedInView="True"
@@ -89,7 +88,7 @@
                                                  VerticalContentAlignment="Stretch"
                                                  HorizontalContentAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
-                                                 ImageSource="{Binding Poster, Converter={StaticResource ImageSourceConverter}}" 
+                                                 ImageSource="{Binding Poster}" 
                                                  ImageFailedCommand="{Binding ImageFailedCommand}" 
                                                  PropName="Poster">
                                 </uc:ImageControl>
@@ -109,18 +108,14 @@
                     </GridView.ItemTemplate>
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ItemsWrapGrid GroupPadding="0,0,50,0" Margin="0" Orientation="Vertical"/>
+                            <ItemsWrapGrid GroupPadding="0,0,40,0" Margin="0" Orientation="Vertical"/>
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                     <GridView.GroupStyle>
                         <GroupStyle>
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="0,0,0,0">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" Margin="0,0,0,0" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
-                                        </StackPanel>
-                                    </Grid>
+                                    <TextBlock Text="{Binding Name}" Margin="0,0,0,8" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
                                 </DataTemplate>
                             </GroupStyle.HeaderTemplate>
                         </GroupStyle>
