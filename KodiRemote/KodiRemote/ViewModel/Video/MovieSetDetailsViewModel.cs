@@ -21,7 +21,6 @@ namespace KodiRemote.ViewModel.Video {
         }
 
         private MovieSetDetailsViewModel(MovieSetTableEntry item) : base(item) {
-            Title = item.Label;
             BackgroundItem = this;
             Groups = new ObservableCollection<Group<ItemViewModel>>();
             var movies = new ObservableCollection<ItemViewModel>();

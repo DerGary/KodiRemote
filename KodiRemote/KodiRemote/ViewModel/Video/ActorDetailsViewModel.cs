@@ -21,7 +21,6 @@ namespace KodiRemote.ViewModel.Video {
         }
         
         private ActorDetailsViewModel(ActorTableEntry item) : base(item) {
-            Title = item.Name;
             BackgroundItem = null;
             Groups = new ObservableCollection<Group<ItemViewModel>>();
             var tvshows = new ObservableCollection<ItemViewModel>();

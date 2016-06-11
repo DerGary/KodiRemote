@@ -46,7 +46,8 @@ namespace KodiRemote.View.Video {
         }
 
         private void SeasonClick(object sender, ItemClickEventArgs e) {
-
+            var viewModel = e.ClickedItem as ItemViewModel;
+            Frame.Navigate(typeof(TVShowSeasonDetailsPage), viewModel.Item);
         }
 
         private void ActorClicked(object sender, ItemClickEventArgs e) {

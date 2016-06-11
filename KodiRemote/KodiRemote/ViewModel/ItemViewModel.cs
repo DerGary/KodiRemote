@@ -117,11 +117,13 @@ namespace KodiRemote.ViewModel {
             }
             var episode = item as EpisodeTableEntry;
             if(episode != null) {
+                poster = episode.Thumbnail;
                 thumbnail = episode.Thumbnail;
                 label = episode.Title;
                 watched = episode.PlayCount > 0;
             }
             this.Item = item;
+            Title = Label;
         }
 
         public void SetProgressRing(string tag, bool active) {

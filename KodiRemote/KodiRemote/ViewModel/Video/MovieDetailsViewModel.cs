@@ -26,7 +26,6 @@ namespace KodiRemote.ViewModel.Video {
 
         public MovieDetailsViewModel(MovieTableEntry item) : base(item) {
             Movie = item;
-            Title = Movie.Label;
             BackgroundItem = this;
         }
 

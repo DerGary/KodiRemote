@@ -324,13 +324,17 @@
     <Compile Include="ViewModel\Video\ActorDetailsViewModel.cs" />
     <Compile Include="ViewModel\Video\ActorViewModel.cs" />
     <Compile Include="ViewModel\Video\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\Video\EpisodeViewModel.cs" />
     <Compile Include="ViewModel\Video\MovieDetailsViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModel\Video\MovieSetDetailsViewModel.cs" />
     <Compile Include="ViewModel\Video\TVShowDetailsViewModel.cs" />
+    <Compile Include="ViewModel\Video\TVShowSeasonDetailsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\Converter\EpisodeLabelConverter.cs" />
     <Compile Include="View\Converter\TVShowMapperConverter.cs" />
+    <Compile Include="View\Converter\TVShowSeasonMapperConverter.cs" />
     <Compile Include="View\Settings\AddKodiPage.xaml.cs">
       <DependentUpon>AddKodiPage.xaml</DependentUpon>
     </Compile>
@@ -396,6 +400,9 @@
     </Compile>
     <Compile Include="View\Video\TVShowDetailsPage.xaml.cs">
       <DependentUpon>TVShowDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Video\TVShowSeasonDetailsPage.xaml.cs">
+      <DependentUpon>TVShowSeasonDetailsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -513,6 +520,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Video\TVShowDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Video\TVShowSeasonDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

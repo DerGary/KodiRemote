@@ -19,9 +19,9 @@ namespace KodiRemote.View.Converter {
             if (tvshowActorMapper != null) {
                 return tvshowActorMapper.Select(x => new ActorViewModel(x));
             }
-            var tvshowSeasonMapper = value as IEnumerable<TVShowSeasonTableEntry>;
-            if (tvshowSeasonMapper != null) {
-                return tvshowSeasonMapper.Select(x => new ItemViewModel(x));
+            var tvshowSeasons = value as IEnumerable<TVShowSeasonTableEntry>;
+            if (tvshowSeasons != null) {
+                return tvshowSeasons.Select(x => new ItemViewModel(x));
             }
             return null;
         }
