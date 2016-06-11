@@ -31,4 +31,17 @@
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
+
+    <Style x:Key="TextHeaderStyle" BasedOn="{StaticResource HeaderTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="Margin" Value="0,0,10,13"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <Style x:Key="TextDetailStyle" BasedOn="{StaticResource HeaderTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="Margin" Value="10,0,0,13"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+    </Style>
+    
 </ResourceDictionary>

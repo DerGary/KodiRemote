@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.Database.MovieTables;
+﻿using KodiRemote.Code.Database.GeneralTables;
+using KodiRemote.Code.Database.MovieTables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace KodiRemote.ViewModel.Video {
     public class ActorViewModel : ItemViewModel {
         public string Role { get; set; }
 
-        public ActorViewModel(MovieActorMapper item) : base(item.Actor) {
+        public ActorViewModel(ActorMapper item) : base(item.Actor) {
             this.Role = item.Role;
         }
     }

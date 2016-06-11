@@ -34,7 +34,6 @@ namespace KodiRemote.View {
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e) {
             SplitView.ContentFrame.Navigate(typeof(HomePage));
-            
         }
     }
 }

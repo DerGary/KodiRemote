@@ -23,24 +23,10 @@ namespace KodiRemote.View {
     public sealed partial class RemoteControlPage : PageBase {
         public RemoteControlViewModel ViewModel { get; set; } = new RemoteControlViewModel();
 
-        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
+        public override ViewModelBase ViewModelBase => ViewModel; 
+
         public RemoteControlPage() {
             this.InitializeComponent();
-            Loaded += RemoteControlPage_Loaded;
-        }
-
-        private void RemoteControlPage_Loaded(object sender, RoutedEventArgs e) {
-            //ViewModel.Kodi.VideoLibrary.GetTVShowsReceived += VideoLibrary_GetTVShowsReceived;
-            //ViewModel.Kodi.VideoLibrary.GetMoviesReceived += VideoLibrary_GetMoviesReceived;
-            //ViewModel.Kodi.VideoLibrary.GetMovies();
-        }
-
-        private void VideoLibrary_GetMoviesReceived(MoviesResult item) {
-            Debug.WriteLine(item);
-        }
-
-        private void VideoLibrary_GetTVShowsReceived(TVShowsResult item) {
-            Debug.WriteLine(item);
         }
 
         private void Rectangle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) {

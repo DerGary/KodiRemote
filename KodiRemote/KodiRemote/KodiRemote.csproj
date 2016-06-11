@@ -125,6 +125,7 @@
     <Compile Include="Code\Database\EpisodeTables\EpisodeSubtitleStreamMapper.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeTableEntry.cs" />
     <Compile Include="Code\Database\EpisodeTables\EpisodeVideoStreamMapper.cs" />
+    <Compile Include="Code\Database\GeneralTables\ActorMapper.cs" />
     <Compile Include="Code\Database\GeneralTables\ActorTableEntry.cs" />
     <Compile Include="Code\Database\GeneralTables\AudioStreamTableEntry.cs" />
     <Compile Include="Code\Database\GeneralTables\DirectorTableEntry.cs" />
@@ -320,12 +321,16 @@
     <Compile Include="ViewModel\Group.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
+    <Compile Include="ViewModel\Video\ActorDetailsViewModel.cs" />
     <Compile Include="ViewModel\Video\ActorViewModel.cs" />
     <Compile Include="ViewModel\Video\CollectionViewModel.cs" />
     <Compile Include="ViewModel\Video\MovieDetailsViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\Video\MovieSetDetailsViewModel.cs" />
+    <Compile Include="ViewModel\Video\TVShowDetailsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\Converter\TVShowMapperConverter.cs" />
     <Compile Include="View\Settings\AddKodiPage.xaml.cs">
       <DependentUpon>AddKodiPage.xaml</DependentUpon>
     </Compile>
@@ -388,6 +393,9 @@
     </Compile>
     <Compile Include="View\Video\MovieSetDetailsPage.xaml.cs">
       <DependentUpon>MovieSetDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Video\TVShowDetailsPage.xaml.cs">
+      <DependentUpon>TVShowDetailsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -501,6 +509,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Video\MovieSetDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Video\TVShowDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

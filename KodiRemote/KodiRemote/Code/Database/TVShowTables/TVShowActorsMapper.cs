@@ -8,14 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.TVShowTables {
-    public class TVShowActorMapper : TableEntryBase {
+    public class TVShowActorMapper : ActorMapper {
         public int TVShowId { get; set; }
         public TVShowTableEntry TVShow { get; set; }
-
-        public int ActorId { get; set; }
-        public ActorTableEntry Actor { get; set; }
-
-        public string Role { get; set; }
 
         [NotMapped]
         public override string Key {

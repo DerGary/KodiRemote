@@ -88,6 +88,14 @@ namespace KodiRemote.ViewModel {
                 fanart = tvshow.Fanart;
                 label = tvshow.Label;
             }
+            var tvshowSeason = item as TVShowSeasonTableEntry;
+            if (tvshowSeason != null) {
+                poster = tvshowSeason.Poster;
+                extraImage = tvshowSeason.Banner;
+                thumbnail = tvshowSeason.Poster;
+                fanart = tvshowSeason.TVShow?.Fanart;
+                label = tvshowSeason.Label;
+            }
             var movieset = item as MovieSetTableEntry;
             if (movieset != null) {
                 poster = movieset.Poster;

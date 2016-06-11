@@ -27,11 +27,10 @@ namespace KodiRemote.View.Video {
                 RaisePropertyChanged(nameof(ViewModelBase));
             }
         }
-        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
+        public override ViewModelBase ViewModelBase => ViewModel;
 
         public delegate void NavigateEventHandler(ItemViewModel item);
         public event NavigateEventHandler Navigate;
-
 
         public HorizontalGridViewPage() {
             this.InitializeComponent();

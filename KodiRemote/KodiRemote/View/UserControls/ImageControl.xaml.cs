@@ -53,6 +53,7 @@ namespace KodiRemote.View.UserControls {
                 }
                 //source = new BitmapImage(new Uri(value));
                 FadeOutImage();
+                RaisePropertyChanged();
             }
         }
 
@@ -93,14 +94,8 @@ namespace KodiRemote.View.UserControls {
             this.InitializeComponent();
         }
 
-        private void ImageDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args) {
-            var image = (sender as Image);
-            image.Opacity = 0;
-            image.Visibility = Visibility.Collapsed;
-        }
-
         private void FadeOutImage() {
-            if(Image.Opacity == 0 || Image.Visibility == Visibility.Collapsed) {
+            if(Image.Opacity == 0) {
                 RaisePropertyChanged(nameof(Source));
             } else {
                 Storyboard AniFadeOut = new Storyboard();

@@ -10,11 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.MovieTables {
-    public class MovieActorMapper : MovieMapper {
-        public int ActorId { get; set; }
-        public ActorTableEntry Actor { get; set; }
-
-        public string Role { get; set; }
+    public class MovieActorMapper : ActorMapper {
+        public int MovieId { get; set; }
+        public MovieTableEntry Movie { get; set; }
 
         [NotMapped]
         public override string Key {

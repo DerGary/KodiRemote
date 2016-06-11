@@ -7,11 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KodiRemote.Code.Database.EpisodeTables {
-    public class EpisodeActorMapper : EpisodeMapper {
-        public int ActorId { get; set; }
-        public ActorTableEntry Actor { get; set; }
-
-        public string Role { get; set; }
+    public class EpisodeActorMapper : ActorMapper {
+        public int EpisodeId { get; set; }
+        public EpisodeTableEntry Episode { get; set; }
 
         [NotMapped]
         public override string Key {

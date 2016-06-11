@@ -18,16 +18,15 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KodiRemote.View.Video {
     public sealed partial class CollectionPage : PageBase {
-        public CollectionViewModel ViewModel { get; set; } =  new CollectionViewModel();
-        public override ViewModelBase ViewModelBase { get { return ViewModel; } }
+        public CollectionViewModel ViewModel { get; set; } = new CollectionViewModel();
+        public override ViewModelBase ViewModelBase => ViewModel; 
 
         public CollectionPage() {
             this.InitializeComponent();
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
-            var pagetype = (PageType)e.Parameter;
-            await ViewModel.Init(pagetype);
+            await ViewModel.Init((PageType)e.Parameter);
 
             base.OnNavigatedTo(e);
         }
@@ -37,6 +36,8 @@ namespace KodiRemote.View.Video {
                 Frame.Navigate(typeof(MovieDetailsPage), item.Item);
             }else if (ViewModel.PageType == PageType.MovieSets) {
                 Frame.Navigate(typeof(MovieSetDetailsPage), item.Item);
+            } else if (ViewModel.PageType == PageType.TVShows) {
+                Frame.Navigate(typeof(TVShowDetailsPage), item.Item);
             }
         }
     }

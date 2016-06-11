@@ -15,62 +15,13 @@
     mc:Ignorable="d">
     <Page.Resources>
         <converter:NullVisibilityConverter x:Key="NullVisibilityConverter" OnNull="Collapsed"/>
-        <Style x:Key="TextHeaderStyle" BasedOn="{StaticResource HeaderTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,0,10,13"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-        <Style x:Key="TextDetailStyle" BasedOn="{StaticResource HeaderTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,0,0,13"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="Light"/>
-        </Style>
-        <Style x:Key="GridViewPresenterStyle" TargetType="GridViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="TabNavigation" Value="Local"/>
-            <Setter Property="IsHoldingEnabled" Value="True"/>
-            <Setter Property="Margin" Value="0,0,2,2"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
-                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" 
-                                               ContentMargin="4" 
-                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
-                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
-                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                               Padding="{TemplateBinding Padding}" 
-                                               PointerOverBackgroundMargin="1" 
-                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                                               PointerOverBackground="#55000000" 
-                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
-                                               SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
-                                               SelectionCheckMarkVisualEnabled="True" 
-                                               SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
-                                               SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
-                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
-                                               SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
         <converter:MovieMapperConverter x:Name="MovieMapperConverter"/>
         <converter:MovieMovieSetMapperConverter x:Name="MovieMovieSetMapperConverter"/>
         <converter:RuntimeLengthConverter x:Name="RuntimeLengthConverter"/>
         <converter:ActorImageConverter x:Name="ActorImageConverter"/>
-        <converter:DivisionConverter x:Name="DivisionConverter"/>
     </Page.Resources>
     <ScrollViewer 
-        x:Name="ScrollViewer"
-        Grid.Row="1" 
         HorizontalScrollBarVisibility="Auto" 
         HorizontalScrollMode="Auto" 
         VerticalScrollBarVisibility="Disabled" 
@@ -84,7 +35,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="20,20,20,20" DataContext="{Binding }">
+            <Grid Grid.Column="0" Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="3*"/>
@@ -96,13 +47,6 @@
                                  ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
                                  PropName="Poster" 
                                  ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
-                <!--<Image Grid.RowSpan="2"
-                       Margin="1" 
-                       Source="{x:Bind ViewModel.Poster, Mode=OneWay}" 
-                       Tag="Poster" 
-                       ImageFailed="{x:Bind ViewModel.ImageFailed, Mode=OneWay}"
-                       ImageOpened="{x:Bind ViewModel.ImageOpened, Mode=OneWay}"
-                       Style="{StaticResource ImageInVisibileStretched}"/>-->
 
                 <Image Style="{StaticResource CheckMarkImageStyle}" 
                        ImageOpened="ImageOpened" 
@@ -117,14 +61,13 @@
                         Style="{StaticResource MovieDetailsPlayButtonStyle}"/>
             </Grid>
 
-            <Grid Grid.Column="1" DataContext="{x:Bind ViewModel.Movie, Mode=OneWay}">
+            <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="56"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" 
-                           VerticalAlignment="Top" 
+                <TextBlock VerticalAlignment="Top" 
                            Margin="20,10,20,0" 
                            Style="{StaticResource SubheaderTextBlockStyle}" 
                            TextWrapping="NoWrap"
@@ -151,22 +94,24 @@
                     <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Erscheinungsjahr:"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{Binding Label}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{Binding Genres, Converter={StaticResource MovieMapperConverter}}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{Binding Runtime, Converter={StaticResource RuntimeLengthConverter}}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{Binding Rating}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{Binding Year}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Label, Mode=OneWay}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Genres, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Rating, Mode=OneWay}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Year, Mode=OneWay}"/>
 
                     <ScrollViewer 
                                 Grid.Row="6" 
                                 Grid.ColumnSpan="2"
-                                Margin="0,0,0,0"
                                 VerticalScrollMode="Auto"
                                 VerticalScrollBarVisibility="Auto"
                                 HorizontalScrollMode="Disabled"
                                 HorizontalScrollBarVisibility="Disabled"
                                 ZoomMode="Disabled">
-                        <TextBlock Style="{StaticResource HeaderTextBlockStyle}" FontSize="20" Text="{Binding Plot}" LineStackingStrategy="BaselineToBaseline"/>
+                        <TextBlock Style="{StaticResource HeaderTextBlockStyle}" 
+                                   FontSize="20"
+                                   Text="{x:Bind ViewModel.Movie.Plot, Mode=OneWay}" 
+                                   LineStackingStrategy="BaselineToBaseline"/>
                     </ScrollViewer>
                 </Grid>
             </Grid>
@@ -179,8 +124,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" 
-                           VerticalAlignment="Top" 
+                <TextBlock VerticalAlignment="Top" 
                            Margin="20,10,20,0" 
                            Style="{StaticResource SubheaderTextBlockStyle}" 
                            TextWrapping="NoWrap" 
@@ -189,6 +133,7 @@
                     ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
                     Grid.Row="1"
                     VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch"
                     Margin="20,8,20,20"
                     SelectionMode="None" 
                     ScrollViewer.VerticalScrollMode="Disabled"
@@ -258,9 +203,7 @@
                     IsItemClickEnabled="True">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="videovm:ActorViewModel">
-                            <Grid x:Name="Grid" 
-                                  Height="260"
-                                  Width="428">
+                            <Grid Height="260" Width="428">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="173"/>
                                     <ColumnDefinition Width="*"/>

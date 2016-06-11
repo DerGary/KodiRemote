@@ -10,7 +10,6 @@
     xmlns:viewmodel="using:KodiRemote.ViewModel"
     xmlns:convert="using:KodiRemote.View.Converter"
     mc:Ignorable="d">
-
     <Page.Resources>
         <CollectionViewSource
             x:Name="groupedItemsViewSource"
