@@ -79,6 +79,7 @@ namespace KodiRemote.ViewModel {
                 thumbnail = movie.Poster;
                 fanart = movie.Fanart;
                 label = movie.Label;
+                watched = movie.PlayCount > 0;
             }
             var tvshow = item as TVShowTableEntry;
             if(tvshow != null) {
@@ -87,6 +88,7 @@ namespace KodiRemote.ViewModel {
                 thumbnail = tvshow.Poster;
                 fanart = tvshow.Fanart;
                 label = tvshow.Label;
+                watched = tvshow.WatchedEpisodes == tvshow.Episode;
             }
             var tvshowSeason = item as TVShowSeasonTableEntry;
             if (tvshowSeason != null) {
@@ -95,6 +97,7 @@ namespace KodiRemote.ViewModel {
                 thumbnail = tvshowSeason.Poster;
                 fanart = tvshowSeason.TVShow?.Fanart;
                 label = tvshowSeason.Label;
+                watched = tvshowSeason.WatchedEpisodes == tvshowSeason.Episode;
             }
             var movieset = item as MovieSetTableEntry;
             if (movieset != null) {
@@ -103,6 +106,7 @@ namespace KodiRemote.ViewModel {
                 thumbnail = movieset.Thumbnail;
                 extraImage = movieset.Poster;
                 label = movieset.Label;
+                watched = movieset.PlayCount > 0;
             }
             var actor = item as ActorTableEntry;
             if(actor != null) {
@@ -115,6 +119,7 @@ namespace KodiRemote.ViewModel {
             if(episode != null) {
                 thumbnail = episode.Thumbnail;
                 label = episode.Title;
+                watched = episode.PlayCount > 0;
             }
             this.Item = item;
         }
