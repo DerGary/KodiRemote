@@ -474,6 +474,15 @@ namespace KodiRemote.Code.Database {
                 .Include(x => x.Genres).ThenInclude(x => x.Genre)
                 .Include(x => x.Seasons).ThenInclude(x => x.Episodes);
         }
+        private IQueryable<EpisodeTableEntry> EpisodesWithRelations(DbContext context) {
+            return context.Set<EpisodeTableEntry>()
+                .Include(x => x.Actors).ThenInclude(x => x.Actor)
+                .Include(x => x.AudioStreams).ThenInclude(x => x.AudioStream)
+                .Include(x => x.Directors).ThenInclude(x => x.Director)
+                .Include(x => x.SubtitleStreams).ThenInclude(x => x.SubtitleStream)
+                .Include(x => x.VideoStreams).ThenInclude(x => x.VideoStream)
+                .Include(x => x.TVShowSeason).ThenInclude(x => x.TVShow).ThenInclude(x => x.Genres).ThenInclude(x => x.Genre);
+        }
 
         private IQueryable<MovieTableEntry> MoviesWithRelations(DbContext context) {
             return context.Set<MovieTableEntry>()
@@ -626,7 +635,6 @@ namespace KodiRemote.Code.Database {
         public async Task<IReadOnlyList<MovieTableEntry>> GetMovies() {
             await LoadMovies();
             return Movies;
-            //return new System.Collections.Generic.List<MovieTableEntry>() { Movies.FirstOrDefault() };
         }
 
         public async Task<MovieTableEntry> GetMovie(MovieTableEntry movie) {
@@ -648,6 +656,12 @@ namespace KodiRemote.Code.Database {
         public async Task<TVShowTableEntry> GetTVShow(TVShowTableEntry tvshow) {
             using (var context = database.CreateContext()) {
                 return await TVShowsWithRelations(context).FirstOrDefaultAsync(x => x.TVShowId == tvshow.TVShowId);
+            }
+        }
+
+        public async Task<EpisodeTableEntry> GetEpisode(EpisodeTableEntry episode) {
+            using (var context = database.CreateContext()) {
+                return await EpisodesWithRelations(context).FirstOrDefaultAsync(x => x.EpisodeId == episode.EpisodeId);
             }
         }
 

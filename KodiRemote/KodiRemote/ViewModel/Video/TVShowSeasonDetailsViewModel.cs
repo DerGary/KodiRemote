@@ -22,6 +22,7 @@ namespace KodiRemote.ViewModel.Video {
         private TVShowSeasonDetailsViewModel(TVShowSeasonTableEntry item) : base(item) {
             BackgroundItem = this;
             TVShowSeason = item;
+            Title = $"{item.TVShow.Label} - Staffel {item.Season}";
         }
 
         public static async Task<TVShowSeasonDetailsViewModel> Init(TVShowSeasonTableEntry item) {

@@ -4,15 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:KodiRemote"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:style="using:KodiRemote.Res.Styles"
     RequestedTheme="Dark">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                
                 <ResourceDictionary Source="Res/Styles/AppStyles.xaml"/>
+                <ResourceDictionary Source="Res/Styles/TextBlockStyles.xaml"/>
                 <ResourceDictionary Source="Res/Styles/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="Res/Styles/ImageStyles.xaml"/>
-                <ResourceDictionary Source="Res/Styles/TextBlockStyles.xaml"/>
                 <ResourceDictionary Source="Res/Styles/SplitViewStyles.xaml"/>
+                <ResourceDictionary Source="Res/Styles/GridViewStyles.xaml"/>
+                <style:DataTemplates/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

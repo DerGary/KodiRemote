@@ -42,8 +42,9 @@ namespace KodiRemote.View.Video {
             base.OnNavigatedTo(e);
         }
 
-        private void EpisodeItemClick(object sender, ItemClickEventArgs e) {
-
+        private void EpisodeClicked(object sender, ItemClickEventArgs e) {
+            var viewModel = e.ClickedItem as ItemViewModel;
+            Frame.Navigate(typeof(EpisodeDetailsPage), viewModel.Item);
         }
     }
 }

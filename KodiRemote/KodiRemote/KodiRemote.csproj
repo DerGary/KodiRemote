@@ -317,6 +317,7 @@
       <DependentUpon>20160526213257_AddedUsernameAndPort.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Settings\SettingsContextModelSnapshot.cs" />
+    <Compile Include="Res\Styles\DataTemplates.cs" />
     <Compile Include="ViewModel\Settings\AddKodiViewModel.cs" />
     <Compile Include="ViewModel\Group.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
@@ -324,6 +325,7 @@
     <Compile Include="ViewModel\Video\ActorDetailsViewModel.cs" />
     <Compile Include="ViewModel\Video\ActorViewModel.cs" />
     <Compile Include="ViewModel\Video\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\Video\EpisodeDetailsViewModel.cs" />
     <Compile Include="ViewModel\Video\EpisodeViewModel.cs" />
     <Compile Include="ViewModel\Video\MovieDetailsViewModel.cs" />
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
@@ -333,6 +335,7 @@
     <Compile Include="ViewModel\Video\TVShowSeasonDetailsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\Converter\EpisodeLabelConverter.cs" />
+    <Compile Include="View\Converter\EpisodeMapperConverter.cs" />
     <Compile Include="View\Converter\TVShowMapperConverter.cs" />
     <Compile Include="View\Converter\TVShowSeasonMapperConverter.cs" />
     <Compile Include="View\Settings\AddKodiPage.xaml.cs">
@@ -367,6 +370,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\Video\EpisodeDetailsPage.xaml.cs">
+      <DependentUpon>EpisodeDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Video\HorizontalGridViewPage.xaml.cs">
       <DependentUpon>HorizontalGridViewPage.xaml</DependentUpon>
     </Compile>
@@ -436,6 +442,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Res\Styles\GridViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Res\Styles\ImageStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -478,6 +489,10 @@
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Video\EpisodeDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Video\HorizontalGridViewPage.xaml">
       <SubType>Designer</SubType>

@@ -21,7 +21,7 @@
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             Stretch="{x:Bind Stretch, Mode=OneWay}"
-            Style="{StaticResource ImageInVisibileStretched}" >
+            Opacity="0">
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="ImageFailed">
                     <ic:InvokeCommandAction Command="{x:Bind ImageFailedCommand, Mode=OneWay}" CommandParameter="{x:Bind PropName, Mode=OneWay}"/>

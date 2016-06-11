@@ -11,11 +11,13 @@
     xmlns:viewmodel="using:KodiRemote.ViewModel"
     xmlns:videovm="using:KodiRemote.ViewModel.Video"
     mc:Ignorable="d">
+    
     <Page.Resources>
         <converter:RuntimeLengthConverter x:Key="RuntimeLengthConverter"/>
         <converter:TVShowSeasonMapperConverter x:Key="TVShowSeasonMapperConverter"/>
         <converter:EpisodeLabelConverter x:Key="EpisodeLabelConverter"/>
     </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -24,9 +26,10 @@
 
         <Grid Margin="20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
+            
             <Polygon Grid.RowSpan="2" Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black"/>
             <ProgressRing Grid.RowSpan="2" Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
             <uc:ImageControl Margin="1" 
@@ -35,7 +38,7 @@
                              PropName="Poster" 
                              ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
 
-            <Image Style="{StaticResource CheckMarkImageStyle}" 
+            <!--<Image Style="{StaticResource CheckMarkImageStyle}" 
                    ImageOpened="ImageOpened" 
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left" 
@@ -44,7 +47,7 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Command="{Binding PlayTvShowSeason}"
-                    Style="{StaticResource MovieDetailsPlayButtonStyle}"/>
+                    Style="{StaticResource MovieDetailsPlayButtonStyle}"/>-->
         </Grid>
 
         <Grid Grid.Column="1">
@@ -53,19 +56,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock VerticalAlignment="Top" 
-                       Margin="20,10,20,0" 
-                       Style="{StaticResource SubheaderTextBlockStyle}" 
-                       TextWrapping="NoWrap"
-                       Text="Episoden"/>
+            <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Episoden"/>
+            
             <ListView 
                 Grid.Row="1"
                 SelectionMode="None"
                 ItemsSource="{x:Bind ViewModel.TVShowSeason.Episodes, Mode=OneWay, Converter={StaticResource TVShowSeasonMapperConverter}}"
                 Margin="20,8,20,20"
                 IsItemClickEnabled="True"
-                ItemClick="EpisodeItemClick">
-                <ListView.ItemTemplate >
+                ItemClick="EpisodeClicked">
+                <ListView.ItemTemplate>
                     <DataTemplate x:DataType="videovm:EpisodeViewModel">
                         <Grid Height="100">
                             <Grid.ColumnDefinitions>
@@ -84,19 +84,19 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind PosterProgressRingActive, Mode=OneWay}" />
-                                <uc:ImageControl ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"
+                                <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
+                                <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
                                                  Grid.RowSpan="2"
                                                  ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
                                                  Margin="1"
                                                  Stretch="UniformToFill"
-                                                 PropName="PosterThumbnail"/>
+                                                 PropName="Thumbnail"/>
 
-                                <Image Style="{StaticResource CheckMarkImageStyle}" 
+                                <!--<Image Style="{StaticResource CheckMarkImageStyle}" 
                                        ImageOpened="ImageOpened"
                                        VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" 
-                                       Stretch="Uniform"/>
+                                       Stretch="Uniform"/>-->
                             </Grid>
 
 

@@ -26,7 +26,7 @@ namespace KodiRemote.ViewModel.Video {
             var movies = new ObservableCollection<ItemViewModel>();
 
             foreach (var movie in item.Movies.Select(x => x.Movie).OrderBy(x => x.Year)) {
-                movies.Add(new ItemViewModel(item));
+                movies.Add(new ItemViewModel(movie));
             }
             if (movies.Any()) {
                 Groups.Add(new Group<ItemViewModel>() { Name = "Movies", Items = movies });

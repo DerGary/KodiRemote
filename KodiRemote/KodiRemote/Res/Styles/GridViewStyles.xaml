@@ -1,0 +1,171 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="KodiRemote.Res.Styles.DataTemplates"
+    xmlns:local="using:KodiRemote.Res.Styles"
+    xmlns:viewmodel="using:KodiRemote.ViewModel"
+    xmlns:uc="using:KodiRemote.View.UserControls"
+    xmlns:videovm="using:KodiRemote.ViewModel.Video"
+    xmlns:converter="using:KodiRemote.View.Converter">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="AppStyles.xaml"/>
+        <ResourceDictionary Source="TextBlockStyles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+    <converter:ActorImageConverter x:Key="ActorImageConverter"/>
+    
+    <Style TargetType="GridViewHeaderItem">
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontSize" Value="{ThemeResource GridViewHeaderItemThemeFontSize}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0,0,0,4"/>
+        <Setter Property="Padding" Value="12,8,12,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="MinHeight" Value="{ThemeResource GridViewHeaderItemMinHeight}"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewHeaderItem">
+                    <StackPanel Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="GridViewPresenterStyle" TargetType="GridViewItem">
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="TabNavigation" Value="Local"/>
+        <Setter Property="IsHoldingEnabled" Value="True"/>
+        <Setter Property="Margin" Value="0,0,2,2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewItem">
+                    <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
+                                           CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" 
+                                           ContentMargin="4" 
+                                           ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                           CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
+                                           DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                                           DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                                           DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                                           DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                                           FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
+                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                           Padding="{TemplateBinding Padding}" 
+                                           PointerOverBackgroundMargin="1" 
+                                           PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                                           PointerOverBackground="#55000000" 
+                                           ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
+                                           SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
+                                           SelectionCheckMarkVisualEnabled="True" 
+                                           SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
+                                           SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
+                                           SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
+                                           SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
+                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- Used for Season Covers and Movie Covers of Movieset on the Details Pages and for Actors too-->
+    <Style x:Key="ItemGridViewStyle" TargetType="GridView">
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="20,8,20,20"/>
+        <Setter Property="SelectionMode" Value="None"/>
+        <Setter Property="IsItemClickEnabled" Value="True"/>
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource GridViewPresenterStyle}"/>
+        <Setter Property="ItemTemplate" Value="{StaticResource ItemGridViewItemTemplate}"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Margin="0" Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="GroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource ItemGridViewStyle}">
+        <Setter Property="Margin" Value="20,0,0,20"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid GroupPadding="20,0,20,0"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="GroupHeaderTemplate">
+        <TextBlock Text="{Binding Name}" Margin="0,0,0,4" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ItemGridViewItemTemplate" x:DataType="viewmodel:ItemViewModel">
+        <Grid Width="428" Height="260" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="173"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+
+                <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind PosterProgressRingActive, Mode=OneWay}" />
+                <uc:ImageControl ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"
+                                 Grid.RowSpan="2"
+                                 Stretch="UniformToFill"
+                                 ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                                 Margin="1"
+                                 PropName="PosterThumbnail"/>
+
+                <!--<Image Style="{StaticResource CheckMarkImageStyle}" 
+                                           ImageOpened="ImageOpened"
+                                           VerticalAlignment="Top" 
+                                           HorizontalAlignment="Left" 
+                                           Stretch="Uniform"/>-->
+            </Grid>
+            <TextBlock Grid.Column="1" Text="{x:Bind Label, Mode=OneWay}" Style="{StaticResource GridTextStyle}" VerticalAlignment="Center" FontWeight="Bold"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ActorGridViewItemTemplate" x:DataType="videovm:ActorViewModel">
+        <Grid Height="260" Width="428">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="173"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ProgressRing Width="30" Height="30" IsActive="{x:Bind PosterProgressRingActive, Mode=OneWay}"/>
+            <uc:ImageControl ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                             PropName="PosterThumbnail"
+                             Stretch="UniformToFill"
+                             ImageSource="{x:Bind PosterThumbnail, Mode=OneWay, Converter={StaticResource ActorImageConverter}}"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{x:Bind Role, Mode=OneWay}" Grid.Row="0" FontSize="20" Padding="20" VerticalAlignment="Bottom" FontWeight="Bold"  TextWrapping="Wrap"/>
+                <TextBlock Text="{x:Bind Label, Mode=OneWay}" Grid.Row="1" FontSize="20" Padding="20" VerticalAlignment="Top"    FontWeight="Light" TextWrapping="Wrap"/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

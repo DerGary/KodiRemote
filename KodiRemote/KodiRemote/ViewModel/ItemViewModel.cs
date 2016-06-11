@@ -117,8 +117,9 @@ namespace KodiRemote.ViewModel {
             }
             var episode = item as EpisodeTableEntry;
             if(episode != null) {
-                poster = episode.Thumbnail;
+                poster = episode.TVShowSeason?.Poster;
                 thumbnail = episode.Thumbnail;
+                fanart = episode.TVShowSeason?.TVShow?.Fanart;
                 label = episode.Title;
                 watched = episode.PlayCount > 0;
             }

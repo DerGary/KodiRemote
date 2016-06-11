@@ -126,19 +126,19 @@
 
             <SemanticZoom.ZoomedOutView>
                 <GridView
-                        Grid.Row="2"
-                        Padding="50,75,50,75"
-                        Margin="0,75,0,0"
-                        VerticalAlignment="Stretch"
-                        VerticalContentAlignment="Center"
-                        x:Name="groupGridView"
-                        ItemsSource="{Binding ElementName=groupedItemsViewSource, Path=View.CollectionGroups}"
-                        ScrollViewer.IsHorizontalScrollChainingEnabled="False"
-                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                        ScrollViewer.VerticalScrollMode="Disabled"
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        ScrollViewer.HorizontalScrollMode="Auto"
-                        IsItemClickEnabled="True">
+                    Grid.Row="2"
+                    Padding="50,75,50,75"
+                    Margin="0,75,0,0"
+                    VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    x:Name="groupGridView"
+                    ItemsSource="{Binding ElementName=groupedItemsViewSource, Path=View.CollectionGroups}"
+                    ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollMode="Disabled"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.HorizontalScrollMode="Auto"
+                    IsItemClickEnabled="True">
                     <GridView.ItemTemplate >
                         <DataTemplate x:DataType="ui:ICollectionViewGroup">
                             <Grid Width="200" Height="300" Background="Black">

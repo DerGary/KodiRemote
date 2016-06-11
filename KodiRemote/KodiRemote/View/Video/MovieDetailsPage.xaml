@@ -13,20 +13,16 @@
     xmlns:uc="using:KodiRemote.View.UserControls"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d">
+    
     <Page.Resources>
         <converter:NullVisibilityConverter x:Key="NullVisibilityConverter" OnNull="Collapsed"/>
-        
         <converter:MovieMapperConverter x:Name="MovieMapperConverter"/>
         <converter:MovieMovieSetMapperConverter x:Name="MovieMovieSetMapperConverter"/>
         <converter:RuntimeLengthConverter x:Name="RuntimeLengthConverter"/>
         <converter:ActorImageConverter x:Name="ActorImageConverter"/>
     </Page.Resources>
-    <ScrollViewer 
-        HorizontalScrollBarVisibility="Auto" 
-        HorizontalScrollMode="Auto" 
-        VerticalScrollBarVisibility="Disabled" 
-        VerticalScrollMode="Disabled" 
-        ScrollViewer.ZoomMode="Disabled">
+
+    <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -40,6 +36,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
+                
                 <Polygon Grid.RowSpan="2" Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black" />
                 <ProgressRing Grid.RowSpan="2" Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
                 <uc:ImageControl Margin="1" 
@@ -48,7 +45,7 @@
                                  PropName="Poster" 
                                  ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
 
-                <Image Style="{StaticResource CheckMarkImageStyle}" 
+                <!--<Image Style="{StaticResource CheckMarkImageStyle}" 
                        ImageOpened="ImageOpened" 
                        VerticalAlignment="Top" 
                        HorizontalAlignment="Left" 
@@ -58,7 +55,7 @@
                         Grid.RowSpan="2"
                         Grid.Column="0"
                         Command="{Binding PlayMovie}"
-                        Style="{StaticResource MovieDetailsPlayButtonStyle}"/>
+                        Style="{StaticResource MovieDetailsPlayButtonStyle}"/>-->
             </Grid>
 
             <Grid Grid.Column="1">
@@ -67,19 +64,16 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock VerticalAlignment="Top" 
-                           Margin="20,10,20,0" 
-                           Style="{StaticResource SubheaderTextBlockStyle}" 
-                           TextWrapping="NoWrap"
-                           Text="Info"/>
+                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
+                
                 <Grid Grid.Row="1" Margin="20,8,20,20" Width="700">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -100,18 +94,8 @@
                     <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Rating, Mode=OneWay}"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Year, Mode=OneWay}"/>
 
-                    <ScrollViewer 
-                                Grid.Row="6" 
-                                Grid.ColumnSpan="2"
-                                VerticalScrollMode="Auto"
-                                VerticalScrollBarVisibility="Auto"
-                                HorizontalScrollMode="Disabled"
-                                HorizontalScrollBarVisibility="Disabled"
-                                ZoomMode="Disabled">
-                        <TextBlock Style="{StaticResource HeaderTextBlockStyle}" 
-                                   FontSize="20"
-                                   Text="{x:Bind ViewModel.Movie.Plot, Mode=OneWay}" 
-                                   LineStackingStrategy="BaselineToBaseline"/>
+                    <ScrollViewer Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource VerticalScrollViewerStyle}">
+                        <TextBlock Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind ViewModel.Movie.Plot, Mode=OneWay}"/>
                     </ScrollViewer>
                 </Grid>
             </Grid>
@@ -124,62 +108,13 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock VerticalAlignment="Top" 
-                           Margin="20,10,20,0" 
-                           Style="{StaticResource SubheaderTextBlockStyle}" 
-                           TextWrapping="NoWrap" 
-                           Text="{Binding Label}" />
-                <GridView 
-                    ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
-                    Grid.Row="1"
-                    VerticalAlignment="Stretch" 
-                    HorizontalAlignment="Stretch"
-                    Margin="20,8,20,20"
-                    SelectionMode="None" 
-                    ScrollViewer.VerticalScrollMode="Disabled"
-                    ScrollViewer.HorizontalScrollMode="Disabled"
-                    ItemContainerStyle="{StaticResource GridViewPresenterStyle}"
-                    ItemClick="MovieSetMovieClicked"
-                    IsItemClickEnabled="True">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="viewmodel:ItemViewModel">
-                            <Grid Height="260"
-                                  Width="428">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="173"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="{Binding Label}"/>
 
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="3*"/>
-                                    </Grid.RowDefinitions>
+                <GridView ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
+                          Grid.Row="1"
+                          Style="{StaticResource ItemGridViewStyle}"
+                          ItemClick="MovieSetMovieClicked"/>
 
-                                    <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind PosterProgressRingActive, Mode=OneWay}" />
-                                    <uc:ImageControl ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"
-                                                     Grid.RowSpan="2"
-                                                     ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
-                                                     Margin="1"
-                                                     PropName="PosterThumbnail"/>
-
-                                    <Image Style="{StaticResource CheckMarkImageStyle}" 
-                                           ImageOpened="ImageOpened"
-                                           VerticalAlignment="Top" 
-                                           HorizontalAlignment="Left" 
-                                           Stretch="Uniform"/>
-
-                                </Grid>
-                                <TextBlock Grid.Column="1" Text="{x:Bind Label, Mode=OneWay}" Style="{StaticResource GridTextStyle}" VerticalAlignment="Center" FontWeight="Bold"/>
-                            </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid Margin="0" Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
-                </GridView>
             </Grid>
 
             <Grid Grid.Column="3">
@@ -188,49 +123,13 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" VerticalAlignment="Top" Margin="20,10,20,0" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" Text="Schauspieler"/>
-                <GridView 
-                    x:Name="ActorGridView"
-                    ItemsSource="{x:Bind ViewModel.Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
-                    Grid.Row="1"
-                    VerticalAlignment="Stretch" 
-                    Margin="20,8,20,20"
-                    SelectionMode="None" 
-                    ScrollViewer.VerticalScrollMode="Disabled"
-                    ScrollViewer.HorizontalScrollMode="Disabled"
-                    ItemContainerStyle="{StaticResource GridViewPresenterStyle}"
-                    ItemClick="ActorClicked"
-                    IsItemClickEnabled="True">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="videovm:ActorViewModel">
-                            <Grid Height="260" Width="428">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="173"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ProgressRing Width="30" Height="30" IsActive="{Binding PosterProgressRingActive}"/>
-                                <uc:ImageControl ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
-                                                 PropName="PosterThumbnail"
-                                                 Stretch="UniformToFill"
-                                                 ImageSource="{x:Bind PosterThumbnail, Mode=OneWay, Converter={StaticResource ActorImageConverter}}"/>
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{x:Bind Role, Mode=OneWay}" Grid.Row="0" FontSize="20" Padding="20" VerticalAlignment="Bottom" FontWeight="Bold"  TextWrapping="Wrap"/>
-                                    <TextBlock Text="{x:Bind Label, Mode=OneWay}" Grid.Row="1" FontSize="20" Padding="20" VerticalAlignment="Top"    FontWeight="Light" TextWrapping="Wrap"/>
-                                </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid Margin="0" Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
-                </GridView>
+                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Schauspieler"/>
+                
+                <GridView Grid.Row="1" 
+                          Style="{StaticResource ItemGridViewStyle}"
+                          ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
+                          ItemsSource="{x:Bind ViewModel.Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
+                          ItemClick="ActorClicked"/>
             </Grid>
 
             <!--Trailer Grid-->

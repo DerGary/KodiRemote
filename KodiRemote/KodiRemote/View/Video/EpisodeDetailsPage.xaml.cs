@@ -1,7 +1,4 @@
-﻿using KodiRemote.Code.Database.MovieTables;
-using KodiRemote.View.Base;
-using KodiRemote.ViewModel;
-using KodiRemote.ViewModel.Video;
+﻿using KodiRemote.View.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,11 +13,14 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using KodiRemote.ViewModel;
+using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.ViewModel.Video;
 
 namespace KodiRemote.View.Video {
-    public sealed partial class MovieDetailsPage : PageBase {
-        private MovieDetailsViewModel viewModel;
-        public MovieDetailsViewModel ViewModel {
+    public sealed partial class EpisodeDetailsPage : PageBase {
+        private EpisodeDetailsViewModel viewModel;
+        public EpisodeDetailsViewModel ViewModel {
             get {
                 return viewModel;
             }
@@ -31,22 +31,17 @@ namespace KodiRemote.View.Video {
             }
         }
 
-        public override ViewModelBase ViewModelBase => ViewModel; 
+        public override ViewModelBase ViewModelBase => ViewModel;
 
-        public MovieDetailsPage() {
+        public EpisodeDetailsPage() {
             this.InitializeComponent();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e) {
-            ViewModel = await MovieDetailsViewModel.Init(e.Parameter as MovieTableEntry);
+        protected override async void OnNavigatedTo(NavigationEventArgs e) {
+            ViewModel = await EpisodeDetailsViewModel.Init(e.Parameter as EpisodeTableEntry);
             base.OnNavigatedTo(e);
         }
-
-        private void MovieSetMovieClicked(object sender, ItemClickEventArgs e) {
-            var viewModel = e.ClickedItem as ItemViewModel;
-            Frame.Navigate(typeof(MovieDetailsPage), viewModel.Item);
-        }
-
+        
         private void ActorClicked(object sender, ItemClickEventArgs e) {
             var vm = e.ClickedItem as ActorViewModel;
             Frame.Navigate(typeof(ActorDetailsPage), vm.Item);
