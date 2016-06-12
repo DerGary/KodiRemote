@@ -23,14 +23,4 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Stretch" Value="UniformToFill"/>
     </Style>
-    
-    <Style x:Key="CheckMarkImageStyle" TargetType="Image">
-        <Setter Property="Source" Value="{Binding WatchedMarkImage}"/>
-        <Setter Property="Name" Value="CheckMark"/>
-        <Setter Property="Visibility"  Value="Visible"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Stretch" Value="UniformToFill"/>
-        <Setter Property="Margin" Value="0"/>
-        <Setter Property="Opacity" Value="0"/>
-    </Style>
 </ResourceDictionary>

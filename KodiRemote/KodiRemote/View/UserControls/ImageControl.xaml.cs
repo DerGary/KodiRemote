@@ -20,25 +20,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KodiRemote.View.UserControls {
     public sealed partial class ImageControl : UserControlBase {
-        //public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(nameof(ImageSource), typeof(string), typeof(ImageControl), new PropertyMetadata(null, new PropertyChangedCallback(dosth)));
-
-        //private static void dosth(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-
-        //    var image = (ImageControl)d;
-        //    if(string.IsNullOrEmpty(e.NewValue as string)) {
-        //        image.source = null;
-        //    }else {
-        //        image.source = new BitmapImage(new Uri(e.NewValue as string));
-        //    }
-        //    image.FadeOutImage();
-        //}
-
-        //public string ImageSource {
-        //    get { return (string)GetValue(ImageSourceProperty); }
-        //    set {
-        //        SetValue(ImageSourceProperty, value);
-        //    }
-        //}
         private string imageSource;
         public string ImageSource {
             get {
@@ -69,6 +50,16 @@ namespace KodiRemote.View.UserControls {
             }
         }
 
+        private bool watched;
+        public bool Watched {
+            get {
+                return watched;
+            }
+            set {
+                watched = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public static readonly DependencyProperty ImageFailedCommandProperty = DependencyProperty.Register(nameof(ImageFailedCommand), typeof(RelayCommand<object>), typeof(ImageControl), null);
 
@@ -98,20 +89,7 @@ namespace KodiRemote.View.UserControls {
             if(Image.Opacity == 0) {
                 RaisePropertyChanged(nameof(Source));
             } else {
-                Storyboard AniFadeOut = new Storyboard();
-
-                DoubleAnimation FadeOut = new DoubleAnimation();
-                FadeOut.From = 1.0;
-                FadeOut.To = 0.0;
-                FadeOut.Duration = new Duration(TimeSpan.FromSeconds(.5));
-
-                AniFadeOut.Children.Add(FadeOut);
-                Storyboard.SetTarget(FadeOut, Image);
-                Storyboard.SetTargetProperty(FadeOut, "Opacity");
-
-                AniFadeOut.Completed += AniFadeOut_Completed;
-
-                AniFadeOut.Begin();
+                FadeOutAnimation.Begin();
             }
         }
 
@@ -120,21 +98,15 @@ namespace KodiRemote.View.UserControls {
         }
 
         private void ImageOpened(object sender, RoutedEventArgs e) {
-            var image = sender as Image;
-            image.Opacity = 0;
-            image.Visibility = Visibility.Visible;
-            Storyboard AniFadeIn = new Storyboard();
+            FadeInAnimation.Begin();
+        }
 
-            DoubleAnimation FadeIn = new DoubleAnimation();
-            FadeIn.From = 0.0;
-            FadeIn.To = 1.0;
-            FadeIn.Duration = new Duration(TimeSpan.FromSeconds(.5));
+        private void FadeInCompleted(object sender, object e) {
 
-            AniFadeIn.Children.Add(FadeIn);
-            Storyboard.SetTarget(FadeIn, image);
-            Storyboard.SetTargetProperty(FadeIn, "Opacity");
+        }
 
-            AniFadeIn.Begin();
+        private void FadeOutCompleted(object sender, object e) {
+            RaisePropertyChanged(nameof(Source));
         }
     }
 }

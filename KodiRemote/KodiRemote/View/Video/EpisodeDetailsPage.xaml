@@ -56,14 +56,8 @@
                                      Grid.ColumnSpan="2"
                                      ImageSource="{x:Bind ViewModel.Thumbnail, Mode=OneWay}" 
                                      PropName="Thumbnail" 
+                                     Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
                                      ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
-
-
-                    <!--<Image Style="{StaticResource CheckMarkImageStyle}" 
-                           ImageOpened="ImageOpened" 
-                           VerticalAlignment="Top" 
-                           HorizontalAlignment="Left" 
-                           Stretch="Uniform"/>-->
                 </Grid>
                 <!--<Button x:Name="TvShowEpisodePlayButton"
                         Grid.RowSpan="2"

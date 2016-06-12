@@ -8,13 +8,30 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:converter="using:KodiRemote.View.Converter"
     VerticalAlignment="Stretch"
     HorizontalAlignment="Stretch"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <!--<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
+    <UserControl.Resources>
+        <Storyboard x:Name="FadeInAnimation" Completed="FadeInCompleted">
+            <DoubleAnimation Duration="0:0:.5"  Storyboard.TargetName="Image" Storyboard.TargetProperty="Opacity"  From="0" To="1"/>
+            <DoubleAnimation Duration="0:0:.5"  Storyboard.TargetName="CheckmarkImage" Storyboard.TargetProperty="Opacity"  From="0" To="1"/>
+        </Storyboard>
+        <Storyboard x:Name="FadeOutAnimation" Completed="FadeOutCompleted">
+            <DoubleAnimation Duration="0:0:.5"  Storyboard.TargetName="Image" Storyboard.TargetProperty="Opacity"  From="1" To="0"/>
+            <DoubleAnimation Duration="0:0:.5"  Storyboard.TargetName="CheckmarkImage" Storyboard.TargetProperty="Opacity"  From="1" To="0"/>
+        </Storyboard>
+        <converter:BoolVisibilityConverter OnTrue="Visible" OnFalse="Collapsed" x:Key="BoolVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
         <Image 
+            Grid.RowSpan="2"
             x:Name="Image"
             Source="{x:Bind Source, Mode=OneWay}"
             ImageOpened="ImageOpened"
@@ -28,6 +45,13 @@
                 </ic:EventTriggerBehavior>
             </i:Interaction.Behaviors>
         </Image>
-    <!--</Grid>-->
+        <Image x:Name="CheckmarkImage" 
+               Source="ms-appx:///Assets/checkmark_wide.png"
+               VerticalAlignment="Top" 
+               HorizontalAlignment="Left" 
+               Visibility="{x:Bind Watched, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"
+               Opacity="0"
+               Stretch="Uniform"/>
+    </Grid>
     
 </base:UserControlBase>

@@ -134,13 +134,8 @@
                                  Stretch="UniformToFill"
                                  ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
                                  Margin="1"
+                                 Watched="{x:Bind Watched, Mode=OneWay}"
                                  PropName="PosterThumbnail"/>
-
-                <!--<Image Style="{StaticResource CheckMarkImageStyle}" 
-                                           ImageOpened="ImageOpened"
-                                           VerticalAlignment="Top" 
-                                           HorizontalAlignment="Left" 
-                                           Stretch="Uniform"/>-->
             </Grid>
             <TextBlock Grid.Column="1" Text="{x:Bind Label, Mode=OneWay}" Style="{StaticResource GridTextStyle}" VerticalAlignment="Center" FontWeight="Bold"/>
         </Grid>

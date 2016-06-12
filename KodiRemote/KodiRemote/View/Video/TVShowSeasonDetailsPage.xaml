@@ -36,13 +36,9 @@
                              Grid.RowSpan="2" 
                              ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
                              PropName="Poster" 
+                             Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
                              ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
-
-            <!--<Image Style="{StaticResource CheckMarkImageStyle}" 
-                   ImageOpened="ImageOpened" 
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Left" 
-                   Stretch="Uniform"/>
+<!--
             <Button x:Name="TvShowPlayButton"
                     Grid.RowSpan="2"
                     Grid.Column="0"
@@ -89,14 +85,9 @@
                                                  Grid.RowSpan="2"
                                                  ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
                                                  Margin="1"
+                                                 Watched="{x:Bind Watched, Mode=OneWay}"
                                                  Stretch="UniformToFill"
                                                  PropName="Thumbnail"/>
-
-                                <!--<Image Style="{StaticResource CheckMarkImageStyle}" 
-                                       ImageOpened="ImageOpened"
-                                       VerticalAlignment="Top" 
-                                       HorizontalAlignment="Left" 
-                                       Stretch="Uniform"/>-->
                             </Grid>
 
 

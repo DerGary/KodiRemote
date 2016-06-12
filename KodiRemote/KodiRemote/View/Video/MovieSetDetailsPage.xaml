@@ -32,6 +32,7 @@
                 <uc:ImageControl ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
                                  ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"
                                  Margin="1"
+                                 Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
                                  PropName="Poster"/>
             </Grid>
             

@@ -89,6 +89,7 @@
                                                  VerticalContentAlignment="Stretch"
                                                  HorizontalContentAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
+                                                 Watched="{x:Bind Watched, Mode=OneWay}"
                                                  ImageSource="{x:Bind Poster, Mode=OneWay}" 
                                                  ImageFailedCommand="{Binding ImageFailedCommand}" 
                                                  PropName="Poster">
@@ -97,13 +98,6 @@
                                 <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
                                     <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20" TextWrapping="Wrap"/>
                                 </StackPanel>
-
-                                <Image Style="{StaticResource CheckMarkImageStyle}" 
-                                       Source="{Binding WatchedMarkImage}" 
-                                       VerticalAlignment="Top" 
-                                       HorizontalAlignment="Left" 
-                                       Stretch="Uniform" />
-
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
@@ -122,6 +116,7 @@
                         </GroupStyle>
                     </GridView.GroupStyle>
                 </GridView>
+               
             </SemanticZoom.ZoomedInView>
 
             <SemanticZoom.ZoomedOutView>
