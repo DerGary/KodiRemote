@@ -130,6 +130,7 @@
     <Compile Include="Code\Database\GeneralTables\ActorTableEntry.cs" />
     <Compile Include="Code\Database\GeneralTables\AudioStreamTableEntry.cs" />
     <Compile Include="Code\Database\GeneralTables\DirectorTableEntry.cs" />
+    <Compile Include="Code\Database\GeneralTables\GenreTableEntry.cs" />
     <Compile Include="Code\Database\GeneralTables\SubtitleStreamTableEntry.cs" />
     <Compile Include="Code\Database\GeneralTables\VideoStreamTable.cs" />
     <Compile Include="Code\Database\MovieTables\MovieActorMapper.cs" />
@@ -335,6 +336,7 @@
     <Compile Include="ViewModel\Video\TVShowDetailsViewModel.cs" />
     <Compile Include="ViewModel\Video\TVShowSeasonDetailsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\Converter\DummyConverter.cs" />
     <Compile Include="View\Converter\EpisodeLabelConverter.cs" />
     <Compile Include="View\Converter\EpisodeMapperConverter.cs" />
     <Compile Include="View\Converter\TVShowMapperConverter.cs" />

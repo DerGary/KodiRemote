@@ -7,10 +7,67 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:generaldb="using:KodiRemote.Code.Database.GeneralTables"
+    xmlns:converter="using:KodiRemote.View.Converter"
+    RequestedTheme="Dark"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <converter:DummyConverter x:Key="DummyConverter"/>
+    </Page.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <ProgressRing IsActive="{x:Bind ViewModel.ProgressBarActive, Mode=OneWay}" Width="100" Height="100"/>
         <local:HorizontalGridViewPage x:Name="HorizontalGridViewPage" ViewModel="{x:Bind ViewModel, Mode=TwoWay}" Navigate="HorizontalGridViewPage_Navigate"/>
+        <CommandBar Grid.Row="1" Background="{StaticResource TransparentGrey}">
+            <AppBarButton Icon="View" Label="Watched">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="All"/>
+                        <MenuFlyoutItem Text="Only Unwatched"/>
+                        <MenuFlyoutItem Text="Only Watched"/>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Icon="Emoji2" Label="Genres">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <ListView ItemsSource="{x:Bind ViewModel.Genres, Mode=OneWay}" 
+                                  DataContext="{x:Bind ViewModel, Mode=OneWay}"
+                                  SelectedItem="{Binding SelectedGenre, Mode=TwoWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="generaldb:GenreTableEntry">
+                                    <TextBlock Text="{x:Bind Genre, Mode=OneWay}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Icon="Sort" Label="Sort">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Title ascending"/>
+                        <MenuFlyoutItem Text="Title descending"/>
+                        <MenuFlyoutItem Text="Releasedate ascending"/>
+                        <MenuFlyoutItem Text="Releasedate descending"/>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Icon="Filter" Label="New">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="all"/>
+                        <MenuFlyoutItem Text="10 newest"/>
+                        <MenuFlyoutItem Text="25 newest"/>
+                        <MenuFlyoutItem Text="50 newest"/>
+                        <MenuFlyoutItem Text="100 newest"/>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+
+        </CommandBar>
     </Grid>
 </base:PageBase>

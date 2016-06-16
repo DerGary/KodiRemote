@@ -541,7 +541,7 @@ namespace KodiRemote.Code.Database {
         private async Task LoadMovies() {
             if(Movies == null) {
                 using (var context = database.CreateContext()) {
-                    Movies = await context.Set<MovieTableEntry>().ToListAsync();
+                    Movies = await context.Set<MovieTableEntry>().Include(x => x.Genres).ToListAsync();
                 }
             }
         }
