@@ -9,10 +9,10 @@
     xmlns:base="using:KodiRemote.View.Base"
     xmlns:generaldb="using:KodiRemote.Code.Database.GeneralTables"
     xmlns:converter="using:KodiRemote.View.Converter"
+    xmlns:vm="using:KodiRemote.ViewModel.Video"
     RequestedTheme="Dark"
     mc:Ignorable="d">
     <Page.Resources>
-        <converter:DummyConverter x:Key="DummyConverter"/>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,16 +21,19 @@
         </Grid.RowDefinitions>
         <ProgressRing IsActive="{x:Bind ViewModel.ProgressBarActive, Mode=OneWay}" Width="100" Height="100"/>
         <local:HorizontalGridViewPage x:Name="HorizontalGridViewPage" ViewModel="{x:Bind ViewModel, Mode=TwoWay}" Navigate="HorizontalGridViewPage_Navigate"/>
+        
         <CommandBar Grid.Row="1" Background="{StaticResource TransparentGrey}">
             <AppBarButton Icon="View" Label="Watched">
                 <AppBarButton.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="All"/>
-                        <MenuFlyoutItem Text="Only Unwatched"/>
-                        <MenuFlyoutItem Text="Only Watched"/>
-                    </MenuFlyout>
+                    <Flyout>
+                        <ListView ItemsSource="{x:Bind ViewModel.Watches, Mode=OneWay}" 
+                                  DataContext="{x:Bind ViewModel, Mode=OneWay}"
+                                  SelectedItem="{Binding SelectedWatched, Mode=TwoWay}">
+                        </ListView>
+                    </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
+            
             <AppBarButton Icon="Emoji2" Label="Genres">
                 <AppBarButton.Flyout>
                     <Flyout>
@@ -46,25 +49,25 @@
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
+            
             <AppBarButton Icon="Sort" Label="Sort">
                 <AppBarButton.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Title ascending"/>
-                        <MenuFlyoutItem Text="Title descending"/>
-                        <MenuFlyoutItem Text="Releasedate ascending"/>
-                        <MenuFlyoutItem Text="Releasedate descending"/>
-                    </MenuFlyout>
+                    <Flyout>
+                        <ListView ItemsSource="{x:Bind ViewModel.Sorts, Mode=OneWay}" 
+                                  DataContext="{x:Bind ViewModel, Mode=OneWay}"
+                                  SelectedItem="{Binding SelectedSort, Mode=TwoWay}">
+                        </ListView>
+                    </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
             <AppBarButton Icon="Filter" Label="New">
                 <AppBarButton.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="all"/>
-                        <MenuFlyoutItem Text="10 newest"/>
-                        <MenuFlyoutItem Text="25 newest"/>
-                        <MenuFlyoutItem Text="50 newest"/>
-                        <MenuFlyoutItem Text="100 newest"/>
-                    </MenuFlyout>
+                    <Flyout>
+                        <ListView ItemsSource="{x:Bind ViewModel.Newest, Mode=OneWay}" 
+                                  DataContext="{x:Bind ViewModel, Mode=OneWay}"
+                                  SelectedItem="{Binding SelectedNewest, Mode=TwoWay}">
+                        </ListView>
+                    </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
 

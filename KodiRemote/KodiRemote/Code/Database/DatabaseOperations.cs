@@ -549,7 +549,7 @@ namespace KodiRemote.Code.Database {
         private async Task LoadTVShows() {
             if (TVShows == null) {
                 using (var context = database.CreateContext()) {
-                    TVShows = await context.Set<TVShowTableEntry>().ToListAsync();
+                    TVShows = await context.Set<TVShowTableEntry>().Include(x => x.Genres).ToListAsync();
                 }
             }
         }

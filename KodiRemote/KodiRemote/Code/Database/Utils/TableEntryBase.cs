@@ -16,4 +16,14 @@ namespace KodiRemote.Code.Database.Utils {
     public abstract class TableEntryWithLabelBase: TableEntryBase {
         public string Label { get; set; }
     }
+    public abstract class TableEntryWithLabelAndRatingBase : TableEntryWithLabelBase {
+        public float Rating { get; set; }
+    }
+    public abstract class MovieTVShowTableEntryBase : TableEntryWithLabelAndRatingBase {
+        public string Poster { get; set; }
+        public string Fanart { get; set; }
+        public string Plot { get; set; }
+        public string IMDBNumber { get; set; }
+        public string DateAdded { get; set; }
+    }
 }

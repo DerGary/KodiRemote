@@ -29,6 +29,13 @@ namespace KodiRemote.ViewModel.Video {
         UnWatched,
         Watched
     }
+    public enum NewestOption {
+        All,
+        Newest10 = 10,
+        Newest25 = 25,
+        Newest50 = 50,
+        Newest100 = 100
+    }
     public class CollectionViewModel : ViewModelBase {
         private ObservableCollection<Group<ItemViewModel>> groups;
         public ObservableCollection<Group<ItemViewModel>> Groups {
@@ -57,8 +64,12 @@ namespace KodiRemote.ViewModel.Video {
                 return selectedGenre;
             }
             set {
+                if(selectedGenre == value) {
+                    return;
+                }
                 selectedGenre = value;
                 RaisePropertyChanged();
+                Reinit();
             }
         }
 
@@ -72,30 +83,73 @@ namespace KodiRemote.ViewModel.Video {
                 RaisePropertyChanged();
             }
         }
-
-
         private SortOption selectedSort = SortOption.TitleAscending;
         public SortOption SelectedSort {
             get {
                 return selectedSort;
             }
             set {
+                if(selectedSort == value) {
+                    return;
+                }
                 selectedSort = value;
+                RaisePropertyChanged();
+                Reinit();
+            }
+        }
+
+        private List<WatchedOption> watches = new List<WatchedOption> { WatchedOption.All, WatchedOption.UnWatched, WatchedOption.Watched };
+        public List<WatchedOption> Watches
+        {
+            get
+            {
+                return watches;
+            }
+            set
+            {
+                watches = value;
                 RaisePropertyChanged();
             }
         }
-        private WatchedOption selectedWatched;
+        private WatchedOption selectedWatched = WatchedOption.All;
         public WatchedOption SelectedWatched {
             get {
                 return selectedWatched;
             }
             set {
+                if(selectedWatched == value) {
+                    return;
+                }
                 selectedWatched = value;
                 RaisePropertyChanged();
+                Reinit();
             }
         }
 
-
+        private List<NewestOption> newest = new List<NewestOption> { NewestOption.All, NewestOption.Newest10, NewestOption.Newest25, NewestOption.Newest50, NewestOption.Newest100 };
+        public List<NewestOption> Newest {
+            get {
+                return newest;
+            }
+            set {
+                newest = value;
+                RaisePropertyChanged();
+            }
+        }
+        private NewestOption selectedNewest = NewestOption.All;
+        public NewestOption SelectedNewest {
+            get {
+                return selectedNewest;
+            }
+            set {
+                if(selectedNewest == value) {
+                    return;
+                }
+                selectedNewest = value;
+                RaisePropertyChanged();
+                Reinit();
+            }
+        }
 
 
         public CollectionViewModel() {
@@ -105,11 +159,21 @@ namespace KodiRemote.ViewModel.Video {
             }
         }
         public PageType PageType { get; private set; }
+        private void Reinit() {
+            Groups = null;
+            ProgressBarActive = true;
+            Task.Run(async () => {
+                await GetItemsAndSortAndCreateGroups();
+
+                ProgressBarActive = false;
+            });
+        }
 
         public async Task Init(PageType type) {
             PageType = type;
-            IEnumerable<TableEntryWithLabelBase> result = null;
             ProgressBarActive = true;
+
+            await GetGenres();
 
             if (type == PageType.Movies) {
                 Title = "Movies";
@@ -123,7 +187,6 @@ namespace KodiRemote.ViewModel.Video {
                     SortOption.RuntimeAscending,
                     SortOption.RuntimeDescending
                 };
-                result = await Kodi.Database.GetMovies();
             } else if (type == PageType.TVShows) {
                 Title = "TV Shows";
                 Sorts = new List<SortOption>() {
@@ -132,23 +195,37 @@ namespace KodiRemote.ViewModel.Video {
                     SortOption.RatingAscending,
                     SortOption.RatingDescending
                 };
-                result = await Kodi.Database.GetTVShows();
             } else if (type == PageType.MovieSets) {
                 Title = "Movie Sets";
                 Sorts = new List<SortOption>() {
                     SortOption.TitleAscending,
                     SortOption.TitleDescending
                 };
-                result = await Kodi.Database.GetMovieSets();
             }
-            
-            await GetGenres();
-            CreateGroups(result);
+
+            await GetItemsAndSortAndCreateGroups();
             ProgressBarActive = false;
         }
 
+        private async Task GetItemsAndSortAndCreateGroups() {
+            IEnumerable<TableEntryWithLabelBase> result = null;
+
+            if(PageType == PageType.Movies) {
+                var response = await Kodi.Database.GetMovies();
+                result = SortMovies(response);
+            } else if(PageType == PageType.TVShows) {
+                var response = await Kodi.Database.GetTVShows();
+                result = SortTVShows(response);
+            } else if(PageType == PageType.MovieSets) {
+                var response = await Kodi.Database.GetMovieSets();
+                result = SortMovieSets(response);
+            }
+
+            CreateGroups(result);
+        }
+
         private async Task GetGenres() {
-            if(this.Genres == null) {
+            if(this.Genres != null) {
                 return;
             }
 
@@ -163,7 +240,13 @@ namespace KodiRemote.ViewModel.Video {
             Genres.Add(new GenreTableEntry() { GenreId = -1, Genre = "All" });
             Genres.AddRange(genres);
             this.Genres = Genres;
-            SelectedGenre = Genres.First();
+            selectedGenre = Genres.First();
+        }
+        public DateTime parseDateTime(string dateString) {
+            DateTime dt = new DateTime();
+            if(!string.IsNullOrEmpty(dateString))
+                dt = DateTime.ParseExact(dateString, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat);
+            return dt;
         }
 
         private IEnumerable<MovieTableEntry> SortMovies(IEnumerable<MovieTableEntry> items) {
@@ -174,6 +257,10 @@ namespace KodiRemote.ViewModel.Video {
                 items = items.Where(x => x.PlayCount == 0);
             } else if (SelectedWatched == WatchedOption.Watched) {
                 items = items.Where(x => x.PlayCount > 0);
+            }
+
+            if(SelectedNewest != NewestOption.All) {
+                items = items.OrderByDescending(x => parseDateTime(x.DateAdded)).Take((int)SelectedNewest);
             }
 
             if (SelectedSort == SortOption.TitleAscending) {
@@ -218,6 +305,10 @@ namespace KodiRemote.ViewModel.Video {
                 items = items.Where(x => x.Genres.Exists(y => y.GenreId == SelectedGenre.GenreId));
             }
 
+            if(SelectedNewest != NewestOption.All) {
+                items = items.OrderByDescending(x => parseDateTime(x.DateAdded)).Take((int)SelectedNewest);
+            }
+
             if (SelectedWatched == WatchedOption.UnWatched) {
                 items = items.Where(x => x.WatchedEpisodes != x.Episode);
             } else if (SelectedWatched == WatchedOption.Watched) {
@@ -242,15 +333,34 @@ namespace KodiRemote.ViewModel.Video {
                 return;
             }
 
-            var movies = items as IEnumerable<MovieTableEntry>;
-            if (movies != null && SelectedSort == SortOption.YearAscending || SelectedSort == SortOption.YearDescending) {
-                CreateYearOrderedGroups(movies);
+            if (SelectedSort == SortOption.YearAscending || SelectedSort == SortOption.YearDescending) {
+                CreateYearGroups(items as IEnumerable<MovieTableEntry>);
+            } else if (SelectedSort == SortOption.RatingAscending || SelectedSort == SortOption.RatingDescending) {
+                CreateRatingGroups(items as IEnumerable<MovieTVShowTableEntryBase>);
+            } else if (SelectedSort == SortOption.RuntimeAscending || SelectedSort == SortOption.RuntimeDescending) {
+                CreateRuntimeGroups(items as IEnumerable<MovieTableEntry>);
             } else {
-                CreateLabelOrderedGroups(items);
+                CreateLabelGroups(items);
             }
         }
-        //Rating Ordered Groups
-        private void CreateYearOrderedGroups(IEnumerable<MovieTableEntry> movies) {
+
+        private void CreateRatingGroups(IEnumerable<MovieTVShowTableEntryBase> items){
+            var Groups = new ObservableCollection<Group<ItemViewModel>>();
+            Group<ItemViewModel> currentGroup = null;
+            int currentRating = 20;
+            foreach(var item in items) {
+                if(currentRating != (int)item.Rating) {
+                    currentRating = (int)item.Rating;
+                    currentGroup = new Group<ItemViewModel>() { Name = currentRating.ToString(), Items = new ObservableCollection<ItemViewModel>() };
+                    Groups.Add(currentGroup);
+                }
+                currentGroup.Items.Add(new ItemViewModel(item));
+            }
+
+            this.Groups = Groups;
+        }
+        
+        private void CreateYearGroups(IEnumerable<MovieTableEntry> movies) {
             var Groups = new ObservableCollection<Group<ItemViewModel>>();
             Group<ItemViewModel> currentGroup = null;
             int currentYear = 0;
@@ -265,13 +375,32 @@ namespace KodiRemote.ViewModel.Video {
 
             this.Groups = Groups;
         }
+        private void CreateRuntimeGroups(IEnumerable<MovieTableEntry> movies) {
+            var Groups = new ObservableCollection<Group<ItemViewModel>>();
+            Group<ItemViewModel> currentGroup = null;
+            int currenRuntime = 0;
+            foreach(var item in movies) {
+                int runtime = item.Runtime / 600;
+                if(currenRuntime != runtime) {
+                    currenRuntime = runtime;
+                    currentGroup = new Group<ItemViewModel>() { Name = currenRuntime.ToString() + "0 min", Items = new ObservableCollection<ItemViewModel>() };
+                    Groups.Add(currentGroup);
+                }
+                currentGroup.Items.Add(new ItemViewModel(item));
+            }
 
-        private void CreateLabelOrderedGroups(IEnumerable<TableEntryWithLabelBase> items) {
+            this.Groups = Groups;
+        }
+
+        private void CreateLabelGroups(IEnumerable<TableEntryWithLabelBase> items) {
             var Groups = new ObservableCollection<Group<ItemViewModel>>();
             Group<ItemViewModel> currentGroup = null;
             char currentLetter = '0';
             foreach (var item in items) {
-                char firstLetter = (item.Label as string).FirstOrDefault();
+                char firstLetter = item.Label.FirstOrDefault();
+                if(firstLetter >= '0' && firstLetter <= '9') {
+                    firstLetter = '#';
+                }
                 if (currentLetter != firstLetter) {
                     currentLetter = firstLetter;
                     currentGroup = new Group<ItemViewModel>() { Name = currentLetter.ToString(), Items = new ObservableCollection<ItemViewModel>() };
