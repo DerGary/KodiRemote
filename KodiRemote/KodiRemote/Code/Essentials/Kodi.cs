@@ -169,26 +169,46 @@ namespace KodiRemote.Code.Essentials {
 
         private async Task UpdateDatabase() {
             DatabaseWorking = true;
-            var first = DateTime.Now;
+            Debug.WriteLine("Start Database Update");
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             var tvShowIds = await UpdateTVShows();
             var tvShowAndSeasonIds = await UpdateTVShowSeasons(tvShowIds);
             await UpdateEpisodes(tvShowAndSeasonIds);
+            Debug.WriteLine("Update TVShows done");
+
             List<MovieSet> moviesets = await Update<MovieSet>(UpdateMovieSets);
             await Database.SaveMovieSets(moviesets);
+            Debug.WriteLine("Update MovieSets done");
+
             List<Movie> movies = await Update<Movie>(UpdateMovies);
             await Database.SaveMovies(movies);
+            Debug.WriteLine("Update MovieSets done");
+
             List<MusicVideo> musicvideos = await Update<MusicVideo>(UpdateMusicVideos);
             await Database.SaveMusicVideos(musicvideos);
+            Debug.WriteLine("Update MusicVideos done");
+
             List<Artist> artists = await Update<Artist>(UpdateArtists);
             artists.AddRange(await Update<Artist>(UpdateArtists2));
             await Database.SaveArtists(artists);
+            Debug.WriteLine("Update Artists done");
+
             List<Song> songs = await Update<Song>(UpdateSongs);
             await Database.SaveSongs(songs);
+            Debug.WriteLine("Update Songs done");
+
             List<Album> albums = await Update<Album>(UpdateAlbums);
             await Database.SaveAlbums(albums);
+            Debug.WriteLine("Update Albums done");
+
             List<Addon> addons = await Update<Addon>(UpdateAddons);
             await Database.SaveAddons(addons);
-            Debug.WriteLine("time taken: " + DateTime.Now.Subtract(first).TotalSeconds);
+            Debug.WriteLine("Update Addons done");
+
+            sw.Stop();
+            Debug.WriteLine("time taken (s): " + sw.Elapsed.TotalSeconds);
             DatabaseWorking = false;
         }
 
@@ -270,14 +290,16 @@ namespace KodiRemote.Code.Essentials {
             foreach (int tvshowId in ids.Keys) {
                 List<int> seasonIds;
                 ids.TryGetValue(tvshowId, out seasonIds);
-                int i = 0;
-                do {
-                    result = await VideoLibrary.GetEpisodes(EpisodeField.WithMine(), tvshowId, limits: new Limits(i, i + LIMIT));
-                    i += LIMIT;
-                    if (result != null) {
-                        episodes.AddRange(result.Episodes);
-                    }
-                } while (result != null && result.Limits.End != result.Limits.Total);
+                foreach(int seasonId in seasonIds) {
+                    int i = 0;
+                    do {
+                        result = await VideoLibrary.GetEpisodes(EpisodeField.WithMine(), tvshowId, seasonId, limits: new Limits(i, i + LIMIT));
+                        i += LIMIT;
+                        if (result != null) {
+                            episodes.AddRange(result.Episodes);
+                        }
+                    } while (result != null && result.Limits.End != result.Limits.Total);
+                }
             }
             await Database.SaveEpisodes(episodes);
         }
@@ -286,10 +308,10 @@ namespace KodiRemote.Code.Essentials {
             TVShowSeasonsResult result;
             List<TVShowSeason> seasons = new List<TVShowSeason>();
             var ids = new Dictionary<int, List<int>>();
-            foreach (int i in tvShowIds) {
-                result = await VideoLibrary.GetSeasons(i, SeasonField.WithMine());
-                if (result != null) {
-                    ids.Add(i, new List<int>(result.TVShowSeasons.Select(x => x.Season)));
+            foreach (int tvshowId in tvShowIds) {
+                result = await VideoLibrary.GetSeasons(tvshowId, SeasonField.WithMine());
+                if (result?.TVShowSeasons != null) {
+                    ids.Add(tvshowId, new List<int>(result.TVShowSeasons.Select(x => x.Season)));
                     seasons.AddRange(result.TVShowSeasons);
                 }
             }

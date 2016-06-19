@@ -40,7 +40,7 @@ namespace KodiRemote.Code.Database.Utils {
                         dic.Add(item.Key, item);
                         if(keyProperty != null) {
                             int id = (int)keyProperty.GetValue(item);
-                            if(id > nextId) {
+                            if(id >= nextId) {
                                 nextId = id + 1;
                             }
                         }
