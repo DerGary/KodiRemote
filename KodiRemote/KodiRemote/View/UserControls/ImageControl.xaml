@@ -35,10 +35,10 @@
             x:Name="Image"
             Source="{x:Bind Source, Mode=OneWay}"
             ImageOpened="ImageOpened"
+            DataContextChanged="ImageDataContextChanged"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
-            Stretch="{x:Bind Stretch, Mode=OneWay}"
-            Opacity="0">
+            Stretch="{x:Bind Stretch, Mode=OneWay}">
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="ImageFailed">
                     <ic:InvokeCommandAction Command="{x:Bind ImageFailedCommand, Mode=OneWay}" CommandParameter="{x:Bind PropName, Mode=OneWay}"/>

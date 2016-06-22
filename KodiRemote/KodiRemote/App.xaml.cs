@@ -32,6 +32,8 @@ namespace KodiRemote {
     /// Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
     /// </summary>
     sealed partial class App : Application {
+        public static Stack<double> ScrollViewerHorizontalOffset = new Stack<double>();
+        public static Stack<ViewModelBase> ViewModels = new Stack<ViewModelBase>();
 
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt.  Dies ist die erste Zeile von erstelltem Code

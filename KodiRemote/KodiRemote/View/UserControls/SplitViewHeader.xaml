@@ -59,6 +59,7 @@
                          Stretch="UniformToFill"
                          ImageSource="{x:Bind Page.ViewModelBase.BackgroundItem.Fanart, Mode=OneWay}" 
                          ImageFailedCommand="{x:Bind Page.ViewModelBase.BackgroundItem.ImageFailedCommand,Mode=OneWay}" 
+                         UseFadeOutAnimation="True"
                          PropName="Fanart"/>
         <Border Background="#77000000" Grid.RowSpan="2"/>
 

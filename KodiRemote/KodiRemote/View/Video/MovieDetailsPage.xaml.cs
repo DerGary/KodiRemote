@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -35,11 +36,38 @@ namespace KodiRemote.View.Video {
 
         public MovieDetailsPage() {
             this.InitializeComponent();
+            Loaded += MovieDetailsPage_Loaded;
+        }
+
+        private NavigationMode navigationMode;
+
+        private void MovieDetailsPage_Loaded(object sender, RoutedEventArgs e) {
+            if (navigationMode == NavigationMode.Back) {
+                var horizontalOffset = App.ScrollViewerHorizontalOffset.Pop();
+                ScrollViewer.ChangeView(horizontalOffset, 0, 1, true);
+                PopInAnimation.Begin();
+            }
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
-            ViewModel = await MovieDetailsViewModel.Init(e.Parameter as MovieTableEntry);
+            if(e.NavigationMode == NavigationMode.Back) {
+                ViewModel = (MovieDetailsViewModel)App.ViewModels.Pop();
+            } else {
+                ViewModel = new MovieDetailsViewModel(e.Parameter as MovieTableEntry);
+                await ViewModel.Init();
+                PopInAnimation.Begin();
+            }
+            navigationMode = e.NavigationMode;
             base.OnNavigatedTo(e);
+        }
+
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
+            if(e.NavigationMode != NavigationMode.Back) {
+                App.ScrollViewerHorizontalOffset.Push(ScrollViewer.HorizontalOffset);
+                App.ViewModels.Push(ViewModel);
+            }
+            base.OnNavigatingFrom(e);
         }
 
         private void MovieSetMovieClicked(object sender, ItemClickEventArgs e) {

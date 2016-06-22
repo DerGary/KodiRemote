@@ -59,9 +59,15 @@
             </Setter>
         </Style>
         <converter:ActorImageConverter x:Key="ImageSourceConverter"/>
+
     </Page.Resources>
     <Grid>
-        <SemanticZoom Grid.Row="2" x:Name="Zoom" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.ZoomMode="Enabled">
+        <SemanticZoom 
+            Grid.Row="2" 
+            x:Name="Zoom" 
+            ScrollViewer.VerticalScrollMode="Disabled" 
+            ScrollViewer.HorizontalScrollMode="Disabled" 
+            ScrollViewer.ZoomMode="Enabled">
             <SemanticZoom.ZoomedInView>
                 <GridView
                     Padding="20,0,0,20"

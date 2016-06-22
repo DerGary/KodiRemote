@@ -29,9 +29,8 @@ namespace KodiRemote.ViewModel.Video {
             BackgroundItem = this;
         }
 
-        public static async Task<MovieDetailsViewModel> Init(MovieTableEntry movieTableEntry) {
-            var movie = await Kodi.ActiveInstance.Database.GetMovie(movieTableEntry);
-            return new MovieDetailsViewModel(movie);
+        public async Task Init() {
+            Movie = await Kodi.ActiveInstance.Database.GetMovie(Movie);
         }
     }
 }

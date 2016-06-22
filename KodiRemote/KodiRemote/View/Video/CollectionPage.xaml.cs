@@ -18,17 +18,47 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KodiRemote.View.Video {
     public sealed partial class CollectionPage : PageBase {
-        public CollectionViewModel ViewModel { get; set; } = new CollectionViewModel();
+        private CollectionViewModel viewModel = new CollectionViewModel();
+        public CollectionViewModel ViewModel {
+            get {
+                return viewModel;
+            }
+            set {
+                viewModel = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(ViewModelBase));
+            }
+        }
+        
         public override ViewModelBase ViewModelBase => ViewModel; 
 
         public CollectionPage() {
             this.InitializeComponent();
+            HorizontalGridViewPage.Loaded += HorizontalGridViewPage_Loaded;
         }
 
+        private void HorizontalGridViewPage_Loaded(object sender, RoutedEventArgs e) {
+            if (NavigationMode == NavigationMode.Back) {
+                HorizontalGridViewPage.SetScrollPosition(App.ScrollViewerHorizontalOffset.Pop());
+                PopInAnimation(HorizontalGridViewPage, ProgressRing);
+            }
+        }
+        
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
-            await ViewModel.Init((PageType)e.Parameter);
-
+            if (e.NavigationMode == NavigationMode.Back) {
+                ViewModel = (CollectionViewModel)App.ViewModels.Pop();
+            } else {
+                await ViewModel.Init((PageType)e.Parameter);
+                PopInAnimation(HorizontalGridViewPage, ProgressRing);
+            }
             base.OnNavigatedTo(e);
+        }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
+            if(e.NavigationMode != NavigationMode.Back) {
+                App.ScrollViewerHorizontalOffset.Push(HorizontalGridViewPage.GetScrollPosition());
+                App.ViewModels.Push(ViewModel);
+            }
+            base.OnNavigatingFrom(e);
         }
 
         private void HorizontalGridViewPage_Navigate(ItemViewModel item) {

@@ -11,7 +11,14 @@ namespace KodiRemote.View.Converter {
             if(value == null) {
                 return null;
             }
-            return TimeSpan.FromSeconds((int)value).ToString("g");
+            var time = TimeSpan.FromSeconds((int)value);
+            if(time.TotalSeconds < 60) {
+                return $"{time.Seconds} s";
+            } else if (time.TotalSeconds < 3600) {
+                return $"{time.Minutes} m {time.Seconds} s";
+            } else {
+                return $"{time.Hours} h {time.Minutes} m {time.Seconds} s";
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language) {

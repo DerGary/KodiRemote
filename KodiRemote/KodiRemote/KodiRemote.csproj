@@ -115,6 +115,7 @@
     </Compile>
     <Compile Include="Code\Common\PropertyChangedBase.cs" />
     <Compile Include="Code\Common\RelayCommand.cs" />
+    <Compile Include="Code\Common\XAMLTools.cs" />
     <Compile Include="Code\Database\AddonTables\AddonTable.cs" />
     <Compile Include="Code\Database\DatabaseContext.cs" />
     <Compile Include="Code\Database\DatabaseContextWrapper.cs" />
@@ -339,6 +340,7 @@
     <Compile Include="View\Converter\DummyConverter.cs" />
     <Compile Include="View\Converter\EpisodeLabelConverter.cs" />
     <Compile Include="View\Converter\EpisodeMapperConverter.cs" />
+    <Compile Include="View\Converter\FilterVisibilityConverter.cs" />
     <Compile Include="View\Converter\TVShowMapperConverter.cs" />
     <Compile Include="View\Converter\TVShowSeasonMapperConverter.cs" />
     <Compile Include="View\Settings\AddKodiPage.xaml.cs">

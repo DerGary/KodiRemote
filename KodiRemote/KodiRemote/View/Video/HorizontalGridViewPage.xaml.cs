@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using KodiRemote.Code.Common;
 
 namespace KodiRemote.View.Video {
     public sealed partial class HorizontalGridViewPage : PageBase {
@@ -39,6 +40,18 @@ namespace KodiRemote.View.Video {
         private void ItemClick(object sender, ItemClickEventArgs e) {
             var viewModel = e.ClickedItem as ItemViewModel;
             Navigate?.Invoke(viewModel);
+        }
+        public double GetScrollPosition() {
+            var scrollviewer = itemGridView.FindVisualChild<ScrollViewer>();
+            return scrollviewer.HorizontalOffset;
+        }
+        public void SetScrollPosition(double position) {
+            var scrollviewer = itemGridView.FindVisualChild<ScrollViewer>();
+            scrollviewer?.ChangeView(position, 0, 1);
+        }
+
+        private void itemGridView_Loaded(object sender, RoutedEventArgs e) {
+
         }
     }
 }

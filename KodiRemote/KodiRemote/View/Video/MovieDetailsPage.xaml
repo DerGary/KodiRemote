@@ -20,10 +20,17 @@
         <converter:MovieMovieSetMapperConverter x:Name="MovieMovieSetMapperConverter"/>
         <converter:RuntimeLengthConverter x:Name="RuntimeLengthConverter"/>
         <converter:ActorImageConverter x:Name="ActorImageConverter"/>
+        <converter:BoolVisibilityConverter x:Name="FalseVisibleConverter" OnFalse="Visible" OnTrue="Collapsed"/>
+        <Storyboard x:Name="PopInAnimation" BeginTime="0:0:0.5">
+            <PopInThemeAnimation FromVerticalOffset="200" TargetName="ScrollViewer"/>
+            <DoubleAnimation Duration="0:0:0.5" From="0" To="1" Storyboard.TargetName="ScrollViewer" Storyboard.TargetProperty="Opacity"/>
+            <DoubleAnimation Duration="0:0:0.5" From="1" To="0" Storyboard.TargetName="ProgressRing" Storyboard.TargetProperty="Opacity"/>
+        </Storyboard>
     </Page.Resources>
-
-    <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}">
-        <Grid>
+    <Grid>
+        <ProgressRing x:Name="ProgressRing" IsActive="True" Width="100" Height="100"/>
+        <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource HorizontalScrollViewerStyle}" Opacity="0">
+            <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -220,4 +227,5 @@
         </Grid>
 
     </ScrollViewer>
+    </Grid>
 </base:PageBase>

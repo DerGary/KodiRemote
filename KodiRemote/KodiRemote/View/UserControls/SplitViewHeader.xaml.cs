@@ -65,6 +65,8 @@ namespace KodiRemote.View.UserControls {
                 ContentFrame.Navigate(typeof(T), param);
                 DeleteBackStackWithoutHome();
                 lastParam = param;
+                App.ScrollViewerHorizontalOffset.Clear();
+                App.ViewModels.Clear();
             }
         }
 
