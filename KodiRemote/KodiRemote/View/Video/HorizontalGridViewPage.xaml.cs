@@ -49,9 +49,6 @@ namespace KodiRemote.View.Video {
             var scrollviewer = itemGridView.FindVisualChild<ScrollViewer>();
             scrollviewer?.ChangeView(position, 0, 1);
         }
-
-        private void itemGridView_Loaded(object sender, RoutedEventArgs e) {
-
-        }
+       
     }
 }

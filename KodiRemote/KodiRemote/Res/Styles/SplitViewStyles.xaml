@@ -123,4 +123,5 @@
     <Style x:Key="PaneButtonSymbolStyle" TargetType="TextBlock" BasedOn="{StaticResource MaterialIconTextStyle}">
         <Setter Property="FontSize" Value="24"/>
     </Style>
+    
 </ResourceDictionary>

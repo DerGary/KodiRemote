@@ -35,7 +35,10 @@ namespace KodiRemote.View.Video {
         public CollectionPage() {
             this.InitializeComponent();
             HorizontalGridViewPage.Loaded += HorizontalGridViewPage_Loaded;
+            PopOutCompleted += CollectionPage_PopOutCompleted;
         }
+
+
 
         private void HorizontalGridViewPage_Loaded(object sender, RoutedEventArgs e) {
             if (NavigationMode == NavigationMode.Back) {
@@ -60,11 +63,15 @@ namespace KodiRemote.View.Video {
             }
             base.OnNavigatingFrom(e);
         }
-
+        ItemViewModel item;
         private void HorizontalGridViewPage_Navigate(ItemViewModel item) {
+            PopOutAnimation(HorizontalGridViewPage);
+            this.item = item;
+        }
+        private void CollectionPage_PopOutCompleted(object sender, object e) {
             if (ViewModel.PageType == PageType.Movies) {
                 Frame.Navigate(typeof(MovieDetailsPage), item.Item);
-            }else if (ViewModel.PageType == PageType.MovieSets) {
+            } else if (ViewModel.PageType == PageType.MovieSets) {
                 Frame.Navigate(typeof(MovieSetDetailsPage), item.Item);
             } else if (ViewModel.PageType == PageType.TVShows) {
                 Frame.Navigate(typeof(TVShowDetailsPage), item.Item);

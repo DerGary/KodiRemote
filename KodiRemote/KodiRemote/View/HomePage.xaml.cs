@@ -41,15 +41,15 @@ namespace KodiRemote.View {
         }
 
         private void itemGridView_ItemClick(object sender, ItemClickEventArgs e) {
-            if(e.ClickedItem == TVShows) {
+            if(e.ClickedItem == TVShowsGrid) {
                 this.Frame.Navigate(typeof(CollectionPage), PageType.TVShows);
-            } else if (e.ClickedItem == Movies) {
+            } else if (e.ClickedItem == MoviesGrid) {
                 this.Frame.Navigate(typeof(CollectionPage), PageType.Movies);
-            } else if (e.ClickedItem == MovieSets) {
+            } else if (e.ClickedItem == MovieSetsGrid) {
                 this.Frame.Navigate(typeof(CollectionPage), PageType.MovieSets);
-            } else if (e.ClickedItem == RemoteControl) {
+            } else if (e.ClickedItem == RemoteControlGrid) {
                 this.Frame.Navigate(typeof(RemoteControlPage));
-            } else if (e.ClickedItem == Settings) {
+            } else if (e.ClickedItem == SettingsGrid) {
                 this.Frame.Navigate(typeof(SettingsPage));
             }
         }

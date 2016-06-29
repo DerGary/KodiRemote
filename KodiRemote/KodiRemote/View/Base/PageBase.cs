@@ -117,7 +117,7 @@ namespace KodiRemote.View.Base {
 
             AniPopIn.Begin();
         }
-        protected void PopOutAnimation(FrameworkElement ele, ProgressRing ring) {
+        protected void PopOutAnimation(FrameworkElement ele) {
             Storyboard AniPopOut = new Storyboard();
 
             AniPopOut.Completed += AniPopOutCompleted;
@@ -126,6 +126,9 @@ namespace KodiRemote.View.Base {
             FadeIn.From = 0.0;
             FadeIn.To = 1.0;
             FadeIn.Duration = new Duration(TimeSpan.FromSeconds(.5));
+
+            PopInThemeAnimation PopIn = new PopInThemeAnimation();
+            
 
             PopOutThemeAnimation PopOut = new PopOutThemeAnimation();
 

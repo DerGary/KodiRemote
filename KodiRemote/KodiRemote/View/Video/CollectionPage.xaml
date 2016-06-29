@@ -9,14 +9,18 @@
     xmlns:generaldb="using:KodiRemote.Code.Database.GeneralTables"
     xmlns:converter="using:KodiRemote.View.Converter"
     xmlns:vm="using:KodiRemote.ViewModel.Video"
+    xmlns:usercontrols="using:KodiRemote.View.UserControls"
     RequestedTheme="Dark"
     mc:Ignorable="d">
     <Page.Resources>
         <converter:FilterVisibilityConverter x:Key="FilterVisibilityConverter"/>
-        <!--<Storyboard x:Name="PopInAnimation" BeginTime="0:0:0.5">
-            <PopInThemeAnimation FromVerticalOffset="200" TargetName="HorizontalGridViewPage"/>
-            <DoubleAnimation Duration="0:0:0.5" From="0" To="1" Storyboard.TargetName="HorizontalGridViewPage" Storyboard.TargetProperty="Opacity"/>
-        </Storyboard>-->
+        <Style x:Key="FlyoutPresenterStyle" TargetType="FlyoutPresenter">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        <DataTemplate x:Key="FlyoutListViewItemTemplate">
+            <TextBlock Text="{Binding}" Margin="0,10,20,10"/>
+        </DataTemplate>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,26 +34,40 @@
                                       Opacity="0"/>
         
         <CommandBar Grid.Row="1" Background="{StaticResource TransparentGrey}">
-            <AppBarButton Icon="View" Label="Watched">
+            <AppBarButton Label="Watched">
+                <AppBarButton.Icon>
+                    <usercontrols:MaterialFontIcon Glyph="{StaticResource MaterialDesign-Eye}"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Resources>
+                    <Style TargetType="FontIcon" x:Key="Mat">
+                        <Setter Property="FontFamily" Value="/Res/Font/MaterialIcons-Regular.ttf#Material Icons"/>
+                        <Setter Property="Glyph" Value="{StaticResource MaterialDesign-Eye}"/>
+
+                    </Style>
+                </AppBarButton.Resources>
                 <AppBarButton.Flyout>
-                    <Flyout>
+                    <Flyout FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}">
                         <ListView ItemsSource="{x:Bind ViewModel.Watches, Mode=OneWay}" 
                                   DataContext="{x:Bind ViewModel, Mode=OneWay}"
-                                  SelectedItem="{Binding SelectedWatched, Mode=TwoWay}">
-                        </ListView>
+                                  SelectedItem="{Binding SelectedWatched, Mode=TwoWay}"
+                                  ItemTemplate="{StaticResource FlyoutListViewItemTemplate}"/>
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
 
-            <AppBarButton Icon="Emoji2" Label="Genres" Visibility="{x:Bind ViewModel.PageType, Mode=OneWay, Converter={StaticResource FilterVisibilityConverter}, ConverterParameter=genres}">
+            <AppBarButton Label="Genres" Visibility="{x:Bind ViewModel.PageType, Mode=OneWay, Converter={StaticResource FilterVisibilityConverter}, ConverterParameter=genres}">
+                <AppBarButton.Icon>
+                    <usercontrols:CinemaFontIcon Glyph="{StaticResource CinemaIcon-Genre}"/>
+                </AppBarButton.Icon>
                 <AppBarButton.Flyout>
-                    <Flyout>
-                        <ListView ItemsSource="{x:Bind ViewModel.Genres, Mode=OneWay}" 
-                                  DataContext="{x:Bind ViewModel, Mode=OneWay}"
-                                  SelectedItem="{Binding SelectedGenre, Mode=TwoWay}">
+                    <Flyout FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}">
+                        <ListView 
+                            ItemsSource="{x:Bind ViewModel.Genres, Mode=OneWay}" 
+                            DataContext="{x:Bind ViewModel, Mode=OneWay}"
+                            SelectedItem="{Binding SelectedGenre, Mode=TwoWay}">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="generaldb:GenreTableEntry">
-                                    <TextBlock Text="{x:Bind Genre, Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind Genre, Mode=OneWay}" Margin="0,10,20,10"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -57,23 +75,29 @@
                 </AppBarButton.Flyout>
             </AppBarButton>
             
-            <AppBarButton Icon="Sort" Label="Sort">
+            <AppBarButton Label="Sort">
+                <AppBarButton.Icon>
+                    <usercontrols:MaterialFontIcon Glyph="{StaticResource MaterialDesign-ArrowsVertical}"/>
+                </AppBarButton.Icon>
                 <AppBarButton.Flyout>
-                    <Flyout>
+                    <Flyout FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}">
                         <ListView ItemsSource="{x:Bind ViewModel.Sorts, Mode=OneWay}" 
                                   DataContext="{x:Bind ViewModel, Mode=OneWay}"
-                                  SelectedItem="{Binding SelectedSort, Mode=TwoWay}">
-                        </ListView>
+                                  SelectedItem="{Binding SelectedSort, Mode=TwoWay}"
+                                  ItemTemplate="{StaticResource FlyoutListViewItemTemplate}"/>
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Icon="Filter" Label="New" Visibility="{x:Bind ViewModel.PageType, Converter={StaticResource FilterVisibilityConverter}, ConverterParameter=newest, Mode=OneWay}">
+            <AppBarButton Label="New" Visibility="{x:Bind ViewModel.PageType, Converter={StaticResource FilterVisibilityConverter}, ConverterParameter=newest, Mode=OneWay}">
+                <AppBarButton.Icon>
+                    <usercontrols:MaterialFontIcon Glyph="{StaticResource MaterialDesign-FilterList}"/>
+                </AppBarButton.Icon>
                 <AppBarButton.Flyout>
-                    <Flyout>
+                    <Flyout FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}">
                         <ListView ItemsSource="{x:Bind ViewModel.Newest, Mode=OneWay}" 
                                   DataContext="{x:Bind ViewModel, Mode=OneWay}"
-                                  SelectedItem="{Binding SelectedNewest, Mode=TwoWay}">
-                        </ListView>
+                                  SelectedItem="{Binding SelectedNewest, Mode=TwoWay}"
+                                  ItemTemplate="{StaticResource FlyoutListViewItemTemplate}"/>
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>

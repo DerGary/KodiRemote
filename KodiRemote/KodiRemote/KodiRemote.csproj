@@ -107,7 +107,15 @@
     <Content Include="Res\Font\icomoon.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Res\Font\MaterialDesignSymbols.ttf" />
+    <Content Include="Res\Font\MaterialDesignSymbols.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\Font\MaterialIcons-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\Font\CinemaIcons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -348,6 +356,12 @@
     </Compile>
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
+    <Compile Include="View\UserControls\FontIcons\CinemaFontIcon.xaml.cs">
+      <DependentUpon>CinemaFontIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\FontIcons\MaterialFontIcon.xaml.cs">
+      <DependentUpon>MaterialFontIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\SmallImage.xaml.cs">
       <DependentUpon>SmallImage.xaml</DependentUpon>
     </Compile>
@@ -473,6 +487,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="View\Settings\AddKodiPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\FontIcons\CinemaFontIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\FontIcons\MaterialFontIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

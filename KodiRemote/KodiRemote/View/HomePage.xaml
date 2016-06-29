@@ -58,7 +58,7 @@
                         <Setter Target="buttonGridView.(RelativePanel.LeftOf)" Value="currentlyPlaying"/>
                         <Setter Target="currentlyPlaying.(RelativePanel.AlignRightWithPanel)" Value="True"/>
                         <Setter Target="currentlyPlaying.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="False"/>
-                        <Setter Target="currentlyPlaying.(RelativePanel.Below)" Value="{x:Null}"/>
+                        <Setter Target="currentlyPlaying.(RelativePanel.Below)" Value=""/>
                         <!--<Setter Target="buttonGridView.Background" Value="Red"/>-->
                     </VisualState.Setters>
                 </VisualState>
@@ -69,7 +69,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="buttonGridView.(RelativePanel.LeftOf)" Value="{x:Null}"/>
+                        <Setter Target="buttonGridView.(RelativePanel.LeftOf)" Value=""/>
                         <!--<Setter Target="buttonGridView.Background" Value="Blue"/>-->
                         <Setter Target="currentlyPlaying.(RelativePanel.AlignRightWithPanel)" Value="False"/>
                         <Setter Target="currentlyPlaying.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True"/>
@@ -132,8 +132,8 @@
                     SelectionMode="None"
                     IsItemClickEnabled="True"
                     ItemClick="itemGridView_ItemClick">
-                    <GridViewItem Style="{StaticResource CategoryButton}">
-                        <Grid x:Name="Movies">
+                    <GridViewItem x:Name="Movies" Style="{StaticResource CategoryButton}">
+                        <Grid x:Name="MoviesGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -147,8 +147,8 @@
                             </StackPanel>
                         </Grid>
                     </GridViewItem>
-                    <GridViewItem Style="{StaticResource CategoryButton}">
-                        <Grid x:Name="MovieSets">
+                    <GridViewItem x:Name="MovieSets" Style="{StaticResource CategoryButton}">
+                        <Grid x:Name="MovieSetsGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -162,8 +162,8 @@
                             </StackPanel>
                         </Grid>
                     </GridViewItem>
-                    <GridViewItem Style="{StaticResource CategoryButton}">
-                        <Grid x:Name="TVShows">
+                    <GridViewItem x:Name="TVShows" Style="{StaticResource CategoryButton}">
+                        <Grid x:Name="TVShowsGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -177,9 +177,8 @@
                             </StackPanel>
                         </Grid>
                     </GridViewItem>
-
-                    <GridViewItem Style="{StaticResource CategoryButton}">
-                        <Grid x:Name="Music">
+                    <GridViewItem x:Name="Music" Style="{StaticResource CategoryButton}">
+                        <Grid x:Name="MusicGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -193,8 +192,8 @@
                             </StackPanel>
                         </Grid>
                     </GridViewItem>
-                    <GridViewItem Style="{StaticResource CategoryButton}" >
-                        <Grid x:Name="RemoteControl">
+                    <GridViewItem x:Name="RemoteControl" Style="{StaticResource CategoryButton}" >
+                        <Grid x:Name="RemoteControlGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
@@ -208,8 +207,8 @@
                             </StackPanel>
                         </Grid>
                     </GridViewItem>
-                    <GridViewItem Style="{StaticResource CategoryButton}" >
-                        <Grid x:Name="Settings">
+                    <GridViewItem x:Name="Settings" Style="{StaticResource CategoryButton}" >
+                        <Grid x:Name="SettingsGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>

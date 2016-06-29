@@ -27,6 +27,21 @@
         <Setter Property="FontFamily" Value="/Res/Font/MaterialDesignSymbols.ttf#MaterialDesignSymbols"/>
         <Setter Property="FontWeight" Value="Thin"/>
     </Style>
+    <Style x:Key="GoogleMaterialIconTextStyle" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="192"/>
+        <Setter Property="FontFamily" Value="/Res/Font/MaterialIcons-Regular.ttf#Material Icons"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+    </Style>
+    
+    <Style x:Key="CinemaIconTextStyle" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="192"/>
+        <Setter Property="FontFamily" Value="/Res/Font/CinemaIcons.ttf#CinemaIcons"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+    </Style>
 
     <Style x:Key="EpisodeGridTextStyle" TargetType="TextBlock">
         <Setter Property="HorizontalAlignment" Value="Left"/>
