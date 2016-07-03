@@ -268,17 +268,17 @@ namespace KodiRemote.ViewModel.Video {
             } else if (SelectedSort == SortOption.TitleDescending) {
                 items = items.OrderByDescending(x => x.Label);
             } else if (SelectedSort == SortOption.YearAscending) {
-                items = items.OrderBy(x => x.Year);
+                items = items.OrderBy(x => x.Year).ThenBy(x => x.Label);
             } else if (SelectedSort == SortOption.YearDescending) {
-                items = items.OrderByDescending(x => x.Year);
+                items = items.OrderByDescending(x => x.Year).ThenBy(x => x.Label);
             } else if (SelectedSort == SortOption.RatingAscending) {
-                items = items.OrderBy(x => x.Rating);
+                items = items.OrderBy(x => x.Rating).ThenBy(x => x.Label);
             } else if (SelectedSort == SortOption.RatingDescending) {
-                items = items.OrderByDescending(x => x.Rating);
+                items = items.OrderByDescending(x => x.Rating).ThenBy(x => x.Label);
             } else if (SelectedSort == SortOption.RuntimeAscending) {
-                items = items.OrderBy(x => x.Runtime);
+                items = items.OrderBy(x => x.Runtime).ThenBy(x => x.Label);
             } else if (SelectedSort == SortOption.RuntimeDescending) {
-                items = items.OrderByDescending(x => x.Runtime);
+                items = items.OrderByDescending(x => x.Runtime).ThenBy(x => x.Label);
             }
 
             return items;
@@ -320,9 +320,9 @@ namespace KodiRemote.ViewModel.Video {
             } else if (SelectedSort == SortOption.TitleDescending) {
                 items = items.OrderByDescending(x => x.Label);
             } else if (SelectedSort == SortOption.RatingAscending) {
-                items = items.OrderBy(x => x.Rating);
+                items = items.OrderBy(x => x.Rating).ThenBy(x => x.Label);
             } else if (SelectedSort == SortOption.RatingDescending) {
-                items = items.OrderByDescending(x => x.Rating);
+                items = items.OrderByDescending(x => x.Rating).ThenBy(x => x.Label);
             }
 
             return items;
@@ -394,19 +394,22 @@ namespace KodiRemote.ViewModel.Video {
 
         private void CreateLabelGroups(IEnumerable<TableEntryWithLabelBase> items) {
             var Groups = new ObservableCollection<Group<ItemViewModel>>();
-            Group<ItemViewModel> currentGroup = null;
-            char currentLetter = '0';
+            Group<ItemViewModel> currentGroup = new Group<ItemViewModel>() { Name = "#", Items = new ObservableCollection<ItemViewModel>() };
+            Groups.Add(currentGroup);
+            char currentLetter = '#';
+            
             foreach (var item in items) {
                 char firstLetter = item.Label.FirstOrDefault();
-                if(firstLetter >= '0' && firstLetter <= '9') {
-                    firstLetter = '#';
+                if(firstLetter < 'A' || (firstLetter > 'Z' && firstLetter < 'a') || firstLetter > 'z') {
+                    Groups[0].Items.Add(new ItemViewModel(item));
+                } else {
+                    if (currentLetter != firstLetter) {
+                        currentLetter = firstLetter;
+                        currentGroup = new Group<ItemViewModel>() { Name = currentLetter.ToString(), Items = new ObservableCollection<ItemViewModel>() };
+                        Groups.Add(currentGroup);
+                    }
+                    currentGroup.Items.Add(new ItemViewModel(item));
                 }
-                if (currentLetter != firstLetter) {
-                    currentLetter = firstLetter;
-                    currentGroup = new Group<ItemViewModel>() { Name = currentLetter.ToString(), Items = new ObservableCollection<ItemViewModel>() };
-                    Groups.Add(currentGroup);
-                }
-                currentGroup.Items.Add(new ItemViewModel(item));
             }
 
             this.Groups = Groups;

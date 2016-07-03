@@ -225,7 +225,7 @@ namespace KodiRemote.Code.Essentials {
 
         private async Task<CollectionResultBase> UpdateAddons(List<Addon> list, Limits limits) {
             AddonsResult result = await Addons.GetAddons(ContentEnum.Null, EnabledEnum.All , AddonField.WithAll(), limits: limits);
-            if (result != null) {
+            if (result?.Addons != null) {
                 list.AddRange(result.Addons);
             }
             return result;
@@ -233,7 +233,7 @@ namespace KodiRemote.Code.Essentials {
 
         private async Task<CollectionResultBase> UpdateSongs(List<Song> list, Limits limits) {
             SongsResult result = await AudioLibrary.GetSongs(SongField.WithMine(), limits: limits);
-            if (result != null) {
+            if (result?.Songs != null) {
                 list.AddRange(result.Songs);
             }
             return result;
@@ -241,21 +241,21 @@ namespace KodiRemote.Code.Essentials {
 
         private async Task<CollectionResultBase> UpdateArtists(List<Artist> list, Limits limits) {
             ArtistsResult result = await AudioLibrary.GetArtists(ArtistField.WithMine(), limits: limits);
-            if (result != null) {
+            if (result?.Artists != null) {
                 list.AddRange(result.Artists);
             }
             return result;
         }
         private async Task<CollectionResultBase> UpdateArtists2(List<Artist> list, Limits limits) {
             ArtistsResult result = await AudioLibrary.GetArtists(ArtistField.WithMine(), albumartistsonly: true, limits: limits);
-            if (result != null) {
+            if (result?.Artists != null) {
                 list.AddRange(result.Artists);
             }
             return result;
         }
         private async Task<CollectionResultBase> UpdateAlbums(List<Album> list, Limits limits) {
             AlbumsResult result = await AudioLibrary.GetAlbums(AlbumField.WithMine(), limits: limits);
-            if (result != null) {
+            if (result?.Albums != null) {
                 list.AddRange(result.Albums);
             }
             return result;
@@ -263,7 +263,7 @@ namespace KodiRemote.Code.Essentials {
 
         private async Task<CollectionResultBase> UpdateMusicVideos(List<MusicVideo> list, Limits limits) {
             MusicVideosResult result = await VideoLibrary.GetMusicVideos(MusicVideoField.WithMine(), limits: limits);
-            if (result != null) {
+            if (result?.MusicVideos != null) {
                 list.AddRange(result.MusicVideos);
             }
             return result;
@@ -271,14 +271,14 @@ namespace KodiRemote.Code.Essentials {
 
         private async Task<CollectionResultBase> UpdateMovieSets(List<MovieSet> list, Limits limits) {
             MovieSetsResult result = await VideoLibrary.GetMovieSets(MovieSetField.WithMine(), limits: limits);
-            if (result != null) {
+            if (result?.MovieSets != null) {
                 list.AddRange(result.MovieSets);
             }
             return result;
         }
         private async Task<CollectionResultBase> UpdateMovies(List<Movie> list, Limits limits) {
             MoviesResult result = await VideoLibrary.GetMovies(MovieField.WithMine(), limits: limits);
-            if (result != null) {
+            if (result?.Movies != null) {
                 list.AddRange(result.Movies);
             }
             return result;
@@ -295,10 +295,10 @@ namespace KodiRemote.Code.Essentials {
                     do {
                         result = await VideoLibrary.GetEpisodes(EpisodeField.WithMine(), tvshowId, seasonId, limits: new Limits(i, i + LIMIT));
                         i += LIMIT;
-                        if (result != null) {
+                        if (result?.Episodes != null) {
                             episodes.AddRange(result.Episodes);
                         }
-                    } while (result != null && result.Limits.End != result.Limits.Total);
+                    } while (result?.Episodes != null && result.Limits.End != result.Limits.Total);
                 }
             }
             await Database.SaveEpisodes(episodes);
@@ -327,11 +327,11 @@ namespace KodiRemote.Code.Essentials {
             do {
                 result = await VideoLibrary.GetTVShows(TVShowField.WithMine(), limits: new Limits(i, i + LIMIT));
                 i += LIMIT;
-                if (result != null) {
+                if (result?.TVShows != null) {
                     tvShowIds.AddRange(result.TVShows.Select(x => x.TVShowId));
                     tvShow.AddRange(result.TVShows);
                 }
-            } while (result != null && result.Limits.End != result.Limits.Total);
+            } while (result?.TVShows != null && result.Limits.End != result.Limits.Total);
             await Database.SaveTVShows(tvShow);
             return tvShowIds;
         }

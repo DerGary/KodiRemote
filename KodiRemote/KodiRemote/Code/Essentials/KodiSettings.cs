@@ -353,7 +353,11 @@ namespace KodiRemote.Code.Essentials {
         private Kodi Kodi;
         private async Task InitConnection() {
             if (Kodi == null) {
-                Kodi = new KodiWebSocket(this);
+                if(Active) {
+                    Kodi = Kodi.ActiveInstance;
+                }else {
+                    Kodi = new KodiWebSocket(this);
+                }
                 await Kodi.Connect();
                 await Kodi.DatabaseInit();
                 Kodi.PropertyChanged += Kodi_PropertyChanged;

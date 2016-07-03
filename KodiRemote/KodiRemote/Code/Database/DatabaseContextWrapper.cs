@@ -136,7 +136,13 @@ namespace KodiRemote.Code.Database {
             Addons = new DbSetWrapper<AddonTableEntry>(CreateContext);
         }
 
+        public bool inited = false;
+
         public async Task Init() {
+            if(inited) {
+                return;
+            }
+            inited = true;
             using (var context = CreateContext()) {
                 ILoggerFactory logger = ((IInfrastructure<IServiceProvider>)context).Instance.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
                 logger.AddProvider(new DatabaseLoggerProvider());

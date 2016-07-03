@@ -138,8 +138,9 @@ namespace KodiRemote.View.UserControls {
             //when the image is reused because of caching of the page then UseFadeOutAnimation is false ans imageShown is true, 
             //and because of the caching the other methods like imagefadeout are not triggered but datacontextchanged will and if i wouldn't
             //ask imageshown the image would not be visible
-            if (!UseFadeOutAnimation && !imageShown) {
+            if (!UseFadeOutAnimation) {
                 Image.Opacity = 0;
+                imageShown = false;
             }
         }
     }
