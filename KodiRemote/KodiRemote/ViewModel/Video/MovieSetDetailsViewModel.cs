@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KodiRemote.Code.Essentials;
+using KodiRemote.Code.Common;
+using KodiRemote.Code.JSON.KPlayer.Params;
 
 namespace KodiRemote.ViewModel.Video {
     public class MovieSetDetailsViewModel : ItemViewModel {
@@ -36,6 +38,18 @@ namespace KodiRemote.ViewModel.Video {
         public static async Task<MovieSetDetailsViewModel> Init(MovieSetTableEntry item) {
             var MovieSet = await Kodi.ActiveInstance.Database.GetMovieSet(item);
             return new MovieSetDetailsViewModel(MovieSet);
+        }
+
+        private RelayCommand play;
+        public RelayCommand Play {
+            get {
+                if(play == null) {
+                    play = new RelayCommand(async () => {
+                        //await this.Kodi.Player.Open(new Movie() { MovieId = Movie.MovieId }, OptionalRepeatEnum.Null);TODO:
+                    });
+                }
+                return play;
+            }
         }
     }
 }

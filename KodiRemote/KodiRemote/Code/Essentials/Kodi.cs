@@ -12,6 +12,7 @@ using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using KodiRemote.Code.JSON.ServiceInterfaces;
 using KodiRemote.Code.JSON.WebSocketServices;
 using KodiRemote.Code.Utils;
+using KodiRemote.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,8 +42,8 @@ namespace KodiRemote.Code.Essentials {
         public IAudioLibraryService AudioLibrary { get; protected set; }
         public IPlaylistService Playlist { get; protected set; }
 
-        private JSON.General.Notifications.Item currentlyPlayingItem;
-        public JSON.General.Notifications.Item CurrentlyPlayingItem {
+        private ItemViewModel currentlyPlayingItem;
+        public ItemViewModel CurrentlyPlayingItem {
             get {
                 return currentlyPlayingItem;
             }

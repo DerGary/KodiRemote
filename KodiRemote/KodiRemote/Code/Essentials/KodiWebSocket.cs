@@ -1,4 +1,5 @@
-﻿using KodiRemote.Code.Essentials.Enums;
+﻿using KodiRemote.Code.Database.Utils;
+using KodiRemote.Code.Essentials.Enums;
 using KodiRemote.Code.JSON.Enums;
 using KodiRemote.Code.JSON.Fields;
 using KodiRemote.Code.JSON.General.Notifications;
@@ -9,6 +10,7 @@ using KodiRemote.Code.JSON.KPlaylist.Results;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using KodiRemote.Code.JSON.WebSocketServices;
 using KodiRemote.Code.Utils;
+using KodiRemote.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -69,33 +71,33 @@ namespace KodiRemote.Code.Essentials {
         }
 
         private async void Playlist_OnAdd(JSON.KPlaylist.Notifications.OnAdd item) {
-            if (item.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
-                SongField properties = new SongField();
-                properties.Mine();
-                CurrentAudioPlaylist.Insert(item.Position, null);
-                SongResult song = await AudioLibrary.GetSongDetails(item.Item.Id, properties);
-                CurrentAudioPlaylist.Insert(item.Position, song.Song);
-            } else if (item.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
-                CurrentVideoPlaylist.Insert(item.Position, null);
-                if (item.Item.Type == ItemTypeEnum.Episode.ToString()) {
-                    var properties = new EpisodeField();
-                    properties.Mine();
-                    EpisodeResult episode = await VideoLibrary.GetEpisodeDetails(item.Item.Id, properties);
-                    CurrentVideoPlaylist.Add(episode.Episode);
-                } else if (item.Item.Type == ItemTypeEnum.Movie.ToString()) {
-                    var properties = new MovieField();
-                    properties.Mine();
-                    MovieResult movie = await VideoLibrary.GetMovieDetails(item.Item.Id, properties);
-                    CurrentVideoPlaylist.Add(movie.Movie);
-                } else if (item.Item.Type == ItemTypeEnum.Musicvideo.ToString()) {
-                    var properties = new MusicVideoField();
-                    properties.Mine();
-                    MusicVideoResult musicvideo = await VideoLibrary.GetMusicVideoDetails(item.Item.Id, properties);
-                    CurrentVideoPlaylist.Add(musicvideo.MusicVideo);
-                }
-            } //else if (item.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {
-            //    CurrentPicturePlaylist.Insert(item.Position, item.Item);
-            //}
+            //if (item.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
+            //    SongField properties = new SongField();
+            //    properties.Mine();
+            //    CurrentAudioPlaylist.Insert(item.Position, null);
+            //    SongResult song = await AudioLibrary.GetSongDetails(item.Item.Id, properties);
+            //    CurrentAudioPlaylist.Insert(item.Position, song.Song);
+            //} else if (item.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
+            //    CurrentVideoPlaylist.Insert(item.Position, null);
+            //    if (item.Item.Type == ItemTypeEnum.Episode.ToString()) {
+            //        var properties = new EpisodeField();
+            //        properties.Mine();
+            //        EpisodeResult episode = await VideoLibrary.GetEpisodeDetails(item.Item.Id, properties);
+            //        CurrentVideoPlaylist.Add(episode.Episode);
+            //    } else if (item.Item.Type == ItemTypeEnum.Movie.ToString()) {
+            //        var properties = new MovieField();
+            //        properties.Mine();
+            //        MovieResult movie = await VideoLibrary.GetMovieDetails(item.Item.Id, properties);
+            //        CurrentVideoPlaylist.Add(movie.Movie);
+            //    } else if (item.Item.Type == ItemTypeEnum.Musicvideo.ToString()) {
+            //        var properties = new MusicVideoField();
+            //        properties.Mine();
+            //        MusicVideoResult musicvideo = await VideoLibrary.GetMusicVideoDetails(item.Item.Id, properties);
+            //        CurrentVideoPlaylist.Add(musicvideo.MusicVideo);
+            //    }
+            //} //else if (item.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {
+            ////    CurrentPicturePlaylist.Insert(item.Position, item.Item);
+            ////}
         }
 
         private async void Timer_Tick(object state) {
@@ -122,8 +124,20 @@ namespace KodiRemote.Code.Essentials {
             }
         }
 
-        private void Player_OnPlayReceived(JSON.KPlayer.Notifications.Data item) {
-            CurrentlyPlayingItem = item.Item;
+        private async Task SetCurrentlyPlayingItem(string type, int id) {
+            TableEntryBase entry = null;
+            if(type == "movie") {
+                entry = await Database.GetMovie(new Code.Database.MovieTables.MovieTableEntry() { MovieId = id });
+            } else if(type == "episode") {
+                entry = await Database.GetEpisode(new Code.Database.EpisodeTables.EpisodeTableEntry() { EpisodeId = id });
+            }
+            CurrentlyPlayingItem = new ItemViewModel(entry);
+        }
+
+        private async void Player_OnPlayReceived(JSON.KPlayer.Notifications.Data item) {
+            if(item.Item != null) {
+                await SetCurrentlyPlayingItem(item.Item.Type, item.Item.Id);
+            }
             Paused = false;
         }
 
@@ -174,6 +188,7 @@ namespace KodiRemote.Code.Essentials {
                         Paused = true;
                     }
                     ItemResult item = await Player.GetItem(player.PlayerId, ItemField.WithAll());
+                    await SetCurrentlyPlayingItem(item.Item.Type, item.Item.Id);
                     //CurrentlyPlayingItem = item.Item;
                     //Todo:currentlyPlaying Item 
                 }
@@ -184,31 +199,31 @@ namespace KodiRemote.Code.Essentials {
         }
 
         private async Task InitPlaylists() {
-            List<Playlist> playlists = await Playlist.GetPlaylists();
-            foreach (Playlist list in playlists) {
-                ItemsResult items = await Playlist.GetItems(list.PlaylistId);
-                if (items.Items != null) {
-                    foreach (JSON.General.Results.Item item in items.Items) {
-                        if (list.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
-                            SongResult song = await AudioLibrary.GetSongDetails(item.Id, SongField.WithMine());
-                            CurrentAudioPlaylist.Add(song.Song);
-                        } else if (list.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
-                            if (item.Type == ItemTypeEnum.Episode.ToString()) {
-                                EpisodeResult episode = await VideoLibrary.GetEpisodeDetails(item.Id, EpisodeField.WithMine());
-                                CurrentVideoPlaylist.Add(episode.Episode);
-                            } else if (item.Type == ItemTypeEnum.Movie.ToString()) {
-                                MovieResult movie = await VideoLibrary.GetMovieDetails(item.Id, MovieField.WithMine());
-                                CurrentVideoPlaylist.Add(movie.Movie);
-                            } else if (item.Type == ItemTypeEnum.Musicvideo.ToString()) {
-                                MusicVideoResult musicvideo = await VideoLibrary.GetMusicVideoDetails(item.Id, MusicVideoField.WithMine());
-                                CurrentVideoPlaylist.Add(musicvideo.MusicVideo);
-                            }
-                        } else if (list.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {
-                            CurrentPicturePlaylist.Insert(item.Id, item);
-                        }
-                    }
-                }
-            }
+            //List<Playlist> playlists = await Playlist.GetPlaylists();
+            //foreach (Playlist list in playlists) {
+            //    ItemsResult items = await Playlist.GetItems(list.PlaylistId);
+            //    if (items.Items != null) {
+            //        foreach (JSON.General.Results.Item item in items.Items) {
+            //            if (list.PlaylistId == PlaylistTypeEnum.Audio.ToInt()) {
+            //                SongResult song = await AudioLibrary.GetSongDetails(item.Id, SongField.WithMine());
+            //                CurrentAudioPlaylist.Add(song.Song);
+            //            } else if (list.PlaylistId == PlaylistTypeEnum.Video.ToInt()) {
+            //                if (item.Type == ItemTypeEnum.Episode.ToString()) {
+            //                    EpisodeResult episode = await VideoLibrary.GetEpisodeDetails(item.Id, EpisodeField.WithMine());
+            //                    CurrentVideoPlaylist.Add(episode.Episode);
+            //                } else if (item.Type == ItemTypeEnum.Movie.ToString()) {
+            //                    MovieResult movie = await VideoLibrary.GetMovieDetails(item.Id, MovieField.WithMine());
+            //                    CurrentVideoPlaylist.Add(movie.Movie);
+            //                } else if (item.Type == ItemTypeEnum.Musicvideo.ToString()) {
+            //                    MusicVideoResult musicvideo = await VideoLibrary.GetMusicVideoDetails(item.Id, MusicVideoField.WithMine());
+            //                    CurrentVideoPlaylist.Add(musicvideo.MusicVideo);
+            //                }
+            //            } else if (list.PlaylistId == PlaylistTypeEnum.Picture.ToInt()) {
+            //                CurrentPicturePlaylist.Insert(item.Id, item);
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         #region IDisposable Support

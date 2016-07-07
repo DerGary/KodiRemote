@@ -122,7 +122,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MovieDetailsPlayButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayButtonStyle}">
+    <Style x:Key="CoverPlayButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayButtonStyle}">
         <Setter Property="Foreground" Value="#88FFFFFF"/>
         <Setter Property="Template">
             <Setter.Value>

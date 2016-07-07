@@ -59,11 +59,8 @@
                                      Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
                                      ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
                 </Grid>
-                <!--<Button x:Name="TvShowEpisodePlayButton"
-                        Grid.RowSpan="2"
-                        Grid.Column="0"
-                        Command="{Binding PlayEpisode}"
-                        Style="{StaticResource MovieDetailsPlayButtonStyle}"/>-->
+                <Button Grid.RowSpan="2" Command="{x:Bind ViewModel.Play, Mode=OneWay}"
+                        Style="{StaticResource CoverPlayButtonStyle}"/>
             </Grid>
             
             <Grid Grid.Column="1">

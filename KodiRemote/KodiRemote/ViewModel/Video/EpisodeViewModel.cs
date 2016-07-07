@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.Common;
+using KodiRemote.Code.JSON.KPlayer.Params;
+using KodiRemote.Code.JSON.Enums;
 
 namespace KodiRemote.ViewModel.Video {
     public class EpisodeViewModel : ItemViewModel {
@@ -17,5 +20,6 @@ namespace KodiRemote.ViewModel.Video {
             Runtime = item.Runtime;
             Episode = item.Episode;
         }
+
     }
 }

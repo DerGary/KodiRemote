@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KodiRemote.View.Base;
+using KodiRemote.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,21 +19,29 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KodiRemote.View.UserControls
 {
-    public sealed partial class CurrentlyPlaying : UserControl
+    public sealed partial class CurrentlyPlaying : UserControlBase
     {
+        private ItemViewModel viewModel;
+        public ItemViewModel ViewModel {
+            get {
+                return viewModel;
+            }
+            set {
+                var oldValue = viewModel;
+                viewModel = value;
+                
+                RaisePropertyChanged();
+                if(viewModel == null) {
+                    HideAnimation.Begin();
+                } else if(oldValue == null) {
+                    ShowAnimation.Begin();
+                }
+            }
+        }
+
         public CurrentlyPlaying()
         {
             this.InitializeComponent();
-        }
-
-        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
-
-        private void Image_ImageOpened(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

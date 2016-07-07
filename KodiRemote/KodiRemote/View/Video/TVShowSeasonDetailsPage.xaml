@@ -25,25 +25,17 @@
         </Grid.ColumnDefinitions>
 
         <Grid Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
-            
-            <Polygon Grid.RowSpan="2" Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black"/>
-            <ProgressRing Grid.RowSpan="2" Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
-            <uc:ImageControl Margin="1" 
-                             Grid.RowSpan="2" 
+
+            <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black"/>
+            <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
+            <uc:ImageControl Margin="1"  
                              ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
                              PropName="Poster" 
                              Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
                              ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
-<!--
-            <Button x:Name="TvShowPlayButton"
-                    Grid.RowSpan="2"
-                    Grid.Column="0"
-                    Command="{Binding PlayTvShowSeason}"
-                    Style="{StaticResource MovieDetailsPlayButtonStyle}"/>-->
+
+            <Button Command="{x:Bind ViewModel.Play, Mode=OneWay}"
+                    Style="{StaticResource CoverPlayButtonStyle}"/>
         </Grid>
 
         <Grid Grid.Column="1">

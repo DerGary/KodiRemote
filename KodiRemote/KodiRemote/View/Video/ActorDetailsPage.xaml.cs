@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.ViewModel.Video;
+using KodiRemote.Code.Database.TVShowTables;
 
 namespace KodiRemote.View.Video {
     public sealed partial class ActorDetailsPage : PageBase {
@@ -51,6 +52,10 @@ namespace KodiRemote.View.Video {
             var movie = vm.Item as MovieTableEntry;
             if (movie != null) {
                 Frame.Navigate(typeof(MovieDetailsPage), movie);
+            }
+            var tvshow = vm.Item as TVShowTableEntry;
+            if(tvshow != null) {
+                Frame.Navigate(typeof(TVShowDetailsPage), tvshow);
             }
         }
     }
