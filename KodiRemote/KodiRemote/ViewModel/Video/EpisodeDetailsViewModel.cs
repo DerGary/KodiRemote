@@ -38,7 +38,7 @@ namespace KodiRemote.ViewModel.Video {
             get {
                 if(play == null) {
                     play = new RelayCommand(async () => {
-                        await this.Kodi.Player.Open(new Episode() { EpisodeId = Episode.EpisodeId }, OptionalRepeatEnum.Null);
+                        await Kodi.Player.Open(new Episode() { EpisodeId = Episode.EpisodeId }, OptionalRepeatEnum.Null);
                     });
                 }
                 return play;

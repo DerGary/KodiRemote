@@ -90,7 +90,7 @@ namespace KodiRemote.View.Base {
         protected void PopInAnimation(FrameworkElement ele, ProgressRing ring) {
             Storyboard AniPopIn = new Storyboard();
 
-            AniPopIn.BeginTime = TimeSpan.FromSeconds(1);
+            AniPopIn.BeginTime = TimeSpan.FromSeconds(0);
             AniPopIn.Completed += AniPopInCompleted;
 
             DoubleAnimation FadeIn = new DoubleAnimation();

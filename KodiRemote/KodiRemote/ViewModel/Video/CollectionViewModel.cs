@@ -1,8 +1,12 @@
 ﻿using KodiRemote.Code.Common;
+using KodiRemote.Code.Database.EpisodeTables;
 using KodiRemote.Code.Database.GeneralTables;
 using KodiRemote.Code.Database.MovieTables;
 using KodiRemote.Code.Database.TVShowTables;
 using KodiRemote.Code.Database.Utils;
+using KodiRemote.Code.Essentials.Enums;
+using KodiRemote.Code.JSON.Enums;
+using KodiRemote.Code.JSON.KPlayer.Params;
 using KodiRemote.View;
 using System;
 using System.Collections.Generic;
@@ -412,6 +416,55 @@ namespace KodiRemote.ViewModel.Video {
                 Groups.RemoveAt(0);
             }
             this.Groups = Groups;
+        }
+
+        private RelayCommand<ItemViewModel> play;
+        public RelayCommand<ItemViewModel> Play {
+            get {
+                if (play == null) {
+                    play = new RelayCommand<ItemViewModel>(async (ItemViewModel item) => {
+                        if(PageType == PageType.Movies) {
+                            await Kodi.Player.Open(new Movie { MovieId = item.Id }, OptionalRepeatEnum.Null);
+                        }else if (PageType == PageType.TVShows) {
+                            var TVShow = await Kodi.Database.GetTVShow(item.Item as TVShowTableEntry);
+                            if (TVShow?.Seasons == null) {
+                                return;
+                            }
+                            bool first = true;
+
+                            foreach (TVShowSeasonTableEntry season in TVShow.Seasons) {
+                                if (season.Episodes != null) {
+                                    foreach (EpisodeTableEntry episode in season.Episodes) {
+                                        if (first) {
+                                            await Kodi.Player.Open(new Episode { EpisodeId = episode.EpisodeId }, OptionalRepeatEnum.Null);
+                                            first = false;
+                                        } else {
+                                            await Kodi.Playlist.Add(PlaylistTypeEnum.Video.ToInt(), new Code.JSON.KPlaylist.Params.Episode { EpisodeId = episode.EpisodeId });
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (PageType == PageType.MovieSets) {
+                            var MovieSet = await Kodi.Database.GetMovieSet(item.Item as MovieSetTableEntry);
+                            if (MovieSet?.Movies == null) {
+                                return;
+                            }
+
+                            bool first = true;
+
+                            foreach (MovieTableEntry movie in MovieSet.Movies.Select(x => x.Movie)) {
+                                if (first) {
+                                    await Kodi.Player.Open(new Movie { MovieId = movie.MovieId }, OptionalRepeatEnum.Null);
+                                    first = false;
+                                } else {
+                                    await Kodi.Playlist.Add(PlaylistTypeEnum.Video.ToInt(), new Code.JSON.KPlaylist.Params.Movie { MovieId = movie.MovieId });
+                                }
+                            }
+                        }
+                    });
+                }
+                return play;
+            }
         }
     }
 

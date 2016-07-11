@@ -49,5 +49,12 @@ namespace KodiRemote.View.Video {
         public void SetScrollPosition(double position) {
             itemGridView.SetHorizontalScrollOffset(position);
         }
+
+        private void ItemRightClick(object sender, RightTappedRoutedEventArgs e) {
+            var item = (e.OriginalSource as FrameworkElement).DataContext as ItemViewModel;
+            var flyout = new MenuFlyout();
+            flyout.Items.Add(new MenuFlyoutItem() { Text = "Play", Command = ViewModel.Play, CommandParameter = item });
+            flyout.ShowAt(sender as FrameworkElement, e.GetPosition(sender as FrameworkElement));
+        }
     }
 }

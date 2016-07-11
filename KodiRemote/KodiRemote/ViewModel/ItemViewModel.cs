@@ -21,13 +21,15 @@ namespace KodiRemote.ViewModel {
         private string extraImage;
         private string label;
         private bool watched;
+        private int id;
         public string Poster => StringMethods.ParseImageUrlToAppData(poster);
         public string Fanart => StringMethods.ParseImageUrlToAppData(fanart);
         public string PosterThumbnail => StringMethods.ParseThumbnailUrlToAppData(poster);
         public string Thumbnail => StringMethods.ParseImageUrlToAppData(thumbnail);
         public string ExtraImage => StringMethods.ParseImageUrlToAppData(extraImage);
         public string Label => label;
-        public bool Watched => watched; 
+        public bool Watched => watched;
+        public int Id => id;
 
         private bool posterProgressRingActive;
         public bool PosterProgressRingActive {
@@ -80,6 +82,7 @@ namespace KodiRemote.ViewModel {
                 fanart = movie.Fanart;
                 label = movie.Label;
                 watched = movie.PlayCount > 0;
+                id = movie.MovieId;
             }
             var tvshow = item as TVShowTableEntry;
             if(tvshow != null) {
@@ -89,6 +92,7 @@ namespace KodiRemote.ViewModel {
                 fanart = tvshow.Fanart;
                 label = tvshow.Label;
                 watched = tvshow.WatchedEpisodes == tvshow.Episode;
+                id = tvshow.TVShowId;
             }
             var tvshowSeason = item as TVShowSeasonTableEntry;
             if (tvshowSeason != null) {
@@ -98,6 +102,7 @@ namespace KodiRemote.ViewModel {
                 fanart = tvshowSeason.TVShow?.Fanart;
                 label = tvshowSeason.Label;
                 watched = tvshowSeason.WatchedEpisodes == tvshowSeason.Episode;
+                id = tvshowSeason.TVShowId;
             }
             var movieset = item as MovieSetTableEntry;
             if (movieset != null) {
@@ -107,6 +112,7 @@ namespace KodiRemote.ViewModel {
                 extraImage = movieset.Poster;
                 label = movieset.Label;
                 watched = movieset.PlayCount > 0;
+                id = movieset.SetId;
             }
             var actor = item as ActorTableEntry;
             if(actor != null) {
@@ -114,6 +120,7 @@ namespace KodiRemote.ViewModel {
                 thumbnail = actor.Thumbnail;
                 extraImage = actor.Thumbnail;
                 label = actor.Name;
+                id = actor.ActorId;
             }
             var episode = item as EpisodeTableEntry;
             if(episode != null) {
@@ -122,6 +129,7 @@ namespace KodiRemote.ViewModel {
                 fanart = episode.TVShowSeason?.TVShow?.Fanart;
                 label = episode.Title;
                 watched = episode.PlayCount > 0;
+                id = episode.EpisodeId;
             }
             this.Item = item;
             Title = Label;

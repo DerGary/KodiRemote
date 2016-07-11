@@ -7,6 +7,10 @@ using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.Database.TVShowTables;
 using KodiRemote.Code.Essentials;
 using KodiRemote.Code.Common;
+using KodiRemote.Code.JSON.KPlayer.Params;
+using KodiRemote.Code.JSON.Enums;
+using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.Essentials.Enums;
 
 namespace KodiRemote.ViewModel.Video {
     public class TVShowSeasonDetailsViewModel : ItemViewModel {
@@ -32,7 +36,20 @@ namespace KodiRemote.ViewModel.Video {
             get {
                 if(play == null) {
                     play = new RelayCommand(async () => {
-                        //await this.Kodi.Player.Open(new Movie() { MovieId = Movie.MovieId }, OptionalRepeatEnum.Null);TODO:
+                        if(TVShowSeason?.Episodes == null) {
+                            return;
+                        }
+
+                        bool first = true;
+
+                        foreach (EpisodeTableEntry episode in TVShowSeason.Episodes) { 
+                            if (first) {
+                                await Kodi.Player.Open(new Episode { EpisodeId = episode.EpisodeId }, OptionalRepeatEnum.Null);
+                                first = false;
+                            } else {
+                                await Kodi.Playlist.Add(PlaylistTypeEnum.Video.ToInt(), new Code.JSON.KPlaylist.Params.Episode { EpisodeId = episode.EpisodeId });
+                            }
+                        }
                     });
                 }
                 return play;

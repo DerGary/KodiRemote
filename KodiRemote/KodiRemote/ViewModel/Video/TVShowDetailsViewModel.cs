@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using KodiRemote.Code.Essentials;
 using KodiRemote.Code.Common;
 using KodiRemote.Code.JSON.KPlayer.Params;
+using KodiRemote.Code.Database.EpisodeTables;
+using KodiRemote.Code.JSON.Enums;
+using KodiRemote.Code.Essentials.Enums;
 
 namespace KodiRemote.ViewModel.Video {
     public class TVShowDetailsViewModel : ItemViewModel {
@@ -29,7 +32,7 @@ namespace KodiRemote.ViewModel.Video {
         }
 
         public async Task Init() {
-            TVShow = await Kodi.ActiveInstance.Database.GetTVShow(TVShow);
+            TVShow = await Kodi.Database.GetTVShow(TVShow);
         }
 
         private RelayCommand play;
@@ -37,7 +40,23 @@ namespace KodiRemote.ViewModel.Video {
             get {
                 if(play == null) {
                     play = new RelayCommand(async () => {
-                        //await this.Kodi.Player.Open(new Movie() { MovieId = Movie.MovieId }, OptionalRepeatEnum.Null);TODO:
+                        if(TVShow?.Seasons == null) {
+                            return;
+                        }
+                        bool first = true;
+
+                        foreach(TVShowSeasonTableEntry season in TVShow.Seasons) {
+                            if(season.Episodes != null) {
+                                foreach(EpisodeTableEntry episode in season.Episodes) {
+                                    if (first) {
+                                        await Kodi.Player.Open(new Episode { EpisodeId = episode.EpisodeId }, OptionalRepeatEnum.Null);
+                                        first = false;
+                                    } else {
+                                        await Kodi.Playlist.Add(PlaylistTypeEnum.Video.ToInt(), new Code.JSON.KPlaylist.Params.Episode { EpisodeId = episode.EpisodeId });
+                                    }
+                                }
+                            }
+                        }
                     });
                 }
                 return play;

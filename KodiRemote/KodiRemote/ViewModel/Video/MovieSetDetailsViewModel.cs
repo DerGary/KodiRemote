@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using KodiRemote.Code.Essentials;
 using KodiRemote.Code.Common;
 using KodiRemote.Code.JSON.KPlayer.Params;
+using KodiRemote.Code.JSON.Enums;
+using KodiRemote.Code.Essentials.Enums;
 
 namespace KodiRemote.ViewModel.Video {
     public class MovieSetDetailsViewModel : ItemViewModel {
@@ -55,7 +57,20 @@ namespace KodiRemote.ViewModel.Video {
             get {
                 if(play == null) {
                     play = new RelayCommand(async () => {
-                        //await this.Kodi.Player.Open(new Movie() { MovieId = Movie.MovieId }, OptionalRepeatEnum.Null);TODO:
+                        if(MovieSet?.Movies == null) {
+                            return;
+                        }
+
+                        bool first = true;
+
+                        foreach (MovieTableEntry movie in MovieSet.Movies.Select(x=> x.Movie)) {
+                            if (first) {
+                                await Kodi.Player.Open(new Movie { MovieId = movie.MovieId }, OptionalRepeatEnum.Null);
+                                first = false;
+                            } else {
+                                await Kodi.Playlist.Add(PlaylistTypeEnum.Video.ToInt(), new Code.JSON.KPlaylist.Params.Movie { MovieId = movie.MovieId });
+                            }
+                        }
                     });
                 }
                 return play;
