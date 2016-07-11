@@ -55,6 +55,12 @@ namespace KodiRemote.Code.Utils {
             semaphore.Release();
         }
 
+        public static async void CancelQueue() {
+            await semaphore.WaitAsync();
+            QueuedUrls.Clear();
+            semaphore.Release();
+        }
+
         public static async Task DownloadImage(Kodi kodi) {
             await semaphore.WaitAsync();
             KeyValuePair<string,Tuple<Kodi, List<Action>>> kv = QueuedUrls.FirstOrDefault();

@@ -33,6 +33,7 @@ namespace KodiRemote {
     /// </summary>
     sealed partial class App : Application {
         public static Stack<double> ScrollViewerHorizontalOffset = new Stack<double>();
+        public static Stack<double> ScrollViewerVerticalOffset = new Stack<double>();
         public static Stack<ViewModelBase> ViewModels = new Stack<ViewModelBase>();
 
         /// <summary>

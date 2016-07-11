@@ -13,7 +13,7 @@ namespace KodiRemote.View.Converter {
         public object Convert(object value, Type targetType, object parameter, string language) {
             var tvshowGenreMapper = value as IEnumerable<TVShowGenreMapper>;
             if (tvshowGenreMapper != null) {
-                return string.Join(", ", tvshowGenreMapper.Select(x => x.Genre.Genre));
+                return string.Join(", ", tvshowGenreMapper.Select(x => x.Genre?.Genre));
             }
             var tvshowActorMapper = value as IEnumerable<TVShowActorMapper>;
             if (tvshowActorMapper != null) {

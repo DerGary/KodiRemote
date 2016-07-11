@@ -14,7 +14,7 @@
         <converter:BooleanResourceConverter OnTrue="{StaticResource SpeakerMore}" OnFalse="{StaticResource SpeakerMute}" x:Key="MuteUnMuteConverter"/>
     </Page.Resources>
 
-    <Grid Name="rootGrid" Background="{StaticResource TransparentBlack}">
+    <Grid Name="rootGrid">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>

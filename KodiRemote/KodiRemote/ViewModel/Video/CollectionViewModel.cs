@@ -161,7 +161,6 @@ namespace KodiRemote.ViewModel.Video {
         public PageType PageType { get; private set; }
         private void Reinit() {
             Groups = null;
-            ProgressBarActive = true;
             Task.Run(async () => {
                 await GetItemsAndSortAndCreateGroups();
 
@@ -171,7 +170,6 @@ namespace KodiRemote.ViewModel.Video {
 
         public async Task Init(PageType type) {
             PageType = type;
-            ProgressBarActive = true;
 
             await GetGenres();
 
@@ -204,7 +202,6 @@ namespace KodiRemote.ViewModel.Video {
             }
 
             await GetItemsAndSortAndCreateGroups();
-            ProgressBarActive = false;
         }
 
         private async Task GetItemsAndSortAndCreateGroups() {
@@ -411,7 +408,9 @@ namespace KodiRemote.ViewModel.Video {
                     currentGroup.Items.Add(new ItemViewModel(item));
                 }
             }
-
+            if (!Groups[0].Items.Any()) {
+                Groups.RemoveAt(0);
+            }
             this.Groups = Groups;
         }
     }

@@ -59,8 +59,8 @@
             </Setter>
         </Style>
         <converter:ActorImageConverter x:Key="ImageSourceConverter"/>
-
     </Page.Resources>
+
     <Grid>
         <SemanticZoom 
             Grid.Row="2" 

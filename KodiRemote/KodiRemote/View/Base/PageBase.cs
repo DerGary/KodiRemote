@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Media.Animation;
 using KodiRemote.ViewModel;
 using KodiRemote.Code.Essentials;
 using Windows.Storage;
+using KodiRemote.Code.Utils;
 
 namespace KodiRemote.View.Base {
     public abstract class PageBase : Page, INotifyPropertyChanged {
@@ -45,6 +46,7 @@ namespace KodiRemote.View.Base {
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
             base.OnNavigatingFrom(e);
             SystemNavigationManager.GetForCurrentView().BackRequested -= PageBase_BackRequested;
+            ImageDownloader.CancelQueue();
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace KodiRemote.View.Base {
         protected void PopInAnimation(FrameworkElement ele, ProgressRing ring) {
             Storyboard AniPopIn = new Storyboard();
 
-            AniPopIn.BeginTime = TimeSpan.FromSeconds(.5);
+            AniPopIn.BeginTime = TimeSpan.FromSeconds(1);
             AniPopIn.Completed += AniPopInCompleted;
 
             DoubleAnimation FadeIn = new DoubleAnimation();

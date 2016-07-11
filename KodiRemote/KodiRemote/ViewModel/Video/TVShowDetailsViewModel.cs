@@ -23,14 +23,13 @@ namespace KodiRemote.ViewModel.Video {
         }
         public int UnWatchedEpisodes => TVShow.Episode - TVShow.WatchedEpisodes;
 
-        private TVShowDetailsViewModel(TVShowTableEntry item) : base(item) {
+        public TVShowDetailsViewModel(TVShowTableEntry item) : base(item) {
             TVShow = item;
             BackgroundItem = this;
         }
 
-        public static async Task<TVShowDetailsViewModel> Init(TVShowTableEntry item) {
-            var tvshow = await Kodi.ActiveInstance.Database.GetTVShow(item);
-            return new TVShowDetailsViewModel(tvshow);
+        public async Task Init() {
+            TVShow = await Kodi.ActiveInstance.Database.GetTVShow(TVShow);
         }
 
         private RelayCommand play;

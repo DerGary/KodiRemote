@@ -19,16 +19,33 @@ namespace KodiRemote.ViewModel.Video {
                 RaisePropertyChanged();
             }
         }
-        
-        private ActorDetailsViewModel(ActorTableEntry item) : base(item) {
+
+        private ActorTableEntry actor;
+        public ActorTableEntry Actor {
+            get {
+                return actor;
+            }
+            set {
+                actor = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
+        public ActorDetailsViewModel(ActorTableEntry item) : base(item) {
+            Actor = item;
             BackgroundItem = null;
             Groups = new ObservableCollection<Group<ItemViewModel>>();
+        }
+
+        public async Task Init() {
+            Actor = await Kodi.ActiveInstance.Database.GetActor(Actor);
             var tvshows = new ObservableCollection<ItemViewModel>();
             var movies = new ObservableCollection<ItemViewModel>();
-            foreach (var tvshowMapper in item.TVShows) {
+            foreach (var tvshowMapper in Actor.TVShows) {
                 tvshows.Add(new ItemViewModel(tvshowMapper.TVShow));
             }
-            foreach (var movieMapper in item.Movies) {
+            foreach (var movieMapper in Actor.Movies) {
                 movies.Add(new ItemViewModel(movieMapper.Movie));
             }
             if (tvshows.Any()) {
@@ -37,11 +54,6 @@ namespace KodiRemote.ViewModel.Video {
             if (movies.Any()) {
                 Groups.Add(new Group<ItemViewModel>() { Name = "Movies", Items = movies });
             }
-        }
-
-        public static async Task<ActorDetailsViewModel> Init(ActorTableEntry item) {
-            var Actor = await Kodi.ActiveInstance.Database.GetActor(item);
-            return new ActorDetailsViewModel(Actor);
         }
     }
 }

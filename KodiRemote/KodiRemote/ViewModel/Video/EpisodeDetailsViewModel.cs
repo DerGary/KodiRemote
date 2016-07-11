@@ -23,18 +23,15 @@ namespace KodiRemote.ViewModel.Video {
             }
         }
 
-        private EpisodeDetailsViewModel(EpisodeTableEntry item) : base(item) {
+        public EpisodeDetailsViewModel(EpisodeTableEntry item) : base(item) {
             Episode = item;
             BackgroundItem = this;
             Title = $"{item.TVShowSeason.TVShow.Label} - Staffel {item.TVShowSeason.Season} - Folge {item.Episode} ({item.Title})";
         }
 
-        public static async Task<EpisodeDetailsViewModel> Init(EpisodeTableEntry item) {
-            var episode = await Kodi.ActiveInstance.Database.GetEpisode(item);
-            return new EpisodeDetailsViewModel(episode);
+        public async Task Init() {
+            Episode = await Kodi.ActiveInstance.Database.GetEpisode(Episode);
         }
-
-
 
         private RelayCommand play;
         public RelayCommand Play {

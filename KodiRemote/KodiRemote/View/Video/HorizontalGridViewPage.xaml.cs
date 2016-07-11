@@ -41,14 +41,13 @@ namespace KodiRemote.View.Video {
             var viewModel = e.ClickedItem as ItemViewModel;
             Navigate?.Invoke(viewModel);
         }
+
         public double GetScrollPosition() {
-            var scrollviewer = itemGridView.FindVisualChild<ScrollViewer>();
-            return scrollviewer.HorizontalOffset;
+            return itemGridView.GetHorizontalScrollOffset();
         }
+
         public void SetScrollPosition(double position) {
-            var scrollviewer = itemGridView.FindVisualChild<ScrollViewer>();
-            scrollviewer?.ChangeView(position, 0, 1);
+            itemGridView.SetHorizontalScrollOffset(position);
         }
-       
     }
 }

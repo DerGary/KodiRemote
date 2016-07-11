@@ -38,20 +38,40 @@ namespace KodiRemote.View.Video {
 
         public TVShowDetailsPage() {
             this.InitializeComponent();
+            Loaded += TVShowDetailsPage_Loaded;
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e) {
-            ViewModel = await TVShowDetailsViewModel.Init(e.Parameter as TVShowTableEntry);
+        private void TVShowDetailsPage_Loaded(object sender, RoutedEventArgs e) {
+            if (NavigationMode == NavigationMode.Back) {
+                ScrollViewer.ChangeView(App.ScrollViewerHorizontalOffset.Pop(), 0, 1, true);
+                PopInAnimation(ScrollViewer, ProgressRing);
+            }
+        }
+
+        #region Navigation
+        protected async override void OnNavigatedTo(NavigationEventArgs e) {
+            if (e.NavigationMode == NavigationMode.Back) {
+                ViewModel = (TVShowDetailsViewModel)App.ViewModels.Pop();
+            } else {
+                ViewModel = new TVShowDetailsViewModel(e.Parameter as TVShowTableEntry);
+                await ViewModel.Init();
+                PopInAnimation(ScrollViewer, ProgressRing);
+            }
             base.OnNavigatedTo(e);
         }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
+            if (e.NavigationMode != NavigationMode.Back) {
+                App.ScrollViewerHorizontalOffset.Push(ScrollViewer.HorizontalOffset);
+                App.ViewModels.Push(ViewModel);
+            }
+            base.OnNavigatingFrom(e);
+        }
+        #endregion Navigation
 
         private void SeasonClicked(object sender, ItemClickEventArgs e) {
             var viewModel = e.ClickedItem as ItemViewModel;
             Frame.Navigate(typeof(TVShowSeasonDetailsPage), viewModel.Item);
-        }
-
-        private void ActorClicked(ActorViewModel item) {
-            Frame.Navigate(typeof(ActorDetailsPage), item.Item);
         }
 
         private void ActorClicked(object sender, ItemClickEventArgs e) {

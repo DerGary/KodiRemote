@@ -21,14 +21,10 @@ namespace KodiRemote.ViewModel.Video {
             }
         }
         
-        private TVShowSeasonDetailsViewModel(TVShowSeasonTableEntry item) : base(item) {
-            BackgroundItem = this;
+        public TVShowSeasonDetailsViewModel(TVShowSeasonTableEntry item) : base(item) {
             TVShowSeason = item;
+            BackgroundItem = this;
             Title = $"{item.TVShow.Label} - Staffel {item.Season}";
-        }
-
-        public static async Task<TVShowSeasonDetailsViewModel> Init(TVShowSeasonTableEntry item) {
-            return new TVShowSeasonDetailsViewModel(item);
         }
 
         private RelayCommand play;

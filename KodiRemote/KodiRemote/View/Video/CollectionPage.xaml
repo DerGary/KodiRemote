@@ -27,7 +27,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ProgressRing x:Name="ProgressRing" IsActive="{x:Bind ViewModel.ProgressBarActive, Mode=OneWay}" Width="100" Height="100"/>
+        <ProgressRing x:Name="ProgressRing" IsActive="True" Width="100" Height="100"/>
         <local:HorizontalGridViewPage x:Name="HorizontalGridViewPage" 
                                       ViewModel="{x:Bind ViewModel, Mode=TwoWay}" 
                                       Navigate="HorizontalGridViewPage_Navigate"

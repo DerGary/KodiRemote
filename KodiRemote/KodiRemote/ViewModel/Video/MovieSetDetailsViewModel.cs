@@ -21,23 +21,33 @@ namespace KodiRemote.ViewModel.Video {
                 RaisePropertyChanged();
             }
         }
+        private MovieSetTableEntry movieSet;
+        public MovieSetTableEntry MovieSet {
+            get {
+                return movieSet;
+            }
+            set {
+                movieSet = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        private MovieSetDetailsViewModel(MovieSetTableEntry item) : base(item) {
+
+        public MovieSetDetailsViewModel(MovieSetTableEntry item) : base(item) {
+            MovieSet = item;
             BackgroundItem = this;
             Groups = new ObservableCollection<Group<ItemViewModel>>();
-            var movies = new ObservableCollection<ItemViewModel>();
+        }
 
-            foreach (var movie in item.Movies.Select(x => x.Movie).OrderBy(x => x.Year)) {
+        public async Task Init() {
+            MovieSet = await Kodi.ActiveInstance.Database.GetMovieSet(MovieSet);
+            var movies = new ObservableCollection<ItemViewModel>();
+            foreach (var movie in MovieSet.Movies.Select(x => x.Movie).OrderBy(x => x.Year)) {
                 movies.Add(new ItemViewModel(movie));
             }
             if (movies.Any()) {
                 Groups.Add(new Group<ItemViewModel>() { Name = "Movies", Items = movies });
             }
-        }
-
-        public static async Task<MovieSetDetailsViewModel> Init(MovieSetTableEntry item) {
-            var MovieSet = await Kodi.ActiveInstance.Database.GetMovieSet(item);
-            return new MovieSetDetailsViewModel(MovieSet);
         }
 
         private RelayCommand play;

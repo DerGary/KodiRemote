@@ -40,12 +40,36 @@ namespace KodiRemote.View.Video {
 
         public ActorDetailsPage() {
             this.InitializeComponent();
+            Loaded += ActorDetailsPage_Loaded;
         }
 
+        private void ActorDetailsPage_Loaded(object sender, RoutedEventArgs e) {
+            if (NavigationMode == NavigationMode.Back) {
+                ScrollViewer.ChangeView(App.ScrollViewerHorizontalOffset.Pop(), 0, 1, true);
+                PopInAnimation(ScrollViewer, ProgressRing);
+            }
+        }
+
+        #region Navigation
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
-            ViewModel = await ActorDetailsViewModel.Init(e.Parameter as ActorTableEntry);
+            if (e.NavigationMode == NavigationMode.Back) {
+                ViewModel = (ActorDetailsViewModel)App.ViewModels.Pop();
+            } else {
+                ViewModel = new ActorDetailsViewModel(e.Parameter as ActorTableEntry);
+                await ViewModel.Init();
+                PopInAnimation(ScrollViewer, ProgressRing);
+            }
             base.OnNavigatedTo(e);
         }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
+            if (e.NavigationMode != NavigationMode.Back) {
+                App.ScrollViewerHorizontalOffset.Push(ScrollViewer.HorizontalOffset);
+                App.ViewModels.Push(ViewModel);
+            }
+            base.OnNavigatingFrom(e);
+        }
+        #endregion Navigation
 
         private void ItemClick(object sender, ItemClickEventArgs e) {
             var vm = e.ClickedItem as ItemViewModel;

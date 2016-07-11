@@ -46,7 +46,8 @@ namespace KodiRemote.View.Video {
                 PopInAnimation(HorizontalGridViewPage, ProgressRing);
             }
         }
-        
+
+        #region Navigation
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
             if (e.NavigationMode == NavigationMode.Back) {
                 ViewModel = (CollectionViewModel)App.ViewModels.Pop();
@@ -56,6 +57,7 @@ namespace KodiRemote.View.Video {
             }
             base.OnNavigatedTo(e);
         }
+
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
             if(e.NavigationMode != NavigationMode.Back) {
                 App.ScrollViewerHorizontalOffset.Push(HorizontalGridViewPage.GetScrollPosition());
@@ -63,11 +65,15 @@ namespace KodiRemote.View.Video {
             }
             base.OnNavigatingFrom(e);
         }
+        #endregion Navigation
+
         ItemViewModel item;
+
         private void HorizontalGridViewPage_Navigate(ItemViewModel item) {
             PopOutAnimation(HorizontalGridViewPage);
             this.item = item;
         }
+
         private void CollectionPage_PopOutCompleted(object sender, object e) {
             if (ViewModel.PageType == PageType.Movies) {
                 Frame.Navigate(typeof(MovieDetailsPage), item.Item);

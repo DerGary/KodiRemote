@@ -38,29 +38,26 @@ namespace KodiRemote.View.Video {
             this.InitializeComponent();
             Loaded += MovieDetailsPage_Loaded;
         }
-
-        private NavigationMode navigationMode;
+        
 
         private void MovieDetailsPage_Loaded(object sender, RoutedEventArgs e) {
-            if (navigationMode == NavigationMode.Back) {
-                var horizontalOffset = App.ScrollViewerHorizontalOffset.Pop();
-                ScrollViewer.ChangeView(horizontalOffset, 0, 1, true);
-                PopInAnimation.Begin();
+            if (NavigationMode == NavigationMode.Back) {
+                ScrollViewer.ChangeView(App.ScrollViewerHorizontalOffset.Pop(), 0, 1, true);
+                PopInAnimation(ScrollViewer, ProgressRing);
             }
         }
 
+        #region Navigation
         protected async override void OnNavigatedTo(NavigationEventArgs e) {
             if(e.NavigationMode == NavigationMode.Back) {
                 ViewModel = (MovieDetailsViewModel)App.ViewModels.Pop();
             } else {
                 ViewModel = new MovieDetailsViewModel(e.Parameter as MovieTableEntry);
                 await ViewModel.Init();
-                PopInAnimation.Begin();
+                PopInAnimation(ScrollViewer, ProgressRing);
             }
-            navigationMode = e.NavigationMode;
             base.OnNavigatedTo(e);
         }
-
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
             if(e.NavigationMode != NavigationMode.Back) {
@@ -69,6 +66,7 @@ namespace KodiRemote.View.Video {
             }
             base.OnNavigatingFrom(e);
         }
+        #endregion Navigation
 
         private void MovieSetMovieClicked(object sender, ItemClickEventArgs e) {
             var viewModel = e.ClickedItem as ItemViewModel;

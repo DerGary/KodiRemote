@@ -20,102 +20,106 @@
         <converter:ActorImageConverter x:Name="ActorImageConverter"/>
     </Page.Resources>
 
-    <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <ProgressRing x:Name="ProgressRing" IsActive="True" Width="100" Height="100"/>
+        <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource HorizontalScrollViewerStyle}" Opacity="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid Margin="20">
+                <Grid Margin="20">
 
-                <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black" />
-                <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
-                <uc:ImageControl Margin="1" 
+                    <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black" />
+                    <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
+                    <uc:ImageControl Margin="1" 
                                  ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
                                  PropName="Poster" 
                                  Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
                                  ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
 
-                <Button Command="{x:Bind ViewModel.Play, Mode=OneWay}"
+                    <Button Command="{x:Bind ViewModel.Play, Mode=OneWay}"
                         Style="{StaticResource CoverPlayButtonStyle}"/>
-            </Grid>
+                </Grid>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
-
-                <Grid Grid.Row="1" Margin="20,8,20,20" Width="700">
+                <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="56"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Serien Titel:"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Genre:"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Episoden:"/>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Gesehene Episoden:"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Ungesehene Episoden:"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.Label, Mode=OneWay}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.Genres, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.Episode, Mode=OneWay}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.WatchedEpisodes, Mode=OneWay}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.UnWatchedEpisodes, Mode=OneWay}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.Rating, Mode=OneWay}"/>
+                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
 
-                    <ScrollViewer Grid.Row="7" Grid.ColumnSpan="2" Style="{StaticResource VerticalScrollViewerStyle}">
-                        <TextBlock Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind ViewModel.TVShow.Plot, Mode=OneWay}"/>
-                    </ScrollViewer>
+                    <Grid Grid.Row="1" Margin="20,8,20,20" Width="700">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Serien Titel:"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Genre:"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Episoden:"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Gesehene Episoden:"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Ungesehene Episoden:"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.Label, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.Genres, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.Episode, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.WatchedEpisodes, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.UnWatchedEpisodes, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.TVShow.Rating, Mode=OneWay}"/>
+
+                        <ScrollViewer Grid.Row="7" Grid.ColumnSpan="2" Style="{StaticResource VerticalScrollViewerStyle}">
+                            <TextBlock Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind ViewModel.TVShow.Plot, Mode=OneWay}"/>
+                        </ScrollViewer>
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="56"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Staffeln"/>
+                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Staffeln"/>
 
-                <GridView ItemsSource="{x:Bind ViewModel.TVShow.Seasons, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}" 
+                    <GridView ItemsSource="{x:Bind ViewModel.TVShow.Seasons, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}" 
                           Grid.Row="1"
                           Style="{StaticResource ItemGridViewStyle}"
                           ItemClick="SeasonClicked"/>
-            </Grid>
+                </Grid>
 
 
-            <Grid Grid.Column="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="Schauspieler"/>
-                
-                <GridView Grid.Row="1" 
+                <Grid Grid.Column="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="56"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="Schauspieler"/>
+
+                    <GridView Grid.Row="1" 
                           Style="{StaticResource ItemGridViewStyle}"
                           ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
                           ItemsSource="{x:Bind ViewModel.TVShow.Actors, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}" 
                           ItemClick="ActorClicked"/>
+                </Grid>
             </Grid>
-        </Grid>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
+    
 </base:PageBase>
