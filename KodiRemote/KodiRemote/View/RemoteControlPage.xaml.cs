@@ -27,78 +27,14 @@ namespace KodiRemote.View {
 
         public RemoteControlPage() {
             this.InitializeComponent();
+            Loaded += RemoteControlPage_Loaded;
         }
 
-        private void Rectangle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) {
-            timer.Stop();
-        }
-        bool singleTap;
-        private async void Rectangle_Tapped(object sender, TappedRoutedEventArgs e) {
-            this.singleTap = true;
-            await Task.Delay(200);
-            if (this.singleTap) {
-                ViewModel.GoCommand.Execute(null);
-                Debug.WriteLine("Single Tapped");
-            }
-        }
-
-        private void Rectangle_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {
-            this.singleTap = false;
-            ViewModel.BackCommand.Execute(null);
-            Debug.WriteLine("Double Tapped");
-        }
-
-        private void Rectangle_Holding(object sender, HoldingRoutedEventArgs e) {
-            Debug.WriteLine("Holding");
-        }
-
-        private void Rectangle_RightTapped(object sender, RightTappedRoutedEventArgs e) {
-            ViewModel.OptionsCommand.Execute(null);
-            Debug.WriteLine("Right Tapped");
-        }
-        double x;
-        double y;
-        DispatcherTimer timer = new DispatcherTimer();
-
-        private void Rectangle_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e) {
-            timer.Interval = TimeSpan.FromSeconds(1);
-            x = e.Cumulative.Translation.X;
-            y = e.Cumulative.Translation.Y;
-
-            StartCommand();
-            timer.Start();
-        }
-
-        void StartCommand() {
-            if (Math.Abs(x) > Math.Abs(y)) {
-                if (x >= 0) {
-                    ViewModel.RightCommand.Execute(null);
-                    Debug.WriteLine("Right");
-                } else {
-                    ViewModel.LeftCommand.Execute(null);
-                    Debug.WriteLine("Left");
-                }
-            } else {
-                if (y >= 0) {
-                    ViewModel.DownCommand.Execute(null);
-                    Debug.WriteLine("Down");
-                } else {
-                    ViewModel.UpCommand.Execute(null);
-                    Debug.WriteLine("Up");
-                }
-            }
-        }
-
-        void timer_Tick(object sender, object e) {
-            if (timer.Interval.Seconds == 1)
-                timer.Interval = TimeSpan.FromMilliseconds(500);
-
-            StartCommand();
-        }
-
-        private void Rectangle_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e) {
-            x = e.Cumulative.Translation.X;
-            y = e.Cumulative.Translation.Y;
+        private async void RemoteControlPage_Loaded(object sender, RoutedEventArgs e) {
+            var movie = await ViewModel.Kodi.Database.GetMovie(new Code.Database.MovieTables.MovieTableEntry() { MovieId = 6 });
+            MovieDetails.Movie = movie;
+            CurrentlyPlaying.ViewModel = new ItemViewModel(movie);
+            CurrentlyPlaying2.ViewModel = new ItemViewModel(movie);
         }
     }
 }

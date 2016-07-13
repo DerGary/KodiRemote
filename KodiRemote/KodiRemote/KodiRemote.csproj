@@ -356,14 +356,26 @@
     </Compile>
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
+    <Compile Include="View\UserControls\CurrentlyPlayingWithHeader.xaml.cs">
+      <DependentUpon>CurrentlyPlayingWithHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\FontIcons\CinemaFontIcon.xaml.cs">
       <DependentUpon>CinemaFontIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\FontIcons\MaterialFontIcon.xaml.cs">
       <DependentUpon>MaterialFontIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\MovieDetails.xaml.cs">
+      <DependentUpon>MovieDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\RemoteControl.xaml.cs">
+      <DependentUpon>RemoteControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\SmallImage.xaml.cs">
       <DependentUpon>SmallImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\TabHeader.xaml.cs">
+      <DependentUpon>TabHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Video\ActorDetailsPage.xaml.cs">
       <DependentUpon>ActorDetailsPage.xaml</DependentUpon>
@@ -476,6 +488,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Res\Styles\PivotStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Res\Styles\SplitViewStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -490,6 +507,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\CurrentlyPlayingWithHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\FontIcons\CinemaFontIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -498,7 +519,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\MovieDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\RemoteControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\SmallImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\TabHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,43 +12,18 @@
     d:DesignHeight="800"
     d:DesignWidth="1000">
 
-    <UserControl.Resources>
-        <Storyboard x:Name="HideAnimation">
-            <DoubleAnimation From="1" To="0" Duration="0:0:0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentGrid"/>
-            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.5" Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ContentGrid">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-            </ObjectAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Name="ShowAnimation">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ContentGrid">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-            </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimation From="0" To="1" Duration="0:0:0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentGrid"/>
-        </Storyboard>
-    </UserControl.Resources>
-    <Grid x:Name="ContentGrid" HorizontalAlignment="Center" Visibility="Collapsed">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock x:Uid="currentlyPlaying"
-                   Margin="25,20,0,0" 
-                   Style="{StaticResource SubheaderTextBlockStyle}" 
-                   TextWrapping="NoWrap" 
-                   Text="Currently Playing"/>
-
-        <Grid Margin="20" Grid.Row="1">
+    <Grid>
+        <Grid Margin="20">
             <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="Uniform" Fill="Black" />
             <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
 
             <uc:ImageControl Margin="1" 
-                            Grid.RowSpan="2" 
-                            ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
-                            PropName="Poster" 
+                             Grid.RowSpan="2" 
+                             ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
+                             PropName="Poster" 
                              UseFadeOutAnimation="True"
-                            Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
-                            ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
+                             Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
+                             ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
             
             <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
                 <TextBlock Text="{x:Bind ViewModel.Label, Mode=OneWay}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20" TextWrapping="Wrap"/>

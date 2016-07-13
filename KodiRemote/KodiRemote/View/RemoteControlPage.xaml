@@ -7,109 +7,124 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:KodiRemote.View.Converter"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:uc="using:KodiRemote.View.UserControls"
     DataContext="{x:Bind ViewModel}"
     mc:Ignorable="d">
     <Page.Resources>
-        <converter:BooleanResourceConverter OnTrue="{StaticResource Play}" OnFalse="{StaticResource Pause}" x:Key="PlayPauseConverter"/>
-        <converter:BooleanResourceConverter OnTrue="{StaticResource SpeakerMore}" OnFalse="{StaticResource SpeakerMute}" x:Key="MuteUnMuteConverter"/>
+        <converter:NullVisibilityConverter OnNull="Collapsed" x:Key="NullVisibilityConverter"/>
     </Page.Resources>
 
-    <Grid Name="rootGrid">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="670"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="PowerButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="MovieButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="TVShowButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="MusicButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="KeyboardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="SpeakerLessButton.Style" Value="{StaticResource IconRepeatButtonStyleSmall}"/>
-                        <Setter Target="SpeakerMuteButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="SpeakerMoreButton.Style" Value="{StaticResource IconRepeatButtonStyleSmall}"/>
-                        <Setter Target="SkipBackButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="FastBackwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="StopButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="PlayButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="FastForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="SkipForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <Grid.ChildrenTransitions>
-            <TransitionCollection>
-                <EntranceThemeTransition/>
-            </TransitionCollection>
-        </Grid.ChildrenTransitions>
+    <Pivot Style="{StaticResource TabsStylePivotStyle}" >
+        <PivotItem>
+            <PivotItem.Header>
+                <uc:TabHeader Label="Remote Control" Glyph="{StaticResource MaterialDesign-ArrowPad}" />
+            </PivotItem.Header>
+            <uc:RemoteControl ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
+        </PivotItem>
 
-        <Grid Margin="20,20,20,20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="15*"/>
-            </Grid.RowDefinitions>
+        <PivotItem IsEnabled="False" Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}">
+            <PivotItem.Header>
+                <uc:TabHeader Visibility="Collapsed" Label="Currently Playing" Glyph="{StaticResource MaterialDesign-Info}" />
+            </PivotItem.Header>
+            <RelativePanel>
+                <uc:CurrentlyPlaying RelativePanel.AlignLeftWithPanel="True" x:Name="CurrentlyPlaying"/>
+                <uc:MovieDetails RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="CurrentlyPlaying" x:Name="MovieDetails"/>
+            </RelativePanel>
+        </PivotItem>
 
+        <PivotItem >
+            <PivotItem.Header>
+                <uc:TabHeader Label="Current Playlist" Glyph="{StaticResource MaterialDesign-ListPlay}" />
+            </PivotItem.Header>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <uc:CurrentlyPlaying Grid.Column="0" x:Name="CurrentlyPlaying2"/>
+                <ListView 
+                    Grid.Column="1"
+                    x:Name="EpisodeListView"
+                    RelativePanel.AlignRightWithPanel="True" 
+                    RelativePanel.LeftOf="CurrentlyPlaying2"
+                    SelectionMode="None"
+                    Margin="20,20,20,20"
+                    IsItemClickEnabled="True">
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <ListViewItem>TEST</ListViewItem>
+                    <!--<ListView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ItemViewModel">
+                            <Grid Height="100">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-                <Button x:Name="PowerButton" Content="{StaticResource Power}" Grid.Row="0" Grid.Column="0" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.TurnOffCommand}"/>
-                <Button x:Name="MovieButton" Content="{StaticResource MovieStrip}" Grid.Row="0" Grid.Column="1" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.MovieCommand}"/>
-                <Button x:Name="TVShowButton" Content="{StaticResource TV}" Grid.Row="0" Grid.Column="2" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.SeriesCommand}"/>
-                <Button x:Name="MusicButton" Content="{StaticResource MusicNote}" Grid.Row="0" Grid.Column="3" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.MusicCommand}" />
-                <Button x:Name="KeyboardButton" Content="{StaticResource Keyboard}" Grid.Row="0" Grid.Column="4"  Command="{x:Bind ViewModel.KeyboardCommand}" Style="{StaticResource IconButtonStyle}"/>
+                                <Grid Grid.Column="0" Grid.RowSpan="2" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="3*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
 
-                <RepeatButton   x:Name="SpeakerLessButton" Content="{StaticResource SpeakerLess}" Grid.Row="0" Grid.Column="5" Command="{x:Bind ViewModel.VolumeDownCommand}" Delay="500" Interval="200" Style="{StaticResource IconRepeatButtonStyle}"/>
-                <Button         x:Name="SpeakerMuteButton" Content="{x:Bind ViewModel.Kodi.Muted, Mode=OneWay, Converter={StaticResource MuteUnMuteConverter}, FallbackValue={StaticResource SpeakerMute}}" Grid.Row="0" Grid.Column="6" Command="{x:Bind ViewModel.VolumeMuteCommand}" Style="{StaticResource IconButtonStyle}"/>
-                <RepeatButton   x:Name="SpeakerMoreButton" Content="{StaticResource SpeakerMore}" Grid.Row="0" Grid.Column="7" Command="{x:Bind ViewModel.VolumeUpCommand}" Delay="500" Interval="200" Style="{StaticResource IconRepeatButtonStyle}"/>
+                                    <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
+                                    <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
+                                                     Grid.RowSpan="2"
+                                                     ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                                                     Margin="1"
+                                                     Watched="{x:Bind Watched, Mode=OneWay}"
+                                                     Stretch="UniformToFill"
+                                                     PropName="Thumbnail"/>
+                                </Grid>
+
+
+                                <TextBlock Margin="20,0,0,5" Grid.Column="1" Grid.Row="0" FontWeight="Bold"  FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
+                                <TextBlock Margin="20,5,0,0" Grid.Column="1" Grid.Row="1" FontWeight="Light" FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Label, Mode=OneWay}"/>
+                                <TextBlock Margin="0,0,40,5" Grid.Column="2" Grid.Row="0" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Rating, Mode=OneWay}" HorizontalAlignment="Right" />
+                                <TextBlock Margin="0,5,40,0" Grid.Column="2" Grid.Row="1" FontWeight="Bold"  FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" HorizontalAlignment="Right" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>-->
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
             </Grid>
-
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Button x:Name="SkipBackButton" Content="{StaticResource SkipBack}" Grid.Column="0" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.PreviousCommand}" />
-                <Button x:Name="FastBackwardButton" Content="{StaticResource FastBackward}" Grid.Column="1" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.FastBackwardCommand}" />
-                <Button x:Name="StopButton" Content="{StaticResource Stop}" Grid.Column="2" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.StopCommand}" />
-                <Button x:Name="PlayButton" Content="{x:Bind ViewModel.Kodi.Paused, Mode=OneWay, Converter={StaticResource PlayPauseConverter}, FallbackValue={StaticResource Pause}}" Grid.Column="3" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.PlayPauseCommand}" />
-                <Button x:Name="FastForwardButton" Content="{StaticResource FastForward}" Grid.Column="4" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.FastForwardCommand}" />
-                <Button x:Name="SkipForwardButton" Content="{StaticResource SkipForward}" Grid.Column="5" Grid.Row="5" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.NextCommand}" />
-            </Grid>
-            <Rectangle Grid.Row="4" 
-                       Fill="{StaticResource TransparentGrey}" 
-                       ManipulationCompleted="Rectangle_ManipulationCompleted" 
-                       ManipulationMode="All" 
-                       Tapped="Rectangle_Tapped" 
-                       DoubleTapped="Rectangle_DoubleTapped" 
-                       Holding="Rectangle_Holding" 
-                       RightTapped="Rectangle_RightTapped" 
-                       ManipulationStarted="Rectangle_ManipulationStarted" 
-                       ManipulationDelta="Rectangle_ManipulationDelta"/>
-        </Grid>
-    </Grid>
+        </PivotItem>
+    </Pivot>
+    
 </base:PageBase>

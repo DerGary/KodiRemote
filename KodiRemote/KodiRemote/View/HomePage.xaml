@@ -224,7 +224,7 @@
                     </GridViewItem>
                 </GridView>
 
-                <uc:CurrentlyPlaying x:Name="currentlyPlaying" RelativePanel.AlignRightWithPanel="True" ViewModel="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay}"/>
+                <uc:CurrentlyPlayingWithHeader RelativePanel.AlignRightWithPanel="True" x:Name="currentlyPlaying"/>
             </RelativePanel>
         </ScrollViewer>
     </Grid>

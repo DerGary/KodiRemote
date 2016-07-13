@@ -26,192 +26,192 @@
         <ProgressRing x:Name="ProgressRing" IsActive="True" Width="100" Height="100"/>
         <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource HorizontalScrollViewerStyle}" Opacity="0">
             <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="20">
-                <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black" />
-                <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
-                <uc:ImageControl Margin="1"
-                                 ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
-                                 PropName="Poster" 
-                                 Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
-                                 ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="20">
+                    <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black" />
+                    <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
+                    <uc:ImageControl Margin="1"
+                                     ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
+                                     PropName="Poster" 
+                                     Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
+                                     ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
 
 
-                <Button Command="{x:Bind ViewModel.Play, Mode=OneWay}"
-                        Style="{StaticResource CoverPlayButtonStyle}"/>
-            </Grid>
+                    <Button Command="{x:Bind ViewModel.Play, Mode=OneWay}"
+                            Style="{StaticResource CoverPlayButtonStyle}"/>
+                </Grid>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
-                
-                <Grid Grid.Row="1" Margin="20,8,20,20" Width="700">
+                <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="56"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Film Titel:"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Genre:"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Länge:"/>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Erscheinungsjahr:"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Label, Mode=OneWay}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Genres, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" />
-                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Rating, Mode=OneWay}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Year, Mode=OneWay}"/>
+                    <Grid Grid.Row="1" Margin="20,8,20,20" Width="700">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                    <ScrollViewer Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource VerticalScrollViewerStyle}">
-                        <TextBlock Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind ViewModel.Movie.Plot, Mode=OneWay}"/>
-                    </ScrollViewer>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Film Titel:"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Genre:"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Länge:"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Erscheinungsjahr:"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Label, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Genres, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Rating, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Year, Mode=OneWay}"/>
+
+                        <ScrollViewer Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource VerticalScrollViewerStyle}">
+                            <TextBlock Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind ViewModel.Movie.Plot, Mode=OneWay}"/>
+                        </ScrollViewer>
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            <Grid Grid.Column="2" 
-                  DataContext="{x:Bind ViewModel.Movie.MovieSets, Mode=OneWay, Converter={StaticResource MovieMovieSetMapperConverter}}"
-                  Visibility="{x:Bind ViewModel.Movie.MovieSets, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="{Binding Label}"/>
-
-                <GridView ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
-                          Grid.Row="1"
-                          Style="{StaticResource ItemGridViewStyle}"
-                          ItemClick="MovieSetMovieClicked"/>
-
-            </Grid>
-
-            <Grid Grid.Column="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Schauspieler"/>
-                
-                <GridView Grid.Row="1" 
-                          Style="{StaticResource ItemGridViewStyle}"
-                          ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
-                          ItemsSource="{x:Bind ViewModel.Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
-                          ItemClick="ActorClicked"/>
-            </Grid>
-
-            <!--Trailer Grid-->
-            <!--<Grid Grid.Column="4" Visibility="{Binding TrailerAvailable}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="40"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Row="0" VerticalAlignment="Top" Margin="25,0,40,0" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" Text="Trailer"/>
-                <Grid Margin="25,0,40,0" Grid.Row="1">
+                <Grid Grid.Column="2" 
+                      DataContext="{x:Bind ViewModel.Movie.MovieSets, Mode=OneWay, Converter={StaticResource MovieMovieSetMapperConverter}}"
+                      Visibility="{x:Bind ViewModel.Movie.MovieSets, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}" >
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="56"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
 
-                    <Image Grid.ColumnSpan="3" Grid.RowSpan="2" Source="../Resources/16-9-placeholder.png" VerticalAlignment="Center" HorizontalAlignment="Center"  Stretch="Fill"/>
-                    <MediaElement Grid.ColumnSpan="3" 
-                                  Grid.RowSpan="2" 
-                                  Source="{Binding Trailer}" 
-                                  Name="smallTrailer"  
-                                  Stretch="Fill" 
-                                  AutoPlay="False" 
-                                  Tapped="smallTrailer_Tapped"
-                                  MediaEnded="smallTrailer_MediaEnded"/>
+                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="{Binding Label}"/>
 
-                    <Button Grid.ColumnSpan="3" 
-                                    Grid.RowSpan="2" 
-                                    Name="smallPauseButton" 
-                                    Visibility="Collapsed"
-                                    Click="OnMouseDownPauseMedia" 
-                                    Style="{StaticResource MovieDetailsTrailerPauseButtonStyle}"/>
+                    <GridView ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
+                              Grid.Row="1"
+                              Style="{StaticResource ItemGridViewStyle}"
+                              ItemClick="MovieSetMovieClicked"/>
 
-                    <Button Grid.ColumnSpan="3" 
-                                    Grid.RowSpan="2" 
-                                    Name="smallPlayButton" 
-                                    Click="OnMouseDownPlayMedia"
-                                    Style="{StaticResource MovieDetailsTrailerPlayButtonStyle}"/>
-
-                    <Slider Grid.Row="0" 
-                                    Grid.Column="2" 
-                                    HorizontalAlignment="Center" 
-                                    Margin="0,20,0,20" 
-                                    Orientation="Vertical" 
-                                    Style="{StaticResource SliderStyle1}" 
-                                    Visibility="Collapsed" 
-                                    Name="smallVolumeSlider" 
-                                    VerticalAlignment="Stretch" 
-                                    Minimum="0" 
-                                    Maximum="1" 
-                                    StepFrequency="0.01" 
-                                    Value="{Binding Path=Volume,ElementName=smallTrailer, Mode=TwoWay}"
-                                    ThumbToolTipValueConverter="{StaticResource VolumeSliderValueConverter}"/>
-
-                    <Slider Grid.Row="1"
-                                    Name="smallTimelineSlider"
-                                    Margin="20,0,0,0"
-                                    Style="{StaticResource SliderStyle1}" 
-                                    Tapped="smallTimelineSlider_Tapped"
-                                    Maximum="{Binding ElementName=smallTrailer, Path=NaturalDuration.TimeSpan.TotalMilliseconds}"
-                                    Value="{Binding ElementName=smallTrailer, Path=Position.TotalMilliseconds, Mode=TwoWay}"
-                                    ThumbToolTipValueConverter="{StaticResource SeekSliderValueConverter}"/>
-
-
-                    <TextBlock Margin="20,0,20,16" 
-                                       VerticalAlignment="Center" 
-                                       HorizontalAlignment="Center" 
-                                       Text="&#58889;" 
-                                       FontFamily="../Resources/icomoon.ttf#icomoon" 
-                                       Grid.Row="1"  
-                                       Grid.Column="1" 
-                                       Tapped="Fullscreen_Tapped" 
-                                       FontSize="30"/>
-
-                    <TextBlock Margin="20,0,20,16" 
-                                       VerticalAlignment="Center" 
-                                       HorizontalAlignment="Center" 
-                                       Text="&#58903;" 
-                                       FontFamily="../Resources/icomoon.ttf#icomoon" 
-                                       Grid.Row="1"  
-                                       Grid.Column="2" 
-                                       Tapped="Volume_Tapped" 
-                                       FontSize="30"/>
                 </Grid>
-            </Grid>-->
-        </Grid>
 
-    </ScrollViewer>
+                <Grid Grid.Column="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="56"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Schauspieler"/>
+
+                    <GridView Grid.Row="1" 
+                              Style="{StaticResource ItemGridViewStyle}"
+                              ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
+                              ItemsSource="{x:Bind ViewModel.Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
+                              ItemClick="ActorClicked"/>
+                </Grid>
+
+                <!--Trailer Grid-->
+                <!--<Grid Grid.Column="4" Visibility="{Binding TrailerAvailable}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" VerticalAlignment="Top" Margin="25,0,40,0" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" Text="Trailer"/>
+                    <Grid Margin="25,0,40,0" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.ColumnSpan="3" Grid.RowSpan="2" Source="../Resources/16-9-placeholder.png" VerticalAlignment="Center" HorizontalAlignment="Center"  Stretch="Fill"/>
+                        <MediaElement Grid.ColumnSpan="3" 
+                                      Grid.RowSpan="2" 
+                                      Source="{Binding Trailer}" 
+                                      Name="smallTrailer"  
+                                      Stretch="Fill" 
+                                      AutoPlay="False" 
+                                      Tapped="smallTrailer_Tapped"
+                                      MediaEnded="smallTrailer_MediaEnded"/>
+
+                        <Button Grid.ColumnSpan="3" 
+                                        Grid.RowSpan="2" 
+                                        Name="smallPauseButton" 
+                                        Visibility="Collapsed"
+                                        Click="OnMouseDownPauseMedia" 
+                                        Style="{StaticResource MovieDetailsTrailerPauseButtonStyle}"/>
+
+                        <Button Grid.ColumnSpan="3" 
+                                        Grid.RowSpan="2" 
+                                        Name="smallPlayButton" 
+                                        Click="OnMouseDownPlayMedia"
+                                        Style="{StaticResource MovieDetailsTrailerPlayButtonStyle}"/>
+
+                        <Slider Grid.Row="0" 
+                                        Grid.Column="2" 
+                                        HorizontalAlignment="Center" 
+                                        Margin="0,20,0,20" 
+                                        Orientation="Vertical" 
+                                        Style="{StaticResource SliderStyle1}" 
+                                        Visibility="Collapsed" 
+                                        Name="smallVolumeSlider" 
+                                        VerticalAlignment="Stretch" 
+                                        Minimum="0" 
+                                        Maximum="1" 
+                                        StepFrequency="0.01" 
+                                        Value="{Binding Path=Volume,ElementName=smallTrailer, Mode=TwoWay}"
+                                        ThumbToolTipValueConverter="{StaticResource VolumeSliderValueConverter}"/>
+
+                        <Slider Grid.Row="1"
+                                        Name="smallTimelineSlider"
+                                        Margin="20,0,0,0"
+                                        Style="{StaticResource SliderStyle1}" 
+                                        Tapped="smallTimelineSlider_Tapped"
+                                        Maximum="{Binding ElementName=smallTrailer, Path=NaturalDuration.TimeSpan.TotalMilliseconds}"
+                                        Value="{Binding ElementName=smallTrailer, Path=Position.TotalMilliseconds, Mode=TwoWay}"
+                                        ThumbToolTipValueConverter="{StaticResource SeekSliderValueConverter}"/>
+
+
+                        <TextBlock Margin="20,0,20,16" 
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Center" 
+                                           Text="&#58889;" 
+                                           FontFamily="../Resources/icomoon.ttf#icomoon" 
+                                           Grid.Row="1"  
+                                           Grid.Column="1" 
+                                           Tapped="Fullscreen_Tapped" 
+                                           FontSize="30"/>
+
+                        <TextBlock Margin="20,0,20,16" 
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Center" 
+                                           Text="&#58903;" 
+                                           FontFamily="../Resources/icomoon.ttf#icomoon" 
+                                           Grid.Row="1"  
+                                           Grid.Column="2" 
+                                           Tapped="Volume_Tapped" 
+                                           FontSize="30"/>
+                    </Grid>
+                </Grid>-->
+            </Grid>
+
+        </ScrollViewer>
     </Grid>
 </base:PageBase>

@@ -80,6 +80,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="VerticalItemGridViewStyle" TargetType="GridView" BasedOn="{StaticResource ItemGridViewStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Margin="0" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     <!-- Used for Season Covers and Movie Covers of Movieset on the Details Pages and for Actors too-->
     <Style x:Key="ItemGridViewStyle" TargetType="GridView">

@@ -1,0 +1,40 @@
+﻿<base:UserControlBase
+    x:Class="KodiRemote.View.UserControls.CurrentlyPlayingWithHeader"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KodiRemote.View.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:base="using:KodiRemote.View.Base"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <Storyboard x:Name="HideAnimation">
+            <DoubleAnimation From="1" To="0" Duration="0:0:0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="currentlyPlaying"/>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.5" Storyboard.TargetProperty="Visibility" Storyboard.TargetName="currentlyPlaying">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="ShowAnimation">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="currentlyPlaying">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation From="0" To="1" Duration="0:0:0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="currentlyPlaying"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid x:Name="currentlyPlaying" RelativePanel.AlignRightWithPanel="True" Visibility="Collapsed">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Uid="currentlyPlaying"
+                   Margin="25,20,0,0" 
+                   Style="{StaticResource SubheaderTextBlockStyle}" 
+                   TextWrapping="NoWrap" 
+                   Text="Currently Playing"/>
+        <local:CurrentlyPlaying Grid.Row="1" ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
+    </Grid>
+</base:UserControlBase>

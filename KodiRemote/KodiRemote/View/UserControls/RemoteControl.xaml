@@ -1,0 +1,180 @@
+﻿<base:UserControlBase
+    x:Class="KodiRemote.View.UserControls.RemoteControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KodiRemote.View.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:base="using:KodiRemote.View.Base"
+    xmlns:converter="using:KodiRemote.View.Converter"
+    mc:Ignorable="d"
+    d:DesignHeight="1080"
+    d:DesignWidth="1920">
+    <UserControl.Resources>
+        <converter:BooleanResourceConverter OnTrue="{StaticResource Play}" OnFalse="{StaticResource Pause}" x:Key="PlayPauseConverter"/>
+        <converter:BooleanResourceConverter OnTrue="{StaticResource SpeakerMore}" OnFalse="{StaticResource SpeakerMute}" x:Key="MuteUnMuteConverter"/>
+    </UserControl.Resources>
+
+    <Grid Name="RemoteControlGrid">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="670"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PowerButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="MovieButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="TVShowButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="MusicButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="KeyboardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="SpeakerLessButton.Style" Value="{StaticResource IconRepeatButtonStyleSmall}"/>
+                        <Setter Target="SpeakerMuteButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="SpeakerMoreButton.Style" Value="{StaticResource IconRepeatButtonStyleSmall}"/>
+                        <Setter Target="SkipBackButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="FastBackwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="StopButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="PlayButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="FastForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                        <Setter Target="SkipForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid Margin="20,20,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="PowerButton" 
+                        Content="{StaticResource Power}" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.TurnOffCommand}"/>
+                <Button x:Name="MovieButton" 
+                        Content="{StaticResource MovieStrip}" 
+                        Grid.Column="1" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.MovieCommand}"/>
+                <Button x:Name="TVShowButton" 
+                        Content="{StaticResource TV}" 
+                        Grid.Column="2" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.SeriesCommand}"/>
+                <Button x:Name="MusicButton" 
+                        Content="{StaticResource MusicNote}"
+                        Grid.Column="3" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.MusicCommand}" />
+                <Button x:Name="KeyboardButton" 
+                        Content="{StaticResource Keyboard}" 
+                        Grid.Column="4" 
+                        Command="{x:Bind ViewModel.KeyboardCommand}" 
+                        Style="{StaticResource IconButtonStyle}"/>
+
+                <RepeatButton   x:Name="SpeakerLessButton" 
+                                Content="{StaticResource SpeakerLess}" 
+                                Grid.Column="5" 
+                                Command="{x:Bind ViewModel.VolumeDownCommand}" 
+                                Delay="500" 
+                                Interval="200" 
+                                Style="{StaticResource IconRepeatButtonStyle}"/>
+                <Button         x:Name="SpeakerMuteButton" 
+                                Content="{x:Bind ViewModel.Kodi.Muted, Mode=OneWay, Converter={StaticResource MuteUnMuteConverter}, FallbackValue={StaticResource SpeakerMute}}"
+                                Grid.Column="6" 
+                                Command="{x:Bind ViewModel.VolumeMuteCommand}" 
+                                Style="{StaticResource IconButtonStyle}"/>
+                <RepeatButton   x:Name="SpeakerMoreButton" 
+                                Content="{StaticResource SpeakerMore}" 
+                                Grid.Column="7" 
+                                Command="{x:Bind ViewModel.VolumeUpCommand}" 
+                                Delay="500" 
+                                Interval="200" 
+                                Style="{StaticResource IconRepeatButtonStyle}"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="SkipBackButton" 
+                        Content="{StaticResource SkipBack}" 
+                        Grid.Row="5" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.PreviousCommand}" />
+                <Button x:Name="FastBackwardButton" 
+                        Content="{StaticResource FastBackward}" 
+                        Grid.Column="1" 
+                        Grid.Row="5" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.FastBackwardCommand}" />
+                <Button x:Name="StopButton" 
+                        Content="{StaticResource Stop}" 
+                        Grid.Column="2" 
+                        Grid.Row="5" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.StopCommand}" />
+                <Button x:Name="PlayButton" 
+                        Content="{x:Bind ViewModel.Kodi.Paused, Mode=OneWay, Converter={StaticResource PlayPauseConverter}, FallbackValue={StaticResource Pause}}" 
+                        Grid.Column="3" 
+                        Grid.Row="5" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.PlayPauseCommand}" />
+                <Button x:Name="FastForwardButton" 
+                        Content="{StaticResource FastForward}" 
+                        Grid.Column="4" 
+                        Grid.Row="5" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.FastForwardCommand}" />
+                <Button x:Name="SkipForwardButton" 
+                        Content="{StaticResource SkipForward}" 
+                        Grid.Column="5" 
+                        Grid.Row="5" 
+                        Style="{StaticResource IconButtonStyle}" 
+                        Command="{x:Bind ViewModel.NextCommand}" />
+            </Grid>
+            <Rectangle Grid.Row="4" 
+                       Fill="{StaticResource TransparentGrey}" 
+                       ManipulationCompleted="Rectangle_ManipulationCompleted" 
+                       ManipulationMode="All" 
+                       Tapped="Rectangle_Tapped" 
+                       DoubleTapped="Rectangle_DoubleTapped" 
+                       Holding="Rectangle_Holding" 
+                       RightTapped="Rectangle_RightTapped" 
+                       ManipulationStarted="Rectangle_ManipulationStarted" 
+                       ManipulationDelta="Rectangle_ManipulationDelta"/>
+        </Grid>
+    </Grid>
+</base:UserControlBase>

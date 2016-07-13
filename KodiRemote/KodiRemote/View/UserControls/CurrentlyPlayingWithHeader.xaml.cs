@@ -18,19 +18,26 @@ using Windows.UI.Xaml.Navigation;
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace KodiRemote.View.UserControls {
-    public sealed partial class CurrentlyPlaying : UserControlBase {
+    public sealed partial class CurrentlyPlayingWithHeader : UserControlBase {
         private ItemViewModel viewModel;
         public ItemViewModel ViewModel {
             get {
                 return viewModel;
             }
             set {
+                var oldValue = viewModel;
                 viewModel = value;
+
                 RaisePropertyChanged();
+                if (viewModel == null) {
+                    HideAnimation.Begin();
+                } else if (oldValue == null) {
+                    ShowAnimation.Begin();
+                }
             }
         }
 
-        public CurrentlyPlaying() {
+        public CurrentlyPlayingWithHeader() {
             this.InitializeComponent();
         }
     }
