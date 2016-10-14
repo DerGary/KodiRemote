@@ -15,6 +15,8 @@
         <converter:BooleanResourceConverter OnTrue="{StaticResource SpeakerMore}" OnFalse="{StaticResource SpeakerMute}" x:Key="MuteUnMuteConverter"/>
     </UserControl.Resources>
 
+    
+    
     <Grid Name="RemoteControlGrid">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -52,7 +54,7 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        <Grid Margin="20,20,20,20">
+        <Grid Margin="20,20,20,20" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="*"/>
@@ -95,7 +97,7 @@
                 <Button x:Name="KeyboardButton" 
                         Content="{StaticResource Keyboard}" 
                         Grid.Column="4" 
-                        Command="{x:Bind ViewModel.KeyboardCommand}" 
+                        Tapped="KeyboardButtonTapped"
                         Style="{StaticResource IconButtonStyle}"/>
 
                 <RepeatButton   x:Name="SpeakerLessButton" 
@@ -165,16 +167,36 @@
                         Style="{StaticResource IconButtonStyle}" 
                         Command="{x:Bind ViewModel.NextCommand}" />
             </Grid>
-            <Rectangle Grid.Row="4" 
-                       Fill="{StaticResource TransparentGrey}" 
-                       ManipulationCompleted="Rectangle_ManipulationCompleted" 
-                       ManipulationMode="All" 
-                       Tapped="Rectangle_Tapped" 
-                       DoubleTapped="Rectangle_DoubleTapped" 
-                       Holding="Rectangle_Holding" 
-                       RightTapped="Rectangle_RightTapped" 
-                       ManipulationStarted="Rectangle_ManipulationStarted" 
-                       ManipulationDelta="Rectangle_ManipulationDelta"/>
+            <Canvas 
+                x:Name="ManipulationCanvas" 
+                Grid.Row="4" 
+                Background="{StaticResource TransparentGrey}"
+                ManipulationCompleted="Rectangle_ManipulationCompleted" 
+                ManipulationMode="All" 
+                Tapped="Rectangle_Tapped" 
+                DoubleTapped="Rectangle_DoubleTapped" 
+                Holding="Rectangle_Holding" 
+                RightTapped="Rectangle_RightTapped" 
+                ManipulationStarted="Rectangle_ManipulationStarted" 
+                ManipulationDelta="Rectangle_ManipulationDelta"
+                PointerPressed="CanvasPointerPressed"
+                PointerReleased="CanvasPointerReleased"
+                PointerMoved="CanvasPointerMoved"
+                PointerExited="CanvasPointerExited"
+                PointerCaptureLost="CanvasPointerExited">
+                <Ellipse x:Name="TouchEllipse" Width="50" Height="50" Fill="Blue" Visibility="Collapsed"/>
+            </Canvas>
         </Grid>
+
+
+        <ContentDialog 
+            x:Name="InputTextContentDialog"
+            VerticalAlignment="Stretch"
+            Title="Enter String"
+            MinWidth="500"
+            PrimaryButtonText="OK"
+            SecondaryButtonText="Cancel">
+            <TextBox Margin="0,20,0,0" Text="{x:Bind ViewModel.InputText, Mode=TwoWay}" KeyUp="InputTextDialogKeyUp"/>
+        </ContentDialog>
     </Grid>
 </base:UserControlBase>

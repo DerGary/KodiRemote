@@ -6,11 +6,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.ApplicationModel.Core;
 
 namespace KodiRemote.ViewModel {
+    public class InputRequestedEventArgs : EventArgs {
+        public Code.JSON.KInput.Notifications.Data Item { get; set; }
+    }
+
     public class RemoteControlViewModel : ViewModelBase {
+        private string inputText;
+        public string InputText {
+            get {
+                return inputText;
+            }
+            set {
+                inputText = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public event EventHandler<InputRequestedEventArgs> InputRequested;
+
         public RemoteControlViewModel() {
             Title = "Remote Control";
+            this.Kodi.Input.OnInputRequested += Input_OnInputRequested;
+            Code.Essentials.Kodi.KodiWillChange += KodiWillChange;
+            Code.Essentials.Kodi.KodiChanged += KodiChanged;
+        }
+
+        private void KodiChanged(object sender, EventArgs e) {
+            Kodi.Input.OnInputRequested += Input_OnInputRequested;
+        }
+
+        private void KodiWillChange(object sender, EventArgs e) {
+            Kodi.Input.OnInputRequested -= Input_OnInputRequested;
+        }
+
+        private async void Input_OnInputRequested(Code.JSON.KInput.Notifications.Data item) {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                InputRequested?.Invoke(this, new InputRequestedEventArgs() { Item = item });
+            });
+        }
+
+        public async Task SendText() {
+            await Kodi.Input.SendText(InputText);
+            InputText = "";
         }
 
         private RelayCommand volumeUpCommand;
@@ -122,6 +163,7 @@ namespace KodiRemote.ViewModel {
                 return rightCommand;
             }
         }
+
 
         private RelayCommand backCommand;
         public RelayCommand BackCommand {

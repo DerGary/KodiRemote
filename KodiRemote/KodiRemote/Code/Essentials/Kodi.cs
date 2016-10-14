@@ -98,7 +98,7 @@ namespace KodiRemote.Code.Essentials {
         }
 
         public DatabaseOperations Database { get; protected set; }
-        
+
         public ObservableCollection<Song> CurrentAudioPlaylist { get; protected set; } = new ObservableCollection<Song>();
         public ObservableCollection<object> CurrentVideoPlaylist { get; protected set; } = new ObservableCollection<object>();
         public ObservableCollection<object> CurrentPicturePlaylist { get; protected set; } = new ObservableCollection<object>();
@@ -109,6 +109,7 @@ namespace KodiRemote.Code.Essentials {
                 return instance;
             }
             private set {
+                KodiWillChange?.Invoke(instance, null);
                 instance = value;
                 KodiChanged?.Invoke(instance, null);
             }
@@ -118,6 +119,7 @@ namespace KodiRemote.Code.Essentials {
             this.Settings = settings;
             this.Database = new DatabaseOperations(settings.Name);
         }
+        public static event KodiChangedEventHandler KodiWillChange;
 
         public static event KodiChangedEventHandler KodiChanged;
         public static async Task Init(KodiSettings settings) {
@@ -131,13 +133,13 @@ namespace KodiRemote.Code.Essentials {
 
         private bool databaseInited;
         public async Task DatabaseInit() {
-            if(databaseInited) {
+            if (databaseInited) {
                 return;
             }
             databaseInited = true;
             await Database.Init();
         }
-        
+
 
         public abstract Task InitProperties();
         public abstract Task Connect();
@@ -291,7 +293,7 @@ namespace KodiRemote.Code.Essentials {
             foreach (int tvshowId in ids.Keys) {
                 List<int> seasonIds;
                 ids.TryGetValue(tvshowId, out seasonIds);
-                foreach(int seasonId in seasonIds) {
+                foreach (int seasonId in seasonIds) {
                     int i = 0;
                     do {
                         result = await VideoLibrary.GetEpisodes(EpisodeField.WithMine(), tvshowId, seasonId, limits: new Limits(i, i + LIMIT));

@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using KodiRemote.Code.JSON.Enums;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -28,16 +29,24 @@ namespace KodiRemote.View.UserControls {
                 return viewModel;
             }
             set {
+                if (viewModel != null) {
+                    viewModel.InputRequested -= ViewModelInputRequested;
+                }
                 viewModel = value;
+                viewModel.InputRequested += ViewModelInputRequested;
                 RaisePropertyChanged();
             }
         }
 
-
         public RemoteControl() {
+            Loaded += RemoteControl_Loaded;
             this.InitializeComponent();
+            timer.Tick += timer_Tick;
         }
 
+        private void RemoteControl_Loaded(object sender, RoutedEventArgs e) {
+            this.Focus(FocusState.Keyboard);
+        }
 
         private void Rectangle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) {
             timer.Stop();
@@ -101,7 +110,7 @@ namespace KodiRemote.View.UserControls {
 
         void timer_Tick(object sender, object e) {
             if (timer.Interval.Seconds == 1)
-                timer.Interval = TimeSpan.FromMilliseconds(500);
+                timer.Interval = TimeSpan.FromMilliseconds(250);
 
             StartCommand();
         }
@@ -109,6 +118,52 @@ namespace KodiRemote.View.UserControls {
         private void Rectangle_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e) {
             x = e.Cumulative.Translation.X;
             y = e.Cumulative.Translation.Y;
+        }
+
+        private async void ViewModelInputRequested(object sender, InputRequestedEventArgs e) {
+            await ShowInputDialog();
+        }
+
+        private async Task ShowInputDialog() {
+            var result = await InputTextContentDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary) {
+                await ViewModel.SendText();
+            }
+        }
+
+        private async void KeyboardButtonTapped(object sender, TappedRoutedEventArgs e) {
+            await ShowInputDialog();
+        }
+
+        private async void InputTextDialogKeyUp(object sender, KeyRoutedEventArgs e) {
+            if (e.Key == Windows.System.VirtualKey.Enter) {
+                InputTextContentDialog.Hide();
+                await ViewModel.SendText();
+            } else if (e.Key == Windows.System.VirtualKey.Escape) {
+                InputTextContentDialog.Hide();
+            }
+        }
+        private void CanvasPointerMoved(object sender, PointerRoutedEventArgs e) {
+            var point = e.GetCurrentPoint(ManipulationCanvas);
+            Canvas.SetLeft(TouchEllipse, point.RawPosition.X - 25);
+            Canvas.SetTop(TouchEllipse, point.RawPosition.Y - 25);
+        }
+
+        private void CanvasPointerExited(object sender, PointerRoutedEventArgs e) {
+            TouchEllipse.Visibility = Visibility.Collapsed;
+        }
+
+
+        private void CanvasPointerReleased(object sender, PointerRoutedEventArgs e) {
+            TouchEllipse.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void CanvasPointerPressed(object sender, PointerRoutedEventArgs e) {
+            var point = e.GetCurrentPoint(ManipulationCanvas);
+            Canvas.SetLeft(TouchEllipse, point.RawPosition.X - 25);
+            Canvas.SetTop(TouchEllipse, point.RawPosition.Y - 25);
+            TouchEllipse.Visibility = Visibility.Visible;
         }
     }
 }

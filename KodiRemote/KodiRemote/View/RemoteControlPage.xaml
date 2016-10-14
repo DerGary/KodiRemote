@@ -22,9 +22,9 @@
             <uc:RemoteControl ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
         </PivotItem>
 
-        <PivotItem IsEnabled="False" Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}">
+        <PivotItem >
             <PivotItem.Header>
-                <uc:TabHeader Visibility="Collapsed" Label="Currently Playing" Glyph="{StaticResource MaterialDesign-Info}" />
+                <uc:TabHeader Label="Currently Playing" Glyph="{StaticResource MaterialDesign-Info}" />
             </PivotItem.Header>
             <RelativePanel>
                 <uc:CurrentlyPlaying RelativePanel.AlignLeftWithPanel="True" x:Name="CurrentlyPlaying"/>
