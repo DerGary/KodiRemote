@@ -15,88 +15,79 @@
         <converter:RuntimeLengthConverter x:Key="RuntimeLengthConverter"/>
     </UserControl.Resources>
 
-    <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource VerticalScrollViewerStyle}">
-        <Grid>
+    <StackPanel Orientation="{x:Bind Orientation, Mode=OneWay}">
+        <Grid x:Name="InfoGrid" MaxWidth="700">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="56"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <Grid Grid.Row="0">
+
+            <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
+
+            <Grid Grid.Row="1" Margin="20,8,20,20">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <Grid Grid.Row="1" Margin="20,8,20,20">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Film Titel:"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Genre:"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Länge:"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Erscheinungsjahr:"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Label, Mode=OneWay}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Genres, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Rating, Mode=OneWay}"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Year, Mode=OneWay}"/>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Film Titel:"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Genre:"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Länge:"/>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Erscheinungsjahr:"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Label, Mode=OneWay}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Genres, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" />
-                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Rating, Mode=OneWay}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind Movie.Year, Mode=OneWay}"/>
-
-                    <TextBlock  Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind Movie.Plot, Mode=OneWay}" Margin="0,0,20,0"/>
-                </Grid>
-            </Grid>
-
-            <Grid Grid.Row="1" 
-                  DataContext="{x:Bind Movie.MovieSets, Mode=OneWay, Converter={StaticResource MovieMovieSetMapperConverter}}"
-                  Visibility="{x:Bind Movie.MovieSets, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="{Binding Label}"/>
-
-                <GridView ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
-                          Grid.Row="1"
-                          Style="{StaticResource VerticalItemGridViewStyle}"
-                          ItemClick="MovieSetMovieClicked"/>
-
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Schauspieler"/>
-
-                <GridView Grid.Row="1" 
-                          Style="{StaticResource VerticalItemGridViewStyle}"
-                          ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
-                          ItemsSource="{x:Bind Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
-                          ItemClick="ActorClicked"/>
+                <TextBlock  Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind Movie.Plot, Mode=OneWay}" Margin="0,0,20,0"/>
             </Grid>
         </Grid>
 
-    </ScrollViewer>
+        <Grid
+            DataContext="{x:Bind Movie.MovieSets, Mode=OneWay, Converter={StaticResource MovieMovieSetMapperConverter}}"
+            Visibility="{x:Bind Movie.MovieSets, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="56"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="{Binding Label}"/>
+
+            <GridView x:Name="MovieSetGridView"
+                      ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
+                      Grid.Row="1"
+                      Style="{StaticResource HorizontalItemGridViewStyle}"
+                      ItemClick="MovieSetMovieClicked"/>
+
+        </Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="56"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Schauspieler"/>
+
+            <GridView x:Name="ActorGridView"
+                      Grid.Row="1" 
+                      Style="{StaticResource HorizontalItemGridViewStyle}"
+                      ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
+                      ItemsSource="{x:Bind Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
+                      ItemClick="ActorGridClicked"/>
+        </Grid>
+    </StackPanel>
 </base:UserControlBase>

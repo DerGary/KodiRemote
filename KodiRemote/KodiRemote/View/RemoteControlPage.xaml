@@ -11,120 +11,141 @@
     DataContext="{x:Bind ViewModel}"
     mc:Ignorable="d">
     <Page.Resources>
-        <converter:NullVisibilityConverter OnNull="Collapsed" x:Key="NullVisibilityConverter"/>
+        <converter:NullVisibilityConverter OnNull="Collapsed" x:Key="OnNotNullVisibilityConverter"/>
+        <converter:NullVisibilityConverter OnNull="Visible" x:Key="OnNullVisibilityConverter"/>
     </Page.Resources>
 
-    <Pivot Style="{StaticResource TabsStylePivotStyle}" >
-        <PivotItem>
-            <PivotItem.Header>
-                <uc:TabHeader Label="Remote Control" Glyph="{StaticResource MaterialDesign-ArrowPad}" />
-            </PivotItem.Header>
-            <uc:RemoteControl ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
-        </PivotItem>
+    <Grid>
+        <Pivot Style="{StaticResource TabsStylePivotStyle}" Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource OnNullVisibilityConverter}}">
+            <PivotItem>
+                <PivotItem.Header>
+                    <uc:TabHeader Label="Remote Control" Glyph="{StaticResource MaterialDesign-ArrowPad}" />
+                </PivotItem.Header>
+                <uc:RemoteControl ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
+            </PivotItem>
+        </Pivot>
 
-        <PivotItem >
-            <PivotItem.Header>
-                <uc:TabHeader Label="Currently Playing" Glyph="{StaticResource MaterialDesign-Info}" />
-            </PivotItem.Header>
-            <RelativePanel>
-                <uc:CurrentlyPlaying RelativePanel.AlignLeftWithPanel="True" x:Name="CurrentlyPlaying"/>
-                <uc:MovieDetails RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="CurrentlyPlaying" x:Name="MovieDetails"/>
-            </RelativePanel>
-        </PivotItem>
+        <Pivot Style="{StaticResource TabsStylePivotStyle}" Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource OnNotNullVisibilityConverter}}">
+            <PivotItem>
+                <PivotItem.Header>
+                    <uc:TabHeader Label="Remote Control" Glyph="{StaticResource MaterialDesign-ArrowPad}" />
+                </PivotItem.Header>
+                <uc:RemoteControl ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
+            </PivotItem>
 
-        <PivotItem >
-            <PivotItem.Header>
-                <uc:TabHeader Label="Current Playlist" Glyph="{StaticResource MaterialDesign-ListPlay}" />
-            </PivotItem.Header>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <uc:CurrentlyPlaying Grid.Column="0" x:Name="CurrentlyPlaying2"/>
-                <ListView 
-                    Grid.Column="1"
-                    x:Name="EpisodeListView"
-                    RelativePanel.AlignRightWithPanel="True" 
-                    RelativePanel.LeftOf="CurrentlyPlaying2"
-                    SelectionMode="None"
-                    Margin="20,20,20,20"
-                    IsItemClickEnabled="True">
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <ListViewItem>TEST</ListViewItem>
-                    <!--<ListView.ItemTemplate>
-                        <DataTemplate x:DataType="vm:ItemViewModel">
-                            <Grid Height="100">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="50"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+            <PivotItem>
+                <PivotItem.Header>
+                    <uc:TabHeader Label="Currently Playing" Glyph="{StaticResource MaterialDesign-Info}" />
+                </PivotItem.Header>
+                <RelativePanel>
+                    <uc:CurrentlyPlaying x:Name="MovieDetailsCurrentlyPlaying" ViewModel="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay}" RelativePanel.AlignLeftWithPanel="True"/>
+                    <uc:MovieDetails x:Name="MovieDetails" RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="MovieDetailsCurrentlyPlaying" Orientation="Vertical"/>
+                </RelativePanel>
+            </PivotItem>
 
-                                <Grid Grid.Column="0" Grid.RowSpan="2" >
+            <PivotItem >
+                <PivotItem.Header>
+                    <uc:TabHeader Label="Current Playlist" Glyph="{StaticResource MaterialDesign-ListPlay}" />
+                </PivotItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <uc:CurrentlyPlaying Grid.Column="0" x:Name="CurrentlyPlaying2"/>
+                    <ListView 
+                        Grid.Column="1"
+                        x:Name="EpisodeListView"
+                        RelativePanel.AlignRightWithPanel="True" 
+                        RelativePanel.LeftOf="CurrentlyPlaying2"
+                        SelectionMode="None"
+                        Margin="20,20,20,20"
+                        IsItemClickEnabled="True">
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem>TEST</ListViewItem>
+                        <!--<ListView.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ItemViewModel">
+                                <Grid Height="100">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="3*"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
-                                    <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
-                                                     Grid.RowSpan="2"
-                                                     ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
-                                                     Margin="1"
-                                                     Watched="{x:Bind Watched, Mode=OneWay}"
-                                                     Stretch="UniformToFill"
-                                                     PropName="Thumbnail"/>
+                                    <Grid Grid.Column="0" Grid.RowSpan="2" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
+                                        <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
+                                                         Grid.RowSpan="2"
+                                                         ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                                                         Margin="1"
+                                                         Watched="{x:Bind Watched, Mode=OneWay}"
+                                                         Stretch="UniformToFill"
+                                                         PropName="Thumbnail"/>
+                                    </Grid>
+
+
+                                    <TextBlock Margin="20,0,0,5" Grid.Column="1" Grid.Row="0" FontWeight="Bold"  FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
+                                    <TextBlock Margin="20,5,0,0" Grid.Column="1" Grid.Row="1" FontWeight="Light" FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Label, Mode=OneWay}"/>
+                                    <TextBlock Margin="0,0,40,5" Grid.Column="2" Grid.Row="0" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Rating, Mode=OneWay}" HorizontalAlignment="Right" />
+                                    <TextBlock Margin="0,5,40,0" Grid.Column="2" Grid.Row="1" FontWeight="Bold"  FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" HorizontalAlignment="Right" />
                                 </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>-->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+            </PivotItem>
+        </Pivot>
 
-
-                                <TextBlock Margin="20,0,0,5" Grid.Column="1" Grid.Row="0" FontWeight="Bold"  FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
-                                <TextBlock Margin="20,5,0,0" Grid.Column="1" Grid.Row="1" FontWeight="Light" FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Label, Mode=OneWay}"/>
-                                <TextBlock Margin="0,0,40,5" Grid.Column="2" Grid.Row="0" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Rating, Mode=OneWay}" HorizontalAlignment="Right" />
-                                <TextBlock Margin="0,5,40,0" Grid.Column="2" Grid.Row="1" FontWeight="Bold"  FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" HorizontalAlignment="Right" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>-->
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Margin" Value="0"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
-            </Grid>
-        </PivotItem>
-    </Pivot>
-    
+        <ContentDialog 
+            x:Name="InputTextDialog"
+            VerticalAlignment="Stretch"
+            Title="Enter String"
+            MinWidth="500"
+            PrimaryButtonText="OK"
+            SecondaryButtonText="Cancel">
+            <TextBox Margin="0,20,0,0" Text="{x:Bind ViewModel.InputText, Mode=TwoWay}" KeyUp="InputTextDialogKeyUp"/>
+        </ContentDialog>
+    </Grid>
 </base:PageBase>

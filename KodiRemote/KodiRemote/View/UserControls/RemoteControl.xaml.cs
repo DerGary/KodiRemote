@@ -22,37 +22,36 @@ using KodiRemote.Code.JSON.Enums;
 
 namespace KodiRemote.View.UserControls {
     public sealed partial class RemoteControl : UserControlBase {
-
         private RemoteControlViewModel viewModel;
         public RemoteControlViewModel ViewModel {
             get {
                 return viewModel;
             }
             set {
-                if (viewModel != null) {
-                    viewModel.InputRequested -= ViewModelInputRequested;
-                }
                 viewModel = value;
-                viewModel.InputRequested += ViewModelInputRequested;
                 RaisePropertyChanged();
             }
         }
 
         public RemoteControl() {
-            Loaded += RemoteControl_Loaded;
             this.InitializeComponent();
             timer.Tick += timer_Tick;
         }
 
-        private void RemoteControl_Loaded(object sender, RoutedEventArgs e) {
-            this.Focus(FocusState.Keyboard);
+        private void KeyboardButtonTapped(object sender, TappedRoutedEventArgs e) {
+            ViewModel.ShowInputDialog();
         }
 
-        private void Rectangle_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) {
+        #region MethodsForSwipeInputsOnCanvas
+        bool singleTap;
+        double x;
+        double y;
+        DispatcherTimer timer = new DispatcherTimer();
+        private void Canvas_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) {
             timer.Stop();
         }
-        bool singleTap;
-        private async void Rectangle_Tapped(object sender, TappedRoutedEventArgs e) {
+
+        private async void Canvas_Tapped(object sender, TappedRoutedEventArgs e) {
             singleTap = true;
             await Task.Delay(200);
             if (singleTap) {
@@ -61,34 +60,32 @@ namespace KodiRemote.View.UserControls {
             }
         }
 
-        private void Rectangle_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {
+        private void Canvas_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) {
             singleTap = false;
             ViewModel.BackCommand.Execute(null);
             Debug.WriteLine("Double Tapped");
         }
 
-        private void Rectangle_Holding(object sender, HoldingRoutedEventArgs e) {
+        private void Canvas_Holding(object sender, HoldingRoutedEventArgs e) {
             Debug.WriteLine("Holding");
         }
 
-        private void Rectangle_RightTapped(object sender, RightTappedRoutedEventArgs e) {
+        private void Canvas_RightTapped(object sender, RightTappedRoutedEventArgs e) {
             ViewModel.OptionsCommand.Execute(null);
             Debug.WriteLine("Right Tapped");
         }
-        double x;
-        double y;
-        DispatcherTimer timer = new DispatcherTimer();
 
-        private void Rectangle_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e) {
+
+        private void Canvas_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e) {
             timer.Interval = TimeSpan.FromSeconds(1);
             x = e.Cumulative.Translation.X;
             y = e.Cumulative.Translation.Y;
 
-            StartCommand();
+            ExecuteCommand();
             timer.Start();
         }
 
-        void StartCommand() {
+        void ExecuteCommand() {
             if (Math.Abs(x) > Math.Abs(y)) {
                 if (x >= 0) {
                     ViewModel.RightCommand.Execute(null);
@@ -112,37 +109,16 @@ namespace KodiRemote.View.UserControls {
             if (timer.Interval.Seconds == 1)
                 timer.Interval = TimeSpan.FromMilliseconds(250);
 
-            StartCommand();
+            ExecuteCommand();
         }
 
-        private void Rectangle_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e) {
+        private void Canvas_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e) {
             x = e.Cumulative.Translation.X;
             y = e.Cumulative.Translation.Y;
         }
+        #endregion
 
-        private async void ViewModelInputRequested(object sender, InputRequestedEventArgs e) {
-            await ShowInputDialog();
-        }
-
-        private async Task ShowInputDialog() {
-            var result = await InputTextContentDialog.ShowAsync();
-            if (result == ContentDialogResult.Primary) {
-                await ViewModel.SendText();
-            }
-        }
-
-        private async void KeyboardButtonTapped(object sender, TappedRoutedEventArgs e) {
-            await ShowInputDialog();
-        }
-
-        private async void InputTextDialogKeyUp(object sender, KeyRoutedEventArgs e) {
-            if (e.Key == Windows.System.VirtualKey.Enter) {
-                InputTextContentDialog.Hide();
-                await ViewModel.SendText();
-            } else if (e.Key == Windows.System.VirtualKey.Escape) {
-                InputTextContentDialog.Hide();
-            }
-        }
+        #region MethodsForTouchEllipse
         private void CanvasPointerMoved(object sender, PointerRoutedEventArgs e) {
             var point = e.GetCurrentPoint(ManipulationCanvas);
             Canvas.SetLeft(TouchEllipse, point.RawPosition.X - 25);
@@ -165,5 +141,6 @@ namespace KodiRemote.View.UserControls {
             Canvas.SetTop(TouchEllipse, point.RawPosition.Y - 25);
             TouchEllipse.Visibility = Visibility.Visible;
         }
+        #endregion
     }
 }

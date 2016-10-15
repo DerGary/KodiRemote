@@ -23,17 +23,37 @@ namespace KodiRemote.View {
     public sealed partial class RemoteControlPage : PageBase {
         public RemoteControlViewModel ViewModel { get; set; } = new RemoteControlViewModel();
 
-        public override ViewModelBase ViewModelBase => ViewModel; 
+        public override ViewModelBase ViewModelBase => ViewModel;
 
         public RemoteControlPage() {
             this.InitializeComponent();
             Loaded += RemoteControlPage_Loaded;
+            ViewModel.InputRequested += ViewModel_InputRequested;
+        }
+
+        private async void ViewModel_InputRequested(object sender, InputRequestedEventArgs e) {
+            await ShowInputDialog();
+        }
+
+        private async Task ShowInputDialog() {
+            var result = await InputTextDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary) {
+                await ViewModel.SendText();
+            }
+        }
+        private async void InputTextDialogKeyUp(object sender, KeyRoutedEventArgs e) {
+            if (e.Key == Windows.System.VirtualKey.Enter) {
+                InputTextDialog.Hide();
+                await ViewModel.SendText();
+            } else if (e.Key == Windows.System.VirtualKey.Escape) {
+                InputTextDialog.Hide();
+            }
         }
 
         private async void RemoteControlPage_Loaded(object sender, RoutedEventArgs e) {
             var movie = await ViewModel.Kodi.Database.GetMovie(new Code.Database.MovieTables.MovieTableEntry() { MovieId = 6 });
             MovieDetails.Movie = movie;
-            CurrentlyPlaying.ViewModel = new ItemViewModel(movie);
+            MovieDetailsCurrentlyPlaying.ViewModel = new ItemViewModel(movie);
             CurrentlyPlaying2.ViewModel = new ItemViewModel(movie);
         }
     }

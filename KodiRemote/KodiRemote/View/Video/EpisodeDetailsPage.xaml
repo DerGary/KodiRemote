@@ -123,7 +123,7 @@
 
                     <GridView Grid.Row="1" 
                           ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
-                          Style="{StaticResource ItemGridViewStyle}"
+                          Style="{StaticResource HorizontalItemGridViewStyle}"
                           ItemsSource="{x:Bind ViewModel.Episode.Actors, Mode=OneWay, Converter={StaticResource EpisodeMapperConverter}}" 
                           ItemClick="ActorClicked"/>
                 </Grid>

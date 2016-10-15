@@ -54,6 +54,10 @@ namespace KodiRemote.ViewModel {
             InputText = "";
         }
 
+        public void ShowInputDialog() {
+            InputRequested?.Invoke(this, null);
+        }
+
         private RelayCommand volumeUpCommand;
         public RelayCommand VolumeUpCommand {
             get {
@@ -115,6 +119,8 @@ namespace KodiRemote.ViewModel {
                 return upCommand;
             }
         }
+
+
 
         private RelayCommand optionsCommand;
         public RelayCommand OptionsCommand {

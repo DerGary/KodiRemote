@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using KodiRemote.Code.Database.GeneralTables;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -33,18 +34,43 @@ namespace KodiRemote.View.UserControls {
             }
         }
 
+        public delegate void MovieClickedEventHandler(MovieTableEntry item);
+        public event MovieClickedEventHandler MovieClicked;
+
+        public delegate void ActorClickedEventHandler(ActorTableEntry item);
+        public event ActorClickedEventHandler ActorClicked;
+
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(MovieDetails), new PropertyMetadata(Orientation.Horizontal, OrientationChanged));
+
+        private static void OrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var control = d as MovieDetails;
+            if ((Orientation)e.NewValue == Orientation.Horizontal) {
+                control.MovieSetGridView.Style = (Style)App.Current.Resources["HorizontalItemGridViewStyle"];
+                control.ActorGridView.Style = (Style)App.Current.Resources["HorizontalItemGridViewStyle"];
+                control.InfoGrid.MaxWidth = 700;
+            } else {
+                control.MovieSetGridView.Style = (Style)App.Current.Resources["VerticalItemGridViewStyle"];
+                control.ActorGridView.Style = (Style)App.Current.Resources["VerticalItemGridViewStyle"];
+            }
+        }
+
+        public Orientation Orientation {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
+        }
+
         public MovieDetails() {
             this.InitializeComponent();
         }
 
         private void MovieSetMovieClicked(object sender, ItemClickEventArgs e) {
             var viewModel = e.ClickedItem as ItemViewModel;
-            //Frame.Navigate(typeof(MovieDetailsPage), viewModel.Item);
+            MovieClicked?.Invoke(viewModel.Item as MovieTableEntry);
         }
 
-        private void ActorClicked(object sender, ItemClickEventArgs e) {
-            var vm = e.ClickedItem as ActorViewModel;
-            //Frame.Navigate(typeof(ActorDetailsPage), vm.Item);
+        private void ActorGridClicked(object sender, ItemClickEventArgs e) {
+            var viewModel = e.ClickedItem as ActorViewModel;
+            ActorClicked?.Invoke(viewModel.Item as ActorTableEntry);
         }
     }
 }

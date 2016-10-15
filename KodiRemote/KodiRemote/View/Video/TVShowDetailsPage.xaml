@@ -99,7 +99,7 @@
 
                     <GridView ItemsSource="{x:Bind ViewModel.TVShow.Seasons, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}" 
                           Grid.Row="1"
-                          Style="{StaticResource ItemGridViewStyle}"
+                          Style="{StaticResource HorizontalItemGridViewStyle}"
                           ItemClick="SeasonClicked"/>
                 </Grid>
 
@@ -113,7 +113,7 @@
                     <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="Schauspieler"/>
 
                     <GridView Grid.Row="1" 
-                          Style="{StaticResource ItemGridViewStyle}"
+                          Style="{StaticResource HorizontalItemGridViewStyle}"
                           ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
                           ItemsSource="{x:Bind ViewModel.TVShow.Actors, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}" 
                           ItemClick="ActorClicked"/>

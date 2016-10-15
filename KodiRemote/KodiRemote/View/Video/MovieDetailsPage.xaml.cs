@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using KodiRemote.Code.Database.GeneralTables;
 
 namespace KodiRemote.View.Video {
     public sealed partial class MovieDetailsPage : PageBase {
@@ -67,15 +68,14 @@ namespace KodiRemote.View.Video {
             base.OnNavigatingFrom(e);
         }
         #endregion Navigation
+        
 
-        private void MovieSetMovieClicked(object sender, ItemClickEventArgs e) {
-            var viewModel = e.ClickedItem as ItemViewModel;
-            Frame.Navigate(typeof(MovieDetailsPage), viewModel.Item);
+        private void MovieClicked(MovieTableEntry item) {
+            Frame.Navigate(typeof(MovieDetailsPage), item);
         }
 
-        private void ActorClicked(object sender, ItemClickEventArgs e) {
-            var vm = e.ClickedItem as ActorViewModel;
-            Frame.Navigate(typeof(ActorDetailsPage), vm.Item);
+        private void ActorClicked(ActorTableEntry item) {
+            Frame.Navigate(typeof(ActorDetailsPage), item);
         }
     }
 }

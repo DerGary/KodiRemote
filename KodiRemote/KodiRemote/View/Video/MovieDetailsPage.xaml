@@ -15,25 +15,12 @@
     mc:Ignorable="d">
     
     <Page.Resources>
-        <converter:NullVisibilityConverter x:Key="NullVisibilityConverter" OnNull="Collapsed"/>
-        <converter:MovieMapperConverter x:Name="MovieMapperConverter"/>
-        <converter:MovieMovieSetMapperConverter x:Name="MovieMovieSetMapperConverter"/>
-        <converter:RuntimeLengthConverter x:Name="RuntimeLengthConverter"/>
-        <converter:ActorImageConverter x:Name="ActorImageConverter"/>
-        <converter:BoolVisibilityConverter x:Name="FalseVisibleConverter" OnFalse="Visible" OnTrue="Collapsed"/>
     </Page.Resources>
     <Grid>
         <ProgressRing x:Name="ProgressRing" IsActive="True" Width="100" Height="100"/>
         <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource HorizontalScrollViewerStyle}" Opacity="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Margin="20">
+            <StackPanel Orientation="Horizontal">
+                <Grid Margin="20">
                     <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black" />
                     <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
                     <uc:ImageControl Margin="1"
@@ -47,79 +34,7 @@
                             Style="{StaticResource CoverPlayButtonStyle}"/>
                 </Grid>
 
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="56"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
-
-                    <Grid Grid.Row="1" Margin="20,8,20,20" Width="700">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Film Titel:"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Genre:"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Länge:"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Erscheinungsjahr:"/>
-                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Label, Mode=OneWay}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Genres, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}"/>
-                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Rating, Mode=OneWay}"/>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Movie.Year, Mode=OneWay}"/>
-
-                        <ScrollViewer Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource VerticalScrollViewerStyle}">
-                            <TextBlock Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind ViewModel.Movie.Plot, Mode=OneWay}"/>
-                        </ScrollViewer>
-                    </Grid>
-                </Grid>
-
-                <Grid Grid.Column="2" 
-                      DataContext="{x:Bind ViewModel.Movie.MovieSets, Mode=OneWay, Converter={StaticResource MovieMovieSetMapperConverter}}"
-                      Visibility="{x:Bind ViewModel.Movie.MovieSets, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="56"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="{Binding Label}"/>
-
-                    <GridView ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
-                              Grid.Row="1"
-                              Style="{StaticResource ItemGridViewStyle}"
-                              ItemClick="MovieSetMovieClicked"/>
-
-                </Grid>
-
-                <Grid Grid.Column="3">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="56"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Schauspieler"/>
-
-                    <GridView Grid.Row="1" 
-                              Style="{StaticResource ItemGridViewStyle}"
-                              ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
-                              ItemsSource="{x:Bind ViewModel.Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
-                              ItemClick="ActorClicked"/>
-                </Grid>
+                <uc:MovieDetails Orientation="Horizontal" Movie="{x:Bind ViewModel.Movie, Mode=OneWay}" ActorClicked="ActorClicked" MovieClicked="MovieClicked"/>
 
                 <!--Trailer Grid-->
                 <!--<Grid Grid.Column="4" Visibility="{Binding TrailerAvailable}">
@@ -210,7 +125,7 @@
                                            FontSize="30"/>
                     </Grid>
                 </Grid>-->
-            </Grid>
+            </StackPanel>
 
         </ScrollViewer>
     </Grid>

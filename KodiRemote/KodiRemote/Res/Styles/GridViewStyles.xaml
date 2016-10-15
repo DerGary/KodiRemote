@@ -81,7 +81,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="VerticalItemGridViewStyle" TargetType="GridView" BasedOn="{StaticResource ItemGridViewStyle}">
+    <Style x:Key="VerticalItemGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalItemGridViewStyle}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -92,7 +92,7 @@
     </Style>
     
     <!-- Used for Season Covers and Movie Covers of Movieset on the Details Pages and for Actors too-->
-    <Style x:Key="ItemGridViewStyle" TargetType="GridView">
+    <Style x:Key="HorizontalItemGridViewStyle" TargetType="GridView">
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Margin" Value="20,8,20,20"/>
@@ -110,7 +110,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="GroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource ItemGridViewStyle}">
+    <Style x:Key="GroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalItemGridViewStyle}">
         <Setter Property="Margin" Value="20,0,0,20"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
