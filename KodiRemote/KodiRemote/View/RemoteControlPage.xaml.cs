@@ -51,10 +51,12 @@ namespace KodiRemote.View {
         }
 
         private async void RemoteControlPage_Loaded(object sender, RoutedEventArgs e) {
-            var movie = await ViewModel.Kodi.Database.GetMovie(new Code.Database.MovieTables.MovieTableEntry() { MovieId = 6 });
-            MovieDetails.Movie = movie;
-            MovieDetailsCurrentlyPlaying.ViewModel = new ItemViewModel(movie);
-            CurrentlyPlaying2.ViewModel = new ItemViewModel(movie);
+            if(ViewModel.Kodi != null) {
+                var movie = await ViewModel.Kodi.Database.GetMovie(new Code.Database.MovieTables.MovieTableEntry() { MovieId = 6 });
+                MovieDetails.Movie = movie;
+                MovieDetailsCurrentlyPlaying.ViewModel = new ItemViewModel(movie);
+                PlaylistCurrentlyPlaying.ViewModel = new ItemViewModel(movie);
+            }
         }
     }
 }

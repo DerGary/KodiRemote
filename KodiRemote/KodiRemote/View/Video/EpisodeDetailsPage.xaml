@@ -12,22 +12,12 @@
     mc:Ignorable="d">
     
     <Page.Resources>
-        <converter:EpisodeMapperConverter x:Key="EpisodeMapperConverter"/>
-        <converter:TVShowMapperConverter x:Key="TVShowMapperConverter"/>
-        <converter:RuntimeLengthConverter x:Key="RuntimeLengthConverter"/>
-        <converter:ActorImageConverter x:Key="ActorImageConverter"/>
     </Page.Resources>
 
     <Grid>
         <ProgressRing x:Name="ProgressRing" IsActive="True" Width="100" Height="100"/>
         <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource HorizontalScrollViewerStyle}" Opacity="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
+            <StackPanel Orientation="Horizontal">
                 <Grid Margin="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>
@@ -67,67 +57,8 @@
                         Style="{StaticResource CoverPlayButtonStyle}"/>
                 </Grid>
 
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="56"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
-
-                    <Grid Grid.Row="1" Margin="20,8,20,20" Width="700">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Serie:"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Staffel:"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Folge:"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Titel:"/>
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Genre:"/>
-                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Rating:"/>
-                        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Laufzeit:"/>
-                        <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource TextHeaderStyle}" Text="Handlung:"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Episode.TVShowSeason.TVShow.Label, Mode=OneWay}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Episode.TVShowSeason.Season, Mode=OneWay}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Episode.Episode, Mode=OneWay}"/>
-                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Episode.Title, Mode=OneWay}"/>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Episode.TVShowSeason.TVShow.Genres, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}"/>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Episode.Rating, Mode=OneWay}"/>
-                        <TextBlock Grid.Row="6" Grid.Column="1" Style="{StaticResource TextDetailStyle}" Text="{x:Bind ViewModel.Episode.Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}"/>
-
-                        <ScrollViewer Grid.ColumnSpan="2" Grid.Row="8" Style="{StaticResource VerticalScrollViewerStyle}">
-                            <TextBlock Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind ViewModel.Episode.Plot, Mode=OneWay}"/>
-                        </ScrollViewer>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Column="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="56"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Schauspieler"/>
-
-                    <GridView Grid.Row="1" 
-                          ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
-                          Style="{StaticResource HorizontalItemGridViewStyle}"
-                          ItemsSource="{x:Bind ViewModel.Episode.Actors, Mode=OneWay, Converter={StaticResource EpisodeMapperConverter}}" 
-                          ItemClick="ActorClicked"/>
-                </Grid>
-            </Grid>
+                <uc:EpisodeDetails Episode="{x:Bind ViewModel.Episode, Mode=OneWay}" Orientation="Horizontal" ActorClicked="ActorClicked"/>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
     

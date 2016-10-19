@@ -80,6 +80,7 @@
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollMode="Disabled"
+                    
                     Margin="0"
                     ItemClick="ItemClick"
                     ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"

@@ -30,7 +30,9 @@ namespace KodiRemote.ViewModel {
 
         public RemoteControlViewModel() {
             Title = "Remote Control";
-            this.Kodi.Input.OnInputRequested += Input_OnInputRequested;
+            if (Kodi != null) {
+                this.Kodi.Input.OnInputRequested += Input_OnInputRequested;
+            }
             Code.Essentials.Kodi.KodiWillChange += KodiWillChange;
             Code.Essentials.Kodi.KodiChanged += KodiChanged;
         }

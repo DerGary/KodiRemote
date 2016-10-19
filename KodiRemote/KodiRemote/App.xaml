@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="Res/Styles/GridViewStyles.xaml"/>
                 <ResourceDictionary Source="Res/Styles/CommandBarStyles.xaml"/>
                 <ResourceDictionary Source="Res/Styles/PivotStyles.xaml"/>
+                <ResourceDictionary Source="Res/Styles/ScrollBarStyle.xaml"/>
                 <style:DataTemplates/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

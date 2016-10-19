@@ -8,6 +8,7 @@
     xmlns:converter="using:KodiRemote.View.Converter"
     xmlns:base="using:KodiRemote.View.Base"
     xmlns:uc="using:KodiRemote.View.UserControls"
+    xmlns:trigger="using:KodiRemote.View.Trigger"
     DataContext="{x:Bind ViewModel}"
     mc:Ignorable="d">
     <Page.Resources>
@@ -16,16 +17,74 @@
     </Page.Resources>
 
     <Grid>
-        <Pivot Style="{StaticResource TabsStylePivotStyle}" Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource OnNullVisibilityConverter}}">
-            <PivotItem>
-                <PivotItem.Header>
-                    <uc:TabHeader Label="Remote Control" Glyph="{StaticResource MaterialDesign-ArrowPad}" />
-                </PivotItem.Header>
-                <uc:RemoteControl ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
-            </PivotItem>
-        </Pivot>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000"/>
+                    </VisualState.StateTriggers>
 
-        <Pivot Style="{StaticResource TabsStylePivotStyle}" Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource OnNotNullVisibilityConverter}}">
+                    <VisualState.Setters>
+                        <Setter Target="MovieDetailsCurrentlyPlaying.MaxWidth" Value="500" />
+                        <Setter Target="PlaylistCurrentlyPlaying.MaxWidth" Value="500" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="MovieDetailsCurrentlyPlaying.MaxWidth" Value="400" />
+                        <Setter Target="PlaylistCurrentlyPlaying.MaxWidth" Value="400" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="CurrentlyPlayingScrollViewer.VerticalScrollMode" Value="Enabled" />
+                        <Setter Target="CurrentlyPlayingScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+                        <Setter Target="DetailsScrollViewer.VerticalScrollMode" Value="Disabled" />
+                        <Setter Target="DetailsScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+                        <Setter Target="DetailsScrollViewer.(RelativePanel.AlignRightWithPanel)" Value="False"/>
+                        <Setter Target="DetailsScrollViewer.(RelativePanel.RightOf)" Value=""/>
+                        <Setter Target="DetailsScrollViewer.(RelativePanel.Below)" Value="MovieDetailsCurrentlyPlaying"/>
+                        <Setter Target="MovieDetailsCurrentlyPlaying.(RelativePanel.AlignLeftWithPanel)" Value="False" />
+                        <Setter Target="MovieDetailsCurrentlyPlaying.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
+                        <Setter Target="MovieDetailsCurrentlyPlaying.(RelativePanel.AlignVerticalCenterWithPanel)" Value="False" />
+                        <Setter Target="MovieDetailsCurrentlyPlaying.(RelativePanel.AlignTopWithPanel)" Value="True" />
+                        <Setter Target="MovieDetailsCurrentlyPlaying.MaxWidth" Value="500" />
+
+                        <!--PlaylistPivotItem-->
+                        <Setter Target="PlaylistCurrentlyPlaying.Visibility" Value="Collapsed" />
+                        <Setter Target="PlaylistListView.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <!--<Pivot Style="{StaticResource TabsStylePivotStyle}" Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource OnNullVisibilityConverter}}">
+             <PivotItem>
+             <PivotItem.Header>
+             <uc:TabHeader Label="Remote Control" Glyph="{StaticResource MaterialDesign-ArrowPad}" />
+             </PivotItem.Header>
+             <uc:RemoteControl ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
+             </PivotItem>
+             </Pivot>-->
+
+        <!--Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource OnNotNullVisibilityConverter}}"-->
+        <Pivot 
+            Style="{StaticResource TabsStylePivotStyle}">
             <PivotItem>
                 <PivotItem.Header>
                     <uc:TabHeader Label="Remote Control" Glyph="{StaticResource MaterialDesign-ArrowPad}" />
@@ -37,96 +96,111 @@
                 <PivotItem.Header>
                     <uc:TabHeader Label="Currently Playing" Glyph="{StaticResource MaterialDesign-Info}" />
                 </PivotItem.Header>
-                <RelativePanel>
-                    <uc:CurrentlyPlaying x:Name="MovieDetailsCurrentlyPlaying" ViewModel="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay}" RelativePanel.AlignLeftWithPanel="True"/>
-                    <uc:MovieDetails x:Name="MovieDetails" RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="MovieDetailsCurrentlyPlaying" Orientation="Vertical"/>
-                </RelativePanel>
+                <ScrollViewer 
+                    x:Name="CurrentlyPlayingScrollViewer" 
+                    HorizontalScrollMode="Disabled" 
+                    VerticalScrollMode="Disabled" 
+                    HorizontalScrollBarVisibility="Disabled" 
+                    VerticalScrollBarVisibility="Disabled">
+                    <RelativePanel>
+                        <uc:CurrentlyPlaying x:Name="MovieDetailsCurrentlyPlaying" 
+                                             ViewModel="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay}"
+                                             RelativePanel.AlignLeftWithPanel="True"
+                                             RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                        <ScrollViewer 
+                            x:Name="DetailsScrollViewer" 
+                            HorizontalScrollMode="Disabled" 
+                            HorizontalScrollBarVisibility="Disabled" 
+                            RelativePanel.AlignRightWithPanel="True"
+                            RelativePanel.RightOf="MovieDetailsCurrentlyPlaying">
+                            <uc:MovieDetails x:Name="MovieDetails" Orientation="Vertical"/>
+                        </ScrollViewer>
+                    </RelativePanel>
+                </ScrollViewer>
             </PivotItem>
 
             <PivotItem >
                 <PivotItem.Header>
                     <uc:TabHeader Label="Current Playlist" Glyph="{StaticResource MaterialDesign-ListPlay}" />
                 </PivotItem.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <uc:CurrentlyPlaying Grid.Column="0" x:Name="CurrentlyPlaying2"/>
+                <RelativePanel>
+                    <uc:CurrentlyPlaying x:Name="PlaylistCurrentlyPlaying"
+                                         ViewModel="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay}"
+                                         RelativePanel.AlignLeftWithPanel="True"
+                                         RelativePanel.AlignVerticalCenterWithPanel="True"/>
                     <ListView 
-                        Grid.Column="1"
-                        x:Name="EpisodeListView"
+                        x:Name="PlaylistListView"
                         RelativePanel.AlignRightWithPanel="True" 
-                        RelativePanel.LeftOf="CurrentlyPlaying2"
+                        RelativePanel.RightOf="PlaylistCurrentlyPlaying"
                         SelectionMode="None"
                         Margin="20,20,20,20"
                         IsItemClickEnabled="True">
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
-                        <ListViewItem>TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
+                        <ListViewItem Background="Green">TEST</ListViewItem>
                         <!--<ListView.ItemTemplate>
-                            <DataTemplate x:DataType="vm:ItemViewModel">
-                                <Grid Height="100">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Grid Grid.Column="0" Grid.RowSpan="2" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="3*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
-                                        <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
-                                                         Grid.RowSpan="2"
-                                                         ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
-                                                         Margin="1"
-                                                         Watched="{x:Bind Watched, Mode=OneWay}"
-                                                         Stretch="UniformToFill"
-                                                         PropName="Thumbnail"/>
-                                    </Grid>
-
-
-                                    <TextBlock Margin="20,0,0,5" Grid.Column="1" Grid.Row="0" FontWeight="Bold"  FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
-                                    <TextBlock Margin="20,5,0,0" Grid.Column="1" Grid.Row="1" FontWeight="Light" FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Label, Mode=OneWay}"/>
-                                    <TextBlock Margin="0,0,40,5" Grid.Column="2" Grid.Row="0" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Rating, Mode=OneWay}" HorizontalAlignment="Right" />
-                                    <TextBlock Margin="0,5,40,0" Grid.Column="2" Grid.Row="1" FontWeight="Bold"  FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" HorizontalAlignment="Right" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>-->
+                             <DataTemplate x:DataType="vm:ItemViewModel">
+                             <Grid Height="100">
+                             <Grid.ColumnDefinitions>
+                             <ColumnDefinition Width="Auto"/>
+                             <ColumnDefinition Width="Auto"/>
+                             <ColumnDefinition Width="*"/>
+                             </Grid.ColumnDefinitions>
+                             <Grid.RowDefinitions>
+                             <RowDefinition Height="50"/>
+                             <RowDefinition Height="*"/>
+                             </Grid.RowDefinitions>
+                             
+                             <Grid Grid.Column="0" Grid.RowSpan="2" >
+                             <Grid.RowDefinitions>
+                             <RowDefinition Height="3*"></RowDefinition>
+                             <RowDefinition Height="*"></RowDefinition>
+                             </Grid.RowDefinitions>
+                             
+                             <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
+                             <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
+                             Grid.RowSpan="2"
+                             ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                             Margin="1"
+                             Watched="{x:Bind Watched, Mode=OneWay}"
+                             Stretch="UniformToFill"
+                             PropName="Thumbnail"/>
+                             </Grid>
+                             
+                             
+                             <TextBlock Margin="20,0,0,5" Grid.Column="1" Grid.Row="0" FontWeight="Bold"  FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
+                             <TextBlock Margin="20,5,0,0" Grid.Column="1" Grid.Row="1" FontWeight="Light" FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Label, Mode=OneWay}"/>
+                             <TextBlock Margin="0,0,40,5" Grid.Column="2" Grid.Row="0" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Rating, Mode=OneWay}" HorizontalAlignment="Right" />
+                             <TextBlock Margin="0,5,40,0" Grid.Column="2" Grid.Row="1" FontWeight="Bold"  FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" HorizontalAlignment="Right" />
+                             </Grid>
+                             </DataTemplate>
+                             </ListView.ItemTemplate>-->
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -134,7 +208,8 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
-                </Grid>
+                </RelativePanel>
+
             </PivotItem>
         </Pivot>
 

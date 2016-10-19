@@ -55,6 +55,7 @@
                     ItemsSource="{x:Bind ViewModel.TVShowSeason.Episodes, Mode=OneWay, Converter={StaticResource TVShowSeasonMapperConverter}}"
                     Margin="20,8,20,20"
                     IsItemClickEnabled="True"
+                    
                     ItemClick="EpisodeClicked">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="videovm:EpisodeViewModel">
@@ -97,6 +98,7 @@
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>

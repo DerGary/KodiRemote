@@ -66,9 +66,8 @@ namespace KodiRemote.View.Video {
         }
         #endregion Navigation
 
-        private void ActorClicked(object sender, ItemClickEventArgs e) {
-            var vm = e.ClickedItem as ActorViewModel;
-            Frame.Navigate(typeof(ActorDetailsPage), vm.Item);
+        private void ActorClicked(Code.Database.GeneralTables.ActorTableEntry item) {
+            Frame.Navigate(typeof(ActorDetailsPage), item);
         }
     }
 }
