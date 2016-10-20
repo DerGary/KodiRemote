@@ -11,41 +11,57 @@
     xmlns:convert="using:KodiRemote.View.Converter"
     mc:Ignorable="d">
     <Page.Resources>
-        <CollectionViewSource
-            x:Name="groupedItemsViewSource"
-            Source="{x:Bind ViewModel.Groups, Mode=OneWay}"
-            IsSourceGrouped="true"
-            ItemsPath="Items"/>
+        <CollectionViewSource x:Name="groupedItemsViewSource"
+                              Source="{x:Bind ViewModel.Groups, Mode=OneWay}"
+                              IsSourceGrouped="true"
+                              ItemsPath="Items"/>
         <convert:ActorImageConverter x:Key="ImageSourceConverter"/>
     </Page.Resources>
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootStackPanel.Orientation" Value="Vertical"/>
+                        <Setter Target="ImageGrid.MaxWidth" Value="500"/>
+                        <Setter Target="ItemGridView.Style" Value="{StaticResource VerticalGroupedGridViewStyle}"/>
+                        <Setter Target="ScrollViewer.Style" Value="{StaticResource VerticalScrollViewerStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <ProgressRing x:Name="ProgressRing" IsActive="True" Width="100" Height="100"/>
         <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource HorizontalScrollViewerStyle}" Opacity="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid Margin="20">
+            <StackPanel x:Name="RootStackPanel" Orientation="Horizontal">
+                <Grid x:Name="ImageGrid" Margin="20">
                     <Polygon Grid.Column="0" Points="0,0 0,1.5 1,1.5 1,0" Stretch="Uniform" Fill="Black" />
                     <ProgressRing Grid.Column="0" Width="50" Height="50" IsActive="{Binding ThumbnailProgressRingActive}"/>
                     <uc:ImageControl ImageSource="{x:Bind ViewModel.Thumbnail, Mode=OneWay}" 
-                                 ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"
-                                 Margin="1"
-                                 PropName="Thumbnail"/>
+                                     ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"
+                                     Margin="1"
+                                     PropName="Thumbnail"/>
                 </Grid>
 
                 <GridView 
-                Grid.Column="1" 
-                ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
-                Style="{StaticResource GroupedGridViewStyle}"
-                ItemClick="ItemClick"
-                ItemTemplate="{StaticResource ItemGridViewItemTemplate}">
+                    x:Name="ItemGridView"
+                    ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
+                    Style="{StaticResource HorizontalGroupedGridViewStyle}"
+                    ItemClick="ItemClick"
+                    ItemTemplate="{StaticResource ItemGridViewItemTemplate}">
                     <GridView.GroupStyle>
                         <GroupStyle HeaderTemplate="{StaticResource GroupHeaderTemplate}"/>
                     </GridView.GroupStyle>
                 </GridView>
-            </Grid>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
     

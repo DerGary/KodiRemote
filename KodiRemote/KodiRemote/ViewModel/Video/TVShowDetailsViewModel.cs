@@ -21,10 +21,8 @@ namespace KodiRemote.ViewModel.Video {
             set {
                 tvshow = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(UnWatchedEpisodes));
             }
         }
-        public int UnWatchedEpisodes => TVShow.Episode - TVShow.WatchedEpisodes;
 
         public TVShowDetailsViewModel(TVShowTableEntry item) : base(item) {
             TVShow = item;
@@ -38,16 +36,16 @@ namespace KodiRemote.ViewModel.Video {
         private RelayCommand play;
         public RelayCommand Play {
             get {
-                if(play == null) {
+                if (play == null) {
                     play = new RelayCommand(async () => {
-                        if(TVShow?.Seasons == null) {
+                        if (TVShow?.Seasons == null) {
                             return;
                         }
                         bool first = true;
 
-                        foreach(TVShowSeasonTableEntry season in TVShow.Seasons) {
-                            if(season.Episodes != null) {
-                                foreach(EpisodeTableEntry episode in season.Episodes) {
+                        foreach (TVShowSeasonTableEntry season in TVShow.Seasons) {
+                            if (season.Episodes != null) {
+                                foreach (EpisodeTableEntry episode in season.Episodes) {
                                     if (first) {
                                         await Kodi.Player.Open(new Episode { EpisodeId = episode.EpisodeId }, OptionalRepeatEnum.Null);
                                         first = false;

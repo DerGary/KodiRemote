@@ -19,6 +19,7 @@ using KodiRemote.Code.Database.Utils;
 using KodiRemote.Code.Essentials;
 using KodiRemote.View.Base;
 using KodiRemote.ViewModel.Video;
+using KodiRemote.Code.Database.GeneralTables;
 
 namespace KodiRemote.View.Video {
     public sealed partial class TVShowDetailsPage : PageBase {
@@ -69,14 +70,13 @@ namespace KodiRemote.View.Video {
         }
         #endregion Navigation
 
-        private void SeasonClicked(object sender, ItemClickEventArgs e) {
-            var viewModel = e.ClickedItem as ItemViewModel;
-            Frame.Navigate(typeof(TVShowSeasonDetailsPage), viewModel.Item);
+
+        private void ActorClicked(ActorTableEntry item) {
+            Frame.Navigate(typeof(ActorDetailsPage), item);
         }
 
-        private void ActorClicked(object sender, ItemClickEventArgs e) {
-            var vm = e.ClickedItem as ActorViewModel;
-            Frame.Navigate(typeof(ActorDetailsPage), vm.Item);
+        private void TVShowSeasonClicked(TVShowSeasonTableEntry item) {
+            Frame.Navigate(typeof(TVShowSeasonDetailsPage), item);
         }
     }
 }

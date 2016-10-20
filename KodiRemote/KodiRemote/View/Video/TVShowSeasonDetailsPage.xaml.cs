@@ -42,7 +42,7 @@ namespace KodiRemote.View.Video {
         private void TVShowSeasonDetailsPage_Loaded(object sender, RoutedEventArgs e) {
             if (NavigationMode == NavigationMode.Back) {
                 EpisodeListView.SetVerticalScrollOffset(App.ScrollViewerVerticalOffset.Pop());
-                PopInAnimation(Content, ProgressRing);
+                PopInAnimation(ScrollViewer, ProgressRing);
             }
         }
 
@@ -52,7 +52,7 @@ namespace KodiRemote.View.Video {
                 ViewModel = (TVShowSeasonDetailsViewModel)App.ViewModels.Pop();
             } else {
                 ViewModel = new TVShowSeasonDetailsViewModel(e.Parameter as TVShowSeasonTableEntry);
-                PopInAnimation(Content, ProgressRing);
+                PopInAnimation(ScrollViewer, ProgressRing);
             }
             base.OnNavigatedTo(e);
         }

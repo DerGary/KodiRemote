@@ -11,6 +11,28 @@
     d:DesignHeight="1080"
     d:DesignWidth="1920">
     <UserControl.Resources>
+        <Style x:Name="FirstRowIconButtonStyle" TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
+            <Setter Property="Margin" Value="5,0,5,5"/>
+        </Style>
+        <Style x:Name="FirstRowIconRepeatButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource IconRepeatButtonStyle}">
+            <Setter Property="Margin" Value="5,0,5,5"/>
+        </Style>
+        <Style x:Name="FirstRowIconButtonStyleSmall" TargetType="Button" BasedOn="{StaticResource IconButtonStyleSmall}">
+            <Setter Property="Margin" Value="5,0,5,5"/>
+        </Style>
+        <Style x:Name="FirstRowIconRepeatButtonStyleSmall" TargetType="RepeatButton" BasedOn="{StaticResource IconRepeatButtonStyleSmall}">
+            <Setter Property="Margin" Value="5,0,5,5"/>
+        </Style>
+        <Style x:Name="FirstRowIconButtonStyleVerySmall" TargetType="Button" BasedOn="{StaticResource IconButtonStyleVerySmall}">
+            <Setter Property="Margin" Value="5,0,5,5"/>
+        </Style>
+        <Style x:Name="FirstRowIconRepeatButtonStyleVerySmall" TargetType="RepeatButton" BasedOn="{StaticResource IconRepeatButtonStyleVerySmall}">
+            <Setter Property="Margin" Value="5,0,5,5"/>
+        </Style>
+
+        
+
+
         <converter:BooleanResourceConverter OnTrue="{StaticResource Play}" OnFalse="{StaticResource Pause}" x:Key="PlayPauseConverter"/>
         <converter:BooleanResourceConverter OnTrue="{StaticResource SpeakerMore}" OnFalse="{StaticResource SpeakerMute}" x:Key="MuteUnMuteConverter"/>
     </UserControl.Resources>
@@ -25,23 +47,44 @@
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1"/>
+                        <AdaptiveTrigger MinWindowWidth="500"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PowerButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="MovieButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="TVShowButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="MusicButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="KeyboardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="SpeakerLessButton.Style" Value="{StaticResource IconRepeatButtonStyleSmall}"/>
-                        <Setter Target="SpeakerMuteButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
-                        <Setter Target="SpeakerMoreButton.Style" Value="{StaticResource IconRepeatButtonStyleSmall}"/>
+                        <Setter Target="PowerButton.Style" Value="{StaticResource FirstRowIconButtonStyleSmall}"/>
+                        <Setter Target="MovieButton.Style" Value="{StaticResource FirstRowIconButtonStyleSmall}"/>
+                        <Setter Target="TVShowButton.Style" Value="{StaticResource FirstRowIconButtonStyleSmall}"/>
+                        <Setter Target="MusicButton.Style" Value="{StaticResource FirstRowIconButtonStyleSmall}"/>
+                        <Setter Target="KeyboardButton.Style" Value="{StaticResource FirstRowIconButtonStyleSmall}"/>
+                        <Setter Target="SpeakerLessButton.Style" Value="{StaticResource FirstRowIconRepeatButtonStyleSmall}"/>
+                        <Setter Target="SpeakerMuteButton.Style" Value="{StaticResource FirstRowIconButtonStyleSmall}"/>
+                        <Setter Target="SpeakerMoreButton.Style" Value="{StaticResource FirstRowIconRepeatButtonStyleSmall}"/>
                         <Setter Target="SkipBackButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="FastBackwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="StopButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="PlayButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="FastForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
                         <Setter Target="SkipForwardButton.Style" Value="{StaticResource IconButtonStyleSmall}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PowerButton.Style" Value="{StaticResource FirstRowIconButtonStyleVerySmall}"/>
+                        <Setter Target="MovieButton.Style" Value="{StaticResource FirstRowIconButtonStyleVerySmall}"/>
+                        <Setter Target="TVShowButton.Style" Value="{StaticResource FirstRowIconButtonStyleVerySmall}"/>
+                        <Setter Target="MusicButton.Style" Value="{StaticResource FirstRowIconButtonStyleVerySmall}"/>
+                        <Setter Target="KeyboardButton.Style" Value="{StaticResource FirstRowIconButtonStyleVerySmall}"/>
+                        <Setter Target="SpeakerLessButton.Style" Value="{StaticResource FirstRowIconRepeatButtonStyleVerySmall}"/>
+                        <Setter Target="SpeakerMuteButton.Style" Value="{StaticResource FirstRowIconButtonStyleVerySmall}"/>
+                        <Setter Target="SpeakerMoreButton.Style" Value="{StaticResource FirstRowIconRepeatButtonStyleVerySmall}"/>
+                        <Setter Target="SkipBackButton.Style" Value="{StaticResource IconButtonStyleVerySmall}"/>
+                        <Setter Target="FastBackwardButton.Style" Value="{StaticResource IconButtonStyleVerySmall}"/>
+                        <Setter Target="StopButton.Style" Value="{StaticResource IconButtonStyleVerySmall}"/>
+                        <Setter Target="PlayButton.Style" Value="{StaticResource IconButtonStyleVerySmall}"/>
+                        <Setter Target="FastForwardButton.Style" Value="{StaticResource IconButtonStyleVerySmall}"/>
+                        <Setter Target="SkipForwardButton.Style" Value="{StaticResource IconButtonStyleVerySmall}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -52,7 +95,7 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        <Grid Margin="20,20,20,20" Grid.Row="1">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -72,30 +115,30 @@
                 </Grid.ColumnDefinitions>
 
                 <Button x:Name="PowerButton" 
-                        Margin="0,5,5,5"
+                        Margin="0,0,5,5"
                         Content="{StaticResource Power}" 
-                        Style="{StaticResource IconButtonStyle}" 
+                        Style="{StaticResource FirstRowIconButtonStyle}" 
                         Command="{x:Bind ViewModel.TurnOffCommand}"/>
                 <Button x:Name="MovieButton" 
                         Content="{StaticResource MovieStrip}" 
                         Grid.Column="1" 
-                        Style="{StaticResource IconButtonStyle}" 
+                        Style="{StaticResource FirstRowIconButtonStyle}" 
                         Command="{x:Bind ViewModel.MovieCommand}"/>
                 <Button x:Name="TVShowButton" 
                         Content="{StaticResource TV}" 
                         Grid.Column="2" 
-                        Style="{StaticResource IconButtonStyle}" 
+                        Style="{StaticResource FirstRowIconButtonStyle}" 
                         Command="{x:Bind ViewModel.SeriesCommand}"/>
                 <Button x:Name="MusicButton" 
                         Content="{StaticResource MusicNote}"
                         Grid.Column="3" 
-                        Style="{StaticResource IconButtonStyle}" 
+                        Style="{StaticResource FirstRowIconButtonStyle}" 
                         Command="{x:Bind ViewModel.MusicCommand}" />
                 <Button x:Name="KeyboardButton" 
                         Content="{StaticResource Keyboard}" 
                         Grid.Column="4" 
                         Tapped="KeyboardButtonTapped"
-                        Style="{StaticResource IconButtonStyle}"/>
+                        Style="{StaticResource FirstRowIconButtonStyle}"/>
 
                 <RepeatButton x:Name="SpeakerLessButton" 
                               Content="{StaticResource SpeakerLess}" 
@@ -103,20 +146,20 @@
                               Command="{x:Bind ViewModel.VolumeDownCommand}" 
                               Delay="500" 
                               Interval="200" 
-                              Style="{StaticResource IconRepeatButtonStyle}"/>
+                              Style="{StaticResource FirstRowIconRepeatButtonStyle}"/>
                 <Button x:Name="SpeakerMuteButton" 
                         Content="{x:Bind ViewModel.Kodi.Muted, Mode=OneWay, Converter={StaticResource MuteUnMuteConverter}, FallbackValue={StaticResource SpeakerMute}}"
                         Grid.Column="6" 
                         Command="{x:Bind ViewModel.VolumeMuteCommand}" 
-                        Style="{StaticResource IconButtonStyle}"/>
+                        Style="{StaticResource FirstRowIconButtonStyle}"/>
                 <RepeatButton x:Name="SpeakerMoreButton" 
                               Content="{StaticResource SpeakerMore}" 
                               Grid.Column="7" 
                               Command="{x:Bind ViewModel.VolumeUpCommand}" 
                               Delay="500" 
                               Interval="200" 
-                              Margin="5,5,0,5"
-                              Style="{StaticResource IconRepeatButtonStyle}"/>
+                              Margin="5,0,0,5"
+                              Style="{StaticResource FirstRowIconRepeatButtonStyle}"/>
             </Grid>
 
             <Grid Grid.Row="1" Margin="0,5,0,5">

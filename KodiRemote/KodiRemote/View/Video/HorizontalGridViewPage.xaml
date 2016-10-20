@@ -130,8 +130,8 @@
             <SemanticZoom.ZoomedOutView>
                 <GridView
                     Grid.Row="2"
-                    Padding="50,75,50,75"
-                    Margin="0,75,0,0"
+                    Padding="20"
+                    Margin="0"
                     VerticalAlignment="Stretch"
                     VerticalContentAlignment="Center"
                     x:Name="groupGridView"
@@ -178,7 +178,7 @@
                     </GridView.ItemTemplate>
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ItemsWrapGrid Orientation="Vertical"/>
+                            <ItemsWrapGrid Orientation="Vertical" VerticalAlignment="Center"/>
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                 </GridView>

@@ -36,6 +36,10 @@
             <Setter Property="Width" Value="220"/>
             <Setter Property="Height" Value="220"/>
         </Style>
+        <Style x:Key="CategoryButtonVerySmall" TargetType="GridViewItem" BasedOn="{StaticResource CategoryButton}">
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Height" Value="140"/>
+        </Style>
 
         <Style x:Key="CategoryButtonText" TargetType="TextBlock">
             <Setter Property="Margin" Value="15"/>
@@ -43,6 +47,9 @@
         </Style>
         <Style x:Key="CategoryButtonSymbolSmall" TargetType="TextBlock" BasedOn="{StaticResource MaterialIconTextStyle}">
             <Setter Property="FontSize" Value="160"/>
+        </Style>
+        <Style x:Key="CategoryButtonSymbolVerySmall" TargetType="TextBlock" BasedOn="{StaticResource MaterialIconTextStyle}">
+            <Setter Property="FontSize" Value="100"/>
         </Style>
     </Page.Resources>
 
@@ -70,6 +77,9 @@
 
                     <VisualState.Setters>
                         <Setter Target="buttonGridView.(RelativePanel.LeftOf)" Value=""/>
+                        <Setter Target="buttonGridView.(RelativePanel.AlignBottomWithPanel)" Value="False"/>
+                        <Setter Target="buttonGridView.(ScrollViewer.VerticalScrollMode)" Value="Disabled"/>
+                        <Setter Target="buttonGridView.(ScrollViewer.VerticalScrollBarVisibility)" Value="Disabled"/>
                         <!--<Setter Target="buttonGridView.Background" Value="Blue"/>-->
                         <Setter Target="currentlyPlaying.(RelativePanel.AlignRightWithPanel)" Value="False"/>
                         <Setter Target="currentlyPlaying.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True"/>
@@ -89,7 +99,7 @@
 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1" />
+                        <AdaptiveTrigger MinWindowWidth="500" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
@@ -105,6 +115,28 @@
                         <Setter Target="MusicSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
                         <Setter Target="RemoteControl.Style" Value="{StaticResource CategoryButtonSmall}"/>
                         <Setter Target="RemoteControlSymbol.Style" Value="{StaticResource CategoryButtonSymbolSmall}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="buttonGridView.Padding" Value="10"/>
+                        <Setter Target="Settings.Style" Value="{StaticResource CategoryButtonVerySmall}"/>
+                        <Setter Target="SettingsSymbol.Style" Value="{StaticResource CategoryButtonSymbolVerySmall}"/>
+                        <Setter Target="MovieSets.Style" Value="{StaticResource CategoryButtonVerySmall}"/>
+                        <Setter Target="MovieSetsSymbol.Style" Value="{StaticResource CategoryButtonSymbolVerySmall}"/>
+                        <Setter Target="Movies.Style" Value="{StaticResource CategoryButtonVerySmall}"/>
+                        <Setter Target="MoviesSymbol.Style" Value="{StaticResource CategoryButtonSymbolVerySmall}"/>
+                        <Setter Target="TVShows.Style" Value="{StaticResource CategoryButtonVerySmall}"/>
+                        <Setter Target="TVShowsSymbol.Style" Value="{StaticResource CategoryButtonSymbolVerySmall}"/>
+                        <Setter Target="Music.Style" Value="{StaticResource CategoryButtonVerySmall}"/>
+                        <Setter Target="MusicSymbol.Style" Value="{StaticResource CategoryButtonSymbolVerySmall}"/>
+                        <Setter Target="RemoteControl.Style" Value="{StaticResource CategoryButtonVerySmall}"/>
+                        <Setter Target="RemoteControlSymbol.Style" Value="{StaticResource CategoryButtonSymbolVerySmall}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -126,9 +158,11 @@
                 <GridView
                     x:Name="buttonGridView"
                     RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignTopWithPanel="True"
+                    RelativePanel.AlignBottomWithPanel="True"
                     RelativePanel.LeftOf="currentlyPlaying"
-                    Margin="20"
-                    Padding="0"
+                    Margin="0"
+                    Padding="20"
                     SelectionMode="None"
                     IsItemClickEnabled="True"
                     ItemClick="itemGridView_ItemClick">

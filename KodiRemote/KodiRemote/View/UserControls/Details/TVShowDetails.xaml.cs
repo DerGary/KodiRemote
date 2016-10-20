@@ -1,13 +1,13 @@
-﻿using KodiRemote.Code.Database.MovieTables;
-using KodiRemote.View.Base;
-using KodiRemote.View.Video;
-using KodiRemote.ViewModel;
-using KodiRemote.ViewModel.Video;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using KodiRemote.Code.Database.GeneralTables;
+using KodiRemote.Code.Database.TVShowTables;
+using KodiRemote.View.Base;
+using KodiRemote.ViewModel;
+using KodiRemote.ViewModel.Video;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -17,39 +17,40 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using KodiRemote.Code.Database.GeneralTables;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace KodiRemote.View.UserControls {
-    public sealed partial class MovieDetails : UserControlBase {
-        private MovieTableEntry movie;
-        public MovieTableEntry Movie {
+    public sealed partial class TVShowDetails : UserControlBase {
+        private TVShowTableEntry tvShow;
+        public TVShowTableEntry TVShow {
             get {
-                return movie;
+                return tvShow;
             }
             set {
-                movie = value;
+                tvShow = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(UnWatchedEpisodes));
             }
         }
+        public int UnWatchedEpisodes => TVShow.Episode - TVShow.WatchedEpisodes;
 
-        public delegate void MovieClickedEventHandler(MovieTableEntry item);
-        public event MovieClickedEventHandler MovieClicked;
+        public delegate void TVShowSeasonClickedEventHandler(TVShowSeasonTableEntry item);
+        public event TVShowSeasonClickedEventHandler TVShowSeasonClicked;
 
         public delegate void ActorClickedEventHandler(ActorTableEntry item);
         public event ActorClickedEventHandler ActorClicked;
 
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(MovieDetails), new PropertyMetadata(Orientation.Horizontal, OrientationChanged));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(TVShowDetails), new PropertyMetadata(Orientation.Horizontal, OrientationChanged));
 
         private static void OrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            var control = d as MovieDetails;
+            var control = d as TVShowDetails;
             if ((Orientation)e.NewValue == Orientation.Horizontal) {
-                control.MovieSetGridView.Style = (Style)App.Current.Resources["HorizontalItemGridViewStyle"];
+                control.TVShowSeasonGridView.Style = (Style)App.Current.Resources["HorizontalItemGridViewStyle"];
                 control.ActorGridView.Style = (Style)App.Current.Resources["HorizontalItemGridViewStyle"];
                 control.Info.MaxWidth = 700;
             } else {
-                control.MovieSetGridView.Style = (Style)App.Current.Resources["VerticalItemGridViewStyle"];
+                control.TVShowSeasonGridView.Style = (Style)App.Current.Resources["VerticalItemGridViewStyle"];
                 control.ActorGridView.Style = (Style)App.Current.Resources["VerticalItemGridViewStyle"];
                 control.Info.MaxWidth = double.PositiveInfinity;
             }
@@ -60,16 +61,16 @@ namespace KodiRemote.View.UserControls {
             set { SetValue(OrientationProperty, value); }
         }
 
-        public MovieDetails() {
+        public TVShowDetails() {
             this.InitializeComponent();
         }
 
-        private void MovieSetMovieClicked(object sender, ItemClickEventArgs e) {
+        private void SeasonClicked(object sender, ItemClickEventArgs e) {
             var viewModel = e.ClickedItem as ItemViewModel;
-            MovieClicked?.Invoke(viewModel.Item as MovieTableEntry);
+            TVShowSeasonClicked?.Invoke(viewModel.Item as TVShowSeasonTableEntry);
         }
 
-        private void ActorGridClicked(object sender, ItemClickEventArgs e) {
+        private void ActorGridViewClicked(object sender, ItemClickEventArgs e) {
             var viewModel = e.ClickedItem as ActorViewModel;
             ActorClicked?.Invoke(viewModel.Item as ActorTableEntry);
         }

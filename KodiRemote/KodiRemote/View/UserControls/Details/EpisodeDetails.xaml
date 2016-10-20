@@ -14,19 +14,13 @@
         <converter:EpisodeMapperConverter x:Key="EpisodeMapperConverter"/>
         <converter:TVShowMapperConverter x:Key="TVShowMapperConverter"/>
         <converter:RuntimeLengthConverter x:Key="RuntimeLengthConverter"/>
-        <converter:ActorImageConverter x:Key="ActorImageConverter"/>
     </UserControl.Resources>
 
     <StackPanel Orientation="{x:Bind Orientation, Mode=OneWay}">
-        <Grid x:Name="InfoGrid" MaxWidth="700">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="56"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
+        <StackPanel Orientation="Vertical" x:Name="InfoGrid" MaxWidth="700">
             <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
 
-            <Grid Grid.Row="1" Margin="20,8,20,20">
+            <Grid Margin="20,8,20,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -63,13 +57,12 @@
                     <TextBlock Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind Episode.Plot, Mode=OneWay}"/>
                 </ScrollViewer>
             </Grid>
-        </Grid>
+        </StackPanel>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="56"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
             <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Schauspieler"/>
 
             <GridView x:Name="ActorGridView" 

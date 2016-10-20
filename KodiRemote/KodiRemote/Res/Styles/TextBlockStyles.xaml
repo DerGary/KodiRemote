@@ -69,6 +69,6 @@
     <Style x:Key="DetailsHeaderTextBlockStyle" BasedOn="{StaticResource SubheaderTextBlockStyle}" TargetType="TextBlock">
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="Margin" Value="20,10,20,0"/>
-        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="TextWrapping" Value="WrapWholeWords"/>
     </Style>
 </ResourceDictionary>

@@ -19,91 +19,123 @@
     </Page.Resources>
 
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ImageGrid.(RelativePanel.AlignLeftWithPanel)" Value="False"/>
+                        <Setter Target="ImageGrid.(RelativePanel.AlignBottomWithPanel)" Value="False"/>
+                        <Setter Target="ImageGrid.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True"/>
+                        <Setter Target="ImageGrid.MaxWidth" Value="500"/>
+                        <Setter Target="ScrollViewer.Style" Value="{StaticResource VerticalScrollViewerStyle}"/>
+                        <Setter Target="EpisodeListView.(ScrollViewer.VerticalScrollMode)" Value="Disabled"/>
+                        <Setter Target="EpisodeListView.(ScrollViewer.VerticalScrollBarVisibility)" Value="Disabled"/>
+                        <Setter Target="EpisodeGrid.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+                        <Setter Target="EpisodeGrid.(RelativePanel.AlignTopWithPanel)" Value="False"/>
+                        <Setter Target="EpisodeGrid.(RelativePanel.AlignBottomWithPanel)" Value="False"/>
+                        <Setter Target="EpisodeGrid.(RelativePanel.RightOf)" Value=""/>
+                        <Setter Target="EpisodeGrid.(RelativePanel.Below)" Value="ImageGrid"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <ProgressRing x:Name="ProgressRing" IsActive="True" Width="100" Height="100"/>
-        <Grid x:Name="Content" Opacity="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource DisabledScrollViewerStyle}" Opacity="0">
+            <RelativePanel>
+                <Grid RelativePanel.AlignLeftWithPanel="True"
+                      RelativePanel.AlignTopWithPanel="True"
+                      RelativePanel.AlignBottomWithPanel="True"
+                      x:Name="ImageGrid" 
+                      Margin="20">
+                    <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="Uniform" Fill="Black"/>
+                    <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
+                    <uc:ImageControl Margin="1"  
+                                     ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
+                                     PropName="Poster" 
+                                     Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
+                                     ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
 
-            <Grid Margin="20">
+                    <Button Command="{x:Bind ViewModel.Play, Mode=OneWay}"
+                            Style="{StaticResource CoverPlayButtonStyle}"/>
+                </Grid>
 
-                <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="UniformToFill" Fill="Black"/>
-                <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
-                <uc:ImageControl Margin="1"  
-                                 ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
-                                 PropName="Poster" 
-                                 Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
-                                 ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
+                <Grid 
+                    x:Name="EpisodeGrid"
+                    RelativePanel.RightOf="ImageGrid"
+                      RelativePanel.AlignRightWithPanel="True"
+                      RelativePanel.AlignTopWithPanel="True"
+                      RelativePanel.AlignBottomWithPanel="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Episoden"/>
 
-                <Button Command="{x:Bind ViewModel.Play, Mode=OneWay}"
-                    Style="{StaticResource CoverPlayButtonStyle}"/>
-            </Grid>
-
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Episoden"/>
-
-                <ListView 
-                    x:Name="EpisodeListView"
-                    Grid.Row="1"
-                    SelectionMode="None"
-                    ItemsSource="{x:Bind ViewModel.TVShowSeason.Episodes, Mode=OneWay, Converter={StaticResource TVShowSeasonMapperConverter}}"
-                    Margin="20,8,20,20"
-                    IsItemClickEnabled="True"
-                    
-                    ItemClick="EpisodeClicked">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="videovm:EpisodeViewModel">
-                            <Grid Height="100">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="180"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="50"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <Grid Grid.Column="0" Grid.RowSpan="2" >
+                    <ListView 
+                        Grid.Row="1"
+                        x:Name="EpisodeListView"
+                        SelectionMode="None"
+                        ItemsSource="{x:Bind ViewModel.TVShowSeason.Episodes, Mode=OneWay, Converter={StaticResource TVShowSeasonMapperConverter}}"
+                        Margin="20,8,20,20"
+                        IsItemClickEnabled="True"
+                        ItemClick="EpisodeClicked">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="videovm:EpisodeViewModel">
+                                <Grid Height="100">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="3*"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
-                                    <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
-                                                     Grid.RowSpan="2"
-                                                     ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
-                                                     Margin="1"
-                                                     Watched="{x:Bind Watched, Mode=OneWay}"
-                                                     Stretch="UniformToFill"
-                                                     PropName="Thumbnail"/>
+                                    <Grid Grid.Column="0" Grid.RowSpan="2" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
+                                        <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
+                                                         Grid.RowSpan="2"
+                                                         ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                                                         Margin="1"
+                                                         Watched="{x:Bind Watched, Mode=OneWay}"
+                                                         Stretch="UniformToFill"
+                                                         PropName="Thumbnail"/>
+                                    </Grid>
+
+
+                                    <TextBlock Margin="20,0,0,5" Grid.Column="1" Grid.Row="0" FontWeight="Bold"  FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
+                                    <TextBlock Margin="20,5,0,0" Grid.Column="1" Grid.Row="1" FontWeight="Light" FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Label, Mode=OneWay}"/>
+                                    <TextBlock Margin="0,0,40,5" Grid.Column="2" Grid.Row="0" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Rating, Mode=OneWay}" HorizontalAlignment="Right" />
+                                    <TextBlock Margin="0,5,40,0" Grid.Column="2" Grid.Row="1" FontWeight="Bold"  FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" HorizontalAlignment="Right" />
                                 </Grid>
-
-
-                                <TextBlock Margin="20,0,0,5" Grid.Column="1" Grid.Row="0" FontWeight="Bold"  FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
-                                <TextBlock Margin="20,5,0,0" Grid.Column="1" Grid.Row="1" FontWeight="Light" FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Label, Mode=OneWay}"/>
-                                <TextBlock Margin="0,0,40,5" Grid.Column="2" Grid.Row="0" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Rating, Mode=OneWay}" HorizontalAlignment="Right" />
-                                <TextBlock Margin="0,5,40,0" Grid.Column="2" Grid.Row="1" FontWeight="Bold"  FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" HorizontalAlignment="Right" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Margin" Value="0"/>
-                            <Setter Property="Padding" Value="0"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
-            </Grid>
-        </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+            </RelativePanel>
+        </ScrollViewer>
     </Grid>
     
 </base:PageBase>

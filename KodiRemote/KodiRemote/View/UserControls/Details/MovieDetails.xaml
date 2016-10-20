@@ -16,15 +16,10 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="{x:Bind Orientation, Mode=OneWay}">
-        <Grid x:Name="InfoGrid" MaxWidth="700">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="56"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
+        <StackPanel x:Name="Info" Orientation="Vertical" MaxWidth="700">
             <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
 
-            <Grid Grid.Row="1" Margin="20,8,20,20">
+            <Grid Margin="20,8,20,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -54,13 +49,13 @@
 
                 <TextBlock  Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource PlotTextBlockStyle}" Text="{x:Bind Movie.Plot, Mode=OneWay}" Margin="0,0,20,0"/>
             </Grid>
-        </Grid>
+        </StackPanel>
 
         <Grid
             DataContext="{x:Bind Movie.MovieSets, Mode=OneWay, Converter={StaticResource MovieMovieSetMapperConverter}}"
             Visibility="{x:Bind Movie.MovieSets, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="56"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -76,7 +71,7 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="56"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 

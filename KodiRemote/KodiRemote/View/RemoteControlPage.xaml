@@ -72,6 +72,25 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+
+
+            <VisualStateGroup x:Name="Phone">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="RemoteControlUserControl.Margin" Value="10" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <!--<Pivot Style="{StaticResource TabsStylePivotStyle}" Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource OnNullVisibilityConverter}}">
              <PivotItem>
@@ -84,12 +103,18 @@
 
         <!--Visibility="{x:Bind ViewModel.Kodi.CurrentlyPlayingItem, Mode=OneWay, Converter={StaticResource OnNotNullVisibilityConverter}}"-->
         <Pivot 
-            Style="{StaticResource TabsStylePivotStyle}">
+            Style="{StaticResource TabsStylePivotStyle}"
+            >
+            <Pivot.ItemContainerStyle>
+                <Style TargetType="PivotItem">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </Pivot.ItemContainerStyle>
             <PivotItem>
                 <PivotItem.Header>
                     <uc:TabHeader Label="Remote Control" Glyph="{StaticResource MaterialDesign-ArrowPad}" />
                 </PivotItem.Header>
-                <uc:RemoteControl ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
+                <uc:RemoteControl x:Name="RemoteControlUserControl" Margin="20,20,20,20" ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
             </PivotItem>
 
             <PivotItem>

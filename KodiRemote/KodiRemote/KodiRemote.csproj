@@ -363,6 +363,9 @@
     <Compile Include="View\UserControls\Details\EpisodeDetails.xaml.cs">
       <DependentUpon>EpisodeDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\Details\TVShowDetails.xaml.cs">
+      <DependentUpon>TVShowDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\FontIcons\CinemaFontIcon.xaml.cs">
       <DependentUpon>CinemaFontIcon.xaml</DependentUpon>
     </Compile>
@@ -521,6 +524,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\Details\EpisodeDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Details\TVShowDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

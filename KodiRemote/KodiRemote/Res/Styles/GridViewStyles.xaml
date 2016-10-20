@@ -110,12 +110,22 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="GroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalItemGridViewStyle}">
+    <Style x:Key="HorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalItemGridViewStyle}">
         <Setter Property="Margin" Value="20,0,0,20"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
                     <ItemsWrapGrid GroupPadding="20,0,20,0"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="VerticalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalItemGridViewStyle}">
+        <Setter Property="Margin" Value="20,0,0,20"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal" GroupPadding="0,0,0,20"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -126,7 +136,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ItemGridViewItemTemplate" x:DataType="viewmodel:ItemViewModel">
-        <Grid Width="428" Height="260" >
+        <Grid Width="400" Height="260" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="173"/>
                 <ColumnDefinition Width="*"/>
@@ -152,7 +162,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ActorGridViewItemTemplate" x:DataType="videovm:ActorViewModel">
-        <Grid Height="260" Width="428">
+        <Grid Height="260" Width="400">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="173"/>
                 <ColumnDefinition Width="*"/>
