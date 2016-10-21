@@ -1,13 +1,6 @@
 #TODO:
 - ScrollViewer Transparent machen
-- Rechts oben einen weiter zurück und Pause Button einbauen
+- Rechts oben einen weiter zurÃ¼ck und Pause Button einbauen
 - YouTube Trailer einbauen
-- Responsive Design MovieDetails
-- Responsive Design TVShowDetails
-- Responsive Design TVSHowSeasonDetails
-- Responsive Design EpisodeDetails
-- Responsive Design MovieSetDetails
-- RemoteControl Page Cover hinzufügen
-- Currently Playing Responsive
+- RemoteControl Page Cover hinzufÃ¼gen
 - Playlist bauen
-- EpisodeDetails in usercontrol auslagern
