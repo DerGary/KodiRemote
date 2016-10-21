@@ -1,0 +1,121 @@
+﻿<ResourceDictionary
+    x:Class="KodiRemote.Res.Styles.ListViewDataTemplates"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:videovm="using:KodiRemote.ViewModel.Video"
+    xmlns:uc="using:KodiRemote.View.UserControls"
+    xmlns:converter="using:KodiRemote.View.Converter"
+    xmlns:local="using:KodiRemote.Res.Styles">
+    
+    <converter:EpisodeLabelConverter x:Key="EpisodeLabelConverter"/>
+    <converter:RuntimeLengthConverter x:Key="RuntimeLengthConverter"/>
+    <converter:MovieMapperConverter x:Key="MovieMapperConverter"/>
+    <Style TargetType="TextBlock" x:Name="ListViewTextBlock">
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Margin" Value="0,5"/>
+    </Style>
+    <DataTemplate x:Name="EpisodeListViewTemplate" x:DataType="videovm:EpisodeViewModel">
+        <RelativePanel Height="100">
+            <Grid Width="177" x:Name="ImageGrid" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
+                <ProgressRing Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
+                <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
+                                 ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                                 Margin="1"
+                                 Watched="{x:Bind Watched, Mode=OneWay}"
+                                 Stretch="UniformToFill"
+                                 PropName="Thumbnail"/>
+            </Grid>
+
+
+            <Grid Margin="20,0,20,0" RelativePanel.RightOf="ImageGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock FontWeight="Bold"  
+                               VerticalAlignment="Bottom"
+                               Style="{StaticResource ListViewTextBlock}"
+                               Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
+                    <TextBlock Grid.Column="1" 
+                               FontWeight="Light" 
+                               VerticalAlignment="Bottom"
+                               Style="{StaticResource ListViewTextBlock}"
+                               Text="{x:Bind Rating, Mode=OneWay}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock FontWeight="Light" 
+                               VerticalAlignment="Top"
+                               Style="{StaticResource ListViewTextBlock}"
+                               Text="{x:Bind Label, Mode=OneWay}"/>
+                    <TextBlock Grid.Column="1" 
+                               FontWeight="Bold"  
+                               VerticalAlignment="Top"
+                               Style="{StaticResource ListViewTextBlock}"
+                               Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" />
+                </Grid>
+            </Grid>
+        </RelativePanel>
+    </DataTemplate>
+
+    <DataTemplate x:Name="MovieListViewTemplate" x:DataType="videovm:MovieViewModel">
+        <RelativePanel Height="150">
+            <Grid Width="100" x:Name="ImageGrid" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
+                <ProgressRing Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
+                <uc:ImageControl ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"
+                                 ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                                 Margin="1"
+                                 Watched="{x:Bind Watched, Mode=OneWay}"
+                                 Stretch="UniformToFill"
+                                 PropName="PosterThumbnail"/>
+            </Grid>
+
+
+            <Grid Margin="20,0,20,0" RelativePanel.RightOf="ImageGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock FontWeight="Bold"  
+                               VerticalAlignment="Bottom"
+                               Style="{StaticResource ListViewTextBlock}"
+                               Text="{x:Bind Label, Mode=OneWay}"/>
+                    <TextBlock Grid.Column="1" 
+                               FontWeight="Light" 
+                               VerticalAlignment="Bottom"
+                               Style="{StaticResource ListViewTextBlock}"
+                               Text="{x:Bind Rating, Mode=OneWay}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock FontWeight="Light" 
+                               VerticalAlignment="Top"
+                               Style="{StaticResource ListViewTextBlock}"
+                               Text="{x:Bind Genres, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}"/>
+                    <TextBlock Grid.Column="1" 
+                               FontWeight="Bold"  
+                               VerticalAlignment="Top"
+                               Style="{StaticResource ListViewTextBlock}"
+                               Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" />
+                </Grid>
+            </Grid>
+        </RelativePanel>
+    </DataTemplate>
+</ResourceDictionary>

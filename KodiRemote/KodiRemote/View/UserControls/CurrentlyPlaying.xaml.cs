@@ -32,6 +32,12 @@ namespace KodiRemote.View.UserControls {
 
         public CurrentlyPlaying() {
             this.InitializeComponent();
+            Image.SizeChanged += Image_SizeChanged;
         }
+
+        private void Image_SizeChanged(object sender, SizeChangedEventArgs e) {
+            Label.MaxWidth = Image.ActualWidth;
+        }
+        
     }
 }

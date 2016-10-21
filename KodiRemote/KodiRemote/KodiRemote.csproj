@@ -329,6 +329,7 @@
     </Compile>
     <Compile Include="Migrations\Settings\SettingsContextModelSnapshot.cs" />
     <Compile Include="Res\Styles\DataTemplates.cs" />
+    <Compile Include="Res\Styles\ListViewDataTemplates.cs" />
     <Compile Include="ViewModel\Settings\AddKodiViewModel.cs" />
     <Compile Include="ViewModel\Group.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
@@ -342,6 +343,7 @@
     <Compile Include="ViewModel\RemoteControlViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModel\Video\MovieSetDetailsViewModel.cs" />
+    <Compile Include="ViewModel\Video\MovieViewModel.cs" />
     <Compile Include="ViewModel\Video\TVShowDetailsViewModel.cs" />
     <Compile Include="ViewModel\Video\TVShowSeasonDetailsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -356,6 +358,7 @@
     </Compile>
     <Compile Include="View\Base\PageBase.cs" />
     <Compile Include="View\Base\UserControlBase.cs" />
+    <Compile Include="View\TemplateSelector\ListViewTemplateSelector.cs" />
     <Compile Include="View\Trigger\ElementSizeTrigger.cs" />
     <Compile Include="View\UserControls\CurrentlyPlayingWithHeader.xaml.cs">
       <DependentUpon>CurrentlyPlayingWithHeader.xaml</DependentUpon>
@@ -491,6 +494,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Res\Styles\ImageStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Res\Styles\ListViewDataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

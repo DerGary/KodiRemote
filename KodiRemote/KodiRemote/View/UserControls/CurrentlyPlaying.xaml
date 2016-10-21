@@ -7,31 +7,55 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:KodiRemote.View.UserControls"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:converter="using:KodiRemote.View.Converter"
     RequestedTheme="Dark"
     mc:Ignorable="d"
     d:DesignHeight="800"
     d:DesignWidth="1000">
+    <UserControl.Resources>
+        <converter:NullVisibilityConverter OnNull="Collapsed" x:Name="NullVisibilityConverter"/>
+    </UserControl.Resources>
 
     <Grid>
         <Grid Margin="20">
-            <Polygon Points="0,0 0,1.50 1,1.50 1,0" Stretch="Uniform" Fill="Black" />
-            <ProgressRing Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Polygon Grid.RowSpan="3" Points="0,0 0,1.50 1,1.50 1,0" Stretch="Uniform" Fill="Black" />
+            <ProgressRing Grid.RowSpan="3" Width="50" Height="50" IsActive="{x:Bind ViewModel.PosterProgressRingActive, Mode=OneWay}"/>
 
-            <uc:ImageControl Margin="1" 
-                             Grid.RowSpan="2" 
+            <uc:ImageControl x:Name="Image" 
+                             Margin="1" 
+                             Grid.RowSpan="3" 
                              ImageSource="{x:Bind ViewModel.Poster, Mode=OneWay}" 
                              PropName="Poster" 
                              UseFadeOutAnimation="True"
                              Watched="{x:Bind ViewModel.Watched, Mode=OneWay}"
                              ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"/>
-            
-            <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
-                <TextBlock Text="{x:Bind ViewModel.Label, Mode=OneWay}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="15,10,15,20" TextWrapping="Wrap"/>
-            </StackPanel>
 
-            <!--<Button x:Name="MovieDetailsPlayButton"
-                    Command="{x:Bind ViewModel.Play, Mode=OneWay}"
-                    Style="{StaticResource CoverPlayButtonStyle}"/>-->
+            <Border 
+                Grid.Row="1" 
+                BorderBrush="Black" 
+                BorderThickness="1" 
+                Margin="20"
+                HorizontalAlignment="Right"
+                Visibility="{x:Bind ViewModel.Thumbnail, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}">
+                <uc:ImageControl ImageSource="{x:Bind ViewModel.Thumbnail, Mode=OneWay}"
+                                 ImageFailedCommand="{x:Bind ViewModel.ImageFailedCommand, Mode=OneWay}"
+                                 PropName="Thumbnail" 
+                                 UseFadeOutAnimation="True"/>
+            </Border>
+
+            <StackPanel x:Name="Label" Grid.Row="2" VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
+                <TextBlock 
+                            Text="{x:Bind ViewModel.Label, Mode=OneWay}" 
+                           Foreground="White" 
+                           Style="{StaticResource TitleTextBlockStyle}"  
+                           Margin="15,10,15,20" 
+                           TextWrapping="Wrap"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </base:UserControlBase>

@@ -87,51 +87,8 @@
                         ItemsSource="{x:Bind ViewModel.TVShowSeason.Episodes, Mode=OneWay, Converter={StaticResource TVShowSeasonMapperConverter}}"
                         Margin="20,8,20,20"
                         IsItemClickEnabled="True"
+                        ItemTemplate="{StaticResource EpisodeListViewTemplate}"
                         ItemClick="EpisodeClicked">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="videovm:EpisodeViewModel">
-                                <Grid Height="100">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="180"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Grid Grid.Column="0" Grid.RowSpan="2" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="3*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind ThumbnailProgressRingActive, Mode=OneWay}" />
-                                        <uc:ImageControl ImageSource="{x:Bind Thumbnail, Mode=OneWay}"
-                                                         Grid.RowSpan="2"
-                                                         ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
-                                                         Margin="1"
-                                                         Watched="{x:Bind Watched, Mode=OneWay}"
-                                                         Stretch="UniformToFill"
-                                                         PropName="Thumbnail"/>
-                                    </Grid>
-
-
-                                    <TextBlock Margin="20,0,0,5" Grid.Column="1" Grid.Row="0" FontWeight="Bold"  FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Episode, Mode=OneWay, Converter={StaticResource EpisodeLabelConverter}}"/>
-                                    <TextBlock Margin="20,5,0,0" Grid.Column="1" Grid.Row="1" FontWeight="Light" FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Label, Mode=OneWay}"/>
-                                    <TextBlock Margin="0,0,40,5" Grid.Column="2" Grid.Row="0" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Text="{x:Bind Rating, Mode=OneWay}" HorizontalAlignment="Right" />
-                                    <TextBlock Margin="0,5,40,0" Grid.Column="2" Grid.Row="1" FontWeight="Bold"  FontSize="20" VerticalAlignment="Top"    Text="{x:Bind Runtime, Mode=OneWay, Converter={StaticResource RuntimeLengthConverter}}" HorizontalAlignment="Right" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="Margin" Value="0"/>
-                                <Setter Property="Padding" Value="0"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
                     </ListView>
                 </Grid>
             </RelativePanel>

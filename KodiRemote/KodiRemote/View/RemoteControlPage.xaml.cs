@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using KodiRemote.Code.JSON.KVideoLibrary.Results;
 using KodiRemote.View.Base;
+using KodiRemote.ViewModel.Video;
 
 namespace KodiRemote.View {
     public sealed partial class RemoteControlPage : PageBase {
@@ -52,10 +53,21 @@ namespace KodiRemote.View {
 
         private async void RemoteControlPage_Loaded(object sender, RoutedEventArgs e) {
             if(ViewModel.Kodi != null) {
-                var movie = await ViewModel.Kodi.Database.GetMovie(new Code.Database.MovieTables.MovieTableEntry() { MovieId = 6 });
-                MovieDetails.Movie = movie;
-                MovieDetailsCurrentlyPlaying.ViewModel = new ItemViewModel(movie);
-                PlaylistCurrentlyPlaying.ViewModel = new ItemViewModel(movie);
+                var movie1 = await ViewModel.Kodi.Database.GetMovie(new Code.Database.MovieTables.MovieTableEntry() { MovieId = 6 });
+                var movie2 = await ViewModel.Kodi.Database.GetMovie(new Code.Database.MovieTables.MovieTableEntry() { MovieId = 7 });
+                //MovieDetails.Movie = movie;
+                //CurrentItemCurrentlyPlaying.ViewModel = new ItemViewModel(movie);
+                //PlaylistCurrentlyPlaying.ViewModel = new ItemViewModel(movie);
+                var episode = await ViewModel.Kodi.Database.GetEpisode(new Code.Database.EpisodeTables.EpisodeTableEntry() { EpisodeId = 18759});
+                EpisodeDetails.Episode = episode;
+                CurrentItemCurrentlyPlaying.ViewModel = new ItemViewModel(episode);
+                PlaylistCurrentlyPlaying.ViewModel = new ItemViewModel(episode);
+                var tvshow = await ViewModel.Kodi.Database.GetTVShow(new Code.Database.TVShowTables.TVShowTableEntry() { TVShowId = 37 });
+                List<ItemViewModel> listViewItems = tvshow.Seasons.First().Episodes.Select(x => new EpisodeViewModel(x)).Cast<ItemViewModel>().ToList();
+                listViewItems.Add(new MovieViewModel(movie1));
+                listViewItems.Add(new MovieViewModel(movie2));
+
+                PlaylistListView.ItemsSource = listViewItems;
             }
         }
     }

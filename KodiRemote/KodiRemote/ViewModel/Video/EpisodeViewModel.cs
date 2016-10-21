@@ -19,6 +19,7 @@ namespace KodiRemote.ViewModel.Video {
             Rating = item.Rating;
             Runtime = item.Runtime;
             Episode = item.Episode;
+            label = item.Title;
         }
 
     }

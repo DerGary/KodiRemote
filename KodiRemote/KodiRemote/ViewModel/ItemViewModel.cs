@@ -15,13 +15,13 @@ using System.Threading.Tasks;
 
 namespace KodiRemote.ViewModel {
     public class ItemViewModel : ViewModelBase {
-        private string poster;
-        private string fanart;
-        private string thumbnail;
-        private string extraImage;
-        private string label;
-        private bool watched;
-        private int id;
+        protected string poster;
+        protected string fanart;
+        protected string thumbnail;
+        protected string extraImage;
+        protected string label;
+        protected bool watched;
+        protected int id;
         public string Poster => StringMethods.ParseImageUrlToAppData(poster);
         public string Fanart => StringMethods.ParseImageUrlToAppData(fanart);
         public string PosterThumbnail => StringMethods.ParseThumbnailUrlToAppData(poster);
@@ -31,7 +31,7 @@ namespace KodiRemote.ViewModel {
         public bool Watched => watched;
         public int Id => id;
 
-        private bool posterProgressRingActive;
+        protected bool posterProgressRingActive;
         public bool PosterProgressRingActive {
             get {
                 return posterProgressRingActive;
@@ -41,7 +41,7 @@ namespace KodiRemote.ViewModel {
                 RaisePropertyChanged();
             }
         }
-        private bool fanartProgressRingActive;
+        protected bool fanartProgressRingActive;
         public bool FanartProgressRingActive {
             get {
                 return fanartProgressRingActive;
@@ -51,7 +51,7 @@ namespace KodiRemote.ViewModel {
                 RaisePropertyChanged();
             }
         }
-        private bool thumbnailProgressRingActive;
+        protected bool thumbnailProgressRingActive;
         public bool ThumbnailProgressRingActive {
             get {
                 return thumbnailProgressRingActive;
@@ -61,7 +61,7 @@ namespace KodiRemote.ViewModel {
                 RaisePropertyChanged();
             }
         }
-        private bool extraImageProgressRingActive;
+        protected bool extraImageProgressRingActive;
         public bool ExtraImageProgressRingActive {
             get {
                 return extraImageProgressRingActive;
@@ -127,7 +127,7 @@ namespace KodiRemote.ViewModel {
                 poster = episode.TVShowSeason?.Poster;
                 thumbnail = episode.Thumbnail;
                 fanart = episode.TVShowSeason?.TVShow?.Fanart;
-                label = episode.Title;
+                label = $"{episode.TVShowSeason.TVShow.Label} - Staffel {episode.TVShowSeason.Season} - Folge {episode.Episode} ({episode.Title})";
                 watched = episode.PlayCount > 0;
                 id = episode.EpisodeId;
             }
@@ -153,7 +153,7 @@ namespace KodiRemote.ViewModel {
             }
         }
 
-        private RelayCommand<object> imageFailedCommand;
+        protected RelayCommand<object> imageFailedCommand;
         public RelayCommand<object> ImageFailedCommand {
             get {
                 if (imageFailedCommand == null) {
@@ -165,7 +165,7 @@ namespace KodiRemote.ViewModel {
             }
         }
 
-        public TableEntryBase Item { get; private set; }
+        public TableEntryBase Item { get; protected set; }
         public void DownloadImage(string tag) {
             if (tag == null) {
                 throw new ArgumentException("tag");
