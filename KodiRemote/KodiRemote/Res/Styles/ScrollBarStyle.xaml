@@ -7,10 +7,18 @@
     </ResourceDictionary.MergedDictionaries>
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
+            <Color x:Key="SystemChromeAltLowColor">#AA222222</Color>
+            <Color x:Key="SystemChromeLowColor">#AA222222</Color>
             <SolidColorBrush x:Key="SystemControlHighlightChromeAltLowBrush" Color="{StaticResource TransparentGreyColor}"/>
+            <SolidColorBrush x:Key="SystemControlHighlightChromeLowBrush" Color="{StaticResource TransparentGreyColor}"/>
+
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
+            
+            <Color x:Key="SystemChromeAltLowColor">#AA222222</Color>
+            <Color x:Key="SystemChromeLowColor">#AA222222</Color>
             <SolidColorBrush x:Key="SystemControlHighlightChromeAltLowBrush" Color="{StaticResource TransparentGreyColor}"/>
+            <SolidColorBrush x:Key="SystemControlHighlightChromeLowBrush" Color="{StaticResource TransparentGreyColor}"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
