@@ -46,12 +46,12 @@ namespace KodiRemote.View.UserControls {
         private static void OrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             var control = d as TVShowDetails;
             if ((Orientation)e.NewValue == Orientation.Horizontal) {
-                control.TVShowSeasonGridView.Style = (Style)App.Current.Resources["HorizontalItemGridViewStyle"];
-                control.ActorGridView.Style = (Style)App.Current.Resources["HorizontalItemGridViewStyle"];
+                control.TVShowSeasonGridView.Style = (Style)App.Current.Resources["HorizontalGridViewStyle"];
+                control.ActorGridView.Style = (Style)App.Current.Resources["HorizontalGridViewStyle"];
                 control.Info.MaxWidth = 700;
             } else {
-                control.TVShowSeasonGridView.Style = (Style)App.Current.Resources["VerticalItemGridViewStyle"];
-                control.ActorGridView.Style = (Style)App.Current.Resources["VerticalItemGridViewStyle"];
+                control.TVShowSeasonGridView.Style = (Style)App.Current.Resources["VerticalGridViewStyle"];
+                control.ActorGridView.Style = (Style)App.Current.Resources["VerticalGridViewStyle"];
                 control.Info.MaxWidth = double.PositiveInfinity;
             }
         }

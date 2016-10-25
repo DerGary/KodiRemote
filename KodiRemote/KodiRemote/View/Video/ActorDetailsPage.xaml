@@ -15,7 +15,6 @@
                               Source="{x:Bind ViewModel.Groups, Mode=OneWay}"
                               IsSourceGrouped="true"
                               ItemsPath="Items"/>
-        <convert:ActorImageConverter x:Key="ImageSourceConverter"/>
     </Page.Resources>
     <Grid>
         <VisualStateManager.VisualStateGroups>

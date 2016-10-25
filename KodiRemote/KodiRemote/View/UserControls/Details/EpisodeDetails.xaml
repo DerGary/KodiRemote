@@ -67,8 +67,9 @@
 
             <GridView x:Name="ActorGridView" 
                       Grid.Row="1" 
+                      Margin="20,0"
                       ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
-                      Style="{StaticResource HorizontalItemGridViewStyle}"
+                      Style="{StaticResource HorizontalGridViewStyle}"
                       ItemsSource="{x:Bind Episode.Actors, Mode=OneWay, Converter={StaticResource EpisodeMapperConverter}}" 
                       ItemClick="ActorGridViewClicked"/>
         </Grid>

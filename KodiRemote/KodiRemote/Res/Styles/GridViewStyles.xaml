@@ -81,25 +81,17 @@
         </Setter>
     </Style>
 
-    <Style x:Key="VerticalItemGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalItemGridViewStyle}">
-        <Setter Property="ItemsPanel">
-            <Setter.Value>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid Margin="0" Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
     
-    <!-- Used for Season Covers and Movie Covers of Movieset on the Details Pages and for Actors too-->
-    <Style x:Key="HorizontalItemGridViewStyle" TargetType="GridView">
+    <Style x:Key="HorizontalGridViewStyle" TargetType="GridView">
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="20,8,20,20"/>
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="SelectionMode" Value="None"/>
         <Setter Property="IsItemClickEnabled" Value="True"/>
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
-        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource GridViewPresenterStyle}"/>
         <Setter Property="ItemTemplate" Value="{StaticResource ItemGridViewItemTemplate}"/>
         <Setter Property="ItemsPanel">
@@ -110,29 +102,93 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="HorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalItemGridViewStyle}">
-        <Setter Property="Margin" Value="20,0,0,20"/>
+    <Style x:Key="CenteredHorizontalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid GroupPadding="20,0,20,0"/>
+                    <ItemsWrapGrid Margin="0" Orientation="Vertical" VerticalAlignment="Center"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="VerticalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalItemGridViewStyle}">
-        <Setter Property="Margin" Value="20,0,0,20"/>
+    <Style x:Key="NoScrollHorizontalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+    </Style>
+    <Style x:Key="HorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal" GroupPadding="0,0,0,20"/>
+                    <ItemsWrapGrid GroupPadding="20,0,20,0" Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <Style x:Key="CenteredHorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid GroupPadding="20,0,20,0" Orientation="Vertical" VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="NoScrollHorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGroupedGridViewStyle}">
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
     </Style>
 
+    <Style x:Key="VerticalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Margin="0" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CenteredVerticalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGridViewStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Margin="0" Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="NoScrollVerticalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGridViewStyle}">
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+    </Style>
+    <Style x:Key="VerticalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGridViewStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Margin="0" Orientation="Horizontal" GroupPadding="0,0,0,20"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CenteredVerticalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGridViewStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Margin="0" Orientation="Horizontal" GroupPadding="0,0,0,20" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="NoScrollVerticalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGroupedGridViewStyle}">
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+    </Style>
+    
     <DataTemplate x:Key="GroupHeaderTemplate">
-        <TextBlock Text="{Binding Name}" Margin="0,0,0,4" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+        <TextBlock Text="{Binding Name}" Margin="0,0,0,4" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
     </DataTemplate>
 
     <DataTemplate x:Key="ItemGridViewItemTemplate" x:DataType="viewmodel:ItemViewModel">
@@ -142,27 +198,23 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="3*"/>
-                </Grid.RowDefinitions>
-
-                <ProgressRing Grid.RowSpan="2" Width="30" Height="30" IsActive="{x:Bind PosterProgressRingActive, Mode=OneWay}" />
-                <uc:ImageControl ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"
-                                 Grid.RowSpan="2"
-                                 Stretch="UniformToFill"
-                                 ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
-                                 Margin="1"
-                                 Watched="{x:Bind Watched, Mode=OneWay}"
-                                 PropName="PosterThumbnail"/>
-            </Grid>
-            <TextBlock Grid.Column="1" Text="{x:Bind Label, Mode=OneWay}" Style="{StaticResource GridTextStyle}" VerticalAlignment="Center" FontWeight="Bold"/>
+            <ProgressRing Width="30" Height="30" IsActive="{x:Bind PosterProgressRingActive, Mode=OneWay}" />
+            <uc:ImageControl ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}"
+                             Stretch="UniformToFill"
+                             ImageFailedCommand="{x:Bind ImageFailedCommand, Mode=OneWay}"
+                             Margin="1"
+                             Watched="{x:Bind Watched, Mode=OneWay}"
+                             PropName="PosterThumbnail"/>
+            <TextBlock Grid.Column="1" 
+                       Text="{x:Bind Label, Mode=OneWay}" 
+                       Style="{StaticResource GridTextStyle}" 
+                       VerticalAlignment="Center" 
+                       FontWeight="Bold"/>
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="ActorGridViewItemTemplate" x:DataType="videovm:ActorViewModel">
-        <Grid Height="260" Width="400">
+        <Grid Width="400" Height="260">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="173"/>
                 <ColumnDefinition Width="*"/>

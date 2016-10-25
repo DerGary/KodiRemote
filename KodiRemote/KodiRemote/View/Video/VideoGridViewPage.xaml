@@ -1,0 +1,274 @@
+﻿<base:PageBase
+    x:Class="KodiRemote.View.Video.VideoGridViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KodiRemote.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:base="using:KodiRemote.View.Base"
+    xmlns:viewmodel="using:KodiRemote.ViewModel"
+    xmlns:i="using:Microsoft.Xaml.Interactivity" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:uc="using:KodiRemote.View.UserControls"
+    xmlns:converter="using:KodiRemote.View.Converter"
+    xmlns:ui="using:Windows.UI.Xaml.Data"
+    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    RequestedTheme="Dark"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <CollectionViewSource x:Name="groupedItemsViewSource"
+                              Source="{x:Bind ViewModel.Groups, Mode=OneWay}"
+                              IsSourceGrouped="true"
+                              ItemsPath="Items"/>
+        <Style x:Key="BigCoverGridViewItemStyle" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
+                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
+                                               ContentMargin="4" 
+                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
+                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                               Padding="0,0,0,0"
+                                               Margin="0,0,0,67"
+                                               PointerOverBackgroundMargin="1" 
+                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                                               PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
+                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
+                                               SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
+                                               SelectionCheckMarkVisualEnabled="True" 
+                                               SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
+                                               SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
+                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
+                                               SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SmallCoverGridViewItemStyle" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
+                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
+                                               ContentMargin="2" 
+                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
+                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                               Padding="0,0,0,0"
+                                               Margin="0,0,0,0"
+                                               PointerOverBackgroundMargin="1" 
+                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                                               PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
+                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
+                                               SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
+                                               SelectionCheckMarkVisualEnabled="True" 
+                                               SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
+                                               SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
+                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
+                                               SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Name="BigCoverGridViewItemTemplate" x:DataType="viewmodel:ItemViewModel">
+            <Grid Margin="0,0,0,0" x:Name="Grid" Background="Black">
+                <Polygon x:Name="Poly" Points="0,0 0,1.50 1,1.50 1,0" Stretch="Uniform" Fill="Black"/>
+                <ProgressRing Width="48" Height="48" IsActive="{Binding PosterProgressRingActive}"/>
+
+                <uc:ImageControl Margin="1" 
+                                 Stretch="UniformToFill"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalContentAlignment="Stretch"
+                                 HorizontalContentAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 Watched="{x:Bind Watched, Mode=OneWay}"
+                                 ImageSource="{x:Bind Poster, Mode=OneWay}" 
+                                 ImageFailedCommand="{Binding ImageFailedCommand}" 
+                                 PropName="Poster"/>
+
+
+                <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
+                    <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="16,12,16,16" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Name="MediumCoverGridViewItemTemplate" x:DataType="viewmodel:ItemViewModel">
+            <Grid Background="Black" Height="400" Width="268">
+                <ProgressRing Width="32" Height="32" IsActive="{Binding PosterProgressRingActive}"/>
+
+                <uc:ImageControl Stretch="UniformToFill"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalContentAlignment="Stretch"
+                                 HorizontalContentAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 Watched="{x:Bind Watched, Mode=OneWay}"
+                                 ImageSource="{x:Bind Poster, Mode=OneWay}" 
+                                 ImageFailedCommand="{Binding ImageFailedCommand}" 
+                                 PropName="Poster"/>
+
+
+                <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
+                    <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="16,12,16,16" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Name="SmallCoverGridViewItemTemplate" x:DataType="viewmodel:ItemViewModel">
+            <Grid Background="Black" Height="300" Width="200">
+                <ProgressRing Width="32" Height="32" IsActive="{Binding PosterProgressRingActive}"/>
+
+                <uc:ImageControl Stretch="UniformToFill"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalContentAlignment="Stretch"
+                                 HorizontalContentAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 Watched="{x:Bind Watched, Mode=OneWay}"
+                                 ImageSource="{x:Bind PosterThumbnail, Mode=OneWay}" 
+                                 ImageFailedCommand="{Binding ImageFailedCommand}" 
+                                 PropName="PosterThumbnail"/>
+
+
+                <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
+                    <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}" FontSize="16"  Margin="12,8,12,12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ZoomedInGridView.Style" Value="{StaticResource CenteredVerticalGroupedGridViewStyle}"/>
+                        <Setter Target="ZoomedInGridView.ItemContainerStyle" Value="{StaticResource SmallCoverGridViewItemStyle}"/>
+                        <Setter Target="ZoomedInGridView.Padding" Value="20,0,20,0"/>
+                        <Setter Target="ZoomedOutGridView.Style" Value="{StaticResource CenteredVerticalGridViewStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="GridViewStyle">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ZoomedInGridView.ItemTemplate" Value="{StaticResource MediumCoverGridViewItemTemplate}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ZoomedInGridView.ItemTemplate" Value="{StaticResource SmallCoverGridViewItemTemplate}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <SemanticZoom 
+            Grid.Row="2" 
+            x:Name="Zoom" 
+            ScrollViewer.VerticalScrollMode="Disabled" 
+            ScrollViewer.HorizontalScrollMode="Disabled" 
+            ScrollViewer.ZoomMode="Enabled">
+            <SemanticZoom.ZoomedInView>
+                <GridView
+                    RightTapped="ItemRightClick"
+                    x:Name="ZoomedInGridView"
+                    IsItemClickEnabled="True"
+                    IsZoomedInView="True"
+                    SelectionMode="None"
+                    Padding="20,0,20,20"
+                    Style="{StaticResource HorizontalGroupedGridViewStyle}"
+                    Margin="0"
+                    ItemClick="ItemClick"
+                    ItemTemplate="{StaticResource BigCoverGridViewItemTemplate}"
+                    ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
+                    ItemContainerStyle="{StaticResource BigCoverGridViewItemStyle}">
+                    <GridView.GroupStyle>
+                        <GroupStyle HeaderTemplate="{StaticResource GroupHeaderTemplate}"/>
+                    </GridView.GroupStyle>
+                </GridView>
+            </SemanticZoom.ZoomedInView>
+
+            <SemanticZoom.ZoomedOutView>
+                <GridView
+                    Padding="20"
+                    Margin="0"
+                    x:Name="ZoomedOutGridView"
+                    ItemsSource="{Binding ElementName=groupedItemsViewSource, Path=View.CollectionGroups}"
+                    ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                    Style="{StaticResource CenteredHorizontalGridViewStyle}"
+                    ItemContainerStyle="{StaticResource SmallCoverGridViewItemStyle}"
+                    IsItemClickEnabled="True">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="200" Height="300">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"/>
+                                    <RowDefinition Height="150"/>
+                                </Grid.RowDefinitions>
+
+                                <uc:SmallImage Grid.Column="0" Grid.Row="0" ViewModel="{Binding Group.Items[0]}"/>
+
+                                <uc:SmallImage Grid.Column="1" Grid.Row="0" ViewModel="{Binding Group.Items[1]}"/>
+
+                                <uc:SmallImage Grid.Column="0" Grid.Row="1" ViewModel="{Binding Group.Items[2]}"/>
+
+                                <uc:SmallImage Grid.Column="1" Grid.Row="1" ViewModel="{Binding Group.Items[3]}"/>
+
+                                <Border Background="#88000000" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <TextBlock Text="{Binding Group.Name}" FontSize="50" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </SemanticZoom.ZoomedOutView>
+        </SemanticZoom>
+    </Grid>
+</base:PageBase>

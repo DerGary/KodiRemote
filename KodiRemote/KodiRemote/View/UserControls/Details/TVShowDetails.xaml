@@ -65,7 +65,8 @@
                 x:Name="TVShowSeasonGridView"
                 ItemsSource="{x:Bind TVShow.Seasons, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}" 
                 Grid.Row="1"
-                Style="{StaticResource HorizontalItemGridViewStyle}"
+                Margin="20,0"
+                Style="{StaticResource HorizontalGridViewStyle}"
                 ItemClick="SeasonClicked"/>
         </Grid>
 
@@ -80,7 +81,8 @@
             <GridView 
                 x:Name="ActorGridView"
                 Grid.Row="1" 
-                Style="{StaticResource HorizontalItemGridViewStyle}"
+                Margin="20,0"
+                Style="{StaticResource HorizontalGridViewStyle}"
                 ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
                 ItemsSource="{x:Bind TVShow.Actors, Mode=OneWay, Converter={StaticResource TVShowMapperConverter}}" 
                 ItemClick="ActorGridViewClicked"/>

@@ -18,8 +18,8 @@ using Windows.UI.Xaml.Navigation;
 using KodiRemote.Code.Common;
 
 namespace KodiRemote.View.Video {
-    public sealed partial class HorizontalGridViewPage : PageBase {
-        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(CollectionViewModel), typeof(HorizontalGridViewPage), null);
+    public sealed partial class VideoGridViewPage : PageBase {
+        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(CollectionViewModel), typeof(VideoGridViewPage), null);
 
         public CollectionViewModel ViewModel {
             get { return (CollectionViewModel)GetValue(ViewModelProperty); }
@@ -33,7 +33,7 @@ namespace KodiRemote.View.Video {
         public delegate void NavigateEventHandler(ItemViewModel item);
         public event NavigateEventHandler Navigate;
 
-        public HorizontalGridViewPage() {
+        public VideoGridViewPage() {
             this.InitializeComponent();
         }
 
@@ -43,11 +43,11 @@ namespace KodiRemote.View.Video {
         }
 
         public double GetScrollPosition() {
-            return itemGridView.GetHorizontalScrollOffset();
+            return ZoomedInGridView.GetHorizontalScrollOffset();
         }
 
         public void SetScrollPosition(double position) {
-            itemGridView.SetHorizontalScrollOffset(position);
+            ZoomedInGridView.SetHorizontalScrollOffset(position);
         }
 
         private void ItemRightClick(object sender, RightTappedRoutedEventArgs e) {

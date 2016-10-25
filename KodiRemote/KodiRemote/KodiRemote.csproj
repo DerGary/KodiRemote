@@ -414,8 +414,8 @@
     <Compile Include="View\Video\EpisodeDetailsPage.xaml.cs">
       <DependentUpon>EpisodeDetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Video\HorizontalGridViewPage.xaml.cs">
-      <DependentUpon>HorizontalGridViewPage.xaml</DependentUpon>
+    <Compile Include="View\Video\VideoGridViewPage.xaml.cs">
+      <DependentUpon>VideoGridViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Video\MovieDetailsPage.xaml.cs">
       <DependentUpon>MovieDetailsPage.xaml</DependentUpon>
@@ -587,7 +587,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Video\HorizontalGridViewPage.xaml">
+    <Page Include="View\Video\VideoGridViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

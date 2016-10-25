@@ -64,7 +64,8 @@
             <GridView x:Name="MovieSetGridView"
                       ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
                       Grid.Row="1"
-                      Style="{StaticResource HorizontalItemGridViewStyle}"
+                      Margin="20,0"
+                      Style="{StaticResource HorizontalGridViewStyle}"
                       ItemClick="MovieSetMovieClicked"/>
 
         </Grid>
@@ -79,7 +80,8 @@
 
             <GridView x:Name="ActorGridView"
                       Grid.Row="1" 
-                      Style="{StaticResource HorizontalItemGridViewStyle}"
+                      Margin="20,0"
+                      Style="{StaticResource HorizontalGridViewStyle}"
                       ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
                       ItemsSource="{x:Bind Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
                       ItemClick="ActorGridClicked"/>
