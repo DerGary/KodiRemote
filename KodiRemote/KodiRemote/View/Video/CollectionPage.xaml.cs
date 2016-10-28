@@ -29,8 +29,8 @@ namespace KodiRemote.View.Video {
                 RaisePropertyChanged(nameof(ViewModelBase));
             }
         }
-        
-        public override ViewModelBase ViewModelBase => ViewModel; 
+
+        public override ViewModelBase ViewModelBase => ViewModel;
 
         public CollectionPage() {
             this.InitializeComponent();
@@ -59,7 +59,7 @@ namespace KodiRemote.View.Video {
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
-            if(e.NavigationMode != NavigationMode.Back) {
+            if (e.NavigationMode != NavigationMode.Back) {
                 App.ScrollViewerHorizontalOffset.Push(HorizontalGridViewPage.GetScrollPosition());
                 App.ViewModels.Push(ViewModel);
             }
@@ -82,6 +82,14 @@ namespace KodiRemote.View.Video {
             } else if (ViewModel.PageType == PageType.TVShows) {
                 Frame.Navigate(typeof(TVShowDetailsPage), item.Item);
             }
+        }
+
+
+        private void FlyoutListViewItemClicked(object sender, ItemClickEventArgs e) {
+            WatchedAppBarButton.Flyout?.Hide();
+            SortAppBarButton.Flyout?.Hide();
+            NewestAppBarButton.Flyout?.Hide();
+            GenreAppBarButton.Flyout?.Hide();
         }
     }
 }

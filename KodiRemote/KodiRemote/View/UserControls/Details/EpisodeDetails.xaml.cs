@@ -35,18 +35,7 @@ namespace KodiRemote.View.UserControls {
         public delegate void ActorClickedEventHandler(ActorTableEntry item);
         public event ActorClickedEventHandler ActorClicked;
 
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(EpisodeDetails), new PropertyMetadata(Orientation.Horizontal, OrientationChanged));
-
-        private static void OrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            var control = d as EpisodeDetails;
-            if ((Orientation)e.NewValue == Orientation.Horizontal) {
-                control.ActorGridView.Style = (Style)App.Current.Resources["HorizontalGridViewStyle"];
-                control.InfoGrid.MaxWidth = 700;
-            } else {
-                control.ActorGridView.Style = (Style)App.Current.Resources["VerticalGridViewStyle"];
-                control.InfoGrid.MaxWidth = double.PositiveInfinity;
-            }
-        }
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(EpisodeDetails), null);
 
         public Orientation Orientation {
             get { return (Orientation)GetValue(OrientationProperty); }

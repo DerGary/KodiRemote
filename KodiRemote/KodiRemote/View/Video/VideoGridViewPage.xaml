@@ -20,83 +20,23 @@
                               Source="{x:Bind ViewModel.Groups, Mode=OneWay}"
                               IsSourceGrouped="true"
                               ItemsPath="Items"/>
+
+        <Style x:Name="BigCoverGridViewItemPresenterStyle" TargetType="GridViewItemPresenter" BasedOn="{StaticResource GridViewItemPresenterStyle}"> 
+            <Setter Property="Margin" Value="0,0,0,67"/>
+            <Setter Property="ContentMargin" Value="4"/>
+        </Style>
+        
+        <ControlTemplate x:Name="BigCoverGridViewItemControlTemplate" TargetType="GridViewItem">
+            <GridViewItemPresenter Style="{StaticResource BigCoverGridViewItemPresenterStyle}" 
+                                   ContentTransitions="{TemplateBinding ContentTransitions}"
+                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </ControlTemplate>
+        
         <Style x:Key="BigCoverGridViewItemStyle" TargetType="GridViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="TabNavigation" Value="Local"/>
-            <Setter Property="IsHoldingEnabled" Value="True"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
-                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
-                                               ContentMargin="4" 
-                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
-                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
-                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                               Padding="0,0,0,0"
-                                               Margin="0,0,0,67"
-                                               PointerOverBackgroundMargin="1" 
-                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                                               PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
-                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
-                                               SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
-                                               SelectionCheckMarkVisualEnabled="True" 
-                                               SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
-                                               SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
-                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
-                                               SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="Template" Value="{StaticResource BigCoverGridViewItemControlTemplate}"/>
         </Style>
 
-        <Style x:Key="SmallCoverGridViewItemStyle" TargetType="GridViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="TabNavigation" Value="Local"/>
-            <Setter Property="IsHoldingEnabled" Value="True"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
-                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
-                                               ContentMargin="2" 
-                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
-                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
-                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                               Padding="0,0,0,0"
-                                               Margin="0,0,0,0"
-                                               PointerOverBackgroundMargin="1" 
-                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                                               PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
-                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
-                                               SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
-                                               SelectionCheckMarkVisualEnabled="True" 
-                                               SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
-                                               SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
-                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
-                                               SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <DataTemplate x:Name="BigCoverGridViewItemTemplate" x:DataType="viewmodel:ItemViewModel">
             <Grid Margin="0,0,0,0" x:Name="Grid" Background="Black">
                 <Polygon x:Name="Poly" Points="0,0 0,1.50 1,1.50 1,0" Stretch="Uniform" Fill="Black"/>
@@ -112,7 +52,6 @@
                                  ImageSource="{x:Bind Poster, Mode=OneWay}" 
                                  ImageFailedCommand="{Binding ImageFailedCommand}" 
                                  PropName="Poster"/>
-
 
                 <StackPanel VerticalAlignment="Bottom" Background="{StaticResource TransparentBlack}" HorizontalAlignment="Stretch">
                     <TextBlock Text="{Binding Label}" Foreground="White" Style="{StaticResource TitleTextBlockStyle}"  Margin="16,12,16,16" TextWrapping="Wrap"/>
@@ -168,6 +107,9 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1000"/>
                     </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ZoomedInGridView.ItemContainerStyle" Value="{StaticResource BigCoverGridViewItemStyle}"/>
+                    </VisualState.Setters>
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
@@ -175,8 +117,8 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ZoomedInGridView.Style" Value="{StaticResource CenteredVerticalGroupedGridViewStyle}"/>
-                        <Setter Target="ZoomedInGridView.ItemContainerStyle" Value="{StaticResource SmallCoverGridViewItemStyle}"/>
                         <Setter Target="ZoomedInGridView.Padding" Value="20,0,20,0"/>
+                        <Setter Target="ZoomedInGridView.Margin" Value="0"/>
                         <Setter Target="ZoomedOutGridView.Style" Value="{StaticResource CenteredVerticalGridViewStyle}"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -220,11 +162,10 @@
                     SelectionMode="None"
                     Padding="20,0,20,20"
                     Style="{StaticResource HorizontalGroupedGridViewStyle}"
-                    Margin="0"
+                    Margin="0,0,0,48"
                     ItemClick="ItemClick"
                     ItemTemplate="{StaticResource BigCoverGridViewItemTemplate}"
-                    ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
-                    ItemContainerStyle="{StaticResource BigCoverGridViewItemStyle}">
+                    ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}">
                     <GridView.GroupStyle>
                         <GroupStyle HeaderTemplate="{StaticResource GroupHeaderTemplate}"/>
                     </GridView.GroupStyle>
@@ -239,7 +180,6 @@
                     ItemsSource="{Binding ElementName=groupedItemsViewSource, Path=View.CollectionGroups}"
                     ScrollViewer.IsHorizontalScrollChainingEnabled="False"
                     Style="{StaticResource CenteredHorizontalGridViewStyle}"
-                    ItemContainerStyle="{StaticResource SmallCoverGridViewItemStyle}"
                     IsItemClickEnabled="True">
                     <GridView.ItemTemplate>
                         <DataTemplate>

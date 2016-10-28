@@ -53,9 +53,9 @@
                 <GridView 
                     x:Name="ItemGridView"
                     ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
-                    Style="{StaticResource HorizontalGroupedGridViewStyle}"
+                    Style="{StaticResource NoScrollHorizontalGroupedItemGridViewStyle}"
                     ItemClick="ItemClick"
-                    ItemTemplate="{StaticResource ItemGridViewItemTemplate}">
+                    Margin="20,0">
                     <GridView.GroupStyle>
                         <GroupStyle HeaderTemplate="{StaticResource GroupHeaderTemplate}"/>
                     </GridView.GroupStyle>

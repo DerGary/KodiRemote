@@ -34,7 +34,7 @@
                     <VisualState.Setters>
                         <Setter Target="RootStackPanel.Orientation" Value="Vertical"/>
                         <Setter Target="ImageGrid.MaxWidth" Value="500"/>
-                        <Setter Target="ItemsGridView.Style" Value="{StaticResource VerticalGroupedGridViewStyle}"/>
+                        <Setter Target="ItemsGridView.Style" Value="{StaticResource NoScrollVerticalGroupedItemGridViewStyle}"/>
                         <Setter Target="ScrollViewer.Style" Value="{StaticResource VerticalScrollViewerStyle}"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -58,9 +58,8 @@
                 <GridView 
                     x:Name="ItemsGridView"
                     ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
-                    Style="{StaticResource HorizontalGroupedGridViewStyle}"
-                    ItemClick="ItemClick"
-                    ItemTemplate="{StaticResource ItemGridViewItemTemplate}">
+                    Style="{StaticResource NoScrollHorizontalGroupedItemGridViewStyle}"
+                    ItemClick="ItemClick">
                     <GridView.GroupStyle>
                         <GroupStyle HeaderTemplate="{StaticResource GroupHeaderTemplate}"/>
                     </GridView.GroupStyle>

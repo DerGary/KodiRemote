@@ -351,8 +351,11 @@
     <Compile Include="View\Converter\EpisodeLabelConverter.cs" />
     <Compile Include="View\Converter\EpisodeMapperConverter.cs" />
     <Compile Include="View\Converter\FilterVisibilityConverter.cs" />
+    <Compile Include="View\Converter\NewestConverter.cs" />
+    <Compile Include="View\Converter\SortConverter.cs" />
     <Compile Include="View\Converter\TVShowMapperConverter.cs" />
     <Compile Include="View\Converter\TVShowSeasonMapperConverter.cs" />
+    <Compile Include="View\Converter\WatchedConverter.cs" />
     <Compile Include="View\Settings\AddKodiPage.xaml.cs">
       <DependentUpon>AddKodiPage.xaml</DependentUpon>
     </Compile>
@@ -360,6 +363,8 @@
     <Compile Include="View\Base\UserControlBase.cs" />
     <Compile Include="View\TemplateSelector\ListViewTemplateSelector.cs" />
     <Compile Include="View\Trigger\ElementSizeTrigger.cs" />
+    <Compile Include="View\Trigger\ElementEqualsTrigger.cs" />
+    <Compile Include="View\Trigger\OrientationTrigger.cs" />
     <Compile Include="View\UserControls\CurrentlyPlayingWithHeader.xaml.cs">
       <DependentUpon>CurrentlyPlayingWithHeader.xaml</DependentUpon>
     </Compile>

@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:KodiRemote.View.Converter"
     xmlns:base="using:KodiRemote.View.Base"
+    xmlns:trigger="using:KodiRemote.View.Trigger"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converter:MovieMapperConverter x:Key="MovieMapperConverter"/>
@@ -16,7 +17,28 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="{x:Bind Orientation, Mode=OneWay}">
-        <StackPanel x:Name="Info" Orientation="Vertical" MaxWidth="700">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <trigger:OrientationTrigger Orientation="{x:Bind Orientation,Mode=OneWay}" ActiveOn="Horizontal"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Info.MaxWidth" Value="700"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <trigger:OrientationTrigger Orientation="{x:Bind Orientation,Mode=OneWay}" ActiveOn="Vertical"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MovieSetGridView.Style" Value="{StaticResource NoScrollVerticalItemGridViewStyle}"/>
+                        <Setter Target="ActorGridView.Style" Value="{StaticResource NoScrollVerticalItemGridViewStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <StackPanel x:Name="Info" Orientation="Vertical">
             <TextBlock Style="{StaticResource DetailsHeaderTextBlockStyle}" Text="Info"/>
 
             <Grid Margin="20,8,20,20">
@@ -65,7 +87,7 @@
                       ItemsSource="{Binding Movies, Converter={StaticResource MovieMapperConverter}}" 
                       Grid.Row="1"
                       Margin="20,0"
-                      Style="{StaticResource HorizontalGridViewStyle}"
+                      Style="{StaticResource NoScrollHorizontalItemGridViewStyle}"
                       ItemClick="MovieSetMovieClicked"/>
 
         </Grid>
@@ -81,7 +103,7 @@
             <GridView x:Name="ActorGridView"
                       Grid.Row="1" 
                       Margin="20,0"
-                      Style="{StaticResource HorizontalGridViewStyle}"
+                      Style="{StaticResource NoScrollHorizontalItemGridViewStyle}"
                       ItemTemplate="{StaticResource ActorGridViewItemTemplate}"
                       ItemsSource="{x:Bind Movie.Actors, Mode=OneWay, Converter={StaticResource MovieMapperConverter}}" 
                       ItemClick="ActorGridClicked"/>

@@ -42,58 +42,58 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    <Style x:Key="GridViewPresenterStyle" TargetType="GridViewItem">
-        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="TabNavigation" Value="Local"/>
-        <Setter Property="IsHoldingEnabled" Value="True"/>
-        <Setter Property="Margin" Value="0,0,2,2"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="GridViewItem">
-                    <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
-                                           CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" 
-                                           ContentMargin="4" 
-                                           ContentTransitions="{TemplateBinding ContentTransitions}" 
-                                           CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
-                                           DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-                                           DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                                           DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-                                           DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                                           FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
-                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                           Padding="{TemplateBinding Padding}" 
-                                           PointerOverBackgroundMargin="1" 
-                                           PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                                           PointerOverBackground="#55000000" 
-                                           ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
-                                           SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
-                                           SelectionCheckMarkVisualEnabled="True" 
-                                           SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
-                                           SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
-                                           SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
-                                           SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
-                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+
+    <Style x:Name="GridViewItemPresenterStyle" TargetType="GridViewItemPresenter">
+        <Setter Property="CheckHintBrush" Value="{ThemeResource ListViewItemCheckHintThemeBrush}" />
+        <Setter Property="CheckBrush" Value="{ThemeResource ListViewItemCheckThemeBrush}"/>
+        <Setter Property="ContentMargin" Value="2" />
+        <Setter Property="CheckSelectingBrush" Value="{ThemeResource ListViewItemCheckSelectingThemeBrush}" />
+        <Setter Property="DragForeground" Value="{ThemeResource ListViewItemDragForegroundThemeBrush}" />
+        <Setter Property="DragOpacity" Value="{ThemeResource ListViewItemDragThemeOpacity}" />
+        <Setter Property="DragBackground" Value="{ThemeResource ListViewItemDragBackgroundThemeBrush}" />
+        <Setter Property="DisabledOpacity" Value="{ThemeResource ListViewItemDisabledThemeOpacity}" />
+        <Setter Property="FocusBorderBrush" Value="{ThemeResource ListViewItemFocusBorderThemeBrush}" />
+        <Setter Property="Padding" Value="0,0,0,0"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="PointerOverBackgroundMargin" Value="1" />
+        <Setter Property="PlaceholderBackground" Value="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" />
+        <!--<Setter Property="PointerOverBackground" Value="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" />-->
+        <Setter Property="PointerOverBackground" Value="#55000000" />
+        <Setter Property="ReorderHintOffset" Value="{ThemeResource ListViewItemReorderHintThemeOffset}" />
+        <Setter Property="SelectedPointerOverBorderBrush" Value="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" />
+        <Setter Property="SelectionCheckMarkVisualEnabled" Value="True" />
+        <Setter Property="SelectedForeground" Value="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" />
+        <Setter Property="SelectedPointerOverBackground" Value="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" />
+        <Setter Property="SelectedBorderThickness" Value="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" />
+        <Setter Property="SelectedBackground" Value="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" />
+    </Style>
+   
+
+    <ControlTemplate x:Name="GridViewItemControlTemplate" TargetType="GridViewItem">
+        <GridViewItemPresenter Style="{StaticResource GridViewItemPresenterStyle}" 
+                               ContentTransitions="{TemplateBinding ContentTransitions}"
+                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+    </ControlTemplate>
+
+    <Style x:Name="GridViewItemStyle" TargetType="GridViewItem">
+        <Setter Property="Template" Value="{StaticResource GridViewItemControlTemplate}"/>
     </Style>
 
-    
-    <Style x:Key="HorizontalGridViewStyle" TargetType="GridView">
+    <Style x:Key="GridViewBaseStyle" TargetType="GridView">
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="SelectionMode" Value="None"/>
         <Setter Property="IsItemClickEnabled" Value="True"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource GridViewItemStyle}"/>
+    </Style>
+
+    <Style x:Key="HorizontalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource GridViewBaseStyle}">
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ItemContainerStyle" Value="{StaticResource GridViewPresenterStyle}"/>
-        <Setter Property="ItemTemplate" Value="{StaticResource ItemGridViewItemTemplate}"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -102,6 +102,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="CenteredHorizontalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -111,33 +112,12 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="NoScrollHorizontalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
     </Style>
-    <Style x:Key="HorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
-        <Setter Property="ItemsPanel">
-            <Setter.Value>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid GroupPadding="20,0,20,0" Orientation="Vertical"/>
-                </ItemsPanelTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="CenteredHorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
-        <Setter Property="ItemsPanel">
-            <Setter.Value>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid GroupPadding="20,0,20,0" Orientation="Vertical" VerticalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="NoScrollHorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGroupedGridViewStyle}">
-        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-    </Style>
-
+   
     <Style x:Key="VerticalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -151,6 +131,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="CenteredVerticalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGridViewStyle}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -160,10 +141,46 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="NoScrollVerticalGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGridViewStyle}">
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
     </Style>
+
+
+
+
+
+    <!--GroupedGridViewStyles-->
+    <DataTemplate x:Key="GroupHeaderTemplate">
+        <TextBlock Text="{Binding Name}" Margin="0,0,0,4" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
+    </DataTemplate>
+    
+    <Style x:Key="HorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid GroupPadding="20,0,20,0" Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CenteredHorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGridViewStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid GroupPadding="20,0,20,0" Orientation="Vertical" VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NoScrollHorizontalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource HorizontalGroupedGridViewStyle}">
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+    </Style>
+
     <Style x:Key="VerticalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGridViewStyle}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -173,6 +190,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="CenteredVerticalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGridViewStyle}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -182,14 +200,33 @@
             </Setter.Value>
         </Setter>
     </Style>
+
     <Style x:Key="NoScrollVerticalGroupedGridViewStyle" TargetType="GridView" BasedOn="{StaticResource VerticalGroupedGridViewStyle}">
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
     </Style>
+
+
+
+
+
+    <!--ItemGridViewStyles-->
     
-    <DataTemplate x:Key="GroupHeaderTemplate">
-        <TextBlock Text="{Binding Name}" Margin="0,0,0,4" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
-    </DataTemplate>
+    <Style x:Key="NoScrollHorizontalItemGridViewStyle" TargetType="GridView" BasedOn="{StaticResource NoScrollHorizontalGridViewStyle}">
+        <Setter Property="ItemTemplate" Value="{StaticResource ItemGridViewItemTemplate}"/>
+    </Style>
+    
+    <Style x:Key="NoScrollVerticalItemGridViewStyle" TargetType="GridView" BasedOn="{StaticResource NoScrollVerticalGridViewStyle}">
+        <Setter Property="ItemTemplate" Value="{StaticResource ItemGridViewItemTemplate}"/>
+    </Style>
+    
+    <Style x:Key="NoScrollVerticalGroupedItemGridViewStyle" TargetType="GridView" BasedOn="{StaticResource NoScrollVerticalGroupedGridViewStyle}">
+        <Setter Property="ItemTemplate" Value="{StaticResource ItemGridViewItemTemplate}"/>
+    </Style>
+
+    <Style x:Key="NoScrollHorizontalGroupedItemGridViewStyle" TargetType="GridView" BasedOn="{StaticResource NoScrollHorizontalGroupedGridViewStyle}">
+        <Setter Property="ItemTemplate" Value="{StaticResource ItemGridViewItemTemplate}"/>
+    </Style>
 
     <DataTemplate x:Key="ItemGridViewItemTemplate" x:DataType="viewmodel:ItemViewModel">
         <Grid Width="400" Height="260" >
@@ -235,4 +272,5 @@
             </Grid>
         </Grid>
     </DataTemplate>
+
 </ResourceDictionary>
