@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
 namespace KodiRemote.ViewModel.Video {
-    public enum SortOption{
+    public enum SortOption {
         TitleAscending,
         TitleDescending,
         YearAscending,
@@ -68,7 +68,7 @@ namespace KodiRemote.ViewModel.Video {
                 return selectedGenre;
             }
             set {
-                if(selectedGenre == value) {
+                if (selectedGenre == value) {
                     return;
                 }
                 selectedGenre = value;
@@ -93,7 +93,7 @@ namespace KodiRemote.ViewModel.Video {
                 return selectedSort;
             }
             set {
-                if(selectedSort == value) {
+                if (selectedSort == value) {
                     return;
                 }
                 selectedSort = value;
@@ -103,14 +103,11 @@ namespace KodiRemote.ViewModel.Video {
         }
 
         private List<WatchedOption> watches = new List<WatchedOption> { WatchedOption.All, WatchedOption.UnWatched, WatchedOption.Watched };
-        public List<WatchedOption> Watches
-        {
-            get
-            {
+        public List<WatchedOption> Watches {
+            get {
                 return watches;
             }
-            set
-            {
+            set {
                 watches = value;
                 RaisePropertyChanged();
             }
@@ -121,7 +118,7 @@ namespace KodiRemote.ViewModel.Video {
                 return selectedWatched;
             }
             set {
-                if(selectedWatched == value) {
+                if (selectedWatched == value) {
                     return;
                 }
                 selectedWatched = value;
@@ -146,7 +143,7 @@ namespace KodiRemote.ViewModel.Video {
                 return selectedNewest;
             }
             set {
-                if(selectedNewest == value) {
+                if (selectedNewest == value) {
                     return;
                 }
                 selectedNewest = value;
@@ -159,7 +156,7 @@ namespace KodiRemote.ViewModel.Video {
         public CollectionViewModel() {
             if (DesignMode.DesignModeEnabled) {
                 Groups = new ObservableCollection<Group<ItemViewModel>>();
-                Groups.Add(new Group<ItemViewModel>() { Name = "A", Items = new ObservableCollection<ItemViewModel>() { new ItemViewModel(new MovieTableEntry() { Label = "test" } )} });
+                Groups.Add(new Group<ItemViewModel>() { Name = "A", Items = new ObservableCollection<ItemViewModel>() { new ItemViewModel(new MovieTableEntry() { Label = "test" }) } });
             }
         }
         public PageType PageType { get; private set; }
@@ -211,13 +208,13 @@ namespace KodiRemote.ViewModel.Video {
         private async Task GetItemsAndSortAndCreateGroups() {
             IEnumerable<TableEntryWithLabelBase> result = null;
 
-            if(PageType == PageType.Movies) {
+            if (PageType == PageType.Movies) {
                 var response = await Kodi.Database.GetMovies();
                 result = SortMovies(response);
-            } else if(PageType == PageType.TVShows) {
+            } else if (PageType == PageType.TVShows) {
                 var response = await Kodi.Database.GetTVShows();
                 result = SortTVShows(response);
-            } else if(PageType == PageType.MovieSets) {
+            } else if (PageType == PageType.MovieSets) {
                 var response = await Kodi.Database.GetMovieSets();
                 result = SortMovieSets(response);
             }
@@ -226,17 +223,17 @@ namespace KodiRemote.ViewModel.Video {
         }
 
         private async Task GetGenres() {
-            if(this.Genres != null) {
+            if (this.Genres != null) {
                 return;
             }
 
             IEnumerable<GenreTableEntry> genres = null;
-            if(PageType == PageType.Movies || PageType == PageType.MovieSets) {
+            if (PageType == PageType.Movies || PageType == PageType.MovieSets) {
                 genres = await Kodi.Database.GetMovieGenres();
-            }else if(PageType == PageType.TVShows) {
+            } else if (PageType == PageType.TVShows) {
                 genres = await Kodi.Database.GetTVShowGenres();
             }
-            
+
             var Genres = new List<GenreTableEntry>();
             Genres.Add(new GenreTableEntry() { GenreId = -1, Genre = "All" });
             Genres.AddRange(genres);
@@ -245,7 +242,7 @@ namespace KodiRemote.ViewModel.Video {
         }
         public DateTime parseDateTime(string dateString) {
             DateTime dt = new DateTime();
-            if(!string.IsNullOrEmpty(dateString))
+            if (!string.IsNullOrEmpty(dateString))
                 dt = DateTime.ParseExact(dateString, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat);
             return dt;
         }
@@ -260,7 +257,7 @@ namespace KodiRemote.ViewModel.Video {
                 items = items.Where(x => x.PlayCount > 0);
             }
 
-            if(SelectedNewest != NewestOption.All) {
+            if (SelectedNewest != NewestOption.All) {
                 items = items.OrderByDescending(x => parseDateTime(x.DateAdded)).Take((int)SelectedNewest);
             }
 
@@ -296,7 +293,7 @@ namespace KodiRemote.ViewModel.Video {
                 items = items.OrderBy(x => x.Label);
             } else if (SelectedSort == SortOption.TitleDescending) {
                 items = items.OrderByDescending(x => x.Label);
-            } 
+            }
 
             return items;
         }
@@ -306,7 +303,7 @@ namespace KodiRemote.ViewModel.Video {
                 items = items.Where(x => x.Genres.Exists(y => y.GenreId == SelectedGenre.GenreId));
             }
 
-            if(SelectedNewest != NewestOption.All) {
+            if (SelectedNewest != NewestOption.All) {
                 items = items.OrderByDescending(x => parseDateTime(x.DateAdded)).Take((int)SelectedNewest);
             }
 
@@ -330,7 +327,7 @@ namespace KodiRemote.ViewModel.Video {
         }
 
         private void CreateGroups(IEnumerable<TableEntryWithLabelBase> items) {
-            if(items == null) {
+            if (items == null) {
                 return;
             }
 
@@ -345,12 +342,12 @@ namespace KodiRemote.ViewModel.Video {
             }
         }
 
-        private void CreateRatingGroups(IEnumerable<MovieTVShowTableEntryBase> items){
+        private void CreateRatingGroups(IEnumerable<MovieTVShowTableEntryBase> items) {
             var Groups = new ObservableCollection<Group<ItemViewModel>>();
             Group<ItemViewModel> currentGroup = null;
             int currentRating = 20;
-            foreach(var item in items) {
-                if(currentRating != (int)item.Rating) {
+            foreach (var item in items) {
+                if (currentRating != (int)item.Rating) {
                     currentRating = (int)item.Rating;
                     currentGroup = new Group<ItemViewModel>() { Name = currentRating.ToString(), Items = new ObservableCollection<ItemViewModel>() };
                     Groups.Add(currentGroup);
@@ -360,7 +357,7 @@ namespace KodiRemote.ViewModel.Video {
 
             this.Groups = Groups;
         }
-        
+
         private void CreateYearGroups(IEnumerable<MovieTableEntry> movies) {
             var Groups = new ObservableCollection<Group<ItemViewModel>>();
             Group<ItemViewModel> currentGroup = null;
@@ -380,9 +377,9 @@ namespace KodiRemote.ViewModel.Video {
             var Groups = new ObservableCollection<Group<ItemViewModel>>();
             Group<ItemViewModel> currentGroup = null;
             int currenRuntime = 0;
-            foreach(var item in movies) {
+            foreach (var item in movies) {
                 int runtime = item.Runtime / 600;
-                if(currenRuntime != runtime) {
+                if (currenRuntime != runtime) {
                     currenRuntime = runtime;
                     currentGroup = new Group<ItemViewModel>() { Name = currenRuntime.ToString() + "0 min", Items = new ObservableCollection<ItemViewModel>() };
                     Groups.Add(currentGroup);
@@ -398,10 +395,10 @@ namespace KodiRemote.ViewModel.Video {
             Group<ItemViewModel> currentGroup = new Group<ItemViewModel>() { Name = "#", Items = new ObservableCollection<ItemViewModel>() };
             Groups.Add(currentGroup);
             char currentLetter = '#';
-            
+
             foreach (var item in items) {
                 char firstLetter = item.Label.FirstOrDefault();
-                if(firstLetter < 'A' || (firstLetter > 'Z' && firstLetter < 'a') || firstLetter > 'z') {
+                if (firstLetter < 'A' || (firstLetter > 'Z' && firstLetter < 'a') || firstLetter > 'z') {
                     Groups[0].Items.Add(new ItemViewModel(item));
                 } else {
                     if (currentLetter != firstLetter) {
@@ -414,7 +411,14 @@ namespace KodiRemote.ViewModel.Video {
             }
             if (!Groups[0].Items.Any()) {
                 Groups.RemoveAt(0);
+            } else {
+                if (SelectedSort == SortOption.TitleDescending) {
+                    var temp = Groups[0];
+                    Groups.RemoveAt(0);
+                    Groups.Add(temp);
+                }
             }
+
             this.Groups = Groups;
         }
 
@@ -423,9 +427,9 @@ namespace KodiRemote.ViewModel.Video {
             get {
                 if (play == null) {
                     play = new RelayCommand<ItemViewModel>(async (ItemViewModel item) => {
-                        if(PageType == PageType.Movies) {
+                        if (PageType == PageType.Movies) {
                             await Kodi.Player.Open(new Movie { MovieId = item.Id }, OptionalRepeatEnum.Null);
-                        }else if (PageType == PageType.TVShows) {
+                        } else if (PageType == PageType.TVShows) {
                             var TVShow = await Kodi.Database.GetTVShow(item.Item as TVShowTableEntry);
                             if (TVShow?.Seasons == null) {
                                 return;

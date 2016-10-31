@@ -117,8 +117,9 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ZoomedInGridView.Style" Value="{StaticResource CenteredVerticalGroupedGridViewStyle}"/>
-                        <Setter Target="ZoomedInGridView.Padding" Value="20,0,20,0"/>
+                        <Setter Target="ZoomedInGridView.Padding" Value="20,0,20,48"/>
                         <Setter Target="ZoomedInGridView.Margin" Value="0"/>
+                        <Setter Target="ZoomedOutGridView.Padding" Value="20,20,20,48"/>
                         <Setter Target="ZoomedOutGridView.Style" Value="{StaticResource CenteredVerticalGridViewStyle}"/>
                     </VisualState.Setters>
                 </VisualState>
